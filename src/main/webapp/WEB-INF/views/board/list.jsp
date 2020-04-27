@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,12 +29,14 @@
         </thead>
         <tbody>
             <c:forEach items="${list }" var="board" >
-                <tr>
-                    <td><c:out value="${board.b_no }"/></td>
-                    <td><c:out value="${board.m_id }"/></td>
-                    <td><c:out value="${board.b_title }"/></td>
-                    <td><c:out value="${board.b_date }"/></td>
-                </tr>
+               
+               		<tr>
+	                    <td><c:out value="${board.b_no }"/></td>
+	                    <td><c:out value="${board.m_id }"/></td>
+	                    <td><a href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/></a></td>
+	                    <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
+                	</tr>
+               
             </c:forEach>
         </tbody>
     </table>

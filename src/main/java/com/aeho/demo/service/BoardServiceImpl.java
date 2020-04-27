@@ -22,6 +22,8 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardVo getBoard(BoardVo bv) {
 		// TODO Auto-generated method stub
+		String cntkeyword = "hit";
+		boardDao.updateCnt(bv.getB_no(), cntkeyword);
 		return boardDao.getBoard(bv);
 	}
 

@@ -21,6 +21,7 @@
   	where b_no=#{b_no}
   </update>
   
+  
   <update id="updateCnt">
   	update board set
   	<choose>
