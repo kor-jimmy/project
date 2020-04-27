@@ -10,6 +10,11 @@
 <body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
+	$(function(){
+		$("#insertBtn").on("click",function(){
+			self.location = "/board/insert";
+		})
+	})
 </script>
     <h2>게시판</h2>
     <table>
@@ -32,5 +37,7 @@
             </c:forEach>
         </tbody>
     </table>
+    <hr>
+    <button id="insertBtn">게시물 등록</button>
 </body>
 </html>
