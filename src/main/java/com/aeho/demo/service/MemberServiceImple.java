@@ -1,0 +1,42 @@
+package com.aeho.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.aeho.demo.dao.MemberDao;
+import com.aeho.demo.vo.MemberVo;
+
+@Service
+public class MemberServiceImple implements MemberService {
+
+	@Autowired
+	private MemberDao m_dao;
+	
+	@Override
+	public List<MemberVo> listMember() {
+		return m_dao.listMember();
+	}
+
+	@Override
+	public MemberVo getMemeber(MemberVo mv) {
+		return m_dao.getMemeber(mv);
+	}
+
+	@Override
+	public int insertMember(MemberVo mv) {
+		return m_dao.insertMember(mv);
+	}
+
+	@Override
+	public int updateMember(MemberVo mv) {
+		return m_dao.updateMember(mv);
+	}
+
+	@Override
+	public int deleteMember(MemberVo mv) {
+		return m_dao.deleteMember(mv);
+	}
+
+}

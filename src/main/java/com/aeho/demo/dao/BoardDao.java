@@ -16,4 +16,6 @@ public interface BoardDao {
 	
 	int deleteBoard(BoardVo bv);
 	
+	int updateCnt(int b_no, String keyword);
+	
 }

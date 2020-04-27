@@ -1,11 +1,11 @@
-package com.aeho.demo.dao;
+package com.aeho.demo.service;
 
 import java.util.List;
 
 import com.aeho.demo.vo.MemberVo;
 
-public interface MemberDao {
-	
+public interface MemberService {
+
 	List<MemberVo> listMember();
 	
 	MemberVo getMemeber(MemberVo mv);
@@ -15,6 +15,4 @@ public interface MemberDao {
 	int updateMember(MemberVo mv);
 	
 	int deleteMember(MemberVo mv);
-	
-
 }

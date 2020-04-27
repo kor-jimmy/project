@@ -10,7 +10,7 @@ public interface ReportDao {
 	
 //	ReportVo getReport();
 	
-	int insertReport();
+	int insertReport(ReportVo rev);
 	
 //	int updateReport();
 	
