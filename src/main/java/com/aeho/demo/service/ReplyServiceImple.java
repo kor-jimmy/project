@@ -25,8 +25,8 @@ public class ReplyServiceImple implements ReplyService {
 	@Override
 	public int insertReply(ReplyVo rv) {
 		int re = replyDao.insertReply(rv);
-		String keyword = "reply";
-		boardDao.updateCnt(rv.getB_no(), keyword);
+		String cntkeyword = "reply";
+		boardDao.updateCnt(rv.getB_no(), cntkeyword);
 		return re;
 	}
 
