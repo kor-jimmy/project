@@ -21,5 +21,4 @@ public class HateServiceImpl implements HateService {
 		int re = hateDao.deleteHate(hv);
 		return re;
 	}
-
 }
