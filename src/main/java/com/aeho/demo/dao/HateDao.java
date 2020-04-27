@@ -1,16 +1,10 @@
 package com.aeho.demo.dao;
 
-import java.util.List;
-
 import com.aeho.demo.vo.HateVo;
 
 public interface HateDao {
-
-	List<HateVo> listHate();
 	
-	int insertHate();
+	int insertHate(HateVo hv);
 	
-	int updateHate();
-	
-	int deleteHate();
+	int deleteHate(HateVo hv);
 }

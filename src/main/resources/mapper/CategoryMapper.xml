@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aeho.demo.dao.CategoryDao">
+  <select id="listCategory" resultType="com.aeho.demo.vo.CategoryVo">
+  	select * from category
+  </select>
+  
+  <select id="getCategory" resultType="com.aeho.demo.vo.CategoryVo">
+  	select * from category where c_no=#{c_no}
+  </select>
+  
+  <insert id="insertCategory">
+  	insert into category(c_no, c_dist)
+  	values(#{c_no}, #{c_dist})
+  </insert>
+  
+  <update id="updateCategory">
+  	update category set c_dist = #{c_dist}
+  	where c_no = #{c_no}
+  </update>
+
+  <delete id="deleteCategory">
+  	delete category where c_no = #{c_no}
+  </delete>
+  
+</mapper>

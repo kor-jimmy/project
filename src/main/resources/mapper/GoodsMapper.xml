@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aeho.demo.dao.GoodsDao">
+  <select id="listGoods" resultType="com.aeho.demo.vo.GoodsVo">
+  	select * from goods
+  </select>
+  
+  <select id="getGoods" resultType="com.aeho.demo.vo.GoodsVo">
+  	select * from goods where g_no = #{g_no}
+  </select>
+  
+  <insert id="insertGoods">
+  	insert into goods(g_no, gc_code, m_id, g_title, g_content, g_price, g_replycnt)
+  	values(seq_goods.nextval, #{gc_code}, #{m_id}, #{g_title}, #{g_content}, #{g_price}, 0)
+  </insert>
+  
+  <update id="updateGoods">
+  	update goods set g_title = #{g_title}, g_content=#{g_content}, g_price=#{g_price}
+  	where g_no = #{g_no}
+  </update>
+  
+  <delete id="deleteGoods">
+  	delete goods where g_no = #{g_no}
+  </delete>
+  
+</mapper>
