@@ -12,4 +12,5 @@ public class VoteVo {
 	private String m_id;
 	private int vt_no;
 	private int v_result;
+	
 }
