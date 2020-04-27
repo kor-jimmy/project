@@ -1,11 +1,11 @@
-package com.aeho.demo.dao;
+package com.aeho.demo.service;
 
 import java.util.List;
 
 import com.aeho.demo.vo.ScheduleVo;
 
-public interface ScheduleDao {
-
+public interface ScheduleService {
+	
 	List<ScheduleVo> listSchedule();
 	
 	ScheduleVo getSchedule(ScheduleVo sv);

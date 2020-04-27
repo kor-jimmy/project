@@ -12,5 +12,4 @@
   	values(seq_report.nextval,#{rc_code},#{m_id},#{b_no},#{g_no},#{r_no})
   </insert>
   
-  
 </mapper>
