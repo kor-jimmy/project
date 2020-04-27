@@ -8,9 +8,9 @@ public interface ScheduleDao {
 
 	List<ScheduleVo> listSchedule();
 	
-	int insertSchedult(ScheduleVo sv);
+	int insertSchedule(ScheduleVo sv);
 
-	int updateSchedult(ScheduleVo sv);
+	int updateSchedule(ScheduleVo sv);
 	
-	int deleteSchedult(ScheduleVo sv);
+	int deleteSchedule(ScheduleVo sv);
 }

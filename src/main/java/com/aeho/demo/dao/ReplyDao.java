@@ -10,7 +10,7 @@ public interface ReplyDao {
 	
 	int insertReply(ReplyVo rv);
 	
-	int updateReply(ReplyVo rv);
+//	int updateReply(ReplyVo rv);
 	
 	int deleteReply(ReplyVo rv);
 }

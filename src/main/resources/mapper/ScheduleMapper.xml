@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aeho.demo.dao.ScheduleDao">
+  <select id="listSchedule" resultType="com.aeho.demo.vo.ScheduleVo">
+  	select *from schedule
+  </select>
+  
+  <select id="getSchedule" resultType="com.aeho.demo.vo.ScheduleVo">
+  	select *from schedule where s_no = #{s_no}
+  </select>
+  
+  <insert id="insertSchedule">
+  	insert into schedule(s_no, s_title, s_content,s_ontime,s_img)
+  	values(seq_schedule.nextval,#{s_title},#{s_content},#{s_ontime},#{s_img})
+  </insert>
+  
+  <update id="updateSchedule">
+  	update schedule set s_title = #{s_title}, s_content=#{s_content}, s_ontime=#{s_ontime}, s_img=#{s_img} 
+  	where s_no=#{s_no}
+  </update>
+
+  <delete id="deleteSchedule">
+  	delete schedule where s_no=#{s_no}
+  </delete>
+  
+</mapper>

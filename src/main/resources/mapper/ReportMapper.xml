@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aeho.demo.dao.ReportDao">
+  <select id="listReport" resultType="com.aeho.demo.vo.ReportVo">
+  	select *from report
+  </select>
+  
+  <insert id="insertReport">
+  	insert into report(re_no, rc_code, m_id, b_no, g_no, r_no)
+  	values(seq_report.nextval,#{rc_code},#{m_id},#{b_no},#{g_no},#{r_no})
+  </insert>
+  
+  
+</mapper>

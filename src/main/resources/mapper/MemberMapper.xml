@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aeho.demo.dao.MemberDao">
+  <select id="listMember" resultType="com.aeho.demo.vo.MemberVo">
+  	select *from member
+  </select>
+  
+  <select id="getMember" resultType="com.aeho.demo.vo.MemberVo">
+  	select *from member where m_id=#{m_id}
+  </select>
+  
+  <insert id="insertMember">
+  	insert into member(m_id, m_pwd, m_nick, m_email, m_phone, m_rate, m_store, role)
+  	values(#{m_id},#{m_pwd},#{m_nick},#{m_email},#{m_phone},1,1,bronze)
+  </insert>
+  
+  <update id="updateMember">
+  	update member set m_nick = #{m_nick}, m_email=#{m_email}, m_phone = #{m_phone}
+  	where m_id = #{m_id}
+  </update>
+  
+  <!-- 시큐리티시 코드 추가. -->
+  <delete id="deleteMember">
+  	delete member where m_id=#{m_id}
+  </delete>
+  
+</mapper>

@@ -8,12 +8,12 @@ public interface ReportDao {
 
 	List<ReportVo> listReport();
 	
-	ReportVo getReport();
+//	ReportVo getReport();
 	
 	int insertReport();
 	
-	int updateReport();
+//	int updateReport();
 	
-	int deleteReport();
+//	int deleteReport();
 	
 }
