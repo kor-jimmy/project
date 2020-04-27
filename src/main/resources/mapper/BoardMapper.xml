@@ -6,4 +6,24 @@
   <select id="listBoard" resultType="com.aeho.demo.vo.BoardVo">
   	select *from board
   </select>
+  
+  <select id="getBoard" resultType="com.aeho.demo.vo.BaordVo">
+  	select *from board where b_no=#{b_no}
+  </select>
+  
+  <insert id="insertBoard">
+  	insert into board(b_no, m_id, c_no, b_title, b_content, b_hit, b_replycnt, b_lovecnt, b_hatecnt)
+  	values(seq_board,#{m_id},#{c_no},#{b_title},#{b_content},0,0,0,0)
+  </insert>
+  
+  <update id="updateBoard">
+  	update board set b_title = #{b_title}, b_content=#{b_content}, b_updatedate=sysdate
+  	where b_no=#{b_no}
+  </update>
+  
+  <!-- 시큐리티시  id 추가. -->
+  <delete id="deleteBoard">
+  	delete board where b_no=#{b_no}
+  </delete>
+  
 </mapper>
