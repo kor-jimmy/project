@@ -42,5 +42,15 @@ public class ReplyController {
 		return gson.toJson(list);
 	}
 	
-
+	@GetMapping("/delete")
+	public String delete(ReplyVo rv) {
+		System.out.println("리플라이 딜리트 컨트롤러 동작중");
+		String msg = "댓글 삭제에 실패하였습니다.";
+		int re = replyService.deleteReply(rv);
+		if (re>0) {
+			msg = "댓글 삭제에 성공하였습니다.";
+		}
+		return msg;
+	}
+	
 }

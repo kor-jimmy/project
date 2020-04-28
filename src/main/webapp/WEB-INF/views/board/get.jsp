@@ -31,13 +31,16 @@
 		$.ajax("/reply/list",{type:"GET",data:{b_no:b_no}, success: function(reply){
 			console.log(reply);
 			$.each(reply, function(idx,r){
- 				var tr = $("<tr></tr>")
+ 				var tr = $("<tr class='rep'></tr>");
+				var button= $("<button class='deleteReply'></button>").text("삭제").attr("r_no",r.r_no);
 				var td1 = $("<td></td>").html(r.m_id);
 				var td2 = $("<td></td>").html(r.r_content);
 				//날짜 양식 맞춰야함.
 				var td3 = $("<td></td>").html(r.r_date);
 				var td4 = $("<td></td>").html("신고버튼넣을꺼임");
-				tr.append(td1,td2,td3,td4);
+				var td5 = $("<td></td>");
+				td5.append(button);
+				tr.append(td1,td2,td3,td4,td5);
 				$("#replyTable").append(tr);
 			})
 		}})
@@ -54,6 +57,17 @@
 			}
 		})
 
+		//댓글 삭제 ajax 기능구현부터!
+		$(document).on("click",".deleteReply",function(){
+			var rno = $(this).attr("r_no");
+			var re = confirm("해당 댓글을 삭제하시겠습니까?")
+			if(re){
+				$.ajax("/reply/delete",{type:"GET", data:{r_no:rno}, success:function(result){
+					alert(result)
+					location.href="/board/get?b_no="+b_no;
+				}})
+			}
+		})
 		
 	})
 </script>
