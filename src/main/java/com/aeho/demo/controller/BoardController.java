@@ -72,7 +72,7 @@ public class BoardController {
 			str = "게시물 수정에 성공했습니다.";
 		}
 		rttr.addFlashAttribute("result", str);
-		return "redirect:/board/list";
+		return "redirect:/board/get?b_no="+bv.getB_no();
 	}
 	
 	@PostMapping("/delete")

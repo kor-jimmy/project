@@ -10,10 +10,11 @@
 <h2>게시물 수정</h2>
 <hr>
 <form action="/board/update" method="post">
+<input type="hidden" id="b_no" name="b_no" value="${board.b_no}">
 <table>
 	<tr>
 		<td>게시물 제목</td>
-		<td><input type="text" name="b_title" required="required" value="${board.b_no}"></td>
+		<td><input type="text" name="b_title" required="required" value="${board.b_title}"></td>
 	</tr>
 	<tr>
 		<td>카테고리번호</td>
