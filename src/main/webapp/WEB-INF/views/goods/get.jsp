@@ -26,7 +26,7 @@
 		$.ajax("/goodsReply/list",{type:"GET",data:{gr_no:gr_no}, success: function(goodsReply){
 			var goodsReplyList = goodsReply;
 			console.log(goodsReplyList);
-			$.each(JSON.parse(GoodsReply), function(idx,r){
+			$.each(JSON.parse(goodsReply), function(idx,r){
 				console.log(r.m_id)
 			})
 		}})
