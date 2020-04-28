@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,28 +9,29 @@
 </head>
 <body>
 	<h2>상품목록</h2>
-	
-	<tabel>
+	<hr>
+	<table>
 		<thead>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td>상품번호</td>
+				<td>제목</td>
+				<td>코드</td>
+				<td>가격</td>
+				<td>날짜</td>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${list }" var="">
+			<c:forEach items="${list }" var="goods">
 				<tr>
-					<td><c:out value="${member.m_id }"></c:out></td>
-					<td><a href="/member/get?m_id=${member.m_id }"><c:out value="${member.m_pwd }"></c:out></a></td>
-					<td><c:out value="${member.m_nick }"></c:out></td>
-					<td><c:out value="${member.m_email }"></c:out></td>
-					<td><c:out value="${member.m_phone }"></c:out></td>
+					<td><c:out value="${goods.g_no }"></c:out></td>
+					<td><a href="/goods/get?g_no=${goods.g_no }"><c:out value="${goods.g_title }"></c:out></a></td>
+					<td><c:out value="${goods.gc_code }"></c:out></td>
+					<td><c:out value="${goods.g_price }"></c:out></td>
+					<td><c:out value="${goods.g_date }"></c:out></td>
 				</tr>
 			</c:forEach>
 		</tbody>
-	</tabel>
+	</table>
+	<hr>
 </body>
 </html>
