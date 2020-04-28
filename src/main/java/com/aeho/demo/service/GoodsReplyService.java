@@ -9,7 +9,5 @@ public interface GoodsReplyService {
 	
 	int insertGoodsReply(GoodsReplyVo gv);
 	
-	int updateGoodsReply(GoodsReplyVo gv);
-
 	int deleteGoodsReply(GoodsReplyVo gv);
 }

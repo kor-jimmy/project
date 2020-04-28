@@ -25,12 +25,6 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	}
 
 	@Override
-	public int updateGoodsReply(GoodsReplyVo gv) {
-		int re = goodsReplyDao.updateGoodsReply(gv);
-		return re;
-	}
-
-	@Override
 	public int deleteGoodsReply(GoodsReplyVo gv) {
 		int re = goodsReplyDao.deleteGoodsReply(gv);
 		return re;
