@@ -29,7 +29,7 @@
 		$.ajax("/reply/list",{type:"GET",data:{b_no:b_no}, success: function(reply){
 			var replyList = reply;
 			console.log(replyList);
-			$.each(reply, function(idx,r){
+			$.each(JSON.parse(reply), function(idx,r){
 				console.log(r.m_id)
 /* 				var tr = $("<tr></tr>")
 				var td1 = $("<td></td>").html(reply.m_id);
