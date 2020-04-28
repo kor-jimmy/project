@@ -27,6 +27,10 @@
 				}});
 			}
 		})
+
+		$.ajax("/reply/list", function(data){
+			console.log(data);
+		})
 	})
 </script>
 	<h2>게시물 상세</h2>

@@ -1,10 +1,12 @@
 package com.aeho.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.aeho.demo.dao.LoveDao;
 import com.aeho.demo.vo.LoveVo;
 
+@Service
 public class LoveServiceImpl implements LoveService {
 
 	@Autowired

@@ -1,10 +1,12 @@
 package com.aeho.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.aeho.demo.dao.HateDao;
 import com.aeho.demo.vo.HateVo;
 
+@Service
 public class HateServiceImpl implements HateService {
 	
 	@Autowired

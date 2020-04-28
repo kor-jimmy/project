@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 
 @Controller
 @RequestMapping("/goods/*")
-@AllArgsConstructor
+
 public class GoodsController {
 	@Autowired
 	private GoodsService goodsService;
