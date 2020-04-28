@@ -75,10 +75,11 @@ public class BoardController {
 		return "redirect:/board/get?b_no="+bv.getB_no();
 	}
 	
-	@PostMapping("/delete")
+	@GetMapping("/delete")
 	@ResponseBody
 	public String delete(BoardVo bv) {
 		String str = "게시물 삭제에 실패했습니다.";
+		System.out.println(bv.getB_no());
 		int re = boardService.deleteBoard(bv);
 		if( re > 0 ) {
 			str = "게시물 삭제에 성공했습니다.";
