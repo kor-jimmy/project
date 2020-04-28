@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -64,6 +65,7 @@ public class BoardController {
 	
 	@PostMapping("/update")
 	public String update(BoardVo bv, RedirectAttributes rttr) {
+		System.out.println("게시물 수정!");
 		String str = "게시물 수정에 실패했습니다.";
 		int re = boardService.updateBoard(bv);
 		if( re > 0 ) {
@@ -74,13 +76,13 @@ public class BoardController {
 	}
 	
 	@PostMapping("/delete")
-	public String delete(BoardVo bv, RedirectAttributes rttr) {
+	@ResponseBody
+	public String delete(BoardVo bv) {
 		String str = "게시물 삭제에 실패했습니다.";
 		int re = boardService.deleteBoard(bv);
 		if( re > 0 ) {
 			str = "게시물 삭제에 성공했습니다.";
 		}
-		rttr.addFlashAttribute("result", str);
-		return "redirect:/board/list";
+		return str;
 	}
 }

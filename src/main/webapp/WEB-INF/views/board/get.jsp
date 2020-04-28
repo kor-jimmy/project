@@ -9,7 +9,25 @@
 <title>Insert title here</title>
 </head>
 <body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#updateBtn").on("click",function(){
+			var b_no = $("#b_no").val();
+			self.location = "/board/update?b_no="+b_no;
+		})
+		$("#deleteBtn").on("click",function(){
+			var re = confirm("정말로 삭제하시겠습니까?");
+			if(re){
+				$.ajax("/delete", {success: function(result){
+
+				}});
+			}
+		})
+	})
+</script>
 	<h2>게시물 상세</h2>
+	<input type="hidden" id="b_no" value="${ board.b_no }">
 	Love : <c:out value="${board.b_lovecnt }"/>/ Hate : <c:out value="${board.b_hatecnt }"/>/ 조회수 : <c:out value="${board.b_hit }"/>
 	<table>
 		<tr>
