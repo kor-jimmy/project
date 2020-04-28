@@ -47,7 +47,7 @@ public class GoodsReplyController {
 	
 	@PostMapping("/delete")
 	public String delete(GoodsReplyVo gv) {
-		String str = "회원삭제 실패";
+		String str = "댓글삭제 실패";
 		int re = goodsReplyService.deleteGoodsReply(gv);
 		if(re>0) {
 			str = "댓글삭제에 성공했습니다.";

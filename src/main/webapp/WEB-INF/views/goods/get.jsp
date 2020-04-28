@@ -16,27 +16,41 @@
 		var gr_no = $("#gr_no").val();
 		
 		$("#deleteBtn").on("click",function(){
-			console.log(gr_no);
+			console.log(g_no);
 			var re = confirm("정말로 삭제하시겠습니까?");
 			if(re){
-				$.ajax("/goodsReply/delete", {type: 'GET', data: {gr_no: gr_no},success: function(result){
+				$.ajax("/goods/delete", {type: 'POST', data: {g_no: g_no},success: function(result){
 					alert(result);
+					location.href="/goods/list";
 				}});
 			}
 		})
 		$.ajax("/goodsReply/list",{type:"GET",data:{g_no:g_no}, success: function(goodsReply){
 			console.log(goodsReply);
 			$.each(goodsReply, function(idx,r){
- 				var tr = $("<tr></tr>")
+ 				var tr = $("<tr></tr>");
+ 				var button = $("<button class='deleteReply'></button>").text("삭제").attr("gr_no",r.gr_no);
 				var td1 = $("<td></td>").html(r.gr_no);
 				var td2 = $("<td></td>").html(r.g_no);
 				var td3 = $("<td></td>").html(r.m_id);
 				var td4 = $("<td></td>").html(r.gr_content) 
 				var td5 = $("<td></td>").html(r.gr_date);
-				tr.append(td1,td2,td3,td4,td5);
+				var td6 = $("<td></td>");
+				td6.append(button)
+				tr.append(td1,td2,td3,td4,td5,td6);
 				$("#goodsReplyTable").append(tr);
 			})
 		}})
+
+		$(document).on("click",".deleteReply",function(){
+			var grno = $(this).attr("gr_no");
+			var re = confirm("진짜로 댓글을 삭제하겠습니까?");
+			if(re){
+				$.ajax("/goodsReply/delete", {type:"POST", data:{gr_no:grno}, success:function(result){
+						alert(result);
+				}})
+			}
+		})
 	})
 </script>
 	<h2>게시물 상세</h2>
@@ -55,11 +69,11 @@
 			<td><c:out value="${goods.g_content }"/></td>
 		</tr>
 	</table>
-	
+	<button id="deleteBtn">삭제</button>
 	<hr>
 	<h4>댓글</h4>
 	<table id="goodsReplyTable">
 	</table>
-	<button id="deleteBtn">삭제</button>
+	
 </body>
 </html>
