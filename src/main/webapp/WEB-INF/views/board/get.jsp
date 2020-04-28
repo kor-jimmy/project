@@ -12,12 +12,11 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		var b_no = $("#b_no").val();
 		$("#updateBtn").on("click",function(){
-			var b_no = $("#b_no").val();
 			self.location = "/board/update?b_no="+b_no;
 		})
 		$("#deleteBtn").on("click",function(){
-			var b_no = $("#b_no").val();
 			console.log(b_no);
 			var re = confirm("정말로 삭제하시겠습니까?");
 			if(re){
@@ -27,10 +26,23 @@
 				}});
 			}
 		})
+		$.ajax("/reply/list",{type:"GET",data:{b_no:b_no}, success: function(reply){
+			var replyList = reply;
+			console.log(replyList);
+			$.each(reply, function(idx,r){
+				console.log(r.m_id)
+/* 				var tr = $("<tr></tr>")
+				var td1 = $("<td></td>").html(reply.m_id);
+				var td2 = $("<td></td>").html(reply.r_content);
+				//날짜 양식 맞춰야함.
+				var td3 = $("<td></td>").html(reply.r_date);
+				var td4 = $("<td></td>").html("신고버튼넣을꺼임");
+				tr.append(td1,td2,td3,td4);
+				$("#replyTable").append(tr); */
+			})
+		}})
 
-		$.ajax("/reply/list", function(data){
-			console.log(data);
-		})
+		
 	})
 </script>
 	<h2>게시물 상세</h2>
@@ -64,5 +76,9 @@
 	</table>
 	<button id="updateBtn">수정</button>
 	<button id="deleteBtn">삭제</button>
+	<hr>
+	<h4>댓글</h4>
+	<table id="replyTable">
+	</table>
 </body>
 </html>

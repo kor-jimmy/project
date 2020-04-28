@@ -24,6 +24,8 @@ public class ReplyController {
 	
 	@GetMapping("/list")
 	public String list(ReplyVo rv) {
+		//b_no <<== 게시물의 댓글 리스트를 뽑을수있잖아
+		System.out.println("리플라이 리스트 컨트롤러 동작중");
 		List<ReplyVo> list = replyService.listReply(rv);
 		Gson gson = new Gson();
 		return gson.toJson(list);
