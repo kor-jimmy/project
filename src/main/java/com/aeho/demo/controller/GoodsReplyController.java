@@ -25,17 +25,17 @@ public class GoodsReplyController {
 		this.goodsReplyService = goodsReplyService;
 	}
 	
-	@GetMapping("/list")
+	@GetMapping("/listR")
 	public String list() {
 		List<GoodsReplyVo> list = goodsReplyService.listGoodsReply();
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}
 	
-	@GetMapping("/insert")
+	@GetMapping("/insertR")
 	public void insert() {}
 	
-	@PostMapping("/insert")
+	@PostMapping("/insertR")
 	public String insert(GoodsReplyVo gv) {
 		int re = goodsReplyService.insertGoodsReply(gv);
 		String str = "댓글등록 실패";
@@ -45,7 +45,7 @@ public class GoodsReplyController {
 		return str;
 	}
 	
-	@PostMapping("/delete")
+	@PostMapping("/deleteR")
 	public String delete(GoodsReplyVo gv) {
 		String str = "회원삭제 실패";
 		int re = goodsReplyService.deleteGoodsReply(gv);
