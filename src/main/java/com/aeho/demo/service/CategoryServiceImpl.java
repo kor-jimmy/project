@@ -19,8 +19,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public CategoryVo getCategory(CategoryVo cv) {
-		return categoryDao.getCategory(cv);
+	public CategoryVo getCategory(int c_no) {
+		return categoryDao.getCategory(c_no);
 	}
 
 	@Override

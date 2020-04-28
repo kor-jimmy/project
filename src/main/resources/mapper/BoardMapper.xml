@@ -11,6 +11,10 @@
   	select *from board where b_no=#{b_no}
   </select>
   
+  <select id="listCatBoard" resultType="com.aeho.demo.vo.BoardVo">
+  	select *from board b, category c where b.c_no=c.c_no and c.c_dist = #{catkeyword}
+  </select>
+  
   <insert id="insertBoard">
   	insert into board(b_no, m_id, c_no, b_title, b_content, b_hit, b_replycnt, b_lovecnt, b_hatecnt)
   	values(seq_board.nextval,#{m_id},#{c_no},#{b_title},#{b_content},0,0,0,0)

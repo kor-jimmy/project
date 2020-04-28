@@ -48,5 +48,11 @@ public class BoardServiceImpl implements BoardService {
 		int re = boardDao.deleteBoard(bv);
 		return re;
 	}
+	
+	@Override
+	public List<BoardVo> listCatBoard(String catkeyword){
+		List<BoardVo> list = boardDao.listCatBoard(catkeyword);
+		return list;
+	}
 
 }

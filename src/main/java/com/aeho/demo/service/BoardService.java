@@ -16,4 +16,7 @@ public interface BoardService {
 	
 	int deleteBoard(BoardVo bv);
 	
+	//카테고리별 게시물 추가
+	List<BoardVo> listCatBoard(String catkeyword);
+	
 }

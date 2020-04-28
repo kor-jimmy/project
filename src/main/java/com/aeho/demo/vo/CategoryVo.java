@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CategoryVo {
-
 	private int c_no;
 	private String c_dist;
 }

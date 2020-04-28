@@ -8,7 +8,7 @@ public interface CategoryDao {
 	
 	List<CategoryVo> listCategory();
 	
-	CategoryVo getCategory(CategoryVo cv);
+	CategoryVo getCategory(int c_no);
 	
 	int insertCategory(CategoryVo cv);
 	

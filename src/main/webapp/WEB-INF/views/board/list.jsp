@@ -13,11 +13,12 @@
 <script type="text/javascript">
 	$(function(){
 		$("#insertBtn").on("click",function(){
-			self.location = "/board/insert";
+            var c_no = $("#c_no").val();
+			self.location = "/board/insert?c_no="+c_no;
 		})
 	})
 </script>
-    <h2>게시판</h2>
+    <h2><c:out value="${catkeyword}"/> 게시판 입니다.</h2>
     <table>
         <thead>
             <tr>
@@ -36,11 +37,11 @@
 	                    <td><a href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/></a></td>
 	                    <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
                 	</tr>
-               
             </c:forEach>
         </tbody>
     </table>
     <hr>
     <button id="insertBtn">게시물 등록</button>
+    <input type="hidden" name="c_no" id="c_no" value="${c_no}">
 </body>
 </html>

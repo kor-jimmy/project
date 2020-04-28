@@ -32,9 +32,9 @@ public class CategoryController {
 	
 	@GetMapping(value = "/get", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String get(CategoryVo cv) {
+	public String get(int c_no) {
 		Gson gson = new Gson();
-		return gson.toJson(categoryService.getCategory(cv));
+		return gson.toJson(categoryService.getCategory(c_no));
 	}
 	
 	@PostMapping("/insert")

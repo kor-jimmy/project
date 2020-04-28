@@ -15,14 +15,11 @@
 <h2>게시물 등록</h2>
 <hr>
 <form action="/board/insert" method="post">
+<input type="number" name="c_no" value="${c_no}">
 <table>
 	<tr>
 		<td>게시물 제목</td>
 		<td><input type="text" name="b_title" required="required"></td>
-	</tr>
-	<tr>
-		<td>카테고리번호</td>
-		<td><input type="number" name="c_no" readonly="readonly" value="1"></td>
 	</tr>
 	<tr>
 		<td>작성자</td>

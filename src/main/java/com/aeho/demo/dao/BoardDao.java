@@ -18,4 +18,7 @@ public interface BoardDao {
 	
 	int updateCnt(int b_no, String cntkeyword);
 	
+	//카테고리별 게시물
+	List<BoardVo> listCatBoard(String catkeyword);
+	
 }
