@@ -25,9 +25,9 @@ public class GoodsReplyController {
 		this.goodsReplyService = goodsReplyService;
 	}
 	
-	@GetMapping("/list")
-	public String list() {
-		List<GoodsReplyVo> list = goodsReplyService.listGoodsReply();
+	@GetMapping(value = "/list", produces = "application/json; charset=utf-8")
+	public String list(GoodsReplyVo gv) {
+		List<GoodsReplyVo> list = goodsReplyService.listGoodsReply(gv);
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}

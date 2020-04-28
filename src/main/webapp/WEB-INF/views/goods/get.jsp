@@ -13,19 +13,29 @@
 <script type="text/javascript">
 	$(function(){
 		var g_no = $("#g_no").val();
+		var gr_no = $("#gr_no").val();
+		
 		$("#deleteBtn").on("click",function(){
 			console.log(gr_no);
 			var re = confirm("정말로 삭제하시겠습니까?");
 			if(re){
 				$.ajax("/goodsReply/delete", {type: 'GET', data: {gr_no: gr_no},success: function(result){
 					alert(result);
-					location.href="/goodsReply/list";
 				}});
 			}
 		})
 		$.ajax("/goodsReply/list",{type:"GET",data:{g_no:g_no}, success: function(goodsReply){
 			console.log(goodsReply);
-			
+			$.each(goodsReply, function(idx,r){
+ 				var tr = $("<tr></tr>")
+				var td1 = $("<td></td>").html(r.gr_no);
+				var td2 = $("<td></td>").html(r.g_no);
+				var td3 = $("<td></td>").html(r.m_id);
+				var td4 = $("<td></td>").html(r.gr_content) 
+				var td5 = $("<td></td>").html(r.gr_date);
+				tr.append(td1,td2,td3,td4,td5);
+				$("#goodsReplyTable").append(tr);
+			})
 		}})
 	})
 </script>
@@ -45,10 +55,11 @@
 			<td><c:out value="${goods.g_content }"/></td>
 		</tr>
 	</table>
-	<button id="deleteBtn">삭제</button>
+	
 	<hr>
 	<h4>댓글</h4>
-	<table id="goodsReply">
+	<table id="goodsReplyTable">
 	</table>
+	<button id="deleteBtn">삭제</button>
 </body>
 </html>

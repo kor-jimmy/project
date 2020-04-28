@@ -14,8 +14,8 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	public GoodsReplyDao goodsReplyDao;
 	
 	@Override
-	public List<GoodsReplyVo> listGoodsReply() {
-		return goodsReplyDao.listGoodsReply();
+	public List<GoodsReplyVo> listGoodsReply(GoodsReplyVo gv) {
+		return goodsReplyDao.listGoodsReply(gv);
 	}
 
 	@Override
