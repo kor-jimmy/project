@@ -18,8 +18,8 @@ public class ReplyServiceImple implements ReplyService {
 	private BoardDao boardDao;
 	
 	@Override
-	public List<ReplyVo> listReply() {
-		return replyDao.listReply();
+	public List<ReplyVo> listReply(ReplyVo rv) {
+		return replyDao.listReply(rv);
 	}
 
 	@Override

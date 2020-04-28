@@ -23,6 +23,7 @@ public class BoardServiceImpl implements BoardService {
 	public BoardVo getBoard(BoardVo bv) {
 		// TODO Auto-generated method stub
 		String cntkeyword = "hit";
+		//조회수증가
 		boardDao.updateCnt(bv.getB_no(), cntkeyword);
 		return boardDao.getBoard(bv);
 	}

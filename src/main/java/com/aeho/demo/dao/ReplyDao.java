@@ -6,7 +6,7 @@ import com.aeho.demo.vo.ReplyVo;
 
 public interface ReplyDao {
 
-	List<ReplyVo> listReply();
+	List<ReplyVo> listReply(ReplyVo rv);
 	
 	int insertReply(ReplyVo rv);
 	
