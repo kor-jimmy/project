@@ -9,7 +9,8 @@ import com.aeho.demo.vo.GoodsVo;
 
 public class GoodsServiceImpl implements GoodsService {
 	@Autowired
-	public GoodsDao goodsDao;
+	private GoodsDao goodsDao;
+	
 	@Override
 	public List<GoodsVo> listGoods() {
 		return goodsDao.listGoods();

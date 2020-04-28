@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class GoodsController {
 	@Autowired
-	public GoodsService goodsService;
+	private GoodsService goodsService;
 
 	public void setGoodsService(GoodsService goodsService) {
 		this.goodsService = goodsService;
