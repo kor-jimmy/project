@@ -13,7 +13,7 @@
   
   <insert id="insertMember">
   	insert into member(m_id, m_pwd, m_nick, m_email, m_phone, m_rate, m_store, role)
-  	values(#{m_id},#{m_pwd},#{m_nick},#{m_email},#{m_phone},1,1,bronze)
+  	values(#{m_id},#{m_pwd},#{m_nick},#{m_email},#{m_phone},1,1,'bronze')
   </insert>
   
   <update id="updateMember">

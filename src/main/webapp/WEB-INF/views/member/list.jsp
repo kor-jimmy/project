@@ -16,9 +16,7 @@
 			})
 		})
 </script>
-
 	<h2>회원목록</h2>
-	
 	<table border="1">
 		<thead>
 			<tr>
