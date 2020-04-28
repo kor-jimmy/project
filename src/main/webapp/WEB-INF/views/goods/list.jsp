@@ -8,6 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#insertBtn").on("click",function(){
+		self.location = "/goods/insert";
+	})
+})
+</script>
 	<h2>상품목록</h2>
 	<hr>
 	<table>
@@ -32,6 +40,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	<button id="insertBtn">상품등록</button>
 	<hr>
 </body>
 </html>

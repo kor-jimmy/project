@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -60,18 +61,18 @@ public class MemberController {
 			str="회원 수정 성공";
 		}
 		rttr.addFlashAttribute("result",str);
-		return "redirect:/member/list";
+		return "redirect:/member/get?m_id="+mv.getM_id();
 	}
 	
-	@PostMapping("/delete")
-	public String delete(MemberVo mv, RedirectAttributes rttr) {
+	@GetMapping("/delete")
+	@ResponseBody
+	public String delete(MemberVo mv) {
 		String str = "회원 삭제 실패";
 		int re = memberService.deleteMember(mv);
 		if(re > 0) {
 			str = "회원 삭제 성공";
 		}
-		rttr.addFlashAttribute("result",str);
-		return "redirect:/member/list";
+		return str;
 	}
 	
 	

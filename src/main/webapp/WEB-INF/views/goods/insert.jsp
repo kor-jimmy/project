@@ -7,32 +7,32 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<h2>상품등록</h2>
-	<form>
+	<form action="/goods/insert" method="post">
 	<table>
 		<tr>
 			<td>상품 제목</td>
-			<td><input type="text" name="g_title" required="required"></td>
+			<td><input type="text" id="g_title" name="g_title" required="required"></td>
 		</tr>
 		<tr>
 			<td>코드</td>
-			<td><input type="number" name="g_no" readonly="readonly" value="1"></td>
+			<td><input type="number" id="g_no" name="g_no" required="required" value="1"></td>
 		</tr>
 		<tr>
 			<td>작성자</td>
-			<td><input type="text" name="m_id" readonly="readonly" value="tiger"></td>
+			<td><input type="text" id="m_id" name="m_id" value="tiger" required="required"></td>
 		</tr>
 		<tr>
 			<td>가격</td>
-			<td><input type="number" name="g_price" readonly="readonly" value="1000"></td>
+			<td><input type="number" id="g_price" name="g_price" required="required"></td>
 		</tr>
 		<tr>
 			<td>내용</td>
-			<td><textarea name="g_content" row="3"></textarea></td>
+			<td><textarea id="g_content" name="g_content" row="3"></textarea></td>
 		</tr>
 	</table>
-	</form>
 	<button type="submit" id="insertBtn">등록</button>
-	<button type="reset" id="resetBtn">취소</button>
+	</form>
 </body>
 </html>
