@@ -49,12 +49,12 @@ public class BoardController {
 	
 	@PostMapping("/insert")
 	public String insert(BoardVo bv, RedirectAttributes rttr) {
-		String str = "게시물 등록에 실패했습니다.";
+		String msg = "게시물 등록에 실패했습니다.";
 		int re = boardService.insertBoard(bv);
 		if( re > 0 ) {
-			str = "게시물 등록에 성공했습니다.";
+			msg = "게시물 등록에 성공했습니다.";
 		}
-		rttr.addFlashAttribute("result", str);
+		rttr.addFlashAttribute("result", msg);
 		return "redirect:/board/list";
 	}
 	
@@ -66,24 +66,24 @@ public class BoardController {
 	@PostMapping("/update")
 	public String update(BoardVo bv, RedirectAttributes rttr) {
 		System.out.println("게시물 수정!");
-		String str = "게시물 수정에 실패했습니다.";
+		String msg = "게시물 수정에 실패했습니다.";
 		int re = boardService.updateBoard(bv);
 		if( re > 0 ) {
-			str = "게시물 수정에 성공했습니다.";
+			msg = "게시물 수정에 성공했습니다.";
 		}
-		rttr.addFlashAttribute("result", str);
+		rttr.addFlashAttribute("result", msg);
 		return "redirect:/board/get?b_no="+bv.getB_no();
 	}
 	
 	@GetMapping("/delete")
 	@ResponseBody
 	public String delete(BoardVo bv) {
-		String str = "게시물 삭제에 실패했습니다.";
+		String msg = "게시물 삭제에 실패했습니다.";
 		System.out.println(bv.getB_no());
 		int re = boardService.deleteBoard(bv);
 		if( re > 0 ) {
-			str = "게시물 삭제에 성공했습니다.";
+			msg = "게시물 삭제에 성공했습니다.";
 		}
-		return str;
+		return msg;
 	}
 }

@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ReplyVo {
-
 	private int r_no;
 	private int b_no;
 	private String m_id;

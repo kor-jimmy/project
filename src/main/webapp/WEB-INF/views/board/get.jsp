@@ -26,21 +26,33 @@
 				}});
 			}
 		})
+		
+		//댓글 목록 ajax
 		$.ajax("/reply/list",{type:"GET",data:{b_no:b_no}, success: function(reply){
-			var replyList = reply;
-			console.log(replyList);
-			$.each(JSON.parse(reply), function(idx,r){
-				console.log(r.m_id)
-/* 				var tr = $("<tr></tr>")
-				var td1 = $("<td></td>").html(reply.m_id);
-				var td2 = $("<td></td>").html(reply.r_content);
+			console.log(reply);
+			$.each(reply, function(idx,r){
+ 				var tr = $("<tr></tr>")
+				var td1 = $("<td></td>").html(r.m_id);
+				var td2 = $("<td></td>").html(r.r_content);
 				//날짜 양식 맞춰야함.
-				var td3 = $("<td></td>").html(reply.r_date);
+				var td3 = $("<td></td>").html(r.r_date);
 				var td4 = $("<td></td>").html("신고버튼넣을꺼임");
 				tr.append(td1,td2,td3,td4);
-				$("#replyTable").append(tr); */
+				$("#replyTable").append(tr);
 			})
 		}})
+
+		//댓글 등록 ajax
+		$("#insertReply").on("click",function(){
+			var r = $("#boardReply").serialize();
+			var re = confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?")
+			if(re){
+				$.ajax("/reply/insert",{type:"POST", data:r, success:function(result){
+					alert(result);
+					location.href="/board/get?b_no="+b_no;
+				}})
+			}
+		})
 
 		
 	})
@@ -78,7 +90,14 @@
 	<button id="deleteBtn">삭제</button>
 	<hr>
 	<h4>댓글</h4>
-	<table id="replyTable">
+	<table id="replyTable" border="1">
 	</table>
+	<hr>
+	<form id="boardReply">
+		<input type="hidden" name="b_no" value="<c:out value='${board.b_no }'/>">
+		<input type="text" name="m_id" value="tiger" readonly="readonly">
+		<input type="text" name="r_content" required="required">
+	</form>
+	<button type="submit" id="insertReply">댓글등록</button>
 </body>
 </html>

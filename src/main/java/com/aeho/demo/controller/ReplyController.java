@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,9 +23,19 @@ public class ReplyController {
 		this.replyService = replyService;
 	}
 	
-	@GetMapping("/list")
+	@PostMapping("/insert")
+	public String insert(ReplyVo rv) {
+		System.out.println("리플라이 인서트 컨트롤러 동작중");
+		String msg = "댓글 등록에 실패하였습니다.";
+		int re  = replyService.insertReply(rv);
+		if(re>0) {
+			msg = "댓글 등록에 성공하였습니다.";
+		}
+		return msg;
+	}
+	
+	@GetMapping(value="/list", produces = "application/json; charset=utf-8")
 	public String list(ReplyVo rv) {
-		//b_no <<== 게시물의 댓글 리스트를 뽑을수있잖아
 		System.out.println("리플라이 리스트 컨트롤러 동작중");
 		List<ReplyVo> list = replyService.listReply(rv);
 		Gson gson = new Gson();
