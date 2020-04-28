@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/goods/*")
+@RequestMapping("/goodsReply/*")
 @AllArgsConstructor
 public class GoodsReplyController {
 	@Autowired
@@ -25,17 +25,17 @@ public class GoodsReplyController {
 		this.goodsReplyService = goodsReplyService;
 	}
 	
-	@GetMapping("/listR")
+	@GetMapping("/list")
 	public String list() {
 		List<GoodsReplyVo> list = goodsReplyService.listGoodsReply();
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}
 	
-	@GetMapping("/insertR")
+	@GetMapping("/insert")
 	public void insert() {}
 	
-	@PostMapping("/insertR")
+	@PostMapping("/insert")
 	public String insert(GoodsReplyVo gv) {
 		int re = goodsReplyService.insertGoodsReply(gv);
 		String str = "댓글등록 실패";
@@ -45,7 +45,7 @@ public class GoodsReplyController {
 		return str;
 	}
 	
-	@PostMapping("/deleteR")
+	@PostMapping("/delete")
 	public String delete(GoodsReplyVo gv) {
 		String str = "회원삭제 실패";
 		int re = goodsReplyService.deleteGoodsReply(gv);
