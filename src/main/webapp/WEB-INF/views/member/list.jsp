@@ -30,8 +30,8 @@ $(function(){
 		<tbody>
 			<c:forEach items="${list }" var="member">
 				<tr>
-					<td><c:out value="${member.m_id }"></c:out></td>
-					<td><a href="/member/get?m_id=${member.m_id }"><c:out value="${member.m_pwd }"></c:out></a></td>
+					<td><a href="/member/get?m_id=${member.m_id }"><c:out value="${member.m_id }"></c:out></td>
+					<td><c:out value="${member.m_pwd }"></c:out></a></td>
 					<td><c:out value="${member.m_nick }"></c:out></td>
 					<td><c:out value="${member.m_email }"></c:out></td>
 					<td><c:out value="${member.m_phone }"></c:out></td>

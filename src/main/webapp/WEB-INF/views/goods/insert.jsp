@@ -17,11 +17,11 @@
 		</tr>
 		<tr>
 			<td>코드</td>
-			<td><input type="number" id="g_no" name="g_no" required="required" value="1"></td>
+			<td><input type="number" id="gc_code" name="gc_code" required="required"></td>
 		</tr>
 		<tr>
 			<td>작성자</td>
-			<td><input type="text" id="m_id" name="m_id" value="tiger" required="required"></td>
+			<td><input type="text" id="m_id" name="m_id" required="required"></td>
 		</tr>
 		<tr>
 			<td>가격</td>
