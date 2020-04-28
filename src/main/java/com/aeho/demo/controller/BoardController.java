@@ -37,7 +37,7 @@ public class BoardController {
 		model.addAttribute("list", boardService.listBoard());
 	}
 	
-	@GetMapping({"/get", "/update"})
+	@GetMapping("/get")
 	public void getBoard(BoardVo bv, Model model) {
 		model.addAttribute("board", boardService.getBoard(bv));
 	}
@@ -55,6 +55,11 @@ public class BoardController {
 		}
 		rttr.addFlashAttribute("result", str);
 		return "redirect:/board/list";
+	}
+	
+	@GetMapping("/update")
+	public void update(BoardVo bv, Model model) {
+		model.addAttribute("board", boardService.getBoard(bv));
 	}
 	
 	@PostMapping("/update")
