@@ -34,7 +34,7 @@ public class MemberController {
 	
 	@GetMapping({"/get","/update"})
 	public void getMember(MemberVo mv, Model model) {
-		model.addAttribute("member", memberService.getMemeber(mv));
+		model.addAttribute("member", memberService.getMember(mv));
 	}
 	
 	@GetMapping("/insert")

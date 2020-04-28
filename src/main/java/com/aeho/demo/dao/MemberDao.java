@@ -8,7 +8,7 @@ public interface MemberDao {
 	
 	List<MemberVo> listMember();
 	
-	MemberVo getMemeber(MemberVo mv);
+	MemberVo getMember(MemberVo mv);
 	
 	int insertMember(MemberVo mv);
 	
