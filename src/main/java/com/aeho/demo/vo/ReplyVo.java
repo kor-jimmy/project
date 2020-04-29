@@ -17,3 +17,4 @@ public class ReplyVo {
 	private String r_content;
 	private Date r_date;
 }
+

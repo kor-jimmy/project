@@ -11,3 +11,4 @@ public class GoodsCodeVo {
 	private int gc_code;
 	private String gc_dist;
 }
+

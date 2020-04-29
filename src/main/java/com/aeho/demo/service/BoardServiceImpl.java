@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aeho.demo.dao.BoardDao;
+import com.aeho.demo.dao.ReplyDao;
 import com.aeho.demo.vo.BoardVo;
 
 @Service
@@ -14,6 +15,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Autowired
+	private ReplyDao replyDao; 
 	
 	@Override
 	public List<BoardVo> listBoard() {
@@ -43,9 +47,12 @@ public class BoardServiceImpl implements BoardService {
 		return re;
 	}
 
+	//게시물 삭제시 댓글 삭제도 추가
+	//트랜잭션 기능 구체화 해야됨.
 	@Override
 	public int deleteBoard(BoardVo bv) {
 		// TODO Auto-generated method stub
+		int re2 = replyDao.deleteBoardReply(bv.getB_no());
 		int re = boardDao.deleteBoard(bv);
 		return re;
 	}

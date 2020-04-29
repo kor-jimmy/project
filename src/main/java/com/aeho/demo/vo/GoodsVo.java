@@ -22,3 +22,4 @@ public class GoodsVo {
 	private int g_replycnt;
 	private int c_no;
 }
+

@@ -13,4 +13,7 @@ public interface ReplyDao {
 //	int updateReply(ReplyVo rv);
 	
 	int deleteReply(ReplyVo rv);
+	
+	//게시물 삭제시 댓글 삭제
+	int deleteBoardReply(int b_no);
 }

@@ -16,3 +16,4 @@ public class GoodsReplyVo {
 	private String gr_content;
 	private Date gr_date;
 }
+

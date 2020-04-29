@@ -35,5 +35,10 @@ public class ReplyServiceImple implements ReplyService {
 		// TODO Auto-generated method stub
 		return replyDao.deleteReply(rv);
 	}
+	
+	@Override
+	public int deleteBoardReply(int b_no) {
+		return replyDao.deleteBoardReply(b_no);
+	}
 
 }

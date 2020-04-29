@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+body{
+	margin:0px;
+}
+
+#header{
+	background: cornflowerblue;
+}
+
+#top div{
+	display: inline-block;
+}
+
+#title{
+	
+}
+
+#serach{
+
+}
+
+#memberInfo{
+
+}

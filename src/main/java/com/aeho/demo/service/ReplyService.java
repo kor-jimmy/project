@@ -11,4 +11,6 @@ public interface ReplyService {
 	int insertReply(ReplyVo rv);
 	
 	int deleteReply(ReplyVo rv);
+	
+	int deleteBoardReply(int b_no);
 }

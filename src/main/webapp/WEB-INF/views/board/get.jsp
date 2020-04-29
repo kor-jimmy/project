@@ -20,7 +20,7 @@
 			console.log(b_no);
 			var re = confirm("정말로 삭제하시겠습니까?");
 			if(re){
-				$.ajax("/board/delete", {type: 'POST', data: {b_no: b_no},success: function(result){
+				$.ajax("/board/delete", {type: 'GET', data: {b_no: b_no},success: function(result){
 					alert(result);
 					location.href="/board/list";
 				}});
