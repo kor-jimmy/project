@@ -6,7 +6,7 @@ import com.aeho.demo.vo.GoodsReplyVo;
 import com.aeho.demo.vo.GoodsVo;
 
 public interface GoodsService {
-	List<GoodsVo> listGoods();
+	List<GoodsVo> listGoods(String keyword);
 	
 	GoodsVo getGoods(GoodsVo gv);
 	

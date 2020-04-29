@@ -81,13 +81,14 @@
 	<button id="updateBtn">수정</button>
 	<hr>
 	<h4>댓글</h4>
-	<table id="goodsReplyTable">
-	</table>
-	<hr>
-	<form id="reply">
-		<input type="hidden" name="g_no" value="<c:out value='${goods.g_no }'/>">
-		<input type="text" name="m_id" required="required">
-		<input type="text" name="gr_content" required="required">		
-	</form>
-	<button type="submit" id="insertReply">댓글 등록</button>
+   <table id="goodsReplyTable">
+   </table>
+   <hr>
+   <form id="reply">
+      <input type="hidden" name="g_no" value="<c:out value='${goods.g_no }'/>">
+      <input type="text" name="m_id" required="required">
+      <input type="text" name="gr_content" required="required">      
+   </form>
+   <button type="submit" id="insertReply">댓글 등록</button>
+	
 <%@include file="../includes/footer.jsp"%>

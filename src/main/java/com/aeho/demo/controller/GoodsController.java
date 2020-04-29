@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeho.demo.service.GoodsService;
 import com.aeho.demo.vo.GoodsVo;
+import com.google.gson.Gson;
 
 import lombok.AllArgsConstructor;
 
@@ -24,10 +25,17 @@ public class GoodsController {
 	public void setGoodsService(GoodsService goodsService) {
 		this.goodsService = goodsService;
 	}
-
+	
 	@GetMapping("/list")
 	public void list(Model model) {
-		model.addAttribute("list", goodsService.listGoods());
+		model.addAttribute("list", goodsService.listGoods(null));
+	}
+
+	@GetMapping(value = "/listGoods", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String listGoods(String keyword) {
+		String list = new Gson().toJson(goodsService.listGoods(keyword));
+		return list;
 	}
 
 	@GetMapping("/insert")

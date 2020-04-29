@@ -11,5 +11,5 @@ public interface GoodsReplyService {
 	
 	int deleteGoodsReply(GoodsReplyVo gv);
 	
-	int deleteRelpy(int g_no);
+	int deleteReply(int g_no);
 }

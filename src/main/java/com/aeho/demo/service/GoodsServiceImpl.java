@@ -19,9 +19,10 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsReplyDao goodsReplyDao;
 	
 	@Override
-	public List<GoodsVo> listGoods() {
-		return goodsDao.listGoods();
+	public List<GoodsVo> listGoods(String keyword) {
+		return goodsDao.listGoods(keyword);
 	}
+
 
 	@Override
 	public GoodsVo getGoods(GoodsVo gv) {

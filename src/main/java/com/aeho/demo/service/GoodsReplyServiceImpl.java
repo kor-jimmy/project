@@ -31,7 +31,7 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	}
 
 	@Override
-	public int deleteRelpy(int g_no) {
+	public int deleteReply(int g_no) {
 		// TODO Auto-generated method stub
 		return goodsReplyDao.deleteReply(g_no);
 	}
