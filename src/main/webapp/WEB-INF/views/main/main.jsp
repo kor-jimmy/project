@@ -1,6 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$.ajax("http://192.168.0.35:5000/videos", 
+			{dataType: "jsonp",
+			jsonpCallback: "getVideos",
+			success: function(data){
+				var rand = Math.round(Math.random()*10);
+				//<iframe width="560" height="315" src="https://www.youtube.com/embed/iDjQSdN_ig8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				d = data[rand]
+				str = d.substr(d.lastIndexOf("=")+1);
+				console.log(str);
+				frame = $("<iframe width='350' height='250' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>").attr("src", "https://www.youtube.com/embed/"+str);
+				$("#iframe").append(frame);
+		}});
+	});
+</script>
 
         <div class="row">
             <!--left content-->
@@ -19,8 +36,8 @@
                 </ul>
                 <hr>
                 <h3>오늘의 영상</h3>
-                <div>
-                    <iframe width="350" height="300" src="https://www.youtube.com/embed/YPFIh0dfYfw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div id="iframe">
+                    
                 </div>
             </div>
             <!--right content-->
