@@ -44,7 +44,6 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	@Transactional
 	public int deleteBoard(BoardVo bv) {
 		// TODO Auto-generated method stub
 		int re = boardDao.deleteBoard(bv);

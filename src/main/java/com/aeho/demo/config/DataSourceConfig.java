@@ -11,8 +11,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableAspectJAutoProxy
-@EnableTransactionManagement
+//@EnableAspectJAutoProxy
+//@EnableTransactionManagement
 public class DataSourceConfig {
 
 	@ConfigurationProperties(prefix = "spring.datasource")
@@ -20,8 +20,8 @@ public class DataSourceConfig {
 		return DataSourceBuilder.create().build();
 	}
 	
-	@Bean
-	public DataSourceTransactionManager txManager() {
-		return new DataSourceTransactionManager(dataSource());
-	}
+//	@Bean
+//	public DataSourceTransactionManager txManager() {
+//		return new DataSourceTransactionManager(dataSource());
+//	}
 }
