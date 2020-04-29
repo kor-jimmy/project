@@ -7,6 +7,8 @@ import com.aeho.demo.vo.CategoryVo;
 public interface CategoryService {
 	List<CategoryVo> listCategory();
 	
+	List<CategoryVo> listGoodsCategory();
+	
 	CategoryVo getCategory(int c_no);
 	
 	int insertCategory(CategoryVo cv);

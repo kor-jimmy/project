@@ -15,4 +15,6 @@ public interface CategoryDao {
 	int updateCategory(CategoryVo cv);
 
 	int deleteCategory(CategoryVo cv);
+
+	List<CategoryVo> listGoodsCategory();
 }

@@ -14,7 +14,9 @@
 	$(function(){
 		var g_no = $("#g_no").val();
 		var gr_no = $("#gr_no").val();
-		
+		$("#updateBtn").on("click",function(){
+			self.location = "/goods/update?g_no="+g_no;
+		})
 		$("#deleteBtn").on("click",function(){
 			console.log(g_no);
 			var re = confirm("정말로 삭제하시겠습니까?");
@@ -82,6 +84,7 @@
 		</tr>
 	</table>
 	<button id="deleteBtn">삭제</button>
+	<button id="updateBtn">수정</button>
 	<hr>
 	<h4>댓글</h4>
 	<table id="goodsReplyTable">

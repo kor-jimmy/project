@@ -30,6 +30,13 @@ public class CategoryController {
 		model.addAttribute("list", categoryService.listCategory());
 	}
 	
+	@GetMapping(value = "/goodsCateList", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String goodsList() {
+		String list = new Gson().toJson(categoryService.listGoodsCategory());
+		return list;
+	}
+	
 	@GetMapping(value = "/get", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String get(int c_no) {

@@ -68,6 +68,7 @@ public class GoodsController {
 		if(re > 0) {
 			str="상품 삭제 성공";
 		}
+		rttr.addFlashAttribute("result",str);
 		return "redirect:/goods/list";
 	}
 

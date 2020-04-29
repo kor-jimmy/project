@@ -7,6 +7,10 @@
   	select * from category
   </select>
   
+  <select id="listGoodsCategory" resultType="com.aeho.demo.vo.CategoryVo">
+  	select * from category where c_no > 1000
+  </select>
+  
   <select id="getCategory" resultType="com.aeho.demo.vo.CategoryVo">
   	select * from category where c_no=#{c_no}
   </select>

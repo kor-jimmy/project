@@ -14,9 +14,22 @@ $(function(){
 	$("#insertBtn").on("click",function(){
 		self.location = "/goods/insert";
 	})
+	$.ajax("/category/goodsCateList",{success:function(result){
+//		console.log(result)
+		$.each(result,function(idx,item){
+			var c_dist= $("<span></span>").html(result[idx].c_dist);
+			var nbsp="  ";
+			$("#goodsType").append(c_dist,nbsp);
+		})
+	}})
 })
 </script>
 	<h2>상품목록</h2>
+	<hr>
+	<div id="goodsType">
+	<h5>상품 종류별 보기</h5>
+	
+	</div>
 	<hr>
 	<table>
 		<thead>

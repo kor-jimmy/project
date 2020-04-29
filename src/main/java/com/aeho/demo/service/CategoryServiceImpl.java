@@ -41,4 +41,9 @@ public class CategoryServiceImpl implements CategoryService {
 		return re;
 	}
 
+	@Override
+	public List<CategoryVo> listGoodsCategory() {
+		return categoryDao.listGoodsCategory();
+	}
+
 }
