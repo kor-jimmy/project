@@ -9,7 +9,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
-    <link href="test.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -29,8 +28,8 @@
         <h1>Ae-Ho</h1>
         <p>깨끗한 웹 커뮤니티 Ae-Ho에 오신것을 환영합니다!</p>
     </div>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <a href="#" class="navbar-brand">Ae-Ho</a>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark text-center"> 
+        <a href="/aeho" class="navbar-brand">Ae-Ho</a>
         <!--토글-->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>

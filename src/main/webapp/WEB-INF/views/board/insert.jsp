@@ -1,17 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<%@include file="../includes/header.jsp"%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
 	})
 </script>
-</head>
-<body>
+
 <h2>게시물 등록</h2>
 <hr>
 <form action="/board/insert" method="post">
@@ -33,5 +28,4 @@
 <button type="submit" id="insertBtn">게시물 등록</button>
 <button type="reset" id="resetBtn">리셋</button>
 </form>
-</body>
-</html>
+<%@include file="../includes/footer.jsp"%>

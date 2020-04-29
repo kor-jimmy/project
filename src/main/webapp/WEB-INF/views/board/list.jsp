@@ -37,5 +37,5 @@
     <hr>
     <button id="insertBtn">게시물 등록</button>
     <input type="hidden" name="c_no" id="c_no" value="${c_no}">
-</body>
-</html>
+
+<%@include file="../includes/footer.jsp"%>  

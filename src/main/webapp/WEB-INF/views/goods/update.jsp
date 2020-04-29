@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@include file="../includes/header.jsp"%>
 
 	<h2>상품수정</h2>
 	<form action="/goods/update" method="post">
@@ -35,5 +29,4 @@
 	</table>
 	<button type="submit" id="updateBtn">등록</button>
 	</form>
-</body>
-</html>
+<%@include file="../includes/footer.jsp"%>
