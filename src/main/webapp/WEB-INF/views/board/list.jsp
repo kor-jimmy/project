@@ -13,23 +13,26 @@
 	})
 </script>
     <h2><c:out value="${catkeyword}"/> 게시판 입니다.</h2>
-    <table>
+    <table class="table table-hover">
         <thead>
             <tr>
-                <td>게시물번호</td>
-                <td>작성자</td>
+                <td>번호</td>
                 <td>제목</td>
+                <td>작성자</td>
                 <td>날짜</td>
+                <td>조회수</td>
+                <td>Love</td>
             </tr>
         </thead>
         <tbody>
             <c:forEach items="${list }" var="board" >
-               
                		<tr>
 	                    <td><c:out value="${board.b_no }"/></td>
-	                    <td><c:out value="${board.m_id }"/></td>
 	                    <td><a href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/></a></td>
+	                    <td><c:out value="${board.m_id }"/></td>
 	                    <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
+	                    <td><c:out value="${board.b_hit }"/></td>
+	                    <td><c:out value="${board.b_lovecnt }"/></td>
                 	</tr>
             </c:forEach>
         </tbody>
