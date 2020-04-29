@@ -20,7 +20,7 @@
 			var re = confirm("정말로 삭제하시겠습니까?");
 			if(re){
 				$.ajax("/goods/delete", {type: 'POST', data: {g_no: g_no},success: function(result){
-					alert(result);
+					//alert(result);
 					location.href="/goods/list";
 				}});
 			}
@@ -41,6 +41,17 @@
 				$("#goodsReplyTable").append(tr);
 			})
 		}})
+		
+		$("#insertReply").on("click",function(){
+			var data = $("#reply").serialize();
+			var re = confirm("댓글을 등록하시겠습니까? 한 번 입력한 댓글은 수정이 불가하므로 신중하게 입력해 주세요.");
+			if(re){
+				$.ajax("/goodsReply/insert", {type:"POST", data:data, success:function(result){
+					alert(result);
+					location.href="/goods/get?g_no="+g_no;
+				}})
+			}
+		})
 
 		$(document).on("click",".deleteReply",function(){
 			var grno = $(this).attr("gr_no");
@@ -48,6 +59,7 @@
 			if(re){
 				$.ajax("/goodsReply/delete", {type:"POST", data:{gr_no:grno}, success:function(result){
 						alert(result);
+						location.href="/goods/get?g_no="+g_no;
 				}})
 			}
 		})
@@ -74,6 +86,13 @@
 	<h4>댓글</h4>
 	<table id="goodsReplyTable">
 	</table>
+	<hr>
+	<form id="reply">
+		<input type="hidden" name="g_no" value="<c:out value='${goods.g_no }'/>">
+		<input type="text" name="m_id" required="required">
+		<input type="text" name="gr_content" required="required">		
+	</form>
+	<button type="submit" id="insertReply">댓글 등록</button>
 	
 </body>
 </html>
