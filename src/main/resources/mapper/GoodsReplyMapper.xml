@@ -23,7 +23,7 @@
   </delete>
   
     <delete id="deleteGoods">
-  	delete goodReply where g_no=#{g_no}
+  	delete goodsReply where g_no=#{g_no}
   </delete>
   
 </mapper>

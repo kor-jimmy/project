@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.aeho.demo.dao.GoodsDao;
 import com.aeho.demo.dao.GoodsReplyDao;
-import com.aeho.demo.vo.GoodsReplyVo;
 import com.aeho.demo.vo.GoodsVo;
 
 @Service
@@ -43,7 +42,7 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Override
 	public int deleteGoods(GoodsVo gv) {
-		int re2 = goodsReplyDao.deleteReply(gv.getG_no());
+		int re2 = goodsReplyDao.deleteGoods(gv.getG_no());
 		int re = goodsDao.deleteGoods(gv);
 		return re;
 	}

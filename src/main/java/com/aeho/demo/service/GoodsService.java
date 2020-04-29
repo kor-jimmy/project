@@ -2,7 +2,6 @@ package com.aeho.demo.service;
 
 import java.util.List;
 
-import com.aeho.demo.vo.GoodsReplyVo;
 import com.aeho.demo.vo.GoodsVo;
 
 public interface GoodsService {
