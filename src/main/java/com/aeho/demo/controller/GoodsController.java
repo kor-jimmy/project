@@ -46,8 +46,8 @@ public class GoodsController {
 	}
 
 	@GetMapping("/update")
-	public void update() {
-
+	public void update(GoodsVo gv, Model model) {
+		model.addAttribute("goods", goodsService.getGoods(gv));
 	}
 
 	@PostMapping("/update")
