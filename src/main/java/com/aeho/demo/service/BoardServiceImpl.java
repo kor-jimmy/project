@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.aeho.demo.dao.BoardDao;
 import com.aeho.demo.vo.BoardVo;
@@ -43,6 +44,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional
 	public int deleteBoard(BoardVo bv) {
 		// TODO Auto-generated method stub
 		int re = boardDao.deleteBoard(bv);

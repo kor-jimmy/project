@@ -108,5 +108,4 @@ public class BoardController {
 		return msg;
 	}
 
-
 }
