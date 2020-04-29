@@ -30,4 +30,10 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 		return re;
 	}
 
+	@Override
+	public int deleteRelpy(int g_no) {
+		// TODO Auto-generated method stub
+		return goodsReplyDao.deleteReply(g_no);
+	}
+
 }

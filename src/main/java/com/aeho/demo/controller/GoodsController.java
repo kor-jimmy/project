@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeho.demo.service.GoodsService;
@@ -61,15 +62,15 @@ public class GoodsController {
 		return "redirect:/goods/list";
 	}
 
-	@PostMapping("/delete")
-	public String delete(GoodsVo gv, RedirectAttributes rttr) {
+	@GetMapping("/delete")
+	@ResponseBody
+	public String delete(GoodsVo gv) {
 		String str = "상품 삭제 실패";
 		int re = goodsService.deleteGoods(gv);
 		if(re > 0) {
 			str="상품 삭제 성공";
 		}
-		rttr.addFlashAttribute("result",str);
-		return "redirect:/goods/list";
+		return str;
 	}
 
 	@GetMapping("/get")

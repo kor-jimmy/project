@@ -10,4 +10,6 @@ public interface GoodsReplyService {
 	int insertGoodsReply(GoodsReplyVo gv);
 	
 	int deleteGoodsReply(GoodsReplyVo gv);
+	
+	int deleteRelpy(int g_no);
 }

@@ -15,8 +15,8 @@
 			console.log(g_no);
 			var re = confirm("정말로 삭제하시겠습니까?");
 			if(re){
-				$.ajax("/goods/delete", {type: 'POST', data: {g_no: g_no},success: function(result){
-					//alert(result);
+				$.ajax("/goods/delete", {type: 'GET', data: {g_no: g_no},success: function(result){
+					alert(result);
 					location.href="/goods/list";
 				}});
 			}
@@ -53,7 +53,7 @@
 			var grno = $(this).attr("gr_no");
 			var re = confirm("진짜로 댓글을 삭제하겠습니까?");
 			if(re){
-				$.ajax("/goodsReply/delete", {type:"POST", data:{gr_no:grno}, success:function(result){
+				$.ajax("/goodsReply/delete", {type:"GET", data:{gr_no:grno}, success:function(result){
 						alert(result);
 						location.href="/goods/get?g_no="+g_no;
 				}})
