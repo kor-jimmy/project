@@ -37,8 +37,8 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item"><a href="#" class="nav-link">공지사항</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">카테고리</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">굿즈</a></li>
+                <li class="nav-item"><a href="/category/category" class="nav-link">카테고리</a></li>
+                <li class="nav-item"><a href="/goods/list" class="nav-link">굿즈</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">일정</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">투표</a></li>
             </ul>
