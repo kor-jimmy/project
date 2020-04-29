@@ -20,4 +20,5 @@ public class GoodsVo {
 	private Date g_date;
 	private Date g_updatedate;
 	private int g_replycnt;
+	private int c_no;
 }
