@@ -68,7 +68,7 @@
 	<h2>게시물 상세</h2>
 	<input type="hidden" id="b_no" value="${ board.b_no }">
 	Love : <c:out value="${board.b_lovecnt }"/>/ Hate : <c:out value="${board.b_hatecnt }"/>/ 조회수 : <c:out value="${board.b_hit }"/>
-	<table>
+	<table class="table table-bordered">
 		<tr>
 			<td>게시물번호</td>
 			<td><c:out value="${board.b_no }"/></td>
@@ -94,8 +94,8 @@
 			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_updatedate }"/></td>
 		</tr>
 	</table>
-	<button id="updateBtn">수정</button>
-	<button id="deleteBtn">삭제</button>
+	<button id="updateBtn" class="btn btn-outline-dark">수정</button>
+	<button id="deleteBtn" class="btn btn-outline-dark">삭제</button>
 	<hr>
 	<h4>댓글</h4>
 	<table id="replyTable" border="1">
@@ -106,5 +106,5 @@
 		<input type="text" name="m_id" value="tiger" readonly="readonly">
 		<input type="text" name="r_content" required="required">
 	</form>
-	<button type="submit" id="insertReply">댓글등록</button>
+	<button type="submit" id="insertReply" class="btn btn-outline-dark">댓글등록</button>
 <%@include file="../includes/footer.jsp"%>

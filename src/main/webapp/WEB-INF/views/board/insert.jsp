@@ -11,7 +11,7 @@
 <hr>
 <form action="/board/insert" method="post">
 <input type="number" name="c_no" value="${c_no}">
-<table>
+<table class="table table-hover">
 	<tr>
 		<td>게시물 제목</td>
 		<td><input type="text" name="b_title" required="required"></td>
@@ -25,7 +25,7 @@
 		<td><textarea name="b_content" row="3"></textarea></td>
 	</tr>
 </table>
-<button type="submit" id="insertBtn">게시물 등록</button>
-<button type="reset" id="resetBtn">리셋</button>
+<button type="submit" id="insertBtn" class="btn btn-outline-dark">게시물 등록</button>
+<button type="reset" id="resetBtn" class="btn btn-outline-dark">리셋</button>
 </form>
 <%@include file="../includes/footer.jsp"%>
