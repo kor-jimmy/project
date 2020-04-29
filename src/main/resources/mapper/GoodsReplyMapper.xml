@@ -22,4 +22,8 @@
   	delete goodsReply where gr_no = #{gr_no}
   </delete>
   
+    <delete id="deleteGoods">
+  	delete goodReply where g_no=#{g_no}
+  </delete>
+  
 </mapper>
