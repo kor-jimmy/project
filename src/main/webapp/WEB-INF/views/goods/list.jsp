@@ -40,6 +40,12 @@ $(function(){
 				listGoods($(this).html())
 			})
 		})
+		var p=$("<p>전체보기</p>");
+		$(p).on("click",function(){
+			listGoods();
+		})
+		$("#goodsType").append(p);
+		
 	}})
 })
 </script>

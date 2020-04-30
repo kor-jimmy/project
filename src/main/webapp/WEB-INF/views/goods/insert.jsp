@@ -6,11 +6,15 @@
 	<form action="/goods/insert" method="post">
 	<table>
 		<tr>
+			<td>장터 카테고리</td>
+			<td><input type="text" id="c_no" name="c_no" required="required"></td>
+		</tr>
+		<tr>
 			<td>상품 제목</td>
 			<td><input type="text" id="g_title" name="g_title" required="required"></td>
 		</tr>
 		<tr>
-			<td>코드</td>
+			<td>삽니다 팝니다 구분 코드</td>
 			<td><input type="number" id="gc_code" name="gc_code" required="required"></td>
 		</tr>
 		<tr>

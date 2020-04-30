@@ -15,8 +15,8 @@
   </select>
   
   <insert id="insertGoods">
-  	insert into goods(g_no, gc_code, m_id, g_title, g_content, g_price, g_replycnt)
-  	values(seq_goods.nextval, #{gc_code}, #{m_id}, #{g_title}, #{g_content}, #{g_price}, 0)
+  	insert into goods(g_no, gc_code, m_id, g_title, g_content, g_price, g_replycnt,c_no)
+  	values(seq_goods.nextval, #{gc_code}, #{m_id}, #{g_title}, #{g_content}, #{g_price}, 0,#{c_no})
   </insert>
   
   <update id="updateGoods">
