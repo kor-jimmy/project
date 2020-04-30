@@ -126,6 +126,8 @@ public class BoardController {
 	}
 	
 	//love insert
+	@GetMapping("/insertLove")
+	@ResponseBody
 	public String loveInsert(LoveVo lv) {
 		String result = "0";
 		int re = loveService.insertLove(lv);
@@ -136,6 +138,8 @@ public class BoardController {
 	}
 	
 	//hate insert
+	@GetMapping("/insertHate")
+	@ResponseBody
 	public String hateInsert(HateVo hv) {
 		String result = "0";
 		int re = hateService.insertHate(hv);
