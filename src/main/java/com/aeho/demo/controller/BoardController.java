@@ -1,7 +1,9 @@
 package com.aeho.demo.controller;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeho.demo.service.BoardService;
 import com.aeho.demo.service.CategoryService;
+import com.aeho.demo.service.ReplyService;
 import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.CategoryVo;
 import com.google.gson.Gson;
@@ -36,6 +40,7 @@ public class BoardController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
 
 	public void setBoardService(BoardService boardService) {
 		this.boardService = boardService;
@@ -98,13 +103,15 @@ public class BoardController {
 	
 	@GetMapping("/delete")
 	@ResponseBody
-	public String delete(BoardVo bv) {
-		String msg = "게시물 삭제에 실패했습니다.";
+	public String delete(BoardVo bv) throws Exception{
+		String msg = "0";
 		System.out.println(bv.getB_no());
-		int re = boardService.deleteBoard(bv);
-		if( re > 0 ) {
-			msg = "게시물 삭제에 성공했습니다.";
+		int result = boardService.deleteBoard(bv);
+		
+		if(result > 0 ) {
+			msg = "1";
 		}
+		
 		return msg;
 	}
 

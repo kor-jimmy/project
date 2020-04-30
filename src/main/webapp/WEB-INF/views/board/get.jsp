@@ -7,6 +7,12 @@
 <script type="text/javascript">
 	$(function(){
 		var b_no = $("#b_no").val();
+
+		var getCDist = function(c_no){
+			$.ajax("/category/get",{data: {c_no: c_no}, success: function(data){
+				console.log(data);
+			}});
+		}
 		$("#updateBtn").on("click",function(){
 			self.location = "/board/update?b_no="+b_no;
 		})
@@ -14,9 +20,13 @@
 			console.log(b_no);
 			var re = confirm("정말로 삭제하시겠습니까?");
 			if(re){
-				$.ajax("/board/delete", {type: 'GET', data: {b_no: b_no},success: function(result){
-					alert(result);
-					location.href="/board/list";
+				$.ajax("/board/delete", {type: 'GET', data: {b_no: b_no}, success: function(result){
+					if( result == "0"){
+						alert("죄송합니다. 예기치 않은 오류가 발생했습니다. 게시물을 삭제하지 못 했습니다.");
+					}else{
+						alert("게시물을 성공적으로 삭제했습니다.");
+						window.history.back();
+					}
 				}});
 			}
 		})
@@ -67,6 +77,7 @@
 </script>
 	<h2>게시물 상세</h2>
 	<input type="hidden" id="b_no" value="${ board.b_no }">
+	<input type="hidden" id="c_no" value="${ board.c_no }">
 	Love : <c:out value="${board.b_lovecnt }"/>/ Hate : <c:out value="${board.b_hatecnt }"/>/ 조회수 : <c:out value="${board.b_hit }"/>
 	<table class="table table-bordered">
 		<tr>
