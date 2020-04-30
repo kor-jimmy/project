@@ -7,6 +7,7 @@
 <script type="text/javascript">
 	$(function(){
 		var b_no = $("#b_no").val();
+		$("#clickheart").hide();
 
 		var getCDist = function(c_no){
 			$.ajax("/category/get",{data: {c_no: c_no}, success: function(data){
@@ -73,22 +74,43 @@
 			}
 		})
 		
+		//좋아요
+		$(document).on("click","#heart",function(){
+			$.ajax("/board/insertLove",{data:{m_id:"tiger", b_no:b_no}, success:function(result){
+				alert(result);
+				if(result == 1){
+					$("#clickheart").show();
+					$("#heart").hide();
+				}
+				
+			}})
+		})
+
+		//좋아요 취소
+		$(document).on("click","#clickheart",function(){
+			$.ajax("/board/")
+		})
+		
 	})
 </script>
 	<input type="hidden" id="b_no" value="${ board.b_no }">
 	<input type="hidden" id="c_no" value="${ board.c_no }">
 	<table class="table table-bordered">
 		<tr>
-			<td colspan="5"><h4><c:out value="${board.b_title }"/></h4></td>
+			<td colspan="3"><h3><c:out value="${board.b_title }"/></h3></td>
+			<td>
+				<img id="heart" src="/img/heart.png"/ width="30" height="30">
+				<img id="clickheart" src="/img/clickheart.png"/ width="30" height="30">				
+			</td>
 		</tr>
 		<tr>
-			<td width="40%"><c:out value="${board.m_id }"/></td>
-			<td width="20%"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
-			<td width="20%"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_updatedate }"/></td>
-			<td width="20%">조회 <c:out value="${board.b_hit }"/>  / Love <c:out value="${board.b_lovecnt }"/> / hate <c:out value="${board.b_hatecnt }"/></td>
+			<td width="45%"><c:out value="${board.m_id }"/></td>
+			<td width="15%"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
+			<td width="15%"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_updatedate }"/></td>
+			<td width="25%">조회 <c:out value="${board.b_hit }"/>  / Love <c:out value="${board.b_lovecnt }"/> / hate <c:out value="${board.b_hatecnt }"/></td>
 		</tr>
 		<tr>
-			<td colspan="5">
+			<td colspan="4">
 				<c:out value="${board.b_content }"/>
 			</td>
 		</tr>
