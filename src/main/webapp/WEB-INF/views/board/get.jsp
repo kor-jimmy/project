@@ -8,6 +8,7 @@
 	$(function(){
 		var b_no = $("#b_no").val();
 		$("#clickheart").hide();
+		$("#clickedhate").hide();
 
 		var getCDist = function(c_no){
 			$.ajax("/category/get",{data: {c_no: c_no}, success: function(data){
@@ -88,9 +89,23 @@
 
 		//좋아요 취소
 		$(document).on("click","#clickheart",function(){
-			$.ajax("/board/")
+			$.ajax("/board/deleteLove")
 		})
-		
+
+		//싫어요 등록
+		$(document).on("click", "#hate", function(){
+			$.ajax("/board/insertHate", {data: {m_id: "tiger", b_no: b_no}, success: function(result){
+				if(result == 1){
+					$("#clickedhate").show();
+					$("#hate").hide();
+				}
+			}});
+		});
+
+		//싫어요 취소
+		$(document).on("click","#clickheart",function(){
+			$.ajax("/board/deleteHate")
+		})
 	})
 </script>
 	<input type="hidden" id="b_no" value="${ board.b_no }">
@@ -99,8 +114,10 @@
 		<tr>
 			<td colspan="3"><h3><c:out value="${board.b_title }"/></h3></td>
 			<td>
-				<img id="heart" src="/img/heart.png"/ width="30" height="30">
-				<img id="clickheart" src="/img/clickheart.png"/ width="30" height="30">				
+				<img id="heart" src="/img/heart.png" width="30" height="30">
+				<img id="clickheart" src="/img/clickheart.png" width="30" height="30">
+				<img id="hate" src="/img/hate.png" width="30" height="30">
+				<img id="clickedhate" src="/img/clickedhate.png" width="30" height="30">		
 			</td>
 		</tr>
 		<tr>

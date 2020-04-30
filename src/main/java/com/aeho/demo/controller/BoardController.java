@@ -136,6 +136,20 @@ public class BoardController {
 		}
 		return result;
 	}
+
+	
+	//love delete
+	@GetMapping("/deleteHate")
+	@ResponseBody
+	public String loveDelete(LoveVo lv) {
+		String result = "0";
+		int l_no = loveService.getLoveNum(lv);
+		int re = loveService.deleteLove(l_no);
+		if(re > 0) {
+			result = "1";
+		}
+		return result;
+	}
 	
 	//hate insert
 	@GetMapping("/insertHate")
@@ -144,6 +158,18 @@ public class BoardController {
 		String result = "0";
 		int re = hateService.insertHate(hv);
 		if( re > 0 ) {
+			result = "1";
+		}
+		return result;
+	}
+	
+	@GetMapping("/deleteHate")
+	@ResponseBody
+	public String hateDelete(HateVo hv) {
+		String result = "0";
+		int h_no = hateService.getHateNum(hv);
+		int re = hateService.deleteHate(h_no);
+		if(re > 0) {
 			result = "1";
 		}
 		return result;

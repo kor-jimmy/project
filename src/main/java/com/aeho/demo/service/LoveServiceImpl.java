@@ -37,8 +37,8 @@ public class LoveServiceImpl implements LoveService {
 	}
 
 	@Override
-	public int deleteLove(LoveVo lv) {
-		int re = loveDao.deleteLove(lv);
+	public int deleteLove(int l_no) {
+		int re = loveDao.deleteLove(l_no);
 		return re;
 	}
 
@@ -50,4 +50,11 @@ public class LoveServiceImpl implements LoveService {
 		} 
 		return re;
 	}
+
+	@Override
+	public int getLoveNum(LoveVo lv) {
+		int l_no = loveDao.getLoveNum(lv);
+		return l_no;
+	}
+
 }

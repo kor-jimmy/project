@@ -13,6 +13,10 @@
   	delete love where l_no = #{l_no}
   </delete>
   
+  <select id="getLoveNum" resultType="java.lang.Integer">
+  	select l_no from love where b_no = #{b_no} and m_id = #{m_id}
+  </select>
+  
   <select id="isChecked" resultType="java.lang.Integer">
   	select count(*) from love where b_no = #{b_no} and m_id = #{m_id}
   </select>

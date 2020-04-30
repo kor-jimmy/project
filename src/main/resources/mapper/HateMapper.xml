@@ -13,6 +13,10 @@
   	delete hate where h_no = #{h_no}
   </delete>
   
+  <select id="getHateNum" resultType="java.lang.Integer">
+  	select h_no from hate where b_no = #{b_no} and m_id = #{m_id}
+  </select>
+  
   <select id="isChecked" resultType="java.lang.Integer">
   	select count(*) from hate where b_no = #{b_no} and m_id = #{m_id}
   </select>

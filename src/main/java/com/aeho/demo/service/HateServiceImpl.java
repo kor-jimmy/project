@@ -37,8 +37,8 @@ public class HateServiceImpl implements HateService {
 	}
 
 	@Override
-	public int deleteHate(HateVo hv) {
-		int re = hateDao.deleteHate(hv);
+	public int deleteHate(int h_no) {
+		int re = hateDao.deleteHate(h_no);
 		return re;
 	}
 
@@ -50,6 +50,11 @@ public class HateServiceImpl implements HateService {
 		} 
 		return re;
 	}
-	
-	
+
+	@Override
+	public int getHateNum(HateVo hv) {
+		int h_no = hateDao.getHateNum(hv);
+		return h_no;
+	}
+
 }
