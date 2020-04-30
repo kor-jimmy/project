@@ -1,15 +1,21 @@
 package com.aeho.demo.controller;
 
+import javax.management.loading.PrivateClassLoader;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.aeho.demo.service.CategoryService;
 import com.aeho.demo.service.GoodsService;
+import com.aeho.demo.vo.CategoryVo;
 import com.aeho.demo.vo.GoodsVo;
 import com.google.gson.Gson;
 
@@ -20,12 +26,17 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class GoodsController {
 	@Autowired
-	public GoodsService goodsService;
-
+	public GoodsService goodsService;	
 	public void setGoodsService(GoodsService goodsService) {
 		this.goodsService = goodsService;
 	}
 	
+	@Autowired
+	public CategoryService categoryService;
+	public void setCategoryService(CategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
+
 	@GetMapping("/list")
 	public void list(Model model) {
 		model.addAttribute("list", goodsService.listGoods(null));
@@ -39,8 +50,14 @@ public class GoodsController {
 	}
 
 	@GetMapping("/insert")
-	public void insert() {
-
+	public void insert(Model model, @Param("c_no")int c_no) {
+//		System.out.println(c_no);
+		//String c_dist = categoryService.getCategory(c_no).getC_dist();
+//		System.out.println(c_dist);
+		//model.addAttribute("c_dist", c_dist);
+		
+		CategoryVo cv = categoryService.getCategory(c_no);
+		model.addAttribute("cv", cv);
 	}
 
 	@PostMapping("/insert")
@@ -85,8 +102,5 @@ public class GoodsController {
 	public void get(GoodsVo gv,Model model) {
 		model.addAttribute("goods", goodsService.getGoods(gv));
 	}
-
-
-
 
 }

@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
-
+	<script type="text/javascript">
+		
+	</script>
 	<h2>상품등록</h2>
 	<form action="/goods/insert" method="post">
 	<table>
 		<tr>
 			<td>장터 카테고리</td>
-			<td><input type="text" id="c_no" name="c_no" required="required"></td>
+			<td><input type="hidden" id="c_no" name="c_no" readonly="readonly" value="${cv.c_no }">${cv.c_dist}</td>
 		</tr>
 		<tr>
 			<td>상품 제목</td>

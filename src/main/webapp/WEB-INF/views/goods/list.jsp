@@ -5,6 +5,12 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
 function listGoods(keyword){
+	if(keyword == null){
+		$("#insertBtn").css("visibility","hidden");
+	}
+	else{
+		$("#insertBtn").css("visibility","visible");
+	}
 	$("#tb").empty();
 	$.ajax("/goods/listGoods",{data:{keyword:keyword}, success:function(result){
 //		console.log(result);
@@ -13,22 +19,20 @@ function listGoods(keyword){
 			var td1=$("<td></td>").html(item.g_no);
 			var a=$("<a></a>").attr("httr","goods/get?g_no="+item.g_no)
 			var td2=$("<td></td>").html(item.g_title);
-			$(td2).on("click",function(){
-				self.location = "/goods/get?g_no="+item.g_no;
-			})
 			var td3=$("<td></td>").html(item.gc_code);
 			var td4=$("<td></td>").html(item.g_price);
 			var td5=$("<td></td>").html(item.g_date);
 			var tr = $("<tr></tr>").append(td1,td2,td3,td4,td5);
+			$(tr).on("click",function(){
+				self.location = "/goods/get?g_no="+item.g_no;
+			})
 			$("#tb").append(tr);
 		})
 	}})
 }
 $(function(){
+	var c_no;
 	listGoods()	
-	$("#insertBtn").on("click",function(){
-		self.location = "/goods/insert";
-	})
 	$.ajax("/category/goodsCateList",{success:function(result){
 //		console.log(result)
 		$.each(result,function(idx,item){
@@ -36,6 +40,8 @@ $(function(){
 			var nbsp="  ";
 			$("#goodsType").append(c_dist,nbsp);
 			$(c_dist).on("click",function(){
+				c_no=result[idx].c_no;
+//				console.log(c_no)
 //				console.log($(c_dist).html())
 				listGoods($(this).html())
 			})
@@ -45,8 +51,11 @@ $(function(){
 			listGoods();
 		})
 		$("#goodsType").append(p);
-		
 	}})
+	$("#insertBtn").on("click",function(){
+//		console.log(c_no);
+		self.location = "/goods/insert?c_no="+c_no;
+	})
 })
 </script>
 
