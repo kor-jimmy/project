@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class LoveVo {
-
 	private int l_no;
 	private int b_no;
 	private String m_id;

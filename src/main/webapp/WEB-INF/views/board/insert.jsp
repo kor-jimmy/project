@@ -10,19 +10,19 @@
 <h2>게시물 등록</h2>
 <hr>
 <form action="/board/insert" method="post">
-<input type="number" name="c_no" value="${c_no}">
-<table class="table table-hover">
+<input type="hidden" name="c_no" value="${c_no}">
+<table class="table table-bordered">
 	<tr>
 		<td>게시물 제목</td>
-		<td><input type="text" name="b_title" required="required"></td>
+		<td><input type="text" name="b_title" required="required" style="width:40%;"></td>
 	</tr>
 	<tr>
 		<td>작성자</td>
-		<td><input type="text" name="m_id" readonly="readonly" value="tiger"></td>
+		<td><input type="text" name="m_id" style="width:40%;" readonly="readonly" value="tiger"></td>
 	</tr>
 	<tr>
 		<td>내용</td>
-		<td><textarea name="b_content" row="3"></textarea></td>
+		<td><textarea name="b_content" rows="20" cols="100%"></textarea></td>
 	</tr>
 </table>
 <button type="submit" id="insertBtn" class="btn btn-outline-dark">게시물 등록</button>
