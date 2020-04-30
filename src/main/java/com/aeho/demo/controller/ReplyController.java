@@ -38,6 +38,7 @@ public class ReplyController {
 	public String list(ReplyVo rv) {
 		System.out.println("리플라이 리스트 컨트롤러 동작중");
 		List<ReplyVo> list = replyService.listReply(rv);
+		System.out.println(list);
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}

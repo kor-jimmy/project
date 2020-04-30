@@ -29,7 +29,7 @@
             <c:forEach items="${list }" var="board" >
                		<tr>
 	                    <td align="center"><c:out value="${board.b_no }"/></td>
-	                    <td><a href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/></a></td>
+	                    <td><a href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/>[<c:out value="${board.b_replycnt }"/>]</a></td>
 	                    <td align="center"><c:out value="${board.m_id }"/></td>
 	                    <td align="center"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
 	                    <td align="center"><c:out value="${board.b_hit }"/></td>

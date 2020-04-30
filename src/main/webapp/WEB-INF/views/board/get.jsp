@@ -37,12 +37,12 @@
 			$.each(reply, function(idx,r){
  				var tr = $("<tr class='rep'></tr>");
 				var button= $("<button class='deleteReply'></button>").text("삭제").attr("r_no",r.r_no);
-				var td1 = $("<td></td>").html(r.m_id);
-				var td2 = $("<td></td>").html(r.r_content);
+				var td1 = $("<td width=10%></td>").html(r.m_id);
+				var td2 = $("<td width=50%></td>").html(r.r_content);
 				//날짜 양식 맞춰야함.
-				var td3 = $("<td></td>").html(r.r_date);
-				var td4 = $("<td></td>").html("신고버튼넣을꺼임");
-				var td5 = $("<td></td>");
+				var td3 = $("<td width=20%></td>").html(r.r_date);
+				var td4 = $("<td width=10%></td>").html("신고버튼");
+				var td5 = $("<td width=10%></td>");
 				td5.append(button);
 				tr.append(td1,td2,td3,td4,td5);
 				$("#replyTable").append(tr);
@@ -75,41 +75,29 @@
 		
 	})
 </script>
-	<h2>게시물 상세</h2>
 	<input type="hidden" id="b_no" value="${ board.b_no }">
 	<input type="hidden" id="c_no" value="${ board.c_no }">
-	Love : <c:out value="${board.b_lovecnt }"/>/ Hate : <c:out value="${board.b_hatecnt }"/>/ 조회수 : <c:out value="${board.b_hit }"/>
 	<table class="table table-bordered">
 		<tr>
-			<td>게시물번호</td>
-			<td><c:out value="${board.b_no }"/></td>
+			<td colspan="5"><h4><c:out value="${board.b_title }"/></h4></td>
 		</tr>
 		<tr>
-			<td>작성자</td>
-			<td><c:out value="${board.m_id }"/></td>
+			<td width="40%"><c:out value="${board.m_id }"/></td>
+			<td width="20%"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
+			<td width="20%"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_updatedate }"/></td>
+			<td width="20%">조회 <c:out value="${board.b_hit }"/>  / Love <c:out value="${board.b_lovecnt }"/> / hate <c:out value="${board.b_hatecnt }"/></td>
 		</tr>
 		<tr>
-			<td>제목</td>
-			<td><c:out value="${board.b_title }"/></td>
-		</tr>
-		<tr>
-			<td>내용</td>
-			<td><c:out value="${board.b_content }"/></td>
-		</tr>
-		<tr>
-			<td>작성일</td>
-			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
-		</tr>
-		<tr>
-			<td>수정일</td>
-			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_updatedate }"/></td>
+			<td colspan="5">
+				<c:out value="${board.b_content }"/>
+			</td>
 		</tr>
 	</table>
 	<button id="updateBtn" class="btn btn-outline-dark">수정</button>
 	<button id="deleteBtn" class="btn btn-outline-dark">삭제</button>
 	<hr>
 	<h4>댓글</h4>
-	<table id="replyTable" border="1">
+	<table id="replyTable" class="table table-bordered">
 	</table>
 	<hr>
 	<form id="boardReply">
