@@ -8,4 +8,6 @@ public interface LoveDao {
 	
 	int deleteLove(LoveVo lv);
 	
+	int isChecked(LoveVo lv);
+	
 }

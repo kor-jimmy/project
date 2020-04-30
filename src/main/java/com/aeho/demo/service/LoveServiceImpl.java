@@ -42,4 +42,12 @@ public class LoveServiceImpl implements LoveService {
 		return re;
 	}
 
+	@Override
+	public int isChecked(LoveVo lv) {
+		int re = 0;
+		if( loveDao.isChecked(lv) > 0 ) {
+			re = 1;
+		} 
+		return re;
+	}
 }

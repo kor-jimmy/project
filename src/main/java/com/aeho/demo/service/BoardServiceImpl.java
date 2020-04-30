@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aeho.demo.dao.BoardDao;
+import com.aeho.demo.dao.HateDao;
+import com.aeho.demo.dao.LoveDao;
 import com.aeho.demo.dao.ReplyDao;
 import com.aeho.demo.vo.BoardVo;
 
@@ -21,6 +23,13 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private ReplyDao replyDao; 
 	
+	@Autowired
+	private LoveDao loveDao;
+	
+	@Autowired
+	private HateDao hateDao;
+	
+	
 	@Override
 	public List<BoardVo> listBoard() {
 		return boardDao.listBoard();
@@ -32,6 +41,8 @@ public class BoardServiceImpl implements BoardService {
 		String cntkeyword = "hit";
 		//조회수증가
 		boardDao.updateCnt(bv.getB_no(), cntkeyword);
+		// * board 상세정보를 불러올 때 사용자의 love, hate 클릭 여부 판단해서 int 반환하는 코드 추가 필요.
+		// * 로그인한 사용자의 정보를 받아와야 하니 security 구현 이후 추가
 		return boardDao.getBoard(bv);
 	}
 
@@ -50,7 +61,6 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	//게시물 삭제시 댓글 삭제도 추가
-	//트랜잭션 기능 구체화 해야됨.
 	@Override
 	@Transactional(rollbackFor=Exception.class)
 	public int deleteBoard(BoardVo bv) {

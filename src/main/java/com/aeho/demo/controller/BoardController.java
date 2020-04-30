@@ -23,9 +23,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeho.demo.service.BoardService;
 import com.aeho.demo.service.CategoryService;
+import com.aeho.demo.service.HateService;
+import com.aeho.demo.service.LoveService;
 import com.aeho.demo.service.ReplyService;
 import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.CategoryVo;
+import com.aeho.demo.vo.HateVo;
+import com.aeho.demo.vo.LoveVo;
 import com.google.gson.Gson;
 
 import lombok.AllArgsConstructor;
@@ -40,6 +44,12 @@ public class BoardController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private LoveService loveService;
+	
+	@Autowired
+	private HateService hateService;
 	
 
 	public void setBoardService(BoardService boardService) {
@@ -114,5 +124,24 @@ public class BoardController {
 		
 		return msg;
 	}
-
+	
+	//love insert
+	public String loveInsert(LoveVo lv) {
+		String result = "0";
+		int re = loveService.insertLove(lv);
+		if( re > 0 ) {
+			result = "1";
+		}
+		return result;
+	}
+	
+	//hate insert
+	public String hateInsert(HateVo hv) {
+		String result = "0";
+		int re = hateService.insertHate(hv);
+		if( re > 0 ) {
+			result = "1";
+		}
+		return result;
+	}
 }

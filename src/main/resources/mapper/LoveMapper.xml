@@ -13,4 +13,8 @@
   	delete love where l_no = #{l_no}
   </delete>
   
+  <select id="isChecked" resultType="java.lang.Integer">
+  	select count(*) from love where b_no = #{b_no} and m_id = #{m_id}
+  </select>
+  
 </mapper>

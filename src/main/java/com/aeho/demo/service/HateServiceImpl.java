@@ -41,4 +41,15 @@ public class HateServiceImpl implements HateService {
 		int re = hateDao.deleteHate(hv);
 		return re;
 	}
+
+	@Override
+	public int isChecked(HateVo hv) {
+		int re = 0;
+		if( hateDao.isChecked(hv) > 0 ) {
+			re = 1;
+		} 
+		return re;
+	}
+	
+	
 }
