@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.aeho.demo.domain.Criteria;
+import com.aeho.demo.domain.PageDto;
 import com.aeho.demo.service.BoardService;
 import com.aeho.demo.service.CategoryService;
 import com.aeho.demo.service.HateService;
@@ -53,12 +55,19 @@ public class BoardController {
 		this.categoryService = categoryService;
 	}
 	
+//	@GetMapping("/list")
+//	public void list(Model model, @RequestParam("catkeyword") String catkeyword,
+//			@RequestParam("c_no") int c_no) {
+//		model.addAttribute("list", boardService.listCatBoard(catkeyword));
+//		model.addAttribute("catkeyword", catkeyword);
+//		model.addAttribute("c_no",c_no);
+//	}
+	
 	@GetMapping("/list")
-	public void list(Model model, @RequestParam("catkeyword") String catkeyword,
-			@RequestParam("c_no") int c_no) {
-		model.addAttribute("list", boardService.listCatBoard(catkeyword));
-		model.addAttribute("catkeyword", catkeyword);
-		model.addAttribute("c_no",c_no);
+	public void list (Criteria cri, Model model) {
+		System.out.println("list:"+cri);
+		model.addAttribute("list", boardService.getList(cri));
+		model.addAttribute("pageMake", new PageDto(cri, 123));
 	}
 	
 	@GetMapping("/get")

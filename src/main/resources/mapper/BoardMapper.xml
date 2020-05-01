@@ -26,7 +26,7 @@
   				from board
   				where rownum<=#{pageNum} * #{amount}
   			)
-  		where rn > (#{pageNum}-1) * #{amount}
+  		where rn > (#{pageNum}-1) * #{amount} and c_no=#{categoryNum}
   	]]>
   </select>
   

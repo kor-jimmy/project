@@ -10,6 +10,18 @@
             var c_no = $("#c_no").val();
 			self.location = "/board/insert?c_no="+c_no;
 		})
+
+		//페이징 관련 내용
+		var actionForm = $("#actionForm");
+
+		$(".paginate_button a").on("click", function(e){
+			//a태그 기본 속성 제거
+			e.preventDefault();
+			console.log("click");
+			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+			actionForm.submit();
+		})
+		
 	})
 </script>
     <h2><c:out value="${catkeyword}"/></h2>
@@ -41,5 +53,33 @@
     <hr>
     <button id="insertBtn" type="button" class="btn btn-outline-dark">게시물 등록</button>
     <input type="hidden" name="c_no" id="c_no" value="${c_no}">
+    
+    <!-- 페이징 -->
+    <div class="pull-right">
+    	<ul class="pagination">
+    		<c:if test="${pageMake.prev }">
+				<li class="paginate_button previous">
+					<a href="${pageMake.startPage -1 }">이전</a>
+				</li>
+			</c:if>
+			
+			<c:forEach var="num" begin="${pageMake.startPage }" end="${pageMake.endPage }">
+				<li class="paginate_button ${pageMake.cri.pageNum==null ? "active": ""}">
+					<a href="${num }">${num }</a>
+				</li>
+			</c:forEach>    		
+			
+			<c:if test="${pageMake.next }">
+				<li class="paginate_button next">
+					<a href="${pageMake.endPage+1 }">다음</a>
+				</li>
+			</c:if>
+    	</ul>
+    	<!-- 페이징 관련 a태그 속성 관리 -->
+    	<form id="actionForm" action="/board/list" method="get">
+    		<input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
+    		<input type="hidden" name="amount" value="${pageMake.cri.amount }">
+    	</form>
+    </div>
 
 <%@include file="../includes/footer.jsp"%>  

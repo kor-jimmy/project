@@ -12,6 +12,7 @@ import com.aeho.demo.dao.BoardDao;
 import com.aeho.demo.dao.HateDao;
 import com.aeho.demo.dao.LoveDao;
 import com.aeho.demo.dao.ReplyDao;
+import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.vo.BoardVo;
 
 @Service
@@ -78,10 +79,15 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 	
+//	@Override
+//	public List<BoardVo> listCatBoard(String catkeyword){
+//		List<BoardVo> list = boardDao.listCatBoard(catkeyword);
+//		return list;
+//	}
+	
 	@Override
-	public List<BoardVo> listCatBoard(String catkeyword){
-		List<BoardVo> list = boardDao.listCatBoard(catkeyword);
-		return list;
+	public List<BoardVo> getList(Criteria cri){
+		return boardDao.getListWithPaging(cri);
 	}
 
 }

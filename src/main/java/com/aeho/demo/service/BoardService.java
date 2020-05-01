@@ -2,6 +2,7 @@ package com.aeho.demo.service;
 
 import java.util.List;
 
+import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.vo.BoardVo;
 
 public interface BoardService {
@@ -17,6 +18,8 @@ public interface BoardService {
 	int deleteBoard(BoardVo bv);
 	
 	//카테고리별 게시물 
-	List<BoardVo> listCatBoard(String catkeyword);
+	//List<BoardVo> listCatBoard(String catkeyword);
+	
+	List<BoardVo> getList(Criteria cri);
 	
 }
