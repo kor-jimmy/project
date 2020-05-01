@@ -14,6 +14,20 @@
   	select * from goods where g_no = #{g_no}
   </select>
   
+  <select id="paging" resultType="com.aeho.demo.vo.GoodsVo">
+  	<![CDATA[
+  		select g_no, gc_code, m_id, g_title, g_content, g_price, g_date, g_updatedate, g_replycnt, c_no
+  		from
+  			(
+  				select rownum rn, g_no, gc_code, m_id, g_title, g_content, g_price, g_date, g_updatedate, g_replycnt, c_no
+  				from goods
+  				where rownum<=#{pageNum} * #{amount}
+  			)
+		where rn > (#{pageNum}-1) * #{amount} and c_no=#{categoryNum}
+  			)
+  	]]>
+  </select>
+  
   <insert id="insertGoods">
   	insert into goods(g_no, gc_code, m_id, g_title, g_content, g_price, g_replycnt,c_no)
   	values(seq_goods.nextval, #{gc_code}, #{m_id}, #{g_title}, #{g_content}, #{g_price}, 0,#{c_no})
