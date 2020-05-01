@@ -22,7 +22,7 @@ public class HateServiceImpl implements HateService {
 	public int insertHate(HateVo hv) {
 		int result = 0;
 		String cntkeyword = "hate";
-		//hate 증가시 board에서 lovecnt 동시 증가 트랜잭션
+		//hate 증가시 board에서 hatecnt 동시 증가 트랜잭션
 		try {
 			int result_hate = hateDao.insertHate(hv);
 			int result_board = boardDao.updateCnt(hv.getB_no(), cntkeyword);

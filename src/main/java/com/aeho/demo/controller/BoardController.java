@@ -125,10 +125,34 @@ public class BoardController {
 		return msg;
 	}
 	
+	//해당 멤버가 해당 게시물에 love를 누른 적 있는지 판단 
+	@GetMapping("/isLoved")
+	@ResponseBody
+	public String loveCheck(LoveVo lv) {
+		String result = "0";
+		int cnt = loveService.isChecked(lv);
+		if(cnt > 0) {
+			result = "1";
+		}
+		return result;
+	}
+	
+	// 해당 멤버가 해당 게시물에 hate를 누른 적 있는지 판단
+	@GetMapping("/isHated")
+	@ResponseBody
+	public String hateCheck(HateVo hv) {
+		String result = "0";
+		int cnt = hateService.isChecked(hv);
+		if(cnt > 0) {
+			result = "1";
+		}
+		return result;
+	}
+	
 	//love insert
 	@GetMapping("/insertLove")
 	@ResponseBody
-	public String loveInsert(LoveVo lv) {
+	public String insertLove(LoveVo lv) {
 		String result = "0";
 		int re = loveService.insertLove(lv);
 		if( re > 0 ) {
@@ -139,9 +163,9 @@ public class BoardController {
 
 	
 	//love delete
-	@GetMapping("/deleteHate")
+	@GetMapping("/deleteLove")
 	@ResponseBody
-	public String loveDelete(LoveVo lv) {
+	public String deleteLove(LoveVo lv) {
 		String result = "0";
 		int l_no = loveService.getLoveNum(lv);
 		int re = loveService.deleteLove(l_no);
@@ -154,7 +178,7 @@ public class BoardController {
 	//hate insert
 	@GetMapping("/insertHate")
 	@ResponseBody
-	public String hateInsert(HateVo hv) {
+	public String insertHate(HateVo hv) {
 		String result = "0";
 		int re = hateService.insertHate(hv);
 		if( re > 0 ) {
@@ -165,7 +189,7 @@ public class BoardController {
 	
 	@GetMapping("/deleteHate")
 	@ResponseBody
-	public String hateDelete(HateVo hv) {
+	public String deleteHate(HateVo hv) {
 		String result = "0";
 		int h_no = hateService.getHateNum(hv);
 		int re = hateService.deleteHate(h_no);

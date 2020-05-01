@@ -7,14 +7,38 @@
 <script type="text/javascript">
 	$(function(){
 		var b_no = $("#b_no").val();
+		var m_id = "tiger";
 		$("#clickheart").hide();
 		$("#clickedhate").hide();
 
-		var getCDist = function(c_no){
+		/*var getCDist = function(c_no){
 			$.ajax("/category/get",{data: {c_no: c_no}, success: function(data){
 				console.log(data);
 			}});
+		}*/
+
+		var isLoved = function(m_id, b_no){
+			$.ajax("/board/isLoved", {data: {m_id: m_id, b_no: b_no}, success: function(re){
+				if(re == 1){
+					$("#clickheart").show();
+					$("#heart").hide();
+				}
+			}});
 		}
+		
+		var isHated = function(m_id, b_no){
+			$.ajax("/board/isHated", {data: {m_id: m_id, b_no: b_no}, success: function(re){
+				if(re == 1){
+					$("#clickedhate").show();
+					$("#hate").hide();
+				}
+			}});
+		}
+		
+
+		isLoved(m_id, b_no);
+		isHated(m_id, b_no);
+		
 		$("#updateBtn").on("click",function(){
 			self.location = "/board/update?b_no="+b_no;
 		})
@@ -75,9 +99,9 @@
 			}
 		})
 		
-		//좋아요
+		//좋아요 등록
 		$(document).on("click","#heart",function(){
-			$.ajax("/board/insertLove",{data:{m_id:"tiger", b_no:b_no}, success:function(result){
+			$.ajax("/board/insertLove",{data:{m_id:m_id, b_no:b_no}, success:function(result){
 				alert(result);
 				if(result == 1){
 					$("#clickheart").show();
@@ -86,15 +110,10 @@
 				
 			}})
 		})
-
-		//좋아요 취소
-		$(document).on("click","#clickheart",function(){
-			$.ajax("/board/deleteLove")
-		})
-
+		
 		//싫어요 등록
 		$(document).on("click", "#hate", function(){
-			$.ajax("/board/insertHate", {data: {m_id: "tiger", b_no: b_no}, success: function(result){
+			$.ajax("/board/insertHate", {data: {m_id: m_id, b_no: b_no}, success: function(result){
 				if(result == 1){
 					$("#clickedhate").show();
 					$("#hate").hide();
@@ -102,9 +121,26 @@
 			}});
 		});
 
-		//싫어요 취소
+		//좋아요 취소
 		$(document).on("click","#clickheart",function(){
-			$.ajax("/board/deleteHate")
+			$.ajax("/board/deleteLove", {data: {m_id: m_id, b_no: b_no}, success: function(result){
+				if(result == 1){
+					$("#clicklove").hide();
+					$("#love").show();
+				}
+			}});
+		});
+
+		
+
+		//싫어요 취소
+		$(document).on("click","#clickedhate",function(){
+			$.ajax("/board/deleteHate", {data: {m_id: m_id, b_no: b_no}, success: function(result){
+				if(result == 1){
+					$("#clickedhate").hide();
+					$("#hate").show();
+				}
+			}});
 		})
 	})
 </script>
