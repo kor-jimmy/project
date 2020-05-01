@@ -75,6 +75,8 @@ public class BoardController {
 		model.addAttribute("board", boardService.getBoard(bv));
 	}
 	
+	
+	
 	@GetMapping("/insert")
 	public void insert(Model model, @Param("c_no") int c_no) {
 		System.out.println(c_no);

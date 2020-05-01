@@ -102,7 +102,7 @@
 		//좋아요 등록
 		$(document).on("click","#heart",function(){
 			$.ajax("/board/insertLove",{data:{m_id:m_id, b_no:b_no}, success:function(result){
-				alert(result);
+				//alert(result);
 				if(result == 1){
 					$("#clickheart").show();
 					$("#heart").hide();

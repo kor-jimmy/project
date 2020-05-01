@@ -20,7 +20,6 @@
 		<td>내용</td>
 		<td><textarea class="text_content" name="b_content" rows="30%" cols="100%">${board.b_content}</textarea></td>
 	</tr>
-	xxxxxxxxxxxasdzxcvasdsdasdasdfasdfasdfasdfasdfasdfasdfasdfzcvzxcvadsdzxc
 </table>
 <button type="submit" id="updateBtn" class="btn btn-outline-dark">수정</button>
 </form>
