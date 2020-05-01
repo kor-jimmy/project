@@ -15,6 +15,21 @@
   	select *from board b, category c where b.c_no=c.c_no and c.c_dist = #{catkeyword}
   </select>
   
+  <select id="getListWithPaging" resultType="com.aeho.demo.vo.BoardVo">
+  	<![CDATA[
+  		select
+  			b_no, m_id, c_no, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt
+  		from
+  			(
+  				select /*+ INDEX_DESC(board pk_board)*/
+  					rownum rn, b_no, m_id, c_no, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt
+  				from board
+  				where rownum<=#{pageNum} * #{amount}
+  			)
+  		where rn > (#{pageNum}-1) * #{amount}
+  	]]>
+  </select>
+  
   <insert id="insertBoard">
   	insert into board(b_no, m_id, c_no, b_title, b_content, b_hit, b_replycnt, b_lovecnt, b_hatecnt)
   	values(seq_board.nextval,#{m_id},#{c_no},#{b_title},#{b_content},0,0,0,0)

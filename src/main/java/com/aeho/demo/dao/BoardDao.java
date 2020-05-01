@@ -2,6 +2,7 @@ package com.aeho.demo.dao;
 
 import java.util.List;
 
+import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.vo.BoardVo;
 
 public interface BoardDao {
@@ -21,4 +22,6 @@ public interface BoardDao {
 	//카테고리별 게시물
 	List<BoardVo> listCatBoard(String catkeyword);
 	
+	//페이징처리 위한거
+	List<BoardVo> getListWithPaging(Criteria cri);
 }
