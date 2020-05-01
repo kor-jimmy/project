@@ -11,6 +11,7 @@
 		$("#updateBtn").on("click",function(){
 			self.location = "/goods/update?g_no="+g_no;
 		})
+		
 		$("#deleteBtn").on("click",function(){
 			console.log(g_no);
 			var re = confirm("정말로 삭제하시겠습니까?");

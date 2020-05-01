@@ -11,6 +11,7 @@ function listGoods(keyword){
 	else{
 		$("#insertBtn").css("visibility","visible");
 	}
+	
 	$("#tb").empty();
 	$.ajax("/goods/listGoods",{data:{keyword:keyword}, success:function(result){
 //		console.log(result);
