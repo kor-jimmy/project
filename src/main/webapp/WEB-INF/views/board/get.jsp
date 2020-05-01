@@ -164,7 +164,7 @@
 		</tr>
 		<tr>
 			<td colspan="4">
-				<c:out value="${board.b_content }"/>
+				<textarea class="text_content" name="b_content" rows="30%" cols="100%"><c:out value="${board.b_content }"/></textarea>
 			</td>
 		</tr>
 	</table>

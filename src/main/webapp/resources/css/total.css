@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+.text_content{
+	resize: none;
+	border: none;
+	overflow: hidden;
+}
