@@ -79,6 +79,7 @@
     	<form id="actionForm" action="/board/list" method="get">
     		<input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
     		<input type="hidden" name="amount" value="${pageMake.cri.amount }">
+    		<input type="hidden" name="categoryNum" value="${pageMake.cri.categoryNum }">    		
     	</form>
     </div>
 

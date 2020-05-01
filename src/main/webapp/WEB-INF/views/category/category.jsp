@@ -17,7 +17,7 @@ $(function(){
 <h2>카테고리 목록</h2>
 <ul>
 	<c:forEach var="cat" items="${ list }">
-		<a href="/board/list?">
+		<a href="/board/list?categoryNum=${cat.c_no }">
 			<li><div class="categories" id="${ cat.c_dist }"><c:out value="${ cat.c_dist }"/></div></li>
 		</a>
 	</c:forEach>

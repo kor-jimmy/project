@@ -68,6 +68,7 @@ public class BoardController {
 		System.out.println("list:"+cri);
 		model.addAttribute("list", boardService.getList(cri));
 		model.addAttribute("pageMake", new PageDto(cri, 123));
+		model.addAttribute("catkeyword",categoryService.getCategory(cri.getCategoryNum()).getC_dist());
 	}
 	
 	@GetMapping("/get")
