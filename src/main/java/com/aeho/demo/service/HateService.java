@@ -6,9 +6,8 @@ public interface HateService {
 	
 	int insertHate(HateVo hv);
 	
-	int deleteHate(int h_no);
+	int deleteHate(HateVo hv);
 	
 	int isChecked(HateVo hv);
-	
-	int getHateNum(HateVo hv);
+
 }

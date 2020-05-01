@@ -31,8 +31,14 @@
 	  	<when test="cntkeyword != null and cntkeyword.equals('love')">
 	  		b_lovecnt = b_lovecnt + 1
 	  	</when>
+	  	<when test="cntkeyword != null and cntkeyword.equals('minusLove')">
+	  		b_lovecnt = b_lovecnt - 1
+	  	</when>
 	  	<when test="cntkeyword != null and cntkeyword.equals('hate')">
 	  		b_hatecnt = b_hatecnt + 1
+	  	</when>
+	  	<when test="cntkeyword != null and cntkeyword.equals('minusHate')">
+	  		b_hatecnt = b_hatecnt - 1
 	  	</when>
 	  	<when test="cntkeyword != null and cntkeyword.equals('hit')">
 	  		b_hit = b_hit + 1

@@ -1,9 +1,6 @@
 package com.aeho.demo.controller;
 
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeho.demo.service.BoardService;
 import com.aeho.demo.service.CategoryService;
 import com.aeho.demo.service.HateService;
 import com.aeho.demo.service.LoveService;
-import com.aeho.demo.service.ReplyService;
 import com.aeho.demo.vo.BoardVo;
-import com.aeho.demo.vo.CategoryVo;
 import com.aeho.demo.vo.HateVo;
 import com.aeho.demo.vo.LoveVo;
-import com.google.gson.Gson;
 
 import lombok.AllArgsConstructor;
 
@@ -167,8 +160,7 @@ public class BoardController {
 	@ResponseBody
 	public String deleteLove(LoveVo lv) {
 		String result = "0";
-		int l_no = loveService.getLoveNum(lv);
-		int re = loveService.deleteLove(l_no);
+		int re = loveService.deleteLove(lv);
 		if(re > 0) {
 			result = "1";
 		}
@@ -191,8 +183,7 @@ public class BoardController {
 	@ResponseBody
 	public String deleteHate(HateVo hv) {
 		String result = "0";
-		int h_no = hateService.getHateNum(hv);
-		int re = hateService.deleteHate(h_no);
+		int re = hateService.deleteHate(hv);
 		if(re > 0) {
 			result = "1";
 		}

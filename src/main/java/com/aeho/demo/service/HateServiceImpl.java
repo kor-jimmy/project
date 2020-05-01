@@ -37,9 +37,22 @@ public class HateServiceImpl implements HateService {
 	}
 
 	@Override
-	public int deleteHate(int h_no) {
-		int re = hateDao.deleteHate(h_no);
-		return re;
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteHate(HateVo hv) {
+		int result = 0;
+		String cntkeyword = "minusHate";
+		try {
+			int result_hate = hateDao.deleteHate(hv);
+			int result_board = boardDao.updateCnt(hv.getB_no(), cntkeyword);
+			
+			if(result_board > 0 && result_hate > 0) {
+				result = 1;
+			}
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -49,12 +62,6 @@ public class HateServiceImpl implements HateService {
 			re = 1;
 		} 
 		return re;
-	}
-
-	@Override
-	public int getHateNum(HateVo hv) {
-		int h_no = hateDao.getHateNum(hv);
-		return h_no;
 	}
 
 }

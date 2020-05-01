@@ -37,9 +37,21 @@ public class LoveServiceImpl implements LoveService {
 	}
 
 	@Override
-	public int deleteLove(int l_no) {
-		int re = loveDao.deleteLove(l_no);
-		return re;
+	public int deleteLove(LoveVo lv) {
+		int result = 0;
+		String cntkeyword = "minusLove";
+		try {
+			int result_love = loveDao.deleteLove(lv);
+			int result_board = boardDao.updateCnt(lv.getB_no(), cntkeyword);
+			
+			if( result_board > 0 && result_love > 0 ) {
+				result = 1;
+			}
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -49,12 +61,6 @@ public class LoveServiceImpl implements LoveService {
 			re = 1;
 		} 
 		return re;
-	}
-
-	@Override
-	public int getLoveNum(LoveVo lv) {
-		int l_no = loveDao.getLoveNum(lv);
-		return l_no;
 	}
 
 }

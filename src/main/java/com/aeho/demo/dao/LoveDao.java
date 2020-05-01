@@ -6,10 +6,8 @@ public interface LoveDao {
 	
 	int insertLove(LoveVo lv);
 	
-	int deleteLove(int l_no);
+	int deleteLove(LoveVo lv);
 	
 	int isChecked(LoveVo lv);
-	
-	int getLoveNum(LoveVo lv);
 	
 }
