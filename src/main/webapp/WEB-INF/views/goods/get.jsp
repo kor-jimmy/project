@@ -63,9 +63,8 @@
 </script>
 	<h2>게시물 상세</h2>
 	<input type="hidden" id="g_no" value="${ goods.g_no }">
-	<table>
+	<table class="table table-bordered">
 		<tr>
-			<td>상품제목</td>
 			<td><c:out value="${goods.g_title }"/></td>
 		</tr>
 		<tr>

@@ -16,16 +16,16 @@ function listGoods(keyword){
 //		console.log(result);
 		$.each(result, function(idx,item){
 			//상품번호,제목,코드,가격,날짜
-			var td1=$("<td></td>").html(item.g_no);
-			var a=$("<a></a>").attr("httr","goods/get?g_no="+item.g_no)
-			var td2=$("<td></td>").html(item.g_title);
-			var td3=$("<td></td>").html(item.gc_code);
-			var td4=$("<td></td>").html(item.g_price);
-			var td5=$("<td></td>").html(item.g_date);
+			var td1=$("<td align='center'></td>").html(item.g_no);
+			var a=$("<a>"+item.g_title+"</a>").attr("href","/goods/get?g_no="+item.g_no)
+			var td2=$("<td></td>").html(a);
+			var td3=$("<td align='center'></td>").html(item.gc_code);
+			var td4=$("<td align='center'></td>").html(item.g_price);
+			var td5=$("<td align='center'></td>").html(item.g_date);
 			var tr = $("<tr></tr>").append(td1,td2,td3,td4,td5);
-			$(tr).on("click",function(){
-				self.location = "/goods/get?g_no="+item.g_no;
-			})
+		//	$(tr).on("click",function(){
+		//		self.location = "/goods/get?g_no="+item.g_no;
+		//	})
 			$("#tb").append(tr);
 		})
 	}})
@@ -35,8 +35,13 @@ $(function(){
 	listGoods()	
 	$.ajax("/category/goodsCateList",{success:function(result){
 //		console.log(result)
+		var b=$("<button id='tot' class='btn btn-outline-dark'></button>").html('전체보기');
+		$(b).on("click",function(){
+			listGoods();
+		})
+		$("#goodsType").append(b);
 		$.each(result,function(idx,item){
-			var c_dist= $("<span></span>").html(result[idx].c_dist);
+			var c_dist= $("<button id='listCate' type='button' class='btn btn-outline-dark'></button>").html(result[idx].c_dist);
 			var nbsp="  ";
 			$("#goodsType").append(c_dist,nbsp);
 			$(c_dist).on("click",function(){
@@ -46,11 +51,7 @@ $(function(){
 				listGoods($(this).html())
 			})
 		})
-		var p=$("<p>전체보기</p>");
-		$(p).on("click",function(){
-			listGoods();
-		})
-		$("#goodsType").append(p);
+		
 	}})
 	$("#insertBtn").on("click",function(){
 //		console.log(c_no);
@@ -62,24 +63,25 @@ $(function(){
 	<h2>상품목록</h2>
 	<hr>
 	<div id="goodsType">
-	<h5>상품 종류별 보기</h5>
+	<h4>상품 종류별 보기</h4>
 	
 	</div>
 	<hr>
-	<table>
+	<table class="table table-hover">
 		<thead>
-			<tr>
-				<td>상품번호</td>
-				<td>제목</td>
-				<td>코드</td>
-				<td>가격</td>
-				<td>날짜</td>
+			<tr align="center">
+				<td width="10%">상품번호</td>
+				<td width="50%">제목</td>
+				<td width="10%">코드</td>
+				<td width="10%">가격</td>
+				<td width="10%">날짜</td>
 			</tr>
 		</thead>
 		<tbody id="tb">
 			
 		</tbody>
 	</table>
-	<button id="insertBtn">상품등록</button>
+	<hr>
+	<button id="insertBtn" type="button" class="btn btn-outline-dark">상품등록</button>
 	<hr>
 <%@include file="../includes/footer.jsp"%>
