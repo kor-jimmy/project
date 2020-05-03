@@ -67,7 +67,8 @@ public class BoardController {
 	public void list (Criteria cri, Model model) {
 		System.out.println("list:"+cri);
 		model.addAttribute("list", boardService.getList(cri));
-		model.addAttribute("pageMake", new PageDto(cri, 123));
+		model.addAttribute("pageMake", new PageDto(cri, 500));
+		model.addAttribute("c_no",cri.getCategoryNum());
 		model.addAttribute("catkeyword",categoryService.getCategory(cri.getCategoryNum()).getC_dist());
 	}
 	
@@ -95,7 +96,8 @@ public class BoardController {
 		String str = categoryService.getCategory(bv.getC_no()).getC_dist();
 		String encoding = URLEncoder.encode(str, "UTF-8");
 		System.out.println(str);
-		String url = "redirect:/board/list?c_no="+bv.getC_no()+"&catkeyword="+encoding;
+		//String url = "redirect:/board/list?c_no="+bv.getC_no()+"&catkeyword="+encoding;
+		String url = "redirect:/board/list?categoryNum="+bv.getC_no();
 		return url;
 	}
 	

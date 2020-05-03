@@ -24,9 +24,9 @@
   				select /*+ INDEX_DESC(board pk_board)*/
   					rownum rn, b_no, m_id, c_no, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt
   				from board
-  				where rownum<=#{pageNum} * #{amount}
+  				where rownum <= #{pageNum} * #{amount} and c_no=#{categoryNum}
   			)
-  		where rn > (#{pageNum}-1) * #{amount} and c_no=#{categoryNum}
+  		where rn > (#{pageNum}-1) * #{amount} 
   	]]>
   </select>
   
