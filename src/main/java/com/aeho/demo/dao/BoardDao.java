@@ -24,4 +24,7 @@ public interface BoardDao {
 	
 	//페이징처리 위한거
 	List<BoardVo> getListWithPaging(Criteria cri);
+	
+	//카테고리별 토탈 게시물 수를 구하기 위한거
+	int getTotalCount(Criteria cri);
 }

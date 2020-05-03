@@ -89,5 +89,10 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVo> getList(Criteria cri){
 		return boardDao.getListWithPaging(cri);
 	}
+	
+	@Override
+	public int getTotalCount(Criteria cri) {
+		return boardDao.getTotalCount(cri);
+	}
 
 }

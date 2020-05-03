@@ -21,7 +21,7 @@ public class PageDto {
 		//페이징의 시작 번호 계산 
 		//ex) 화면에 페이지를 10개씩 보여준다면 startPage는 endPage에서 9를 뺀 값이 된다.
 		//endPage이 20이면 9를 뺀 startPage 11
-		this.startPage=this.endPage-9;
+		this.startPage=this.endPage-9; 
 		
 		//게시물의 총 개수를 이용하여 마지막 페이지를 계산/
 		//게시물이 총 80개이면 80 * 1.0 / Amount(화면당 보여줄 페이지 예로 10)

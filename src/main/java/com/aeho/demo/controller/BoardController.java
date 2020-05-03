@@ -65,9 +65,10 @@ public class BoardController {
 	
 	@GetMapping("/list")
 	public void list (Criteria cri, Model model) {
+		int total = boardService.getTotalCount(cri);
 		System.out.println("list:"+cri);
 		model.addAttribute("list", boardService.getList(cri));
-		model.addAttribute("pageMake", new PageDto(cri, 500));
+		model.addAttribute("pageMake", new PageDto(cri, total));
 		model.addAttribute("c_no",cri.getCategoryNum());
 		model.addAttribute("catkeyword",categoryService.getCategory(cri.getCategoryNum()).getC_dist());
 	}

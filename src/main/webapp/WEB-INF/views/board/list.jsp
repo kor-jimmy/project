@@ -21,7 +21,6 @@
 			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 			actionForm.submit();
 		})
-		
 	})
 </script>
     <h2><c:out value="${catkeyword}"/></h2>
@@ -51,22 +50,21 @@
         </tbody>
     </table>
     <hr>
-    <button id="insertBtn" type="button" class="btn btn-outline-dark">게시물 등록</button>
-    <input type="hidden" name="c_no" id="c_no" value="${c_no}">
-    
     <!-- 페이징 -->
-    <div class="pull-right">
+    <div class="float-right">
     	<ul class="pagination">
     		<c:if test="${pageMake.prev }">
 				<li class="paginate_button previous">
 					<a href="${pageMake.startPage -1 }">이전</a>
 				</li>
+				<li>&nbsp;/&nbsp;</li>
 			</c:if>
 			
 			<c:forEach var="num" begin="${pageMake.startPage }" end="${pageMake.endPage }">
 				<li class="paginate_button ${pageMake.cri.pageNum==num ? "active": ""}">
 					<a href="${num }">${num }</a>
 				</li>
+				<li>&nbsp;/&nbsp;</li>
 			</c:forEach>    		
 			
 			<c:if test="${pageMake.next }">
@@ -82,5 +80,13 @@
     		<input type="hidden" name="categoryNum" value="${pageMake.cri.categoryNum }">    		
     	</form>
     </div>
+    <!-- end 페이징 -->
+    <hr>
+    <!-- 게시물 인서트 -->
+    <div>
+    	<button id="insertBtn" type="button" class="btn btn-outline-dark">게시물 등록</button>
+    	<input type="hidden" name="c_no" id="c_no" value="${c_no}">
+    </div>
+    <!-- end 게시물 인서트 -->
 
 <%@include file="../includes/footer.jsp"%>  
