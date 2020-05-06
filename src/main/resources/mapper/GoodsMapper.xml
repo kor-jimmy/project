@@ -4,17 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aeho.demo.dao.GoodsDao">
   <select id="listGoods" resultType="com.aeho.demo.vo.GoodsVo">
-  	select * from goods g 
-  	<choose>
-  		<when test="gc_code != 0">
-  			where gc_code = #{gc_code}
-  		</when>
-  		<otherwise>
-  			where gc_code > 0
-  		</otherwise>
-  	</choose>
+  	select * from goods g
   	<if test="keyword != null">
-  		 and g.c_no=(select g.c_no from category c where c.c_no=g.c_no and c_dist=#{keyword})
+  		where g.c_no=(select g.c_no from category c where c.c_no=g.c_no and c_dist=#{keyword})
   	</if>
   </select>
   
@@ -43,6 +35,19 @@
   
   <update id="updateGoods">
   	update goods set g_title = #{g_title}, g_content=#{g_content}, g_price=#{g_price}
+  	where g_no = #{g_no}
+  </update>
+  
+  <update id="updateCnt">
+  	update goods set
+  	<choose>
+  		<when test="cntKeyword != null and cntKeyword.equals('reply')">
+  			g_replycnt = g_replycnt + 1
+  		</when>
+  		<when test="cntKeyword != null and cntKeyword.equals('minusReply')">
+  			g_replycnt = g_replycnt - 1
+  		</when>
+  	</choose>
   	where g_no = #{g_no}
   </update>
   

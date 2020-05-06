@@ -6,7 +6,7 @@ import com.aeho.demo.vo.GoodsVo;
 
 public interface GoodsDao {
 
-	List<GoodsVo> listGoods(int gc_code,String keyword);
+	List<GoodsVo> listGoods(String keyword);
 	
 	GoodsVo getGoods(GoodsVo gv);
 	
@@ -16,4 +16,5 @@ public interface GoodsDao {
 	
 	int deleteGoods(GoodsVo gv);
 	
+	int updateCnt(int g_no, String cntKeyword);
 }
