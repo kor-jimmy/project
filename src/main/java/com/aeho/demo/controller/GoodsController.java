@@ -39,13 +39,13 @@ public class GoodsController {
 
 	@GetMapping("/list")
 	public void list(Model model) {
-		model.addAttribute("list", goodsService.listGoods(null));
+		model.addAttribute("list", goodsService.listGoods(0,null));
 	}
 
 	@GetMapping(value = "/listGoods", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String listGoods(String keyword) {
-		String list = new Gson().toJson(goodsService.listGoods(keyword));
+	public String listGoods(int gc_code,String keyword) {
+		String list = new Gson().toJson(goodsService.listGoods(gc_code,keyword));
 		return list;
 	}
 

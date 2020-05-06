@@ -18,8 +18,8 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsReplyDao goodsReplyDao;
 	
 	@Override
-	public List<GoodsVo> listGoods(String keyword) {
-		return goodsDao.listGoods(keyword);
+	public List<GoodsVo> listGoods(int gc_code,String keyword) {
+		return goodsDao.listGoods(gc_code,keyword);
 	}
 
 
