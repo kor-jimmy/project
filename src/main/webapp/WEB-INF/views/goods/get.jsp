@@ -66,7 +66,7 @@
 	<input type="hidden" id="g_no" value="${ goods.g_no }">
 	<table class="table table-bordered">
 		<tr>
-			<td><c:out value="${goods.g_title }"/></td>
+			<td colspan="2"><c:out value="${goods.g_title }"/></td>
 		</tr>
 		<tr>
 			<td>작성자</td>
@@ -86,8 +86,8 @@
    <hr>
    <form id="reply">
       <input type="hidden" name="g_no" value="<c:out value='${goods.g_no }'/>">
-      <input type="text" name="m_id" required="required">
-      <input type="text" name="gr_content" required="required">      
+      id:<input type="text" name="m_id" required="required">
+      content:<input type="text" name="gr_content" required="required">      
    </form>
    <button type="submit" id="insertReply">댓글 등록</button>
 	

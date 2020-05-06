@@ -17,7 +17,11 @@
 		</tr>
 		<tr>
 			<td>삽니다 팝니다 구분 코드</td>
-			<td><input type="number" id="gc_code" name="gc_code" required="required"></td>
+			<td><select name="gc_code">
+				<option value="1">팝니다</option>
+				<option value="2">삽니다</option>
+			</select>
+			</td>
 		</tr>
 		<tr>
 			<td>작성자</td>

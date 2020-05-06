@@ -48,7 +48,7 @@ $(function(){
          var nbsp="  ";
          $("#goodsType").append(c_dist,nbsp);
          $(c_dist).on("click",function(){
-             console.log(gc_code);
+//             console.log(gc_code);
             c_no=result[idx].c_no;
 //            console.log(c_no)
 //            console.log($(c_dist).html())
@@ -66,14 +66,14 @@ $(function(){
 	   $(this).css("background","pink");
 	   $("#sellBtn").css("background","white");
 		gc_code=$(this).val();
-		console.log(gc_code);
+//		console.log(gc_code);
 		listGoods(gc_code);
 	})
 	$("#sellBtn").on("click",function(){
 		$(this).css("background","pink");
 		$("#buyBtn").css("background","white");
 		gc_code=$(this).val();
-		console.log(gc_code);
+//		console.log(gc_code);
 		listGoods(gc_code);
 	})
 })
