@@ -54,6 +54,37 @@
 <script type="text/javascript">
 
 	$(function(){
+		//섬머노트
+		$("#b_content").summernote({
+			height: 700,
+			minHeight:null,
+			maxHeight:null,
+			focus:true,
+			lang:"ko-KR",
+			placeholder:"본문 내용을 입력해주세요.",
+			callbacks:{
+				onImageUpload : function(files){
+					uploadSummernoteImageFile(files[0],this);
+				}	
+			}
+		})
+		//파일처리
+		function uploadSummernoteImageFile(file, editor) {
+		data = new FormData();
+		data.append("file", file);
+		console.log(data);
+		$.ajax({
+			data : data,
+			type : "POST",
+			url : "/board/testUpload",
+			contentType : false,
+			processData : false,
+			success : function(data) {
+            	//항상 업로드된 파일의 url이 있어야 한다.
+				$(editor).summernote('insertImage', data.url);
+			}
+		});
+	}
 
 
 /* 	     //게시판 등록 폼태그 기본이벤트 제거

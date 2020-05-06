@@ -1,7 +1,11 @@
 package com.aeho.demo.controller;
 
+import java.io.File;
+import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +31,7 @@ import com.aeho.demo.service.LoveService;
 import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.HateVo;
 import com.aeho.demo.vo.LoveVo;
+import com.google.gson.JsonObject;
 
 import lombok.AllArgsConstructor;
 
@@ -205,4 +210,34 @@ public class BoardController {
 		}
 		return result;
 	}
+	
+	//파일처리테스트
+	@PostMapping(value="/testUpload", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+		JsonObject jsonObject = new JsonObject();
+		
+		String fileRoot = "C:\\aehoUpload\\";	//저장될 외부 파일 경로
+		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+				
+		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+		
+		File targetFile = new File(fileRoot + savedFileName);	
+		
+		try {
+			InputStream fileStream = multipartFile.getInputStream();
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+			jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
+			jsonObject.addProperty("responseCode", "success");
+				
+		} catch (Exception e) {
+			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+			jsonObject.addProperty("responseCode", "error");
+			e.printStackTrace();
+		}
+		
+		return jsonObject;
+	}
+	
 }
