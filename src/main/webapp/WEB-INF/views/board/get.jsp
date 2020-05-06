@@ -6,8 +6,10 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+
 		var b_no = $("#b_no").val();
 		var m_id = "tiger";
+		
 		$("#clickheart").hide();
 		$("#clickedhate").hide();
 
@@ -17,6 +19,8 @@
 			}});
 		}*/
 
+
+		//회원별 이 게시물에 love를 눌렀는지 확인 function
 		var isLoved = function(m_id, b_no){
 			$.ajax("/board/isLoved", {data: {m_id: m_id, b_no: b_no}, success: function(re){
 				if(re == 1){
@@ -25,7 +29,7 @@
 				}
 			}});
 		}
-		
+		//회원별 이 게시물에 hate를 눌렀는지 확인 function
 		var isHated = function(m_id, b_no){
 			$.ajax("/board/isHated", {data: {m_id: m_id, b_no: b_no}, success: function(re){
 				if(re == 1){
@@ -34,7 +38,6 @@
 				}
 			}});
 		}
-		
 
 		isLoved(m_id, b_no);
 		isHated(m_id, b_no);
@@ -106,7 +109,9 @@
 				if(result == 1){
 					$("#clickheart").show();
 					$("#heart").hide();
+					$("#loveCnt").html(eval($("#loveCnt").html())+1);
 				}
+				
 			}})
 		})
 		
@@ -116,6 +121,7 @@
 				if(result == 1){
 					$("#clickedhate").show();
 					$("#hate").hide();
+					$("#hateCnt").html(eval($("#hateCnt").html())+1);
 				}
 			}});
 		});
@@ -124,13 +130,12 @@
 		$(document).on("click","#clickheart",function(){
 			$.ajax("/board/deleteLove", {data: {m_id: m_id, b_no: b_no}, success: function(result){
 				if(result == 1){
-					$("#clicklove").hide();
-					$("#love").show();
+					$("#clickheart").hide();
+					$("#heart").show();
+					$("#loveCnt").html(eval($("#loveCnt").html())-1);
 				}
 			}});
 		});
-
-		
 
 		//싫어요 취소
 		$(document).on("click","#clickedhate",function(){
@@ -138,6 +143,7 @@
 				if(result == 1){
 					$("#clickedhate").hide();
 					$("#hate").show();
+					$("#hateCnt").html(eval($("#hateCnt").html())-1);
 				}
 			}});
 		})
@@ -159,7 +165,7 @@
 			<td width="45%"><c:out value="${board.m_id }"/></td>
 			<td width="15%"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
 			<td width="15%"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_updatedate }"/></td>
-			<td width="25%">조회 <c:out value="${board.b_hit }"/>  / Love <c:out value="${board.b_lovecnt }"/> / hate <c:out value="${board.b_hatecnt }"/></td>
+			<td width="25%">조회 <c:out value="${board.b_hit }"/>  / Love <c:out value="<span id='loveCnt'>${ board.b_lovecnt }</span>" escapeXml="false"/> / hate <c:out value="<span id='hateCnt'>${ board.b_hatecnt }</span>" escapeXml="false"/></td>
 		</tr>
 		<tr>
 			<td colspan="4">
