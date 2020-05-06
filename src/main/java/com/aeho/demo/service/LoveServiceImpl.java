@@ -39,7 +39,7 @@ public class LoveServiceImpl implements LoveService {
 	@Override
 	public int deleteLove(LoveVo lv) {
 		int result = 0;
-		String cntkeyword = "minusLove";
+		String cntkeyword = "love";
 		try {
 			int result_love = loveDao.deleteLove(lv);
 			int result_board = boardDao.updateCnt(lv.getB_no(), cntkeyword);

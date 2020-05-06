@@ -48,22 +48,16 @@
   	update board set
   	<choose>
 	  	<when test="cntkeyword != null and cntkeyword.equals('love')">
-	  		b_lovecnt = b_lovecnt + 1
-	  	</when>
-	  	<when test="cntkeyword != null and cntkeyword.equals('minusLove')">
-	  		b_lovecnt = b_lovecnt - 1
+	  		b_lovecnt = (select count(*) from love where b_no = #{b_no})
 	  	</when>
 	  	<when test="cntkeyword != null and cntkeyword.equals('hate')">
-	  		b_hatecnt = b_hatecnt + 1
-	  	</when>
-	  	<when test="cntkeyword != null and cntkeyword.equals('minusHate')">
-	  		b_hatecnt = b_hatecnt - 1
+	  		b_hatecnt = (select count(*) from hate where b_no = #{b_no})
 	  	</when>
 	  	<when test="cntkeyword != null and cntkeyword.equals('hit')">
 	  		b_hit = b_hit + 1
 	  	</when>
 	  	<when test="cntkeyword != null and cntkeyword.equals('reply')">
-	  		b_replycnt = b_replycnt + 1
+	  		b_replycnt = (select count(*) from reply where b_no = #{b_no})
 	  	</when>
   	</choose>
   	where b_no = #{b_no}

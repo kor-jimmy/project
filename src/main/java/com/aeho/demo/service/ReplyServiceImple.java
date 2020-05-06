@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.aeho.demo.dao.BoardDao;
 import com.aeho.demo.dao.ReplyDao;
@@ -18,22 +19,44 @@ public class ReplyServiceImple implements ReplyService {
 	private BoardDao boardDao;
 	
 	@Override
+	@Transactional(rollbackFor=Exception.class)
 	public List<ReplyVo> listReply(ReplyVo rv) {
 		return replyDao.listReply(rv);
 	}
 
 	@Override
+	@Transactional(rollbackFor=Exception.class)
 	public int insertReply(ReplyVo rv) {
-		int re = replyDao.insertReply(rv);
-		String cntkeyword = "reply";
-		boardDao.updateCnt(rv.getB_no(), cntkeyword);
+		int re = 0;
+		try {
+			int result_insert = replyDao.insertReply(rv);
+			String cntkeyword = "reply";
+			int result_update = boardDao.updateCnt(rv.getB_no(), cntkeyword);
+			
+			if(result_insert > 0 && result_update > 0) {
+				re = 1;
+			}
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return re;
 	}
 
 	@Override
 	public int deleteReply(ReplyVo rv) {
-		// TODO Auto-generated method stub
-		return replyDao.deleteReply(rv);
+		int re = 0;
+		try {
+			int result_delete = replyDao.deleteReply(rv);
+			String cntkeyword = "reply";
+			int result_update = boardDao.updateCnt(rv.getB_no(), cntkeyword);
+
+			if( result_delete > 0 && result_update > 0 ) {
+				re = 1;
+			}
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return re;
 	}
 	
 	@Override

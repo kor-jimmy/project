@@ -95,7 +95,7 @@
 			var rno = $(this).attr("r_no");
 			var re = confirm("해당 댓글을 삭제하시겠습니까?")
 			if(re){
-				$.ajax("/reply/delete",{type:"GET", data:{r_no:rno}, success:function(result){
+				$.ajax("/reply/delete",{type:"GET", data:{r_no:rno, b_no:b_no}, success:function(result){
 					alert(result)
 					location.href="/board/get?b_no="+b_no;
 				}})

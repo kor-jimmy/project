@@ -40,7 +40,7 @@ public class HateServiceImpl implements HateService {
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteHate(HateVo hv) {
 		int result = 0;
-		String cntkeyword = "minusHate";
+		String cntkeyword = "hate";
 		try {
 			int result_hate = hateDao.deleteHate(hv);
 			int result_board = boardDao.updateCnt(hv.getB_no(), cntkeyword);
