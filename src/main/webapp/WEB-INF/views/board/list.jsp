@@ -5,8 +5,8 @@
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript">
 	$(function(){
+		var c_no = $("#c_no").val();
 		$("#insertBtn").on("click",function(){
-            var c_no = $("#c_no").val();
 			self.location = "/board/insert?c_no="+c_no;
 		})
 
@@ -20,9 +20,33 @@
 			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 			actionForm.submit();
 		})
+
+		//검색 관련 form
+		var searchForm = $("#searchForm");
+
+		$("#searchBtn").on("click", function(e){
+			//if(!searchForm.find("option:selected").val()){
+			//	alert("검색하고자 하는 분류를 선택해주십시오.");
+			//	return false;
+			//}
+			if(!searchForm.find("input[name='keyword']").val()){
+				alert("검색어를 입력해주십시오.");
+				return false;
+			}
+			searchForm.find("input[name='pageNum']").val("1");
+			e.preventDefault();
+
+			searchForm.submit();
+		});
+
+		$("#allBoardBtn").on("click", function(e){
+			e.preventDefault();
+			self.location = "/board/list?cetegoryNum="+c_no;
+		});
 	})
 </script>
     <h2><c:out value="${catkeyword}"/></h2>
+    <input type="hidden" name="c_no" id="c_no" value="${c_no}">
     <hr>
     <table class="table table-hover">
         <thead>
@@ -48,6 +72,25 @@
             </c:forEach>
         </tbody>
     </table>
+    <hr>
+    <!-- 게시물 검색 -->
+    <form id="searchForm" action="/board/list" method="get">
+    <input type="hidden" id="categoryNum" name="categoryNum" value="${ c_no }">
+    	<select name="searchField">
+    		<option value="all" <c:out value="${ pageMake.cri.searchField eq 'all'?'selected':'' }"/>>전체</option>
+    		<option value="b_title" <c:out value="${ pageMake.cri.searchField eq 'b_title'?'selected':'' }"/>>제목
+    		<option value="b_content" <c:out value="${ pageMake.cri.searchField eq 'b_content'?'selected':'' }"/>>내용</option>
+    		<option value="doc" <c:out value="${ pageMake.cri.searchField eq 'doc'?'selected':'' }"/>>제목+내용</option>
+    		<option value="m_id" <c:out value="${ pageMake.cri.searchField eq 'm_id'?'selected':'' }"/>>작성자</option>
+    	</select>
+    	<input type="text" id="keyword" name="keyword" value="${ pageMake.cri.keyword }">
+    	<input type="hidden" name="c_no" id="c_no" value="${c_no}">
+    	<input type="hidden" name="pageNum" id="pageNum" value="${pageMake.cri.pageNum}">
+    	<input type="hidden" name="amount" id="amount" value="${pageMake.cri.amount}">
+    	<button id="searchBtn" class="btn btn-outline-dark">검색</button>
+    	<button id="allBoardBtn" class="btn btn-outline-dark float-right">전체글</button>
+    </form>
+    
     <hr>
     <!-- 페이징 -->
     <div class="float-right">
@@ -76,15 +119,15 @@
     	<form id="actionForm" action="/board/list" method="get">
     		<input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
     		<input type="hidden" name="amount" value="${pageMake.cri.amount }">
-    		<input type="hidden" name="categoryNum" value="${pageMake.cri.categoryNum }">    		
+    		<input type="hidden" name="categoryNum" value="${pageMake.cri.categoryNum }"> 
+    		<input type="hidden" name="searchField" value="${ pageMake.cri.searchField }">   		
+    		<input type="hidden" name="keyword" value="${ pageMake.cri.keyword }">    		
     	</form>
     </div>
     <!-- end 페이징 -->
-    <hr>
     <!-- 게시물 인서트 -->
     <div>
     	<button id="insertBtn" type="button" class="btn btn-outline-dark">게시물 등록</button>
-    	<input type="hidden" name="c_no" id="c_no" value="${c_no}">
     </div>
     <!-- end 게시물 인서트 -->
 
