@@ -52,39 +52,13 @@
 </form>
 
 <script type="text/javascript">
-	var oEditors = [];
+
 	$(function(){
-		nhn.husky.EZCreator.createInIFrame({
-			oAppRef: oEditors,
-			elPlaceHolder: "b_content",
-			sSkinURI: "/resources/editor/SmartEditor2Skin.html",
-			htParams:{
-				//툴바 사용여뷰
-				bUseToolbar:true,
-				//입력창 크기 조절바 사용 여부
-				bUseVerticalResizer:false,
-				//모드탭 html,text등 사용여부
-				bUseModeChanger:false,
-				//실행전 설정내용
-				fOnBeforeunolad:function(){
-				}
-			},fOnAppLoad:function(){
-				var content = "본문을 입력하세요!"
-				oEditors.getById["b_content"].exec("PASTE_HTML",[content]);
-				oEditors.getById["b_content"].setDefaultFont("돋음", 12);
-			},
-			fCreator: "createSEditor2"
-		});
 
-		//저장버튼 클릭시 form 전송
-	     $("#insertBtn").click(function(){
-	         oEditors.getById["b_content"].exec("UPDATE_CONTENTS_FIELD", []);
-	         $("#insertForm").submit();
-	     }); 
 
-	     //게시판 등록 폼태그 기본이벤트 제거
+/* 	     //게시판 등록 폼태그 기본이벤트 제거
 	     var formObj = $("form[role='form']");
-	     $("button[type='submit']").onc("click",function(e){
+	     $("button[type='submit']").on("click",function(e){
 		     e.preventDefault();
 		     console.log("submit clicked");
 		 })   
@@ -104,8 +78,28 @@
 		 }
 
 		 $("input[type='file']").change(function(e){
-		 
-		 })
+		 	var formData = new FormData();
+		 	var inputFile = $("input[name='uploadFile']");
+		 	var files = inputFile[0].files;
+
+		 	for(var i=0; i<files.length;i++){
+				if(!checkExtension(files[i].name, files[i].size)){
+					return false;
+				}
+				formData.append("uploadFile", files[i]);
+			}
+			$.ajax({
+				url : "/board/insert",
+				processData : false,
+				data : formData,
+				type: "POST",
+				datType : "json",
+				success: function(result){
+					console.log(result);
+					//showUploadResult(result);
+				}
+			})
+		 }) */
 	})
 </script>
 <%@include file="../includes/footer.jsp"%>

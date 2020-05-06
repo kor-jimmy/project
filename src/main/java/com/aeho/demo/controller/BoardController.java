@@ -89,7 +89,6 @@ public class BoardController {
 	
 	@PostMapping(value="/insert")
 	public String insert(BoardVo bv, RedirectAttributes rttr) throws Exception {
-		MultipartFile uploadFile;
 		String msg = "게시물 등록에 실패했습니다.";
 		int re = boardService.insertBoard(bv);
 		if( re > 0 ) {
