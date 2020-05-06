@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeho.demo.domain.Criteria;
@@ -88,6 +89,7 @@ public class BoardController {
 	
 	@PostMapping(value="/insert")
 	public String insert(BoardVo bv, RedirectAttributes rttr) throws Exception {
+		MultipartFile uploadFile;
 		String msg = "게시물 등록에 실패했습니다.";
 		int re = boardService.insertBoard(bv);
 		if( re > 0 ) {

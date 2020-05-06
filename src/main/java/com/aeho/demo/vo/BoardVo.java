@@ -1,6 +1,7 @@
 package com.aeho.demo.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,4 +22,7 @@ public class BoardVo {
 	private int b_replycnt;
 	private int b_lovecnt;
 	private int b_hatecnt;
+	
+	//vo에 파일 리스트 추가.
+	private List<BoardFilesVo> fileList;
 }

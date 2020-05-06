@@ -42,7 +42,7 @@
 				fOnBeforeunolad:function(){
 				}
 			},fOnAppLoad:function(){
-				
+				oEditors.getById['b_content'].setDefaultFont("돋음", 12);
 			},
 			fCreator: "createSEditor2"
 		});

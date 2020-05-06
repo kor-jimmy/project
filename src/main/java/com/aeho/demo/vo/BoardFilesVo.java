@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class HateVo {
-
-	private int h_no;
+public class BoardFilesVo {
+	private String uuid;
+	private String uploadpath;
+	private String filename;
 	private int b_no;
-	private String m_id;
 }

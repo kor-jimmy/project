@@ -1,9 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
+<style>
+	.uploadResult {
+		width:100%;
+		background-color: gray;
+	}
+	.uploadResult ul{
+		display:flex;
+		flex-flow: row;
+		justify-content: center;
+		aling-items: center;
+	}
+	.uploadResult ul li{
+		list-style: none;
+		padding: 10px;
+	}
+	.uploadResult ul li img{
+		width:20px;
+	}
+</style>
 <h2>게시물 등록</h2>
 <hr>
-<form id="insertForm" action="/board/insert" method="post">
+<form id="insertForm" action="/board/insert" method="post" enctype="multipart/form-data">
 <input type="hidden" name="c_no" value="${c_no}">
 <table class="table table-bordered">
 	<tr>
@@ -18,10 +37,20 @@
 		<td>내용</td>
 		<td><textarea class="text_content" id="b_content" name="b_content" rows="30%" cols="100%"></textarea></td>
 	</tr>
+	<tr>
+		<td>이미지</td>
+		<td>
+			<div class="form-group uploadDiv">
+				<input type="file" name="uploadFile" multiple="multiple">
+			</div>
+			<div class="uploadResult"></div>
+		</td>
+	</tr>
 </table>
 <button type="submit" id="insertBtn" class="btn btn-outline-dark">게시물 등록</button>
 <button type="reset" id="resetBtn" class="btn btn-outline-dark">리셋</button>
 </form>
+
 <script type="text/javascript">
 	var oEditors = [];
 	$(function(){
@@ -40,8 +69,9 @@
 				fOnBeforeunolad:function(){
 				}
 			},fOnAppLoad:function(){
-				var content = "본문을 입력하세요"
+				var content = "본문을 입력하세요!"
 				oEditors.getById["b_content"].exec("PASTE_HTML",[content]);
+				oEditors.getById["b_content"].setDefaultFont("돋음", 12);
 			},
 			fCreator: "createSEditor2"
 		});
@@ -50,7 +80,32 @@
 	     $("#insertBtn").click(function(){
 	         oEditors.getById["b_content"].exec("UPDATE_CONTENTS_FIELD", []);
 	         $("#insertForm").submit();
-	     });    
+	     }); 
+
+	     //게시판 등록 폼태그 기본이벤트 제거
+	     var formObj = $("form[role='form']");
+	     $("button[type='submit']").onc("click",function(e){
+		     e.preventDefault();
+		     console.log("submit clicked");
+		 })   
+
+		 //파일 관련 스크립트
+		 var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		 var maxSize = 524880;
+		 function checkExtension(fileName, fileSize){
+			if(fileSize>=maxSize){
+				alert("파일 용량이 초과하였습니다.");
+				return false;
+			}
+			if(regex.test(fileName)){
+				alert("해당 종류의 파일은 업로드 할 수 없습니다");
+				return false;
+			}
+		 }
+
+		 $("input[type='file']").change(function(e){
+		 
+		 })
 	})
 </script>
 <%@include file="../includes/footer.jsp"%>
