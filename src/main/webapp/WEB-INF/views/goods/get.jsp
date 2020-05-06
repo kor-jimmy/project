@@ -54,7 +54,7 @@
 			var grno = $(this).attr("gr_no");
 			var re = confirm("진짜로 댓글을 삭제하겠습니까?");
 			if(re){
-				$.ajax("/goodsReply/delete", {type:"GET", data:{gr_no:grno}, success:function(result){
+				$.ajax("/goodsReply/delete", {type:"GET", data:{gr_no:grno, g_no:g_no}, success:function(result){
 						alert(result);
 						location.href="/goods/get?g_no="+g_no;
 				}})

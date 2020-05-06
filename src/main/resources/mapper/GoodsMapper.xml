@@ -40,14 +40,9 @@
   
   <update id="updateCnt">
   	update goods set
-  	<choose>
-  		<when test="cntKeyword != null and cntKeyword.equals('reply')">
-  			g_replycnt = g_replycnt + 1
-  		</when>
-  		<when test="cntKeyword != null and cntKeyword.equals('minusReply')">
-  			g_replycnt = g_replycnt - 1
-  		</when>
-  	</choose>
+  	<if test="cntKeyword != null and cntKeyword.equals('reply')">
+            g_replycnt = (select count(*) from goodsReply where g_no = #{g_no})
+    </if>
   	where g_no = #{g_no}
   </update>
   

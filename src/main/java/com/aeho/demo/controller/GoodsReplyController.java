@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aeho.demo.service.GoodsReplyService;
 import com.aeho.demo.vo.GoodsReplyVo;
+import com.aeho.demo.vo.HateVo;
 import com.google.gson.Gson;
 
 import lombok.AllArgsConstructor;
@@ -54,4 +56,27 @@ public class GoodsReplyController {
 		}
 		return str;
 	}
+	
+	@GetMapping("/insertReply")
+	@ResponseBody
+	public String insertReply(GoodsReplyVo gv) {
+		String result = "0";
+		int re = goodsReplyService.insertGoodsReply(gv);
+		if( re > 0 ) {
+			result = "1";
+		}
+		return result;
+	}
+	
+	@GetMapping("/deleteReply")
+	@ResponseBody
+	public String deleteReply(GoodsReplyVo gv) {
+		String result = "0";
+		int re = goodsReplyService.deleteGoodsReply(gv);
+		if(re > 0) {
+			result = "1";
+		}
+		return result;
+	}
+	
 }

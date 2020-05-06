@@ -32,7 +32,7 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 
 	@Override
 	public int deleteGoodsReply(GoodsReplyVo gv) {
-		String cntKeyword = "minusReply";
+		String cntKeyword = "reply";
 		goodsDao.updateCnt(gv.getG_no(), cntKeyword);
 		int re = goodsReplyDao.deleteGoodsReply(gv);
 		return re;
