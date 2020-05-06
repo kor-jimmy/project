@@ -107,7 +107,6 @@
 					$("#clickheart").show();
 					$("#heart").hide();
 				}
-				
 			}})
 		})
 		
@@ -164,7 +163,7 @@
 		</tr>
 		<tr>
 			<td colspan="4">
-				<textarea class="text_content" name="b_content" rows="30%" cols="100%"><c:out value="${board.b_content }"/></textarea>
+				<div>${board.b_content }</div>
 			</td>
 		</tr>
 	</table>

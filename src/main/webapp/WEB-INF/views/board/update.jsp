@@ -4,7 +4,7 @@
 
 <h2>게시물 수정</h2>
 <hr>
-<form action="/board/update" method="post">
+<form id="updateForm" action="/board/update" method="post">
 <input type="hidden" id="b_no" name="b_no" value="${board.b_no}">
 
 <table class="table table-bordered">
@@ -18,10 +18,41 @@
 	</tr>
 	<tr>
 		<td>내용</td>
-		<td><textarea class="text_content" name="b_content" rows="30%" cols="100%">${board.b_content}</textarea></td>
+		<td><textarea class="text_content" id="b_content" name="b_content" rows="30%" cols="100%">${board.b_content}</textarea></td>
 	</tr>
 </table>
 <button type="submit" id="updateBtn" class="btn btn-outline-dark">수정</button>
 </form>
+
+<script type="text/javascript">
+	var oEditors = [];
+	$(function(){
+		nhn.husky.EZCreator.createInIFrame({
+			oAppRef: oEditors,
+			elPlaceHolder: "b_content",
+			sSkinURI: "/resources/editor/SmartEditor2Skin.html",
+			htParams:{
+				//툴바 사용여뷰
+				bUseToolbar:true,
+				//입력창 크기 조절바 사용 여부
+				bUseVerticalResizer:false,
+				//모드탭 html,text등 사용여부
+				bUseModeChanger:false,
+				//실행전 설정내용
+				fOnBeforeunolad:function(){
+				}
+			},fOnAppLoad:function(){
+				
+			},
+			fCreator: "createSEditor2"
+		});
+
+		//저장버튼 클릭시 form 전송
+	     $("#updateBtn").click(function(){
+	         oEditors.getById["b_content"].exec("UPDATE_CONTENTS_FIELD", []);
+	         $("#updateForm").submit();
+	     });    
+	})
+</script>
 
 <%@include file="../includes/footer.jsp"%>
