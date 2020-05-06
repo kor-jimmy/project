@@ -24,17 +24,17 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 
 	@Override
 	public int insertGoodsReply(GoodsReplyVo gv) {
+		int re = goodsReplyDao.insertGoodsReply(gv);
 		String cntKeyword = "reply";
 		goodsDao.updateCnt(gv.getG_no(), cntKeyword);
-		int re = goodsReplyDao.insertGoodsReply(gv);
 		return re;
 	}
 
 	@Override
 	public int deleteGoodsReply(GoodsReplyVo gv) {
+		int re = goodsReplyDao.deleteGoodsReply(gv);
 		String cntKeyword = "reply";
 		goodsDao.updateCnt(gv.getG_no(), cntKeyword);
-		int re = goodsReplyDao.deleteGoodsReply(gv);
 		return re;
 	}
 
