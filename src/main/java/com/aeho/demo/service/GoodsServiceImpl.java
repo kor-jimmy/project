@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.aeho.demo.dao.GoodsDao;
 import com.aeho.demo.dao.GoodsReplyDao;
+import com.aeho.demo.domain.Criteria2;
 import com.aeho.demo.vo.GoodsVo;
 
 @Service
@@ -16,12 +17,16 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsDao goodsDao;
 	@Autowired
 	private GoodsReplyDao goodsReplyDao;
-	
+	/*
 	@Override
-	public List<GoodsVo> listGoods(String keyword) {
-		return goodsDao.listGoods(keyword);
+	public List<GoodsVo> listGoods(int gc_code,String keyword) {
+		return goodsDao.listGoods(gc_code,keyword);
 	}
-
+*/
+	@Override
+	public List<GoodsVo> listGoods(Criteria2 cri) {
+		return goodsDao.paging(cri);
+	}
 
 	@Override
 	public GoodsVo getGoods(GoodsVo gv) {
@@ -46,5 +51,12 @@ public class GoodsServiceImpl implements GoodsService {
 		int re = goodsDao.deleteGoods(gv);
 		return re;
 	}
+
+	@Override
+	public int getTotalCount(Criteria2 cri) {
+		return goodsDao.getTotalCount(cri);
+	}
+
+	
 
 }

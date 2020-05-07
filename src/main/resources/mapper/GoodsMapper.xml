@@ -4,9 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aeho.demo.dao.GoodsDao">
   <select id="listGoods" resultType="com.aeho.demo.vo.GoodsVo">
-  	select * from goods g
+  	select * from goods g 
+  	<choose>
+  		<when test="gc_code != 0">
+  			where gc_code = #{gc_code}
+  		</when>
+  		<otherwise>
+  			where gc_code > 0
+  		</otherwise>
+  	</choose>
   	<if test="keyword != null">
-  		where g.c_no=(select g.c_no from category c where c.c_no=g.c_no and c_dist=#{keyword})
+  		 and g.c_no=(select g.c_no from category c where c.c_no=g.c_no and c_dist=#{keyword})
   	</if>
   </select>
   
@@ -16,16 +24,44 @@
   
   <select id="paging" resultType="com.aeho.demo.vo.GoodsVo">
   	<![CDATA[
-  		select g_no, gc_code, m_id, g_title, g_content, g_price, g_date, g_updatedate, g_replycnt, c_no
+  		select
+  			g_no, gc_code, m_id, g_title, g_content, g_price, g_date, g_updatedate, g_replycnt, c_no
   		from
   			(
-  				select rownum rn, g_no, gc_code, m_id, g_title, g_content, g_price, g_date, g_updatedate, g_replycnt, c_no
+  				select /*+ INDEX_DESC(goods pk_goods)*/
+  					rownum rn, g_no, gc_code, m_id, g_title, g_content, g_price, g_date, g_updatedate, g_replycnt, c_no
   				from goods
-  				where rownum<=#{pageNum} * #{amount}
+  				where rownum <= #{pageNum} * #{amount}
+  				]]>
+  				<choose>
+		  			<when test="gc_code != 0">
+  						and gc_code = #{gc_code}
+  					</when>
+  					<otherwise>
+  						and gc_code > 0
+  					</otherwise>
+  				</choose>
+  				<if test="keyword != null">
+  					 and goods.c_no=(select goods.c_no from category c where c.c_no=goods.c_no and c_dist=#{keyword})
+  				</if>
+  			<![CDATA[
   			)
-		where rn > (#{pageNum}-1) * #{amount} and c_no=#{categoryNum}
-  			)
-  	]]>
+  		where rn > (#{pageNum}-1) * #{amount}
+  	]]>  
+  </select>
+  <select id="getTotalCount" resultType="int">
+  	select count(*) from goods g
+  	<choose>
+  		<when test="gc_code != 0">
+  			where gc_code = #{gc_code}
+  		</when>
+  		<otherwise>
+  			where gc_code > 0
+  		</otherwise>
+  	</choose>
+  	<if test="keyword != null">
+  		 and g.c_no=(select g.c_no from category c where c.c_no=g.c_no and c_dist=#{keyword})
+  	</if>
   </select>
   
   <insert id="insertGoods">

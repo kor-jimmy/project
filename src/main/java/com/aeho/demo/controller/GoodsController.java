@@ -1,5 +1,7 @@
 package com.aeho.demo.controller;
 
+import java.io.Console;
+
 import javax.management.loading.PrivateClassLoader;
 
 import org.apache.ibatis.annotations.Param;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.aeho.demo.domain.Criteria2;
+import com.aeho.demo.domain.PageDto;
+import com.aeho.demo.domain.PageDto2;
 import com.aeho.demo.service.CategoryService;
 import com.aeho.demo.service.GoodsService;
 import com.aeho.demo.vo.CategoryVo;
@@ -38,24 +43,30 @@ public class GoodsController {
 	}
 
 	@GetMapping("/list")
-	public void list(Model model) {
-		model.addAttribute("list", goodsService.listGoods(null));
+	public void list(Criteria2 cri,Model model) {
+		int total = goodsService.getTotalCount(cri);
+		PageDto2 p = new PageDto2(cri, total);
+		model.addAttribute("pageMake", p);
 	}
-
+/*
 	@GetMapping(value = "/listGoods", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String listGoods(String keyword) {
-		String list = new Gson().toJson(goodsService.listGoods(keyword));
+	public String listGoods(int gc_code,String keyword) {
+		String list = new Gson().toJson(goodsService.listGoods(gc_code,keyword));
 		return list;
 	}
-
+*/
+	@GetMapping(value = "/listGoods", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String listGoods(Criteria2 cri,Model model) {
+//		int total = goodsService.getTotalCount(cri);		
+//		PageDto2 p = new PageDto2(cri, total);
+		String list = new Gson().toJson(goodsService.listGoods(cri));
+//		model.addAttribute("pageMake", p);
+		return list;
+	}
 	@GetMapping("/insert")
 	public void insert(Model model, @Param("c_no")int c_no) {
-//		System.out.println(c_no);
-		//String c_dist = categoryService.getCategory(c_no).getC_dist();
-//		System.out.println(c_dist);
-		//model.addAttribute("c_dist", c_dist);
-		
 		CategoryVo cv = categoryService.getCategory(c_no);
 		model.addAttribute("cv", cv);
 	}
