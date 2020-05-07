@@ -15,7 +15,7 @@ function listGoods(gc_code,keyword,pageNum){
    var total;
    $("#tb").empty();
    $.ajax("/goods/listGoods",{data:{gc_code:gc_code,keyword:keyword,pageNum:pageNum}, success:function(result){
-	   result = JSON.parse(result)
+	   result=JSON.parse(result);
       $.each(result, function(idx,item){
           //상품번호,제목,코드,가격,날짜
          var td1=$("<td align='center'></td>").html(item.g_no);
@@ -30,8 +30,6 @@ function listGoods(gc_code,keyword,pageNum){
  		//가져온 목록의 갯수
          total=idx+1;
       })
-
-      
    }})
 }
 $(function(){
@@ -39,7 +37,7 @@ $(function(){
    var keyword;
    listGoods(0)   
    var gc_code=0;
-   $.getJSON("/category/goodsCateList",function(result){
+   $.ajax("/category/goodsCateList",{success:function(result){
 //      console.log(result)
       var b=$("<button id='tot' class='btn btn-outline-dark dist'></button>").html('전체보기');
       $(b).on("click",function(){
@@ -48,7 +46,7 @@ $(function(){
          listGoods(gc_code);
       })
       $("#goodsType").append(b);
-      result = JSON.parse(result)
+      result=JSON.parse(result);
       $.each(result,function(idx,item){
          var c_dist= $("<button id='listCate' type='button' class='btn btn-outline-dark dist'></button>").html(result[idx].c_dist);
          var nbsp="  ";
@@ -62,7 +60,7 @@ $(function(){
          })
       })
       
-   })
+   }})
    $("#insertBtn").on("click",function(){
 //      console.log(c_no);
       self.location = "/goods/insert?c_no="+c_no;
@@ -84,6 +82,24 @@ $(function(){
 	$(".pageNum").on("click",function(){
 		listGoods(gc_code,keyword,$(this).html());
 	})
+
+	//검색처리
+	var searchForm = $("#searchForm");
+
+	$("#searchBtn").on("click", function(e){
+		if(!searchForm.find("input[name='keyword']").val()){
+			alert("검색어를 입력해주세요.");
+			return false;
+		}
+		searchForm.find("input[name='pageNum']").val("1");
+		e.preventDefault();
+		searchForm.submit();
+		});
+
+	$("allGoodsBtn").on("click", function(e){
+		e.preventDefault();
+		self.location = "/goods/list?categoryNum="+gc_code;
+		});
 })
 </script>
 	
@@ -112,6 +128,25 @@ $(function(){
       </tbody>
    </table>
    <hr>
+   <!-- 게시물 검색 -->
+   <form id="searchForm" action="/goods/list" method="get">
+   <input type="hidden" id="categoryNum" name="categoryNum" value="${c_no }">
+		<select name="searchField">
+			<option value="all" <c:out value="${pageMake.cri.searchField eq 'all'?'selected':''}"/>>전체보기</option>
+			<option value="g_title" <c:out value="${pageMake.cri.searchField eq 'g_title'?'selected':''}"/>>제목</option>
+			<option value="g_content" <c:out value="${pageMake.cri.searchField eq 'g_content'?'selected':''}"/>>내용</option>
+			<option value="doc" <c:out value="${pageMake.cri.searchField eq 'doc'?'selected':''}"/>>제목+내용</option>
+			<option value="m_id" <c:out value="${pageMake.cri.searchField eq 'm_id'?'selected':''}"/>>작성자</option>
+		</select>
+		<input type="text" id="keyword" name="keyword" value="${pageMake.cri.keyword}">
+		<input type="hidden" id="gc_code" name="gc_code" value="${pageMake.cri.gc_code}">
+		<input type="hidden" id="c_no" name="c_no" value="${c_no}">
+		<input type="hidden" id="pageNum" name="pageNum" value="${pageMake.cri.pageNum}">
+		<input type="hidden" id="amount" name="amount" value="${pageMake.cri.amount}">
+		<button id="searchBtn" class="btn btn_outline-dark">검색</button>
+		<button id="allGoodsBtn" class="btn btn-outline-dark float-right">전체글</button>
+   </form>
+   
    <!-- 페이징 -->
    <div class="float-right">
    	<ul class="pagination">

@@ -41,7 +41,7 @@
 
 		$("#allBoardBtn").on("click", function(e){
 			e.preventDefault();
-			self.location = "/board/list?cetegoryNum="+c_no;
+			self.location = "/board/list?categoryNum="+c_no;
 		});
 	})
 </script>

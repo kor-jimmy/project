@@ -61,6 +61,7 @@
 		
 		//댓글 목록 ajax
 		$.ajax("/reply/list",{type:"GET",data:{b_no:b_no}, success: function(reply){
+			reply = JSON.parse(reply);
 			console.log(reply);
 			$.each(reply, function(idx,r){
  				var tr = $("<tr class='rep'></tr>");
