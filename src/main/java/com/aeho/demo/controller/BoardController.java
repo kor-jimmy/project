@@ -3,6 +3,8 @@ package com.aeho.demo.controller;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,10 +27,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.domain.PageDto;
+import com.aeho.demo.service.BoardFilesSevice;
 import com.aeho.demo.service.BoardService;
 import com.aeho.demo.service.CategoryService;
 import com.aeho.demo.service.HateService;
 import com.aeho.demo.service.LoveService;
+import com.aeho.demo.vo.BoardFilesVo;
 import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.HateVo;
 import com.aeho.demo.vo.LoveVo;
@@ -52,7 +57,9 @@ public class BoardController {
 	@Autowired
 	private HateService hateService;
 	
-
+	@Autowired
+	private BoardFilesSevice boardFilesService;
+	
 	public void setBoardService(BoardService boardService) {
 		this.boardService = boardService;
 	}
@@ -72,6 +79,7 @@ public class BoardController {
 	@GetMapping("/list")
 	public void list (Criteria cri, Model model) {
 		int total = boardService.getTotalCount(cri);
+		System.out.println(total);
 		System.out.println("list:"+cri);
 		model.addAttribute("list", boardService.getList(cri));
 		model.addAttribute("pageMake", new PageDto(cri, total));
@@ -93,6 +101,7 @@ public class BoardController {
 	}
 	
 	@PostMapping(value="/insert")
+	@ResponseBody
 	public String insert(BoardVo bv, RedirectAttributes rttr) throws Exception {
 		String msg = "게시물 등록에 실패했습니다.";
 		int re = boardService.insertBoard(bv);
@@ -100,12 +109,13 @@ public class BoardController {
 			msg = "게시물 등록에 성공했습니다.";
 		}
 		rttr.addFlashAttribute("result", msg);
+		rttr.addFlashAttribute("b_no", bv.getB_no());
 		String str = categoryService.getCategory(bv.getC_no()).getC_dist();
 		String encoding = URLEncoder.encode(str, "UTF-8");
 		System.out.println(str);
 		//String url = "redirect:/board/list?c_no="+bv.getC_no()+"&catkeyword="+encoding;
-		String url = "redirect:/board/list?categoryNum="+bv.getC_no();
-		return url;
+		System.out.println(bv.getB_no());
+		return bv.getB_no()+"";
 	}
 	
 	@GetMapping("/update")
@@ -211,7 +221,7 @@ public class BoardController {
 		return result;
 	}
 	
-	//파일처리테스트
+	//게시물 등록 이미지 콜백 컨트롤러.
 	@PostMapping(value="/testUpload", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
@@ -220,8 +230,8 @@ public class BoardController {
 		String fileRoot = "C:\\aehoUpload\\";	//저장될 외부 파일 경로
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-				
-		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+		//확장자 유효성 검사
+		String savedFileName = UUID.randomUUID() +"_"+originalFileName;	//저장될 파일 명
 		
 		File targetFile = new File(fileRoot + savedFileName);	
 		
@@ -238,6 +248,17 @@ public class BoardController {
 		}
 		
 		return jsonObject;
+	}
+	
+	// file DB upload
+	@PostMapping(value="fileDBupload")
+	@ResponseBody
+	public String FileDBupload(@RequestBody List<BoardFilesVo> files) {
+		System.out.println(files);
+		for(BoardFilesVo bfv : files) {
+			boardFilesService.insert(bfv);
+		}
+		return "msg";
 	}
 	
 }

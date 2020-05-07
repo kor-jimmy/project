@@ -1,11 +1,10 @@
-package com.aeho.demo.dao;
+package com.aeho.demo.service;
 
 import java.util.List;
 
 import com.aeho.demo.vo.BoardFilesVo;
 
-public interface BoardFilesDao {
-	
+public interface BoardFilesSevice {
 	public int insert(BoardFilesVo bfv);
 	
 	public int delete(String uuid);

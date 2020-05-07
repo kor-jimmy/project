@@ -54,6 +54,13 @@
 <script type="text/javascript">
 
 	$(function(){
+		var fileList = [];
+		var uploadFileList = [];
+
+		//이미지 파일 유효성 검사
+		var imgCheck = new RegExp("^(image)/(.*?)");
+		var maxSize = 10485760;
+		
 		//섬머노트
 		$("#b_content").summernote({
 			height: 700,
@@ -68,69 +75,76 @@
 				}	
 			}
 		})
+		
 		//파일처리
 		function uploadSummernoteImageFile(file, editor) {
-		data = new FormData();
-		data.append("file", file);
-		console.log(data);
-		$.ajax({
-			data : data,
-			type : "POST",
-			url : "/board/testUpload",
-			contentType : false,
-			processData : false,
-			success : function(data) {
-            	//항상 업로드된 파일의 url이 있어야 한다.
-				$(editor).summernote('insertImage', data.url);
-			}
-		});
-	}
-
-
-/* 	     //게시판 등록 폼태그 기본이벤트 제거
-	     var formObj = $("form[role='form']");
-	     $("button[type='submit']").on("click",function(e){
-		     e.preventDefault();
-		     console.log("submit clicked");
-		 })   
-
-		 //파일 관련 스크립트
-		 var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-		 var maxSize = 524880;
-		 function checkExtension(fileName, fileSize){
-			if(fileSize>=maxSize){
-				alert("파일 용량이 초과하였습니다.");
+			data = new FormData();
+			data.append("file", file);
+			console.log(file);
+			//이미지 파일인지에 대한 유효성 검사.
+			if(!imgCheck.test(file.type)){
+				alert("이미지 파일만 업로드 해주세요! ^3^");
 				return false;
 			}
-			if(regex.test(fileName)){
-				alert("해당 종류의 파일은 업로드 할 수 없습니다");
+			//이미지 파일 최대 용량에 대한 유효성 검사 최대 10mb로 제한
+			if(file.size>maxSize){
+				alert("파일의 용량이 너무 큽니다... -ㅅ-!");
 				return false;
 			}
-		 }
-
-		 $("input[type='file']").change(function(e){
-		 	var formData = new FormData();
-		 	var inputFile = $("input[name='uploadFile']");
-		 	var files = inputFile[0].files;
-
-		 	for(var i=0; i<files.length;i++){
-				if(!checkExtension(files[i].name, files[i].size)){
-					return false;
-				}
-				formData.append("uploadFile", files[i]);
-			}
+			
 			$.ajax({
-				url : "/board/insert",
+				data : data,
+				type : "POST",
+				url : "/board/testUpload",
+				contentType : false,
 				processData : false,
-				data : formData,
-				type: "POST",
-				datType : "json",
-				success: function(result){
-					console.log(result);
-					//showUploadResult(result);
+				success : function(data) {
+	            	//항상 업로드된 파일의 url이 있어야 한다.
+					$(editor).summernote('insertImage', data.url);
+					//리스트에 담기.
+					fileList.push(data);
+					console.log(fileList);
+				}
+			});
+		}
+
+		//폼태그 기본속성 제거
+		$("#insertBtn").on("click",function(e){
+			e.preventDefault();
+			var myInsert = $("#insertForm").serialize();
+			$.ajax({
+				data : myInsert,
+				type : "POST",
+				url : "/board/insert",
+				success : function(boardNum){
+					console.log(boardNum);
+					if(boardNum>0){
+						$.each(fileList,function(idx,f){
+							var url = f.url;
+							var src = url.substring(17);
+							var myUpload = {
+								uuid : src.split("_")[0],
+								filename : src.split("_")[1],
+								b_no : boardNum,
+								uploadpath : "C:\\aehoUpload"
+							}
+							uploadFileList.push(myUpload)
+						})
+						console.log(uploadFileList);
+						$.ajax({
+							data : JSON.stringify(uploadFileList),
+							dataType : "json",
+							contentType:"application/json; charset=utf-8",
+							type : "POST",
+							url : "/board/fileDBupload",
+							success : function(msg){
+								location.href="/board/get?b_no="+boardNum;
+							}
+						})
+					}
 				}
 			})
-		 }) */
+		})
 	})
 </script>
 <%@include file="../includes/footer.jsp"%>
