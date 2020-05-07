@@ -1,6 +1,7 @@
 package com.aeho.demo.controller;
 
 import java.io.Console;
+import java.util.HashMap;
 
 import javax.management.loading.PrivateClassLoader;
 
@@ -43,10 +44,7 @@ public class GoodsController {
 	}
 
 	@GetMapping("/list")
-	public void list(Criteria2 cri,Model model) {
-		int total = goodsService.getTotalCount(cri);
-		PageDto2 p = new PageDto2(cri, total);
-		model.addAttribute("pageMake", p);
+	public void list() {
 	}
 /*
 	@GetMapping(value = "/listGoods", produces = "application/json; charset=utf-8")
@@ -58,12 +56,17 @@ public class GoodsController {
 */
 	@GetMapping(value = "/listGoods", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String listGoods(Criteria2 cri,Model model) {
-//		int total = goodsService.getTotalCount(cri);		
-//		PageDto2 p = new PageDto2(cri, total);
+	public HashMap listGoods(Criteria2 cri) {
+		int total = goodsService.getTotalCount(cri);		
+		PageDto2 dto = new PageDto2(cri, total);
+		System.out.println(total);
 		String list = new Gson().toJson(goodsService.listGoods(cri));
-//		model.addAttribute("pageMake", p);
-		return list;
+//		System.out.println("컨트롤에서 start:"+dto.getStartPage());
+//		System.out.println("컨트롤에서 end:"+dto.getEndPage());
+		HashMap hm = new HashMap();
+		hm.put("dto", dto);
+		hm.put("list", list);
+		return hm;
 	}
 	@GetMapping("/insert")
 	public void insert(Model model, @Param("c_no")int c_no) {

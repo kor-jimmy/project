@@ -12,11 +12,12 @@ function listGoods(gc_code,keyword,pageNum){
    else{
       $("#insertBtn").css("visibility","visible");
    }
-   var total;
+   var dto;
    $("#tb").empty();
    $.ajax("/goods/listGoods",{data:{gc_code:gc_code,keyword:keyword,pageNum:pageNum}, success:function(result){
-	   result=JSON.parse(result);
-      $.each(result, function(idx,item){
+		//리스트 가져오기
+		var list = JSON.parse(result.list)
+	      $.each(list, function(idx,item){
           //상품번호,제목,코드,가격,날짜
          var td1=$("<td align='center'></td>").html(item.g_no);
          var a=$("<a>"+item.g_title+"["+item.g_replycnt+"]"+"</a>").attr("href","/goods/get?g_no="+item.g_no)
@@ -26,10 +27,37 @@ function listGoods(gc_code,keyword,pageNum){
          var td5=$("<td align='center'></td>").html(item.g_date);
          var tr = $("<tr></tr>").append(td1,td2,td3,td4,td5);
          $("#tb").append(tr);
-
- 		//가져온 목록의 갯수
-         total=idx+1;
       })
+
+    //페이징
+      dto=result.dto;
+	  $(".pagination").empty();
+	  if(dto.prev){
+		  var a=$("<a>이전</a>").attr("href","#");
+		  var li = $("<li></li>").append(a);
+		  $(a).on("click",function(){
+			  listGoods(gc_code,keyword,(dto.startPage)-1);
+		  })
+		  var nbsp=$("<li>&nbsp;/&nbsp;</li>");
+		  $(".pagination").append(li,nbsp);
+	  }
+	  for(i=dto.startPage; i<=dto.endPage; i++){
+		  var a=$("<a class='pageNum'>"+i+"</a>").attr("href","#");
+		  var li=$("<li></li>").append(a);
+		  $(a).on("click",function(){
+				listGoods(gc_code,keyword,$(this).html());
+			})
+		  var nbsp=$("<li>&nbsp;/&nbsp;</li>");
+		  $(".pagination").append(li,nbsp);
+	  }
+	  if(dto.next){
+		  var a=$("<a>다음</a>").attr("href","#");
+		  var li = $("<li></li>").append(a);
+		  $(a).on("click",function(){
+			  listGoods(gc_code,keyword,(dto.endPage)+1);
+		  })
+		  $(".pagination").append(li);
+	  }
    }})
 }
 $(function(){
@@ -150,24 +178,7 @@ $(function(){
    <!-- 페이징 -->
    <div class="float-right">
    	<ul class="pagination">
-   		<c:if test="${pageMake.prev }">
-   			<li>
-   				<a href="${pageMake.startPage-1 }">이전</a>
-   			</li>
-   			<li>&nbsp;/&nbsp;</li>
-   		</c:if>
-   		<c:forEach var="num" begin="${pageMake.startPage }" end="${pageMake.endPage }">
-   			<li>
-				<a class="pageNum" href="#">${num }</a>
-			</li>
-			<li>&nbsp;/&nbsp;</li>
-		</c:forEach> 
-		
-		<c:if test="${pageMake.next }">
-			<li>
-				<a href="${pageMake.endPage+1 }">다음</a>
-			</li>
-		</c:if>
+   		
    	</ul>
    </div>
    <!-- paging end -->
