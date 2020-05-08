@@ -63,8 +63,12 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 $(function(){
    var c_no;
    var keyword;
-   listGoods(0)   
    var gc_code=0;
+   var searchKeyword;
+   var searchField;
+   listGoods(0)
+   
+   
    $.ajax("/category/goodsCateList",{success:function(result){
 //      console.log(result)
       var b=$("<button id='tot' class='btn btn-outline-dark dist' style='background: lightyellow;'></button>").html('전체보기');
@@ -100,11 +104,11 @@ $(function(){
 		listGoods(gc_code,keyword);
 	})
 	//검색처리
-	var searchForm = $("#searchForm");
+//	var searchForm = $("#searchForm");
 
 	$("#searchBtn").on("click", function(e){
-		var searchKeyword = $("#searchKeyword").val();
-		var searchField = $(".sf").val();
+		searchKeyword = $("#searchKeyword").val();
+		searchField = $(".sf").val();
 		if(searchKeyword==null){
 			alert("검색어를 입력해주세요.");
 			return false;
@@ -112,6 +116,7 @@ $(function(){
 		console.log(searchKeyword, searchField);
 		//e.preventDefault();
 		//searchForm.submit();
+		listGoods(gc_code,keyword,1,searchField,searchKeyword)
 		});
 
 	$("allGoodsBtn").on("click", function(e){

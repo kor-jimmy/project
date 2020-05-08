@@ -47,7 +47,7 @@
   				from goods
   				where rownum <= #{pageNum} * #{amount}
   				]]>
-  				<include refid="searchSql"></include>
+  				
   				<choose>
 		  			<when test="gc_code != 0">
   						and gc_code = #{gc_code}
@@ -59,6 +59,10 @@
   				<if test="keyword != null">
   					 and goods.c_no=(select goods.c_no from category c where c.c_no=goods.c_no and c_dist=#{keyword})
   				</if>
+  				<if test="searchKeyword != null">
+  					<include refid="searchSql"></include>
+  				</if>
+  				
   			<![CDATA[
   			)
   		where rn > (#{pageNum}-1) * #{amount}
@@ -77,7 +81,9 @@
   	<if test="keyword != null">
   		 and g.c_no=(select g.c_no from category c where c.c_no=g.c_no and c_dist=#{keyword})
   	</if>
-  	<include refid="searchSql"></include>
+  	<if test="searchKeyword != null">
+  					<include refid="searchSql"></include>
+	</if>
   </select>
   
   <insert id="insertGoods">
