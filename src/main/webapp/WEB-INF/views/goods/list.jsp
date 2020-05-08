@@ -75,7 +75,8 @@ $(function(){
       $(b).on("click",function(){
     	  $(".dist").css("background","white");
     	  $(this).css("background","lightyellow");
-         listGoods(gc_code);
+    	  var nokey;	//keyword에 null을 넣어주기 위한 변수 (null로 대입하면 적용안됨)
+    	  listGoods(gc_code,nokey,1,searchField,searchKeyword);
       })
       $("#goodsType").append(b);
       result=JSON.parse(result);
@@ -88,7 +89,7 @@ $(function(){
             keyword=$(this).text();
             c_no=result[idx].c_no;
             $(this).css("background","lightyellow");
-            listGoods(gc_code,keyword);
+            listGoods(gc_code,keyword,1,searchField,searchKeyword);
          })
       })
       
@@ -101,28 +102,19 @@ $(function(){
 	   $(".typeBtn").css("background","white");
 	   $(this).css("background","pink");
 		gc_code=$(this).val();
-		listGoods(gc_code,keyword);
+		console.log(searchKeyword,searchField);
+		listGoods(gc_code,keyword,1,searchField,searchKeyword);
 	})
 	//검색처리
-//	var searchForm = $("#searchForm");
-
 	$("#searchBtn").on("click", function(e){
 		searchKeyword = $("#searchKeyword").val();
-		searchField = $(".sf").val();
-		if(searchKeyword==null){
-			alert("검색어를 입력해주세요.");
-			return false;
-		}
+		searchField = $("#searchField").val();
 		console.log(searchKeyword, searchField);
-		//e.preventDefault();
-		//searchForm.submit();
-		listGoods(gc_code,keyword,1,searchField,searchKeyword)
-		});
+		
+		listGoods(gc_code,keyword,1,searchField,searchKeyword)			
+	});
 
-	$("allGoodsBtn").on("click", function(e){
-		e.preventDefault();
-		//self.location = "/goods/list?gc_code="+gc_code;
-		});
+	
 })
 </script>
 	
@@ -153,7 +145,7 @@ $(function(){
    </table>
    <hr>
    <!-- 게시물 검색 -->
-		<select name="searchField">
+  	<select id="searchField">
 			<option value="all" class="sf">전체보기</option>
 			<option value="g_title" class="sf">제목</option>
 			<option value="g_content" class="sf">내용</option>
@@ -162,8 +154,6 @@ $(function(){
 		</select>
 		<input type="text" id="searchKeyword" name="searchKeyword">
 		<button id="searchBtn" class="btn btn_outline-dark">검색</button>
-		<button id="allGoodsBtn" class="btn btn-outline-dark float-right">전체글</button>
-   
    <!-- 페이징 -->
    <div class="float-right">
    	<ul class="pagination">
