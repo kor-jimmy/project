@@ -67,10 +67,10 @@ $(function(){
    var gc_code=0;
    $.ajax("/category/goodsCateList",{success:function(result){
 //      console.log(result)
-      var b=$("<button id='tot' class='btn btn-outline-dark dist'></button>").html('전체보기');
+      var b=$("<button id='tot' class='btn btn-outline-dark dist' style='background: lightyellow;'></button>").html('전체보기');
       $(b).on("click",function(){
     	  $(".dist").css("background","white");
-    	  $(this).css("background","yellow");
+    	  $(this).css("background","lightyellow");
          listGoods(gc_code);
       })
       $("#goodsType").append(b);
@@ -83,7 +83,7 @@ $(function(){
             $(".dist").css("background","white");
             keyword=$(this).text();
             c_no=result[idx].c_no;
-            $(this).css("background","yellow");
+            $(this).css("background","lightyellow");
             listGoods(gc_code,keyword);
          })
       })
@@ -93,24 +93,12 @@ $(function(){
 //      console.log(c_no);
       self.location = "/goods/insert?c_no="+c_no;
    })
-   $("#buyBtn").on("click",function(){
+   $(".typeBtn").on("click",function(){
+	   $(".typeBtn").css("background","white");
 	   $(this).css("background","pink");
-	   $("#sellBtn").css("background","white");
 		gc_code=$(this).val();
-//		console.log(gc_code);
-		listGoods(gc_code);
+		listGoods(gc_code,keyword);
 	})
-	$("#sellBtn").on("click",function(){
-		$(this).css("background","pink");
-		$("#buyBtn").css("background","white");
-		gc_code=$(this).val();
-//		console.log(gc_code);
-		listGoods(gc_code);
-	})
-	$(".pageNum").on("click",function(){
-		listGoods(gc_code,keyword,$(this).html());
-	})
-
 	//검색처리
 	var searchForm = $("#searchForm");
 
@@ -133,8 +121,9 @@ $(function(){
 	
    <h2>상품목록</h2><div id=state></div>
    <hr>
-   <button id="buyBtn" type="button" class="btn btn-outline-dark" value="2">삽니다</button>
-   <button id="sellBtn" type="button" class="btn btn-outline-dark" value="1">팝니다</button>
+   <button id="allBtn" type="button" class="btn btn-outline-dark typeBtn" value="0" style="background: pink;">전체보기</button>
+   <button id="buyBtn" type="button" class="btn btn-outline-dark typeBtn" value="2">삽니다</button>
+   <button id="sellBtn" type="button" class="btn btn-outline-dark typeBtn" value="1">팝니다</button>
    <br><br>
    <div id="goodsType">
    <h4>상품 종류별 보기</h4>
