@@ -20,8 +20,8 @@ public class ReplyServiceImple implements ReplyService {
 	
 	@Override
 	@Transactional(rollbackFor=Exception.class)
-	public List<ReplyVo> listReply(ReplyVo rv) {
-		return replyDao.listReply(rv);
+	public List<ReplyVo> listReply(int b_no) {
+		return replyDao.listReply(b_no);
 	}
 
 	@Override

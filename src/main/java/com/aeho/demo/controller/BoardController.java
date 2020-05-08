@@ -124,6 +124,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/update")
+	@ResponseBody
 	public String update(BoardVo bv, RedirectAttributes rttr) {
 		System.out.println("게시물 수정!");
 		String msg = "게시물 수정에 실패했습니다.";
@@ -132,7 +133,7 @@ public class BoardController {
 			msg = "게시물 수정에 성공했습니다.";
 		}
 		rttr.addFlashAttribute("result", msg);
-		return "redirect:/board/get?b_no="+bv.getB_no();
+		return bv.getB_no()+"";
 	}
 	
 	@GetMapping("/delete")
@@ -141,11 +142,10 @@ public class BoardController {
 		String msg = "0";
 		System.out.println(bv.getB_no());
 		int result = boardService.deleteBoard(bv);
-		
 		if(result > 0 ) {
 			msg = "1";
 		}
-		
+		System.out.println(msg);
 		return msg;
 	}
 	
@@ -227,7 +227,7 @@ public class BoardController {
 	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
 		JsonObject jsonObject = new JsonObject();
 		
-		String fileRoot = "C:\\aehoUpload\\";	//저장될 외부 파일 경로
+		String fileRoot = "C:\\aehoUpload\\board\\";	//저장될 외부 파일 경로
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 		//확장자 유효성 검사
@@ -238,11 +238,11 @@ public class BoardController {
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-			jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
+			jsonObject.addProperty("url", "/boardImage/"+savedFileName);
 			jsonObject.addProperty("responseCode", "success");
 				
 		} catch (Exception e) {
-			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+			  //저장된 파일 삭제
 			jsonObject.addProperty("responseCode", "error");
 			e.printStackTrace();
 		}

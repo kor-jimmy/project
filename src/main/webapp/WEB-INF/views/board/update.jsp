@@ -4,7 +4,7 @@
 
 <h2>게시물 수정</h2>
 <hr>
-<form id="updateForm" action="/board/update" method="post">
+<form id="updateForm" method="post" enctype="multipart/form-data">
 <input type="hidden" id="b_no" name="b_no" value="${board.b_no}">
 
 <table class="table table-bordered">
@@ -23,7 +23,99 @@
 </table>
 <button type="submit" id="updateBtn" class="btn btn-outline-dark">수정</button>
 </form>
+<script>
+	$(function(){
+		var fileList = [];
+		var uploadFileList = [];
 
+		//이미지 파일 유효성 검사
+		var imgCheck = new RegExp("^(image)/(.*?)");
+		var maxSize = 10485760;
+		
+		$("#b_content").summernote({
+			height: 700,
+			minHeight:null,
+			maxHeight:null,
+			focus:true,
+			lang:"ko-KR",
+			placeholder:"본문 내용을 입력해주세요.",
+			callbacks:{
+				onImageUpload : function(files){
+					uploadSummernoteImageFile(files[0],this);
+				}	
+			}
+		})
+
+				//파일처리
+		function uploadSummernoteImageFile(file, editor) {
+			data = new FormData();
+			data.append("file", file);
+			console.log(file);
+			//이미지 파일인지에 대한 유효성 검사.
+			if(!imgCheck.test(file.type)){
+				alert("이미지 파일만 업로드 해주세요! ^3^");
+				return false;
+			}
+			//이미지 파일 최대 용량에 대한 유효성 검사 최대 10mb로 제한
+			if(file.size>maxSize){
+				alert("파일의 용량이 너무 큽니다... -ㅅ-!");
+				return false;
+			}
+			
+			$.ajax({
+				data : data,
+				type : "POST",
+				url : "/board/testUpload",
+				contentType : false,
+				processData : false,
+				success : function(data) {
+	            	//항상 업로드된 파일의 url이 있어야 한다.
+					$(editor).summernote('insertImage', data.url);
+					//리스트에 담기.
+					fileList.push(data);
+					console.log(fileList);
+				}
+			});
+		}
+
+		//폼태그 기본속성 제거
+		$("#updateBtn").on("click",function(e){
+			e.preventDefault();
+			var myInsert = $("#updateForm").serialize();
+			$.ajax({
+				data : myInsert,
+				type : "POST",
+				url : "/board/update",
+				success : function(boardNum){
+					console.log(boardNum);
+					if(boardNum>0){
+						$.each(fileList,function(idx,f){
+							var url = f.url;
+							var src = url.substring(12);
+							var myUpload = {
+								uuid : src.split("_")[0],
+								filename : src.split("_")[1],
+								b_no : boardNum,
+								uploadpath : "C:\\\aehoUpload\\board"
+							}
+							uploadFileList.push(myUpload)
+						})
+						console.log(uploadFileList);
+						$.ajax({
+							data : JSON.stringify(uploadFileList),
+							dataType : "json",
+							contentType:"application/json; charset=utf-8",
+							type : "POST",
+							url : "/board/fileDBupload",
+							success : function(msg){
+								location.href="/board/get?b_no="+boardNum;
+							}
+						})
+					}
+				}
+			})
+		})
+	})
 
 </script>
 

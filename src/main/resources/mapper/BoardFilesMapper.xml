@@ -9,10 +9,15 @@
 	</insert>
 	
 	<delete id="delete">
-		delete from boardfiles where uuid=#{uuid}
+		delete boardfiles where uuid=#{uuid}
+	</delete>
+	
+	<delete id="deleteByBno">
+		delete boardfiles where b_no=#{b_no} 
 	</delete>  
 	
 	<select id="findByBno" resultType="com.aeho.demo.vo.BoardFilesVo">
 		select * from boardfiles where b_no=#{b_no}
 	</select>
+	
 </mapper>

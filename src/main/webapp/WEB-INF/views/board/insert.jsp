@@ -22,7 +22,7 @@
 </style>
 <h2>게시물 등록</h2>
 <hr>
-<form id="insertForm" action="/board/insert" method="post" enctype="multipart/form-data">
+<form id="insertForm" method="post" enctype="multipart/form-data">
 <input type="hidden" name="c_no" value="${c_no}">
 <table class="table table-bordered">
 	<tr>
@@ -36,15 +36,6 @@
 	<tr>
 		<td>내용</td>
 		<td><textarea class="text_content" id="b_content" name="b_content" rows="30%" cols="100%"></textarea></td>
-	</tr>
-	<tr>
-		<td>이미지</td>
-		<td>
-			<div class="form-group uploadDiv">
-				<input type="file" name="uploadFile" multiple="multiple">
-			</div>
-			<div class="uploadResult"></div>
-		</td>
 	</tr>
 </table>
 <button type="submit" id="insertBtn" class="btn btn-outline-dark">게시물 등록</button>
@@ -121,12 +112,12 @@
 					if(boardNum>0){
 						$.each(fileList,function(idx,f){
 							var url = f.url;
-							var src = url.substring(17);
+							var src = url.substring(12);
 							var myUpload = {
 								uuid : src.split("_")[0],
 								filename : src.split("_")[1],
 								b_no : boardNum,
-								uploadpath : "C:\\aehoUpload"
+								uploadpath : "C:\\\aehoUpload\\board"
 							}
 							uploadFileList.push(myUpload)
 						})

@@ -53,7 +53,7 @@
 						alert("죄송합니다. 예기치 않은 오류가 발생했습니다. 게시물을 삭제하지 못 했습니다.");
 					}else{
 						alert("게시물을 성공적으로 삭제했습니다.");
-						window.history.back();
+						location.href="/board/list?categoryNum="+$("#c_no").val();
 					}
 				}});
 			}

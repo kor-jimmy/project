@@ -10,4 +10,6 @@ public interface BoardFilesSevice {
 	public int delete(String uuid);
 	
 	public List<BoardFilesVo> findByBno(int bno);
+	
+	public int deleteByBno(int b_no);
 }

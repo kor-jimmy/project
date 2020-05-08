@@ -17,4 +17,8 @@
   	delete reply where r_no=#{r_no}
   </delete>
   
+  <delete id="deleteBoardReply">
+  	delete reply where b_no=#{b_no}
+  </delete>
+  
 </mapper>

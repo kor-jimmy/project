@@ -35,5 +35,11 @@ public class BoardFilesServiceImpl implements BoardFilesSevice {
 		List<BoardFilesVo> list = boardFilesDao.findByBno(bno);
 		return list;
 	}
+	
+	@Override
+	public int deleteByBno(int b_no) {
+		int re = boardFilesDao.deleteByBno(b_no);
+		return re;
+	}
 
 }
