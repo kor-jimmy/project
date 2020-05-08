@@ -4,7 +4,7 @@
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
-function listGoods(gc_code,keyword,pageNum,searchKeyword){
+function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 //	c_no를 강제로 넣어주기 위해 카테고리 설정시에만 글쓰기 버튼 보이게 / 검색을 위해 searchKeyword 추가
    if(keyword == null){
       $("#insertBtn").css("visibility","hidden");
@@ -14,7 +14,7 @@ function listGoods(gc_code,keyword,pageNum,searchKeyword){
    }
    var dto;
    $("#tb").empty();
-   $.ajax("/goods/listGoods",{data:{gc_code:gc_code,keyword:keyword,pageNum:pageNum,searchKeyword:searchKeyword}, success:function(result){
+   $.ajax("/goods/listGoods",{data:{gc_code:gc_code,keyword:keyword,pageNum:pageNum,searchField:searchField,searchKeyword:searchKeyword}, success:function(result){
 		//리스트 가져오기
 		var list = JSON.parse(result.list)
 	      $.each(list, function(idx,item){
@@ -103,18 +103,20 @@ $(function(){
 	var searchForm = $("#searchForm");
 
 	$("#searchBtn").on("click", function(e){
-		if(!searchForm.find("input[name='searchKeyword']").val()){
+		var searchKeyword = $("#searchKeyword").val();
+		var searchField = $(".sf").val();
+		if(searchKeyword==null){
 			alert("검색어를 입력해주세요.");
 			return false;
 		}
-		searchForm.find("input[name='pageNum']").val("1");
-		e.preventDefault();
-		searchForm.submit();
+		console.log(searchKeyword, searchField);
+		//e.preventDefault();
+		//searchForm.submit();
 		});
 
 	$("allGoodsBtn").on("click", function(e){
 		e.preventDefault();
-		self.location = "/goods/list?categoryNum="+gc_code;
+		//self.location = "/goods/list?gc_code="+gc_code;
 		});
 })
 </script>
@@ -146,17 +148,16 @@ $(function(){
    </table>
    <hr>
    <!-- 게시물 검색 -->
-   <form id="searchForm" action="/goods/list" method="get">
 		<select name="searchField">
-			<option value="all" <c:out value="${all}"/>>전체보기</option>
-			<option value="g_title" <c:out value="${g_title}"/>>제목</option>
-			<option value="g_content" <c:out value="${g_content}"/>>내용</option>
-			<option value="doc" <c:out value="${doc}"/>>제목+내용</option>
-			<option value="m_id" <c:out value="${m_id}"/>>작성자</option>
+			<option value="all" class="sf">전체보기</option>
+			<option value="g_title" class="sf">제목</option>
+			<option value="g_content" class="sf">내용</option>
+			<option value="m_id" class="sf">작성자</option>
+			<option value="doc" class="sf">제목+내용</option>
 		</select>
+		<input type="text" id="searchKeyword" name="searchKeyword">
 		<button id="searchBtn" class="btn btn_outline-dark">검색</button>
 		<button id="allGoodsBtn" class="btn btn-outline-dark float-right">전체글</button>
-   </form>
    
    <!-- 페이징 -->
    <div class="float-right">

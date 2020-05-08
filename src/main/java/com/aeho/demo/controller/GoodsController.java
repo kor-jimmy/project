@@ -116,5 +116,4 @@ public class GoodsController {
 	public void get(GoodsVo gv,Model model) {
 		model.addAttribute("goods", goodsService.getGoods(gv));
 	}
-
 }
