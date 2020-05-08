@@ -25,13 +25,13 @@
   <sql id="searchSql">
   	<choose>
   		<when test="searchField != null and !searchField.equals('') and searchField.equals('all')">
-  			and (g_title like '%'||#{keyword}||'%' or g_content like '%'||#{keyword}||'%' or m_id like '%'||#{keyword}||'%')
+  			and (g_title like '%'||#{searchKeyword}||'%' or g_content like '%'||#{searchKeyword}||'%' or m_id like '%'||#{searchKeyword}||'%')
   		</when>
   		<when test="searchField != null and !searchField.equals('') and (searchField.equals('g_title') or searchField.equals('g_content') or searchField.equals('m_id'))">
-  			and ${searchField} like '%'||#{keyword}||'%'
+  			and ${searchField} like '%'||#{searchKeyword}||'%'
   		</when>
   		<when test="searchField != null and !searchField.equals('') and searchField.equals('doc')">
-  			and (g_title like '%'||#{keyword}||'%' or g_content like '%'||#{keyword}||'%')
+  			and (g_title like '%'||#{searchKeyword}||'%' or g_content like '%'||#{searchKeyword}||'%')
   		</when>
   	</choose>
   </sql>

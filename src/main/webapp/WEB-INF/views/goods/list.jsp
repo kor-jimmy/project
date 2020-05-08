@@ -4,8 +4,8 @@
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
-function listGoods(gc_code,keyword,pageNum){
-//	c_no를 강제로 넣어주기 위해 카테고리 설정시에만 글쓰기 버튼 보이게
+function listGoods(gc_code,keyword,pageNum,searchKeyword){
+//	c_no를 강제로 넣어주기 위해 카테고리 설정시에만 글쓰기 버튼 보이게 / 검색을 위해 searchKeyword 추가
    if(keyword == null){
       $("#insertBtn").css("visibility","hidden");
    }
@@ -14,7 +14,7 @@ function listGoods(gc_code,keyword,pageNum){
    }
    var dto;
    $("#tb").empty();
-   $.ajax("/goods/listGoods",{data:{gc_code:gc_code,keyword:keyword,pageNum:pageNum}, success:function(result){
+   $.ajax("/goods/listGoods",{data:{gc_code:gc_code,keyword:keyword,pageNum:pageNum,searchKeyword:searchKeyword}, success:function(result){
 		//리스트 가져오기
 		var list = JSON.parse(result.list)
 	      $.each(list, function(idx,item){
@@ -115,7 +115,7 @@ $(function(){
 	var searchForm = $("#searchForm");
 
 	$("#searchBtn").on("click", function(e){
-		if(!searchForm.find("input[name='keyword']").val()){
+		if(!searchForm.find("input[name='searchKeyword']").val()){
 			alert("검색어를 입력해주세요.");
 			return false;
 		}
@@ -158,19 +158,13 @@ $(function(){
    <hr>
    <!-- 게시물 검색 -->
    <form id="searchForm" action="/goods/list" method="get">
-   <input type="hidden" id="categoryNum" name="categoryNum" value="${c_no }">
 		<select name="searchField">
-			<option value="all" <c:out value="${pageMake.cri.searchField eq 'all'?'selected':''}"/>>전체보기</option>
-			<option value="g_title" <c:out value="${pageMake.cri.searchField eq 'g_title'?'selected':''}"/>>제목</option>
-			<option value="g_content" <c:out value="${pageMake.cri.searchField eq 'g_content'?'selected':''}"/>>내용</option>
-			<option value="doc" <c:out value="${pageMake.cri.searchField eq 'doc'?'selected':''}"/>>제목+내용</option>
-			<option value="m_id" <c:out value="${pageMake.cri.searchField eq 'm_id'?'selected':''}"/>>작성자</option>
+			<option value="all" <c:out value="${all}"/>>전체보기</option>
+			<option value="g_title" <c:out value="${g_title}"/>>제목</option>
+			<option value="g_content" <c:out value="${g_content}"/>>내용</option>
+			<option value="doc" <c:out value="${doc}"/>>제목+내용</option>
+			<option value="m_id" <c:out value="${m_id}"/>>작성자</option>
 		</select>
-		<input type="text" id="keyword" name="keyword" value="${pageMake.cri.keyword}">
-		<input type="hidden" id="gc_code" name="gc_code" value="${pageMake.cri.gc_code}">
-		<input type="hidden" id="c_no" name="c_no" value="${c_no}">
-		<input type="hidden" id="pageNum" name="pageNum" value="${pageMake.cri.pageNum}">
-		<input type="hidden" id="amount" name="amount" value="${pageMake.cri.amount}">
 		<button id="searchBtn" class="btn btn_outline-dark">검색</button>
 		<button id="allGoodsBtn" class="btn btn-outline-dark float-right">전체글</button>
    </form>
