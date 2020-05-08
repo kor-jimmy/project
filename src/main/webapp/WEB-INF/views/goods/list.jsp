@@ -119,6 +119,7 @@ $(function(){
 </script>
 	
    <h2>상품목록</h2><div id=state></div>
+   <p>상품 등록을 원하시면 카테고리를 선택해주세요.</p>
    <hr>
    <button id="allBtn" type="button" class="btn btn-outline-dark typeBtn" value="0" style="background: pink;">전체보기</button>
    <button id="buyBtn" type="button" class="btn btn-outline-dark typeBtn" value="2">삽니다</button>
