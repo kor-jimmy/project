@@ -42,4 +42,10 @@ public class BoardFilesServiceImpl implements BoardFilesSevice {
 		return re;
 	}
 
+	@Override
+	public List<BoardFilesVo> checkFiles() {
+		List<BoardFilesVo> list = boardFilesDao.checkFiles();
+		return list;
+	}
+
 }

@@ -20,4 +20,9 @@
 		select * from boardfiles where b_no=#{b_no}
 	</select>
 	
+	<!-- 실제 디렉토리의 파일과 db의 파일을 비교해 db에 존재하지 않는 파일 -->
+	<select id="checkFiles" resultType="com.aeho.demo.vo.BoardFilesVo">
+		select * from boardfiles 
+	</select>
+	
 </mapper>

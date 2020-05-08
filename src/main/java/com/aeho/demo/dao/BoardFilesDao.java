@@ -14,4 +14,6 @@ public interface BoardFilesDao {
 	public int deleteByBno(int b_no);
 	
 	public List<BoardFilesVo> findByBno(int bno);
+	
+	public List<BoardFilesVo> checkFiles();
 }
