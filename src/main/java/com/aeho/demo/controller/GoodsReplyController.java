@@ -28,8 +28,8 @@ public class GoodsReplyController {
 	}
 	
 	@GetMapping(value = "/list", produces = "application/json; charset=utf-8")
-	public String list(GoodsReplyVo gv) {
-		List<GoodsReplyVo> list = goodsReplyService.listGoodsReply(gv);
+	public String list(int g_no) {
+		List<GoodsReplyVo> list = goodsReplyService.listGoodsReply(g_no);
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aeho.demo.dao.GoodsDao;
+import com.aeho.demo.dao.GoodsFilesDao;
 import com.aeho.demo.dao.GoodsReplyDao;
 import com.aeho.demo.domain.Criteria2;
 import com.aeho.demo.vo.GoodsVo;
@@ -17,12 +18,10 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsDao goodsDao;
 	@Autowired
 	private GoodsReplyDao goodsReplyDao;
-	/*
-	@Override
-	public List<GoodsVo> listGoods(int gc_code,String keyword) {
-		return goodsDao.listGoods(gc_code,keyword);
-	}
-*/
+	@Autowired
+	private GoodsFilesDao goodsFilesDao;
+	
+	
 	@Override
 	public List<GoodsVo> listGoods(Criteria2 cri) {
 		return goodsDao.paging(cri);
@@ -47,9 +46,18 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Override
 	public int deleteGoods(GoodsVo gv) {
-		int re2 = goodsReplyDao.deleteGoods(gv.getG_no());
-		int re = goodsDao.deleteGoods(gv);
-		return re;
+		int result=0;
+		if(goodsFilesDao.findByGno(gv.getG_no())!=null) {
+			int result_files=goodsFilesDao.deleteByGno(gv.getG_no());	//파일 삭제 번호
+		}
+		if(goodsReplyDao.listGoodsReply(gv.getG_no()) != null) {
+			int result_goodsReply = goodsReplyDao.deleteGoods(gv.getG_no());//댓글 삭제 번호
+		}
+//		int result_goodsReply = goodsReplyDao.deleteGoods(gv.getG_no());
+		int result_goods = goodsDao.deleteGoods(gv);
+		if(result_goods > 0)
+			result = 1;
+		return result;
 	}
 
 	@Override

@@ -18,8 +18,8 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	private GoodsDao goodsDao;
 	
 	@Override
-	public List<GoodsReplyVo> listGoodsReply(GoodsReplyVo gv) {
-		return goodsReplyDao.listGoodsReply(gv);
+	public List<GoodsReplyVo> listGoodsReply(int g_no) {
+		return goodsReplyDao.listGoodsReply(g_no);
 	}
 
 	@Override

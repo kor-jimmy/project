@@ -6,7 +6,7 @@ import com.aeho.demo.vo.GoodsReplyVo;
 
 public interface GoodsReplyDao {
 	
-	List<GoodsReplyVo> listGoodsReply(GoodsReplyVo gv);
+	List<GoodsReplyVo> listGoodsReply(int g_no);
 	
 	int insertGoodsReply(GoodsReplyVo gv);
 	

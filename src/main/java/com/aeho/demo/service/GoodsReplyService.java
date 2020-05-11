@@ -5,7 +5,7 @@ import java.util.List;
 import com.aeho.demo.vo.GoodsReplyVo;
 
 public interface GoodsReplyService {
-	List<GoodsReplyVo> listGoodsReply(GoodsReplyVo gv);
+	List<GoodsReplyVo> listGoodsReply(int g_no);
 	
 	int insertGoodsReply(GoodsReplyVo gv);
 	

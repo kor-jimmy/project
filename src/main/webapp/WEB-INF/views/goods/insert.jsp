@@ -1,9 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
-	<script type="text/javascript">
-		
-	</script>
+	<style>
+	.uploadResult {
+		width:100%;
+		background-color: gray;
+	}
+	.uploadResult ul{
+		display:flex;
+		flex-flow: row;
+		justify-content: center;
+		aling-items: center;
+	}
+	.uploadResult ul li{
+		list-style: none;
+		padding: 10px;
+	}
+	.uploadResult ul li img{
+		width:20px;
+	}
+</style>
 	<h2>상품등록</h2>
 	
 	<form id="insertForm" method="post" enctype="multipart/form-data">
@@ -18,7 +34,7 @@
 			<td><input type="text" id="g_title" name="g_title" required="required"></td>
 		</tr>
 		<tr>
-			<td>삽니다 팝니다 구분 코드</td>
+			<td>삽니다/팝니다</td>
 			<td><select name="gc_code">
 				<option value="1">팝니다</option>
 				<option value="2">삽니다</option>
@@ -35,7 +51,7 @@
 		</tr>
 		<tr>
 			<td>내용</td>
-			<td><textarea id="g_content" name="g_content" row="3"></textarea></td>
+			<td><textarea id="g_content" name="g_content" row="30%" cols="100%"></textarea></td>
 		</tr>
 	</table>
 	<button type="submit" id="insertBtn" class="btn btn-outline-dark">등록</button>
@@ -45,29 +61,43 @@
 		$(function(){
 			var fileList=[];
 			var uploadFileList=[];
-			var imgCheck=new RegExp("^(image)/(.*?)");
+			var imgCheck = new RegExp("^(image)/(.*?)");
 			var maxSize= 10485760;
 			
 			$("#g_content").summernote({
+				disableDragAndDrop : true,
 				height: 700,
 				minHeight:null,
 				maxHeight:null,
 				focus:true,
 				lang:"ko-KR",
 				placeholder:"본문 내용을 입력해주세요.",
+				toolbar: [
+				    ['style', ['style']],
+				    ['font', ['fontsize','bold', 'italic', 'underline', 'clear']],
+				    ['color', ['color']],
+				    ['insert', ['picture','video']],
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    ['table', ['table']]
+				    
+				 ],
 				callbacks:{
-					onImageUpload: function(files){
-						uploadSummernoteImageFile(files[0],this);
-					}
+					onImageUpload : function(files){
+						console.log(files);
+						$.each(files, function(idx, file){
+							uploadSummernoteImageFile(file, $("#g_content"));
+							console.log(file);
+						});
+					}	
 				}
 			})
-
+			//파일처리
 			function uploadSummernoteImageFile(file,editor){
 				data=new FormData();
 				data.append("file",file);
 				console.log(file);
 
-				if(imgCheck.test(file.type)){
+				if(!imgCheck.test(file.type)){
 					alert("이미지 파일만 업로드해주세요");
 					return false;
 				}
@@ -91,12 +121,13 @@
 			}
 
 			$("#insertBtn").on("click",function(e){
+				console.log("클릭동작")
 				e.preventDefault();
 				var myInsert = $("#insertForm").serialize();
 				$.ajax({
 					data:myInsert,
 					type: "POST",
-					url: "goods/insert",
+					url: "/goods/insert",
 					success: function(goodsNum){
 						//console.log(goodsNum);
 						if(goodsNum > 0){
@@ -117,7 +148,7 @@
 								dataType: "json",
 								contentType: "application/json; charset=utf-8",
 								type: "POST",
-								url:"/goods/fileDBupoad",
+								url:"/goods/fileDBupload",
 								success: function(msg){
 									location.href="/goods/get?g_no="+goodsNum;
 								}

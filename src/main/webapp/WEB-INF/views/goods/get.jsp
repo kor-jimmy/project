@@ -68,15 +68,17 @@
 	<input type="hidden" id="g_no" value="${ goods.g_no }">
 	<table class="table table-bordered">
 		<tr>
-			<td colspan="2"><c:out value="${goods.g_title }"/></td>
+			<td colspan="4"><h3><c:out value="${goods.g_title }"/></h3></td>
 		</tr>
 		<tr>
-			<td>작성자</td>
-			<td><c:out value="${goods.m_id }"/></td>
+			<td width="25%">작성자</td>
+			<td width="25%"><c:out value="${goods.m_id }"/></td>
+			<td width="25%">작성시간</td>
+			<td width="25%"><c:out value="${goods.g_date }"/></td>
 		</tr>
 		<tr>
-			<td>상품내용</td>
-			<td><c:out value="${goods.g_content }"/></td>
+			<td colspan="4">
+			<div>${goods.g_content }</div></td>
 		</tr>
 	</table>
 	<button id="deleteBtn">삭제</button>
