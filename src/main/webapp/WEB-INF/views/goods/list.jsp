@@ -76,7 +76,8 @@ $(function(){
     	  $(".dist").css("background","white");
     	  $(this).css("background","lightyellow");
     	  var nokey;	//keyword에 null을 넣어주기 위한 변수 (null로 대입하면 적용안됨)
-    	  listGoods(gc_code,nokey,1,searchField,searchKeyword);
+    	  keyword=nokey;
+    	  listGoods(gc_code,keyword,1,searchField,searchKeyword);
       })
       $("#goodsType").append(b);
       result=JSON.parse(result);
@@ -100,9 +101,13 @@ $(function(){
    })
    $(".typeBtn").on("click",function(){
 	   $(".typeBtn").css("background","white");
+		var noCode;
 	   $(this).css("background","pink");
-		gc_code=$(this).val();
-		console.log(searchKeyword,searchField);
+		if($(this).val()==0)
+			gc_code= noCode;
+		else
+			gc_code = $(this).val();
+		console.log(gc_code,keyword,searchKeyword,searchField);
 		listGoods(gc_code,keyword,1,searchField,searchKeyword);
 	})
 	//검색처리

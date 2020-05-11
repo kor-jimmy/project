@@ -8,7 +8,7 @@
 	
 	<form id="insertForm" method="post" enctype="multipart/form-data">
 	
-	<table>
+	<table class="table table-bordered">
 		<tr>
 			<td>장터 카테고리</td>
 			<td><input type="hidden" id="c_no" name="c_no" readonly="readonly" value="${cv.c_no }">${cv.c_dist}</td>
