@@ -62,23 +62,27 @@
 			placeholder:"본문 내용을 입력해주세요.",
 			callbacks:{
 				onImageUpload : function(files){
-					uploadSummernoteImageFile(files[0],this);
+					console.log(files);
+					$.each(files, function(idx, file){
+						uploadSummernoteImageFile(file, $("#b_content"));
+						console.log(file);
+					});
 				}	
 			}
 		})
 		
 		//파일처리
-		function uploadSummernoteImageFile(file, editor) {
+		function uploadSummernoteImageFile(files, editor) {
 			data = new FormData();
-			data.append("file", file);
-			console.log(file);
+
+			data.append("file", files);
 			//이미지 파일인지에 대한 유효성 검사.
-			if(!imgCheck.test(file.type)){
+			if(!imgCheck.test(files.type)){
 				alert("이미지 파일만 업로드 해주세요! ^3^");
 				return false;
 			}
 			//이미지 파일 최대 용량에 대한 유효성 검사 최대 10mb로 제한
-			if(file.size>maxSize){
+			if(files.size>maxSize){
 				alert("파일의 용량이 너무 큽니다... -ㅅ-!");
 				return false;
 			}
@@ -103,6 +107,12 @@
 		$("#insertBtn").on("click",function(e){
 			e.preventDefault();
 			var myInsert = $("#insertForm").serialize();
+			var date = new Date();
+			var year = date.getYear()+1900;
+			var month = date.getMonth()+1;
+			if( month < 10 ) {
+				month = "0"+month;
+			}
 			$.ajax({
 				data : myInsert,
 				type : "POST",
@@ -117,7 +127,7 @@
 								uuid : src.split("_")[0],
 								filename : src.split("_")[1],
 								b_no : boardNum,
-								uploadpath : "C:\\\aehoUpload\\board"
+								uploadpath : "C:\\\aehoUpload\\board\\"+year+"\\"+month+"\\"
 							}
 							uploadFileList.push(myUpload)
 						})

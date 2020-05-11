@@ -1,5 +1,9 @@
 package com.aeho.demo.config;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -11,7 +15,16 @@ public class WebConfig implements WebMvcConfigurer {
     //로 접속하면 C:/summernote_image/1234.jpg 파일을 불러온다.
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    	Date date = new Date();
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH", Locale.KOREA);
+    	String today = dateFormat.format(date);
+
+    	String year = today.split("/")[0];
+    	String month = today.split("/")[1];
+
         registry.addResourceHandler("/boardImage/**")
-                .addResourceLocations("file:///C:/aehoUpload/board/");
+                .addResourceLocations("file:///C:/aehoUpload/board/"+year+"/"+month+"/");
+        registry.addResourceHandler("/goodsImage/**")
+        		.addResourceLocations("file:///C:/aehoUpload/goods/");
     }
 }

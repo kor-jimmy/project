@@ -1,11 +1,13 @@
 package com.aeho.demo.schedule;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -36,8 +38,17 @@ public class FilesSchedule {
 		Calendar filesUploadTime = Calendar.getInstance();
 		Date filesUpdateDate = null;
 		
+		Date date = new Date();
+		date = new Date(date.getTime()+(1000*60*60*24*-1));
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM", Locale.KOREA);
+		String yesterday = dateFormat.format(date);
+		
+		String [] splitYester = yesterday.split("/");
+		String year = splitYester[0];
+		String month = splitYester[1];
+		
 		//지울 파일의 위치
-		File path = new File("C:\\aehoUpload\\board");
+		File path = new File("C:\\aehoUpload\\board\\"+year+"\\"+month);
 		//위 path의 파일을 모두 가져와 filesList에 담는다.
 		File [] filesList = path.listFiles();
 		HashMap<Integer, String> map = new HashMap<Integer, String>();
