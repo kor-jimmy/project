@@ -19,9 +19,8 @@
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"> -->
 <!-- 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
   
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous" type="text/javascript">
-    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
     </script>
@@ -31,28 +30,55 @@
     </script>
     
     <!-- summer note -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/resources/editor/summernote-lite.js"></script>
 	<script src="/resources/editor/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/resources/editor/summernote-lite.css">
-	    
+	<style>
+        #searchDiv{
+            margin-top: 50px;
+        }
+        #headerTop{
+        	padding-top: 5px;
+        	padding-bottom: 5px;
+        }
+        #customNav{
+			padding-left:200px;
+			padding-right: 200px;
+        }	
+    </style>
 </head>
 
 <body>
     <!--header-->
-    <div class="jumbotron text-center mb-0" style="background-color: rgb(163, 161, 252);">
-        <h1>Ae-Ho</h1>
-        <p>깨끗한 웹 커뮤니티 Ae-Ho에 오신것을 환영합니다!</p>
+    <div class="jumbotron mb-0" id="headerTop" style="background-color: rgb(163, 161, 252);">
+    	<div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <a href="/aeho">
+                        <img src="/img/mainImg.png" width="200px" height="120px">
+                    </a>
+                </div>
+                <div class="col-5 text-center">
+                        <div id="searchDiv">
+                            <label for="mainSearch">통합검색</label>
+                            <input type="text" name="mainSearch" id="mainSearch" size="30" placeholder="애호하는 것을 검색하세요!">
+                            <button id="mainTotalSearch">
+                                <img src="/img/search.png" width="20px" height="20px">
+                            </button>
+                        </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark text-center"> 
-        <a href="/aeho" class="navbar-brand">Ae-Ho</a>
-        <!--토글-->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark text-center" id="customNav"> 
+        <!-- <a href="/aeho" class="navbar-brand">Ae-Ho</a>
+        토글
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav justify-content-center">
                 <li class="nav-item"><a href="#" class="nav-link">공지사항</a></li>
                 <li class="nav-item"><a href="/category/category" class="nav-link">카테고리</a></li>
                 <li class="nav-item"><a href="/goods/list" class="nav-link">굿즈</a></li>
