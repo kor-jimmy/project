@@ -5882,7 +5882,7 @@ function () {
      * @param {File[]} files
      */
 
-  }, {
+  },/* {
     key: "insertImagesAsDataURL",
     value: function insertImagesAsDataURL(files) {
       var _this4 = this;
@@ -5904,9 +5904,9 @@ function () {
     /**
      * insertImagesOrCallback
      * @param {File[]} files
-     */
+    
 
-  }, {
+  },*/ {
     key: "insertImagesOrCallback",
     value: function insertImagesOrCallback(files) {
       var callbacks = this.options.callbacks; // If onImageUpload set,

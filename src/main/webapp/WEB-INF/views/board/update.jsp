@@ -39,9 +39,20 @@
 			focus:true,
 			lang:"ko-KR",
 			placeholder:"본문 내용을 입력해주세요.",
+			toolbar: [
+			    ['style', ['style']],
+			    ['font', ['fontsize','bold', 'italic', 'underline', 'clear']],
+			    ['color', ['color']],
+			    ['insert', ['picture','video']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['table', ['table']]
+			    
+			 ],
 			callbacks:{
 				onImageUpload : function(files){
-					uploadSummernoteImageFile(files[0],this);
+					$.each(files,function(idx,file){
+						uploadSummernoteImageFile(file,$("#b_content"));
+					})
 				}	
 			}
 		})

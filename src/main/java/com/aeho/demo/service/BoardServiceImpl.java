@@ -57,11 +57,11 @@ public class BoardServiceImpl implements BoardService {
 		int re = boardDao.insertBoard(bv);
 		return re;
 	}
-
+	
 	// 파일 수정 관련 로직 추가. 0508 쥔톽~ 아룸~
 	@Override
 	public int updateBoard(BoardVo bv) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub  
 		int re = boardDao.updateBoard(bv);
 		List<BoardFilesVo> fileList = boardFilesDao.findByBno(bv.getB_no());
 		for (BoardFilesVo bfv : fileList) {
@@ -97,7 +97,7 @@ public class BoardServiceImpl implements BoardService {
 		System.out.println("게심루 삭제 성공 번호 "+result_board);
 		
 		if (result_board > 0) {
-			result = 1;
+			result = 1; 
 		}
 		return result;
 	}

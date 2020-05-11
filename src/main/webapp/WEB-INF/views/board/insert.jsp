@@ -54,12 +54,22 @@
 		
 		//섬머노트
 		$("#b_content").summernote({
+			disableDragAndDrop : true,
 			height: 700,
 			minHeight:null,
 			maxHeight:null,
 			focus:true,
 			lang:"ko-KR",
 			placeholder:"본문 내용을 입력해주세요.",
+			toolbar: [
+			    ['style', ['style']],
+			    ['font', ['fontsize','bold', 'italic', 'underline', 'clear']],
+			    ['color', ['color']],
+			    ['insert', ['picture','video']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['table', ['table']]
+			    
+			 ],
 			callbacks:{
 				onImageUpload : function(files){
 					console.log(files);
