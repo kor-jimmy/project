@@ -27,62 +27,91 @@
             pause:"hover",
             wrap: true
         })
+
+        var todayBest = function(){
+            $.ajax("/todayBest",{success:function(list){
+                var ul = $("<ul class='list-group list-group-flush'></ul>");
+                var list = JSON.parse(list);
+                $.each(list, function(idx,content){
+                    var li = $("<li class='list-group-item'></li>");
+					var b_title = $("<p></p>").text(content.b_title);
+					var cnt = $("<p></p>");
+                    var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
+                    var b_replyCnt = $("<span class='badge badge-info'></span>").text("댓글 " + content.b_replycnt);
+                    cnt.append(b_loveCnt,"   ",b_replyCnt);
+                    li.append(b_title,cnt);
+                    ul.append(li);
+                })
+                $("#bestContent").append(ul);
+            }})
+        }
+        todayBest();
+    
 	});
 </script>
-
-        <div class="row">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                </ol>
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img class="d-block w-100" src="/img/slideBts.png">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>전 세계를 강타한 K-POP 열풍!</h5>
-                        <p>방탄소년단</p>
-                      </div>
-                  </div>
-                  <div class="carousel-item">
-                    <img class="d-block w-100" src="/img/slideTwice.png">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>CearUp!</h5>
-                        <p>트와이스</p>
-                      </div>
-                  </div>
-                  <div class="carousel-item">
-                    <img class="d-block w-100" src="/img/slidePeng.png">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>EBS 연습생</h5>
-                        <p>자이언트 펭TV의 펭수!</p>
-                      </div>
-                  </div>
-                  <div class="carousel-item">
-                    <img class="d-block w-100" src="/img/slideLol.png">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>라이엇</h5>
-                        <p>리그오브레전드</p>
-                      </div>
-                  </div>
+		<!-- 이미지 슬라이드 -->
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            </ol>
+            <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="/img/slideBts.png">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>전 세계를 강타한 K-POP 열풍!</h5>
+                    <p>방탄소년단</p>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </div>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="/img/slideTwice.png">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>CearUp!</h5>
+                    <p>트와이스</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="/img/slidePeng.png">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>EBS 연습생</h5>
+                    <p>자이언트 펭TV의 펭수!</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="/img/slideLol.png">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>라이엇</h5>
+                    <p>리그오브레전드</p>
+                </div>
+            </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <!-- end 이미지 슬라이드 -->
+        <hr>
+        <div class="row">
+
             <!--left content-->
+            <!--인기글 일간,주간,월간-->
             <div class="col-sm-4">
-                <h2>About BTS</h2>
-                <p>전 세계를 강타한 남조선의 아이돌!</p>
-                <img src="/img/bts.jpg" class="img-fluid">
-                <p>남조선이 자랑하는 8인의 인민 남자 집단!</p>
+                <h2>Ae!-HO? 인기글</h2>
+                <p>
+                    <button type="button" class="btn btn-light">일간</button>
+                    <button type="button" class="btn btn-light">주간</button>
+                    <button type="button" class="btn btn-light">월간</button>
+                </p>
+                <div id="bestContent">
+
+                </div>
                 <hr>
                 <h3>사이드 메뉴</h3>
                 <p>사이드 메뉴에서 여러 소식을 확인해 보세요!</p>
