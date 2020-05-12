@@ -163,7 +163,7 @@ public class GoodsController {
 			str = "상품 수정 성공";
 		}
 		rttr.addFlashAttribute("result",str);
-		return "redirect:/goods/list";
+		return gv.getG_no()+"";
 	}
 
 	@GetMapping("/delete")

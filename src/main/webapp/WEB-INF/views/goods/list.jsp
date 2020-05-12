@@ -130,9 +130,13 @@ $(function(){
    <button id="buyBtn" type="button" class="btn btn-outline-dark typeBtn" value="2">삽니다</button>
    <button id="sellBtn" type="button" class="btn btn-outline-dark typeBtn" value="1">팝니다</button>
    <br><br>
-   <div id="goodsType">
+   <div>
+   <div id="goodsType" style="display: inline-block;">
    <h4>상품 종류별 보기</h4>
-   
+   </div>
+   <div style="display: inline-block; float: right;">
+   <button id="insertBtn" type="button" class="btn btn-outline-dark">상품등록</button>
+   </div>
    </div>
    <hr>
    <table class="table table-hover">
@@ -168,6 +172,5 @@ $(function(){
    </div>
    <!-- paging end -->
    <hr>
-   <button id="insertBtn" type="button" class="btn btn-outline-dark">상품등록</button>
    <hr>
 <%@include file="../includes/footer.jsp"%>

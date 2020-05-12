@@ -9,6 +9,8 @@ import com.aeho.demo.dao.GoodsDao;
 import com.aeho.demo.dao.GoodsFilesDao;
 import com.aeho.demo.dao.GoodsReplyDao;
 import com.aeho.demo.domain.Criteria2;
+import com.aeho.demo.vo.BoardFilesVo;
+import com.aeho.demo.vo.GoodsFilesVo;
 import com.aeho.demo.vo.GoodsVo;
 
 @Service
@@ -41,6 +43,14 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public int updateGoods(GoodsVo gv) {
 		int re = goodsDao.updateGoods(gv);
+		List<GoodsFilesVo> fileList = goodsFilesDao.findByGno(gv.getG_no());
+		for (GoodsFilesVo gfv : fileList) {
+			String g_content = gv.getG_content();
+			// contains 함수 문자열이 포함되어 있는지 비교하여 true,false 반환
+			if (!g_content.contains(gfv.getUuid())) {
+				goodsFilesDao.delete(gfv.getUuid());
+			}
+		}
 		return re;
 	}
 

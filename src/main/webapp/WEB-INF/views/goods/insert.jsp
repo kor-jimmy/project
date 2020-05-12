@@ -36,6 +36,7 @@
 		<tr>
 			<td>삽니다/팝니다</td>
 			<td><select name="gc_code">
+				<option value="0" disabled="disabled" selected="selected">=선택=</option>
 				<option value="1">팝니다</option>
 				<option value="2">삽니다</option>
 			</select>
