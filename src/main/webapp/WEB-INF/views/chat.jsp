@@ -29,8 +29,14 @@
 			height: 500px;
 			overflow: auto;
 		}
-		.chating p{
-			color: #fff;
+		
+		.chating .me{
+			color: black;
+			text-align: right;
+		}
+		
+		.chating .others{
+			color: blue;
 			text-align: left;
 		}
 		input{
@@ -59,7 +65,21 @@
 		ws.onmessage = function(data) {
 			var msg = data.data;
 			if(msg != null && msg.trim() != ''){
-				$("#chating").append("<p>" + msg + "</p>");
+				var d = JSON.parse(msg);
+				if(d.type=="getId"){
+					var si = d.sessionId != null ? d.sessionId : "";
+					if(si != ''){
+						$("#sessionId").val(si);
+					}
+				}else if(d.type == "message"){
+					if(d.sessionId == $("#sessionId").val()){
+						$("#chating").append("<p class='me'>나 :"+d.msg+"</p>");
+					}else{
+						$("#chating").append("<p class='others'> :"+d.userName+":"+d.msg+"</p>");
+					}
+				}else{
+						console.warn("허용하지 않는 타입입니다.");
+					}
 			}
 		}
 
@@ -83,15 +103,20 @@
 	}
 
 	function send() {
-		var uN = $("#userName").val();
-		var msg = $("#chatting").val();
-		ws.send(uN+" : "+msg);
+	var option ={
+		type:"message",
+		sessionId : $("#sessionId").val(),
+		userName : $("#userName").val(),
+		msg : $("#chatting").val()
+	}
+		ws.send(JSON.stringify(option));
 		$('#chatting').val("");
 	}
 </script>
 <body>
 	<div id="container" class="container">
 		<h1>채팅</h1>
+		<input type="hidden" id="sessionId" value=""></input>
 		<div id="chating" class="chating">
 		</div>
 		

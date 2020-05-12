@@ -2,11 +2,15 @@ package com.aeho.demo.handler;
 
 import java.util.HashMap;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
 
 @Component
 public class SocketTextHandler extends TextWebSocketHandler {
@@ -16,6 +20,7 @@ public class SocketTextHandler extends TextWebSocketHandler {
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) {
 		String payload = message.getPayload();
+		JSONObject obj = JsonToObjectParser(payload);
 		
 		try {
 			for(String key : sessions.keySet()) {
@@ -27,12 +32,16 @@ public class SocketTextHandler extends TextWebSocketHandler {
 			e.printStackTrace();
 		}
 	}
-	
 	// 세션이 생성될때 시작되는 함수
+		@SuppressWarnings("unchecked")
 		@Override
 		public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 			super.afterConnectionEstablished(session);
 			sessions.put(session.getId(), session);
+			JSONObject obj = new JSONObject();
+			obj.put("type", "getId");
+			obj.put("sessionId",session.getId());
+			session.sendMessage(new TextMessage(obj.toJSONString()));
 		}
 
 		// 세션이 끝날때 실행되는 함수
@@ -40,6 +49,15 @@ public class SocketTextHandler extends TextWebSocketHandler {
 		public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 			sessions.remove(session.getId());
 			super.afterConnectionClosed(session, status);
-
+		}
+		private static JSONObject JsonToObjectParser(String jsonStr) {
+			JSONParser parser = new JSONParser();
+			JSONObject obj = null;
+			try {
+				obj = (JSONObject) parser.parse(jsonStr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			return obj;
 		}
 }
