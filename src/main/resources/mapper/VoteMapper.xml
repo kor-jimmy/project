@@ -15,9 +15,17 @@
   	insert into vote(v_no,m_id,vt_no,v_result)
   	values(seq_vote.nextval,#{m_id},#{vt_no},#{v_result})
   </insert>
+  
+  <update id="updateVote">
+  	update vote set v_result = #{v_result} where v_no = #{v_no}
+  </update>
  
   <delete id="deleteVote">
   	delete vote where v_no=#{v_no}
   </delete>
+  
+  <select id="isChecked" resultType="com.aeho.demo.vo.VoteVo">
+  	select * from vote where vt_no = #{vt_no} and m_id = #{m_id}
+  </select>
   
 </mapper>

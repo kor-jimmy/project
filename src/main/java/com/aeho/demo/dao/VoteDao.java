@@ -15,5 +15,7 @@ public interface VoteDao {
 	int updateVote(VoteVo vv);
 	
 	int deleteVote(VoteVo vv);
+	
+	List<VoteVo> isChecked(VoteVo vv);
 		
 }

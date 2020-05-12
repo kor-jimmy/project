@@ -5,13 +5,19 @@ import java.util.List;
 import com.aeho.demo.vo.VoteTopicVo;
 
 public interface VoteTopicService {
+	
 	List<VoteTopicVo> listVoteTopic();
 	
-	VoteTopicVo getVoteTopic(VoteTopicVo vtv);
+	List<VoteTopicVo> ongoingListVoteTopic();
+	
+	List<VoteTopicVo> endedListVoteTopic();
+	
+	VoteTopicVo getVoteTopic(int vt_no);
 	
 	int insertVoteTopic(VoteTopicVo vtv);
 
 	//int updateVoteTopic(VoteTopicVo vtv);
 	
 	int deleteVoteTopic(VoteTopicVo vtv);
+	
 }

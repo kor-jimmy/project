@@ -19,11 +19,23 @@ public class VoteTopicServiceImpl implements VoteTopicService {
 		// TODO Auto-generated method stub
 		return votetopicDao.listVoteTopic();
 	}
+	
+	@Override
+	public List<VoteTopicVo> ongoingListVoteTopic() {
+		// TODO Auto-generated method stub
+		return votetopicDao.ongoingListVoteTopic();
+	}
 
 	@Override
-	public VoteTopicVo getVoteTopic(VoteTopicVo vtv) {
+	public List<VoteTopicVo> endedListVoteTopic() {
 		// TODO Auto-generated method stub
-		return votetopicDao.getVoteTopic(vtv);
+		return votetopicDao.endedListVoteTopic();
+	}
+
+	@Override
+	public VoteTopicVo getVoteTopic(int vt_no) {
+		// TODO Auto-generated method stub
+		return votetopicDao.getVoteTopic(vt_no);
 	}
 
 	@Override
