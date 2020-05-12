@@ -26,7 +26,7 @@ public class FilesSchedule2 {
 	@Scheduled(cron="0 59 * * * *")
 	public void removeFiles() {
 		
-		System.out.println("스케줄링 작동중");
+		System.out.println("굿즈파일용 스케줄링 작동중");
 		
 		List<GoodsFilesVo> filesDBList = goodsFilesService.checkFiles();
 		

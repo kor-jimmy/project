@@ -52,7 +52,7 @@
 		</tr>
 		<tr>
 			<td>내용</td>
-			<td><textarea id="g_content" name="g_content" row="30%" cols="100%"></textarea></td>
+			<td><textarea class="text_content" id="g_content" name="g_content" row="30%" cols="100%"></textarea></td>
 		</tr>
 	</table>
 	<button type="submit" id="insertBtn" class="btn btn-outline-dark">등록</button>
@@ -125,6 +125,13 @@
 				console.log("클릭동작")
 				e.preventDefault();
 				var myInsert = $("#insertForm").serialize();
+				var myInsert = $("#insertForm").serialize();
+				var date = new Date();
+				var year = date.getYear()+1900;
+				var month = date.getMonth()+1;
+				if( month < 10 ) {
+					month = "0"+month;
+				}
 				$.ajax({
 					data:myInsert,
 					type: "POST",
@@ -139,7 +146,7 @@
 										uuid : src.split("_")[0],
 										filename: src.split("_")[1],
 										g_no: goodsNum,
-										uploadpath: "C\\\aehoUpload\\goods"
+										uploadpath: "C\\\aehoUpload\\goods\\"+year+"\\"+month+"\\"
 								}
 								uploadFileList.push(myUpload)
 							})

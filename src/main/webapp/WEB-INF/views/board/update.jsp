@@ -93,6 +93,12 @@
 		$("#updateBtn").on("click",function(e){
 			e.preventDefault();
 			var myInsert = $("#updateForm").serialize();
+			var date = new Date();
+			var year = date.getYear()+1900;
+			var month = date.getMonth()+1;
+			if( month < 10 ) {
+				month = "0"+month;
+			}
 			$.ajax({
 				data : myInsert,
 				type : "POST",
@@ -107,7 +113,7 @@
 								uuid : src.split("_")[0],
 								filename : src.split("_")[1],
 								b_no : boardNum,
-								uploadpath : "C:\\\aehoUpload\\board"
+								uploadpath : "C:\\\aehoUpload\\board\\"+year+"\\"+month+"\\"
 							}
 							uploadFileList.push(myUpload)
 						})

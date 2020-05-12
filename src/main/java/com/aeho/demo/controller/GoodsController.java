@@ -169,10 +169,10 @@ public class GoodsController {
 	@GetMapping("/delete")
 	@ResponseBody
 	public String delete(GoodsVo gv) {
-		String str = "상품 삭제 실패";
+		String str = "0";
 		int re = goodsService.deleteGoods(gv);
 		if(re > 0) {
-			str="상품 삭제 성공";
+			str="1";
 		}
 		return str;
 	}

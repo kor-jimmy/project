@@ -64,7 +64,7 @@
 		})
 	})
 </script>
-	<h2>게시물 상세</h2>
+	<h2>상품 상세</h2>
 	<input type="hidden" id="g_no" value="${ goods.g_no }">
 	<table class="table table-bordered">
 		<tr>

@@ -4,7 +4,7 @@
 <%@include file="../includes/header.jsp"%>
 
 	<h2>상품수정</h2>
-	<form action="/goods/update" method="post">
+	<form id="updateForm" method="post" enctype="multipart/form-data">
 	<input type="hidden" id="g_no" name="g_no" value="${goods.g_no}">
 	<table class="table table-bordered">
 		<tr>
@@ -33,10 +33,10 @@
 		</tr>
 		<tr>
 			<td>내용</td>
-			<td><textarea class="text_content" name="g_content" row="30%" cols="100%">${goods.g_content }</textarea></td>
+			<td><textarea id="g_content" class="text_content" name="g_content" rows="30%" cols="100%">${goods.g_content }</textarea></td>
 		</tr>
 	</table>
-	<button type="submit" id="updateBtn">등록</button>
+	<button type="submit" id="updateBtn" class="btn btn-outline-dark">등록</button>
 	</form>
 	<script>
 	//summernote 적용
@@ -109,6 +109,12 @@
 		$("#updateBtn").on("click",function(e){
 			e.preventDefault();
 			var myInsert = $("#updateForm").serialize();
+			var date = new Date();
+			var year = date.getYear()+1900;
+			var month = date.getMonth()+1;
+			if( month < 10 ) {
+				month = "0"+month;
+			}
 			$.ajax({
 				data : myInsert,
 				type : "POST",
@@ -123,7 +129,7 @@
 								uuid : src.split("_")[0],
 								filename : src.split("_")[1],
 								g_no : goodsNum,
-								uploadpath : "C:\\\aehoUpload\\goods"
+								uploadpath : "C:\\\aehoUpload\\goods\\"+year+"\\"+month+"\\"
 							}
 							uploadFileList.push(myUpload)
 						})

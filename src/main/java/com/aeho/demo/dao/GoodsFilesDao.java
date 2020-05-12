@@ -6,7 +6,7 @@ import com.aeho.demo.vo.GoodsFilesVo;
 
 public interface GoodsFilesDao {
 	
-	public int insert(GoodsFilesVo bfv);
+	public int insert(GoodsFilesVo gfv);
 	
 	public int delete(String uuid);
 	
