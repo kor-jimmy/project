@@ -6,9 +6,18 @@
         width: 1100px;
         height: 300px;
     }
+    #bestContent{
+    	/* 설정한 너비보다 길면 말줄임 사용 */
+    	text-overflow: ellipsis;
+    	/* 줄바꿈 사용지 않음 */
+    	white-space: nowrap;
+    	overflow: hidden;
+    	display: block;
+    }
 </style>
 <script type="text/javascript">
 	$(function(){
+		
 		$.ajax("http://192.168.0.35:5000/videos", 
 			{dataType: "jsonp",
 			jsonpCallback: "getVideos",
@@ -27,13 +36,15 @@
             pause:"hover",
             wrap: true
         })
-
+        
+		// 일,주,월 최고의 게시물 호출 함수
         var todayBest = function(){
             $.ajax("/todayBest",{success:function(list){
-                var ul = $("<ul class='list-group list-group-flush'></ul>");
+            	$("#bestContent").empty();
+                var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
                 var list = JSON.parse(list);
                 $.each(list, function(idx,content){
-                    var li = $("<li class='list-group-item'></li>");
+                    var li = $("<li id='bestContent' class='list-group-item'></li>").attr("b_no",content.b_no);
 					var b_title = $("<p></p>").text(content.b_title);
 					var cnt = $("<p></p>");
                     var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
@@ -45,8 +56,65 @@
                 $("#bestContent").append(ul);
             }})
         }
+        
+		var weekBest = function(){
+			console.log("주간 추천")
+            $.ajax("/weekBest",{success:function(list){
+            	$("#bestContent").empty();
+                var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
+                var list = JSON.parse(list);
+                $.each(list, function(idx,content){
+                    var li = $("<li id='bestContent' class='list-group-item'></li>").attr("b_no",content.b_no);
+					var b_title = $("<p></p>").text(content.b_title);
+					var cnt = $("<p></p>");
+                    var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
+                    var b_replyCnt = $("<span class='badge badge-info'></span>").text("댓글 " + content.b_replycnt);
+                    cnt.append(b_loveCnt,"   ",b_replyCnt);
+                    li.append(b_title,cnt);
+                    ul.append(li);
+                })
+                $("#bestContent").append(ul);
+            }})
+		}
+
+		var monthBest = function(){
+			console.log("월간 추천")
+            $.ajax("/monthBest",{success:function(list){
+            	$("#bestContent").empty();
+                var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
+                var list = JSON.parse(list);
+                $.each(list, function(idx,content){
+                    var li = $("<li id='bestContent' class='list-group-item'></li>").attr("b_no",content.b_no);
+					var b_title = $("<p></p>").text(content.b_title);
+					var cnt = $("<p></p>");
+                    var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
+                    var b_replyCnt = $("<span class='badge badge-info'></span>").text("댓글 " + content.b_replycnt);
+                    cnt.append(b_loveCnt,"   ",b_replyCnt);
+                    li.append(b_title,cnt);
+                    ul.append(li);
+                })
+                $("#bestContent").append(ul);
+            }})
+		}
+        
         todayBest();
-    
+
+		//베스트 게시물 클릭 이벤트.
+        $(document).on("click","#todayContent",function(e){
+        	location.href="/board/get?b_no="+$(this).attr("b_no");
+        })
+
+        //일간,월간,주간 버튼 이벤트
+        $("#todayBestBtn").click(function(){
+        	todayBest();
+        })
+        $("#weekBestBtn").click(function(){
+			weekBest();
+        })
+        $("#monthBestBtn").click(function(){
+			monthBest();
+        })
+        
 	});
 </script>
 		<!-- 이미지 슬라이드 -->
@@ -103,27 +171,31 @@
             <!--left content-->
             <!--인기글 일간,주간,월간-->
             <div class="col-sm-4">
-                <h2>Ae!-HO? 인기글</h2>
-                <p>
-                    <button type="button" class="btn btn-light">일간</button>
-                    <button type="button" class="btn btn-light">주간</button>
-                    <button type="button" class="btn btn-light">월간</button>
-                </p>
-                <div id="bestContent">
-
-                </div>
+            	<div>
+            		<h2>Ae!-HO? 인기글</h2>
+	                <p>
+	                    <button id="todayBestBtn" type="button" class="btn btn-light">일간</button>
+	                    <button id="weekBestBtn" type="button" class="btn btn-light">주간</button>
+	                    <button id="monthBestBtn" type="button" class="btn btn-light">월간</button>
+	                </p>
+	                <div id="bestContent">
+	
+	                </div>
+            	</div>
                 <hr>
-                <h3>사이드 메뉴</h3>
-                <p>사이드 메뉴에서 여러 소식을 확인해 보세요!</p>
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-action"><a href="#">Ae-Ho 공지사항</a></li>
-                    <li class="list-group-item list-group-item-action"><a href="#">이벤트</a></li>
-                    <li class="list-group-item list-group-item-action"><a href="#">일정확인</a></li>
-                </ul>
-                <hr>
-                <h3>오늘의 영상</h3>
-                <div id="iframe">
-                    
+                <div>
+                	<h3>사이드 메뉴</h3>
+	                <p>사이드 메뉴에서 여러 소식을 확인해 보세요!</p>
+	                <ul class="list-group">
+	                    <li class="list-group-item list-group-item-action"><a href="#">Ae-Ho 공지사항</a></li>
+	                    <li class="list-group-item list-group-item-action"><a href="#">이벤트</a></li>
+	                    <li class="list-group-item list-group-item-action"><a href="#">일정확인</a></li>
+	                </ul>
+	                <hr>
+	                <h3>오늘의 영상</h3>
+	                <div id="iframe">
+	                    
+	                </div>
                 </div>
             </div>
             <!--right content-->

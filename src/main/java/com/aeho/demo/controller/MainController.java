@@ -37,4 +37,22 @@ public class MainController {
 		String todayList = gson.toJson(list);
 		return todayList;
 	}
+	
+	@ResponseBody
+	@GetMapping("/weekBest")
+	public String weekBest() {
+		List<BoardVo> list = mainService.weekBest();
+		Gson gson = new Gson();
+		String todayList = gson.toJson(list);
+		return todayList;
+	}
+	
+	@ResponseBody
+	@GetMapping("/monthBest")
+	public String monthBest() {
+		List<BoardVo> list = mainService.monthBest();
+		Gson gson = new Gson();
+		String todayList = gson.toJson(list);
+		return todayList;
+	}
 }

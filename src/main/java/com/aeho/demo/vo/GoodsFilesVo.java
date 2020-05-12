@@ -9,10 +9,7 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
- 
+@Data
 public class GoodsFilesVo {
 	private String uuid;
 	private String uploadpath;
