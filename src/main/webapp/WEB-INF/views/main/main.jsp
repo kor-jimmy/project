@@ -66,17 +66,17 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="/img/slideTwice.png">
+                <img class="d-block w-100" src="/img/s_twice.png">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>CearUp!</h5>
                     <p>트와이스</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="/img/slidePeng.png">
+                <img class="d-block w-100" src="/img/s_blackpink.png">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>EBS 연습생</h5>
-                    <p>자이언트 펭TV의 펭수!</p>
+                    <h5>Kill This Love</h5>
+                    <p>BlackPink</p>
                 </div>
             </div>
             <div class="carousel-item">

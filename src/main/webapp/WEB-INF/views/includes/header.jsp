@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="col-4">
                     <a href="/aeho">
-                        <img src="/img/mainImg.png" width="200px" height="120px">
+                        <img src="/img/ma.png" width="200px" height="120px">
                     </a>
                 </div>
                 <div class="col-5 text-center">
