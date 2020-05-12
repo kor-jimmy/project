@@ -44,7 +44,7 @@
                 var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
                 var list = JSON.parse(list);
                 $.each(list, function(idx,content){
-                    var li = $("<li id='bestContent' class='list-group-item'></li>").attr("b_no",content.b_no);
+                    var li = $("<li id='listContent' class='list-group-item'></li>").attr("b_no",content.b_no);
 					var b_title = $("<p></p>").text(content.b_title);
 					var cnt = $("<p></p>");
                     var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
@@ -64,7 +64,7 @@
                 var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
                 var list = JSON.parse(list);
                 $.each(list, function(idx,content){
-                    var li = $("<li id='bestContent' class='list-group-item'></li>").attr("b_no",content.b_no);
+                    var li = $("<li id='listContent' class='list-group-item'></li>").attr("b_no",content.b_no);
 					var b_title = $("<p></p>").text(content.b_title);
 					var cnt = $("<p></p>");
                     var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
@@ -84,7 +84,8 @@
                 var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
                 var list = JSON.parse(list);
                 $.each(list, function(idx,content){
-                    var li = $("<li id='bestContent' class='list-group-item'></li>").attr("b_no",content.b_no);
+                    console.log(content.b_no)
+                    var li = $("<li id='listContent' class='list-group-item'></li>").attr("b_no",content.b_no);
 					var b_title = $("<p></p>").text(content.b_title);
 					var cnt = $("<p></p>");
                     var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
@@ -100,7 +101,7 @@
         todayBest();
 
 		//베스트 게시물 클릭 이벤트.
-        $(document).on("click","#todayContent",function(e){
+        $(document).on("click","#listContent",function(e){
         	location.href="/board/get?b_no="+$(this).attr("b_no");
         })
 
