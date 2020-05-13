@@ -63,7 +63,8 @@ public class MainController {
 	public String menuCategory(CategoryDTO categoryDTO) {
 		List<CategoryVo> list = mainService.menuCategory(categoryDTO);
 		Gson gson = new Gson();
-		String meunCategoryList = gson.toJson(list);
-		return meunCategoryList;
+		String menuCategoryList = gson.toJson(list);
+		System.out.println(menuCategoryList);
+		return menuCategoryList;
 	}
 }

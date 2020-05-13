@@ -46,6 +46,51 @@
 			padding-right: 200px;
         }	 */
     </style>
+    <script>
+		$(function(){
+			var menuCategory = function(categoryInfo){
+				$(".dropdown-menu").empty();
+				$.ajax("/menuCategory",{
+					data: categoryInfo,
+					success:function(data){
+						console.log("ajax 통신");
+						var menus = JSON.parse(data)
+						$.each(menus,function(idx,menu){
+							console.log(menu)
+							var categoryName = $("<a class='dropdown-item'></a>").text(menu.c_dist).attr("href","/board/list?categoryNum="+menu.c_no);
+							var line = $("<div class='dropdown-divider'></div>");
+							$(".dropdown-menu").append(categoryName,line);
+						})
+					}
+				})
+			}
+
+			$("#brodMenu").click(function(e){
+				var info = {startNum:1, endNum:100};
+				menuCategory(info);
+			})
+			
+			$("#entMenu").click(function(e){
+				var info = {startNum:101, endNum:200};
+				menuCategory(info);
+			})
+			
+			$("#movieMenu").click(function(e){
+				var info = {startNum:201, endNum:300};
+				menuCategory(info);
+			})
+			
+			$("#gameMenu").click(function(e){
+				var info = {startNum:301, endNum:400};
+				menuCategory(info);
+			})
+			
+			$("#sportMenu").click(function(e){
+				var info = {startNum:401, endNum:500};
+				menuCategory(info);
+			})
+		})
+    </script>
 </head>
 
 <body>
@@ -79,49 +124,39 @@
 	            <ul class="nav">
 	                <li class="nav-item"><a href="#" class="nav-link">공지사항</a></li>
 	                <li class="nav-item"><a href="/category/category" class="nav-link">카테고리</a></li>
-	                <li class="nav-item dropdown">
+	                <li id="brodMenu" class="nav-item dropdown">
 				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				          	방송
 				        </a>
-				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				          	<a class="dropdown-item" href="#">방송</a>
-				          	<div class="dropdown-divider"></div>			        				         	
+				        <div id="bMenu" class="dropdown-menu" aria-labelledby="navbarDropdown">		        				         	
 				        </div>
      				</li>
-	                <li class="nav-item dropdown">
+	                <li id="entMenu" class="nav-item dropdown">
 				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				          	연예
 				        </a>
-				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				          	<a class="dropdown-item" href="#">방송</a>
-				          	<div class="dropdown-divider"></div>			        				         	
+				        <div id="eMenu" class="dropdown-menu" aria-labelledby="navbarDropdown">		        				         	
 				        </div>
      				</li>
-	                <li class="nav-item dropdown">
+	                <li id="movieMenu" class="nav-item dropdown">
 				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				          	영화
 				        </a>
-				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				          	<a class="dropdown-item" href="#">방송</a>
-				          	<div class="dropdown-divider"></div>			        				         	
+				        <div id="mMenu" class="dropdown-menu" aria-labelledby="navbarDropdown">			        				         	
 				        </div>
      				</li>
-	                <li class="nav-item dropdown">
+	                <li id="gameMenu" class="nav-item dropdown">
 				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				          	게임
 				        </a>
-				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				          	<a class="dropdown-item" href="#">방송</a>
-				          	<div class="dropdown-divider"></div>			        				         	
+				        <div id="gMenu" class="dropdown-menu" aria-labelledby="navbarDropdown">		        				         	
 				        </div>
      				</li>
-	                <li class="nav-item dropdown">
+	                <li id="sportMenu" class="nav-item dropdown">
 				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				          	스포츠
 				        </a>
-				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				          	<a class="dropdown-item" href="#">방송</a>
-				          	<div class="dropdown-divider"></div>			        				         	
+				        <div id="sMenu" class="dropdown-menu" aria-labelledby="navbarDropdown">			        				         	
 				        </div>
      				</li>
 	                <li class="nav-item"><a href="/goods/list" class="nav-link">굿즈</a></li>
