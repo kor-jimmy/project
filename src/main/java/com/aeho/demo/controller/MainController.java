@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aeho.demo.domain.CategoryDTO;
 import com.aeho.demo.service.MainServcie;
 import com.aeho.demo.vo.BoardVo;
+import com.aeho.demo.vo.CategoryVo;
 import com.google.gson.Gson;
 
 @Controller
@@ -54,5 +56,14 @@ public class MainController {
 		Gson gson = new Gson();
 		String todayList = gson.toJson(list);
 		return todayList;
+	}
+	
+	@ResponseBody
+	@GetMapping("/menuCategory")
+	public String menuCategory(CategoryDTO categoryDTO) {
+		List<CategoryVo> list = mainService.menuCategory(categoryDTO);
+		Gson gson = new Gson();
+		String meunCategoryList = gson.toJson(list);
+		return meunCategoryList;
 	}
 }

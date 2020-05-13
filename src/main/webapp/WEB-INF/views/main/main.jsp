@@ -39,13 +39,15 @@
         
 		// 일,주,월 최고의 게시물 호출 함수
         var todayBest = function(){
-            $.ajax("/todayBest",{success:function(list){
+            $.ajax("/todayBest",{success:function(data){
             	$("#bestContent").empty();
                 var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
-                var list = JSON.parse(list);
+                var list = JSON.parse(data);
                 $.each(list, function(idx,content){
+                	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
                     var li = $("<li id='listContent' class='list-group-item'></li>").attr("b_no",content.b_no);
-					var b_title = $("<p></p>").text(content.b_title);
+					var b_title = $("<p></p>");
+					b_title.append(category,content.b_title)
 					var cnt = $("<p></p>");
                     var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
                     var b_replyCnt = $("<span class='badge badge-info'></span>").text("댓글 " + content.b_replycnt);
@@ -59,13 +61,15 @@
         
 		var weekBest = function(){
 			console.log("주간 추천")
-            $.ajax("/weekBest",{success:function(list){
+            $.ajax("/weekBest",{success:function(data){
             	$("#bestContent").empty();
                 var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
-                var list = JSON.parse(list);
+                var list = JSON.parse(data);
                 $.each(list, function(idx,content){
+                	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
                     var li = $("<li id='listContent' class='list-group-item'></li>").attr("b_no",content.b_no);
-					var b_title = $("<p></p>").text(content.b_title);
+					var b_title = $("<p></p>");
+					b_title.append(category,content.b_title)
 					var cnt = $("<p></p>");
                     var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
                     var b_replyCnt = $("<span class='badge badge-info'></span>").text("댓글 " + content.b_replycnt);
@@ -79,14 +83,15 @@
 
 		var monthBest = function(){
 			console.log("월간 추천")
-            $.ajax("/monthBest",{success:function(list){
+            $.ajax("/monthBest",{success:function(data){
             	$("#bestContent").empty();
                 var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
-                var list = JSON.parse(list);
+                var list = JSON.parse(data);
                 $.each(list, function(idx,content){
-                    console.log(content.b_no)
+                	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
                     var li = $("<li id='listContent' class='list-group-item'></li>").attr("b_no",content.b_no);
-					var b_title = $("<p></p>").text(content.b_title);
+					var b_title = $("<p></p>");
+					b_title.append(category,content.b_title)
 					var cnt = $("<p></p>");
                     var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
                     var b_replyCnt = $("<span class='badge badge-info'></span>").text("댓글 " + content.b_replycnt);
@@ -171,13 +176,13 @@
 
             <!--left content-->
             <!--인기글 일간,주간,월간-->
-            <div class="col-sm-4">
+            <div class="col-sm-5">
             	<div>
             		<h2>Ae!-HO? 인기글</h2>
 	                <p>
-	                    <button id="todayBestBtn" type="button" class="btn btn-light">일간</button>
-	                    <button id="weekBestBtn" type="button" class="btn btn-light">주간</button>
-	                    <button id="monthBestBtn" type="button" class="btn btn-light">월간</button>
+	                    <button id="todayBestBtn" type="button" class="btn btn-light">today</button>
+	                    <button id="weekBestBtn" type="button" class="btn btn-light">week</button>
+	                    <button id="monthBestBtn" type="button" class="btn btn-light">month</button>
 	                </p>
 	                <div id="bestContent">
 	
@@ -200,7 +205,7 @@
                 </div>
             </div>
             <!--right content-->
-            <div class="col-sm-8">
+            <div class="col-sm-7">
                 <h2>ChearUp! Twice</h2>
                 <p>열도를 강타한 9인조 인민 여자 동무 집단!</p>
                 <img src="/img/twice.png" class="img-fluid">

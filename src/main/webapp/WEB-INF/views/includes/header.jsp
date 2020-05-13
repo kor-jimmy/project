@@ -41,10 +41,10 @@
         	padding-top: 5px;
         	padding-bottom: 5px;
         }
-        #customNav{
+/*         #customNav{
 			padding-left:200px;
 			padding-right: 200px;
-        }	
+        }	 */
     </style>
 </head>
 
@@ -71,23 +71,67 @@
         </div>
 
     </div>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark text-center" id="customNav"> 
-        <!-- <a href="/aeho" class="navbar-brand">Ae-Ho</a>
-        토글
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button> -->
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav justify-content-center">
-                <li class="nav-item"><a href="#" class="nav-link">공지사항</a></li>
-                <li class="nav-item"><a href="/category/category" class="nav-link">카테고리</a></li>
-                <li class="nav-item"><a href="/goods/list" class="nav-link">굿즈</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">일정</a></li>
-                <li class="nav-item"><a href="/vote/vote" class="nav-link">투표</a></li>
-            </ul>
-        </div>
-    </nav>
     <!--end header-->
+    <!--menu -->
+    <nav class="navbar navbar-dark bg-dark justify-content-center" id="customNav">
+    	<div>
+	    	<div>
+	            <ul class="nav">
+	                <li class="nav-item"><a href="#" class="nav-link">공지사항</a></li>
+	                <li class="nav-item"><a href="/category/category" class="nav-link">카테고리</a></li>
+	                <li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				          	방송
+				        </a>
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				          	<a class="dropdown-item" href="#">방송</a>
+				          	<div class="dropdown-divider"></div>			        				         	
+				        </div>
+     				</li>
+	                <li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				          	연예
+				        </a>
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				          	<a class="dropdown-item" href="#">방송</a>
+				          	<div class="dropdown-divider"></div>			        				         	
+				        </div>
+     				</li>
+	                <li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				          	영화
+				        </a>
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				          	<a class="dropdown-item" href="#">방송</a>
+				          	<div class="dropdown-divider"></div>			        				         	
+				        </div>
+     				</li>
+	                <li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				          	게임
+				        </a>
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				          	<a class="dropdown-item" href="#">방송</a>
+				          	<div class="dropdown-divider"></div>			        				         	
+				        </div>
+     				</li>
+	                <li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				          	스포츠
+				        </a>
+				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				          	<a class="dropdown-item" href="#">방송</a>
+				          	<div class="dropdown-divider"></div>			        				         	
+				        </div>
+     				</li>
+	                <li class="nav-item"><a href="/goods/list" class="nav-link">굿즈</a></li>
+	                <li class="nav-item"><a href="#" class="nav-link">일정</a></li>
+	                <li class="nav-item"><a href="/vote/vote" class="nav-link">투표</a></li>
+	            </ul>
+	        </div>
+    	</div>
+    </nav>
+    <!--end menu -->
 
     <!--content-->
     <div class="container pt-3">

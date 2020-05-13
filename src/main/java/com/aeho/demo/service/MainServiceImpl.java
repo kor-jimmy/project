@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aeho.demo.dao.MainDao;
+import com.aeho.demo.domain.CategoryDTO;
 import com.aeho.demo.vo.BoardVo;
+import com.aeho.demo.vo.CategoryVo;
 
 @Service
 public class MainServiceImpl implements MainServcie {
@@ -30,6 +32,12 @@ public class MainServiceImpl implements MainServcie {
 	public List<BoardVo> monthBest() {
 		// TODO Auto-generated method stub
 		return mainDao.monthBest();
+	}
+
+	@Override
+	public List<CategoryVo> menuCategory(CategoryDTO categoryDTO) {
+		// TODO Auto-generated method stub
+		return mainDao.menuCategory(categoryDTO);
 	}
 
 }
