@@ -25,11 +25,19 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	@Override
 	public int insertGoodsReply(GoodsReplyVo gv) {
 		if(gv.getGr_ref() != 0) {
-			System.out.println("그냥 대댓의 레벨 ! ! ! : "+gv.getGr_level());
 			GoodsReplyVo grv = goodsReplyDao.getGoodsReply(gv.getGr_ref());
 			gv.setGr_level(grv.getGr_level()+1);
-			System.out.println("업뎃된 대댓의 레벨 ! ! ! : "+gv.getGr_level());
-			goodsReplyDao.updateGstep(grv);	//부모댓글의 step을 +1시켜줌
+			if(grv.getGr_step() != 0) {
+				gv.setGr_step(grv.getGr_step());
+			}
+			else {
+				gv.setGr_step(goodsReplyDao.maxGrstep(gv)+1);
+			}
+
+			gv.setGr_ref(grv.getGr_ref());
+		}
+		else {
+//			gv.setGr_ref(gv.getGr_no());//여기 gr_no 먼저 얻을거 생각하기 (부모댓글이 없는 경우)
 		}
 		int re = goodsReplyDao.insertGoodsReply(gv);
 		String cntKeyword = "reply";
@@ -57,8 +65,8 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	}
 
 	@Override
-	public int updateGstep(GoodsReplyVo gv) {
-		return goodsReplyDao.updateGstep(gv);
+	public int maxGrstep(GoodsReplyVo gv) {
+		return goodsReplyDao.maxGrstep(gv);
 	}
 
 }

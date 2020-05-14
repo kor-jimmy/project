@@ -18,5 +18,5 @@ public interface GoodsReplyDao {
 
 	GoodsReplyVo getGoodsReply(int gr_no);
 
-	int updateGstep(GoodsReplyVo gv);
+	int maxGrstep(GoodsReplyVo gv);
 }

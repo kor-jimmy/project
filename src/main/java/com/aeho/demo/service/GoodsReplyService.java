@@ -15,5 +15,5 @@ public interface GoodsReplyService {
 	
 	GoodsReplyVo getGoodsReply(int gr_no);
 	
-	int updateGstep(GoodsReplyVo gv);
+	int maxGrstep(GoodsReplyVo gv);
 }
