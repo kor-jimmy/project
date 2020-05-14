@@ -8,6 +8,8 @@ public interface VoteService {
 	List<VoteVo> listVote();
 
 	VoteVo getVote(VoteVo vv);
+	
+	List<VoteVo> findByVoteTopic(VoteVo vv);
 
 	int insertVote(VoteVo vv);
 

@@ -1,5 +1,6 @@
 package com.aeho.demo.service;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class VoteServiceImpl implements VoteService {
 		// TODO Auto-generated method stub
 		//int voteResult = vv.getV_result();
 		int result_insertVote = voteDao.insertVote(vv);
-		int result_updateCount = voteTopicDao.updatCount(vv.getV_no());
+		int result_updateCount = voteTopicDao.updateCount(vv.getV_no());
 //		switch (voteResult) {
 //			case 1:result_updateCount=voteTopicDao.updateCountA(vv.getVt_no());break;
 //			case 2:result_updateCount=voteTopicDao.updateCountB(vv.getVt_no());break;
@@ -51,7 +52,7 @@ public class VoteServiceImpl implements VoteService {
 		// TODO Auto-generated method stub
 		int re = 0;
 		int result_updateVote = voteDao.updateVote(vv);
-		int result_updateVoteTopic = voteTopicDao.updatCount(vv.getVt_no());
+		int result_updateVoteTopic = voteTopicDao.updateCount(vv.getVt_no());
 		if(result_updateVote > 0 && result_updateVoteTopic > 0) {
 			re = 1;
 		}
@@ -69,6 +70,11 @@ public class VoteServiceImpl implements VoteService {
 	public List<VoteVo> isChecked(VoteVo vv) {
 		// TODO Auto-generated method stub
 		return voteDao.isChecked(vv);
+	}
+
+	@Override
+	public List<VoteVo> findByVoteTopic(VoteVo vv) {
+		return voteDao.findByVoteTopic(vv);
 	}
 
 }

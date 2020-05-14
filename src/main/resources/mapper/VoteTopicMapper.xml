@@ -8,11 +8,11 @@
   </select>
   <!-- 진행중인 투표 목록 -->
   <select id="ongoingListVoteTopic" resultType="com.aeho.demo.vo.VoteTopicVo">
-  	select * from votetopic where vs_no = 1
+  	select * from votetopic where vs_no = 1 order by vt_no desc
   </select>
   <!-- 마감된 투표 목록 -->
   <select id="endedListVoteTopic" resultType="com.aeho.demo.vo.VoteTopicVo">
-  	select * from votetopic where vs_no = 2
+  	select * from votetopic where vs_no = 2 order by vt_no desc
   </select>
   
   <select id="getVoteTopic" resultType="com.aeho.demo.vo.VoteTopicVo">
@@ -21,10 +21,14 @@
   
   <insert id="insertVoteTopic">
   	insert into votetopic(vt_no,vs_no,vt_content,vt_start,vt_end, vt_img_a, vt_img_b, vt_count_a, vt_count_b)
-  	values(seq_votetopic.nextval,1,#{vt_content},sysdate,#{vt_end}, #{vt_img_a}, #{vt_img_b}, 0, 0)
+  	values(seq_votetopic.nextval,1,#{vt_content},sysdate,sysdate+7, #{vt_img_a}, #{vt_img_b}, 0, 0)
   </insert>
+  
+  <update id="updateVoteTopic">
+  	update votetopic set vt_content = #{vt_content}, vt_img_a = #{vt_img_a}, vt_img_b = #{vt_img_b} where vt_no = #{vt_no}
+  </update>
 
-  <update id="updatCount">
+  <update id="updateCount">
   	update votetopic set vt_count_a = (select count(*) from vote where v_result = 1 and vt_no = #{vt_no}), 
   	vt_count_b = (select count(*) from vote where v_result = 2 and vt_no = #{vt_no}) where vt_no = #{vt_no}
   </update>

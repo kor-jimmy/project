@@ -7,8 +7,12 @@
   	select *from vote
   </select>
   
-  <select id="getVote" resultType="com.aeho.demo.vo.VoteTopicVo">
+  <select id="getVote" resultType="com.aeho.demo.vo.VoteVo">
   	select *from vote where v_no = #{v_no} and m_id=#{m_id}
+  </select>
+  
+  <select id="findByVoteTopic" resultType="com.aeho.demo.vo.VoteVo">
+  	select * from vote where vt_no = #{vt_no}
   </select>
   
   <insert id="insertVote">
@@ -21,7 +25,7 @@
   </update>
  
   <delete id="deleteVote">
-  	delete vote where v_no=#{v_no}
+  	delete vote where vt_no=#{vt_no}
   </delete>
   
   <select id="isChecked" resultType="com.aeho.demo.vo.VoteVo">

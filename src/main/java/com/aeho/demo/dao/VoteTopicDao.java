@@ -16,10 +16,10 @@ public interface VoteTopicDao {
 	
 	int insertVoteTopic(VoteTopicVo vtv);
 
-	//int updateVoteTopic(VoteTopicVo vtv);
+	int updateVoteTopic(VoteTopicVo vtv);
 	
 	int deleteVoteTopic(VoteTopicVo vtv);
 	
-	int updatCount(int vt_no);
+	int updateCount(int vt_no);
 	
 }

@@ -68,6 +68,7 @@
 			vt = trList[idx];
 			console.log(vt);
 			isChecked(m_id, vt.vt_no);
+			modal.find('.modalheader #myModalLabel').html(vt.vt_content);
 			modal.find('.modal-body #option_A').html("<img id='optionAImg' width='300px' height='300px' style='border-radius: 50%;' src='/img/vote/jajangmyeon.jpg'/><br><h4 style='color:gray'>♥ <b id='countA'>"+vt.vt_count_a+"</b></h4>").attr("idx", idx).attr("option", "a");
 			modal.find('.modal-body #option_B').html("<img id='optionBImg' width='300px' height='300px' style='border-radius: 50%;' src='/img/vote/jjambbong.jpg'/><br><h4 style='color:gray'>♥ <b id='countB'>"+vt.vt_count_b+"</b></h4>").attr("idx", idx).attr("option", "b");
 		});
@@ -86,6 +87,7 @@
 		//[투표] 버튼을 클릭
 		$(".btn-primary").click(function(){
 			isChecked(m_id, vt.vt_no);
+			console.log(option);
 			if( option == '' ){
 				alert("선택해주세요!");
 			}else{
@@ -108,6 +110,7 @@
 						}
 						isChecked(m_id, vt.vt_no);
 					}});
+					$("#voteModal").modal("hide");
 				//새로 고른 선택지와 DB의 선택지가 동일하다면
 				}else if((usersChoice == 1 && option == 'a')||(usersChoice == 2 && option == 'b')){
 					alert("이미 투표된 선택지입니다.");
@@ -124,9 +127,13 @@
 							alert(map.msg);
 							$("#countA").html(map.resultA);
 							$("#countB").html(map.resultB);
+							isChecked(m_id, vt.vt_no);
 						}});
+						$("#voteModal").modal("hide");
 					}
-					isChecked(m_id, vt.vt_no);
+					if(!re){
+						option = '';				
+					}
 				}
 			}
 		});
@@ -147,7 +154,7 @@
 		<div class="modal-content">
 			<div class="modalheader">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<!-- <h5 class="modal-title" id="myModalLabel">투표 내용</h5>-->
+				<h5 class="modal-title" id="myModalLabel"></h5>
 			</div>
 			<div class="modal-body" style="padding: 20px 50px 20px 50px;">
 				<div id="option_A" class="option" align="center" style="display:inline-block; float:left; margin:0 auto;"></div>

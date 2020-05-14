@@ -10,6 +10,8 @@ public interface VoteDao {
 	
 	VoteVo getVote(VoteVo vv);
 	
+	List<VoteVo> findByVoteTopic(VoteVo vv);
+	
 	int insertVote(VoteVo vv);
 	
 	int updateVote(VoteVo vv);

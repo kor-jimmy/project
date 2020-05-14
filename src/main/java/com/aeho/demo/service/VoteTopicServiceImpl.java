@@ -5,14 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aeho.demo.dao.VoteDao;
 import com.aeho.demo.dao.VoteTopicDao;
 import com.aeho.demo.vo.VoteTopicVo;
+import com.aeho.demo.vo.VoteVo;
 
 @Service
 public class VoteTopicServiceImpl implements VoteTopicService {
 
 	@Autowired
 	private VoteTopicDao votetopicDao;
+	@Autowired
+	private VoteDao voteDao;
 	
 	@Override
 	public List<VoteTopicVo> listVoteTopic() {
@@ -48,8 +52,30 @@ public class VoteTopicServiceImpl implements VoteTopicService {
 	@Override
 	public int deleteVoteTopic(VoteTopicVo vtv) {
 		// TODO Auto-generated method stub
-		int re = votetopicDao.deleteVoteTopic(vtv);
+		int re = 0;
+		VoteVo vv = new VoteVo();
+		vv.setVt_no(vtv.getVt_no());
+		if(voteDao.findByVoteTopic(vv) != null) {
+			int result_deleteV = voteDao.deleteVote(vv);
+			System.out.println("투표 삭제 결과: " + result_deleteV);
+		}else {
+		}
+		 
+		System.out.println("voteDao.findByVoteTopic(vv): " + voteDao.findByVoteTopic(vv));
+		int result_deleteVT = votetopicDao.deleteVoteTopic(vtv);
+
+		if( result_deleteVT > 0 ) {
+			re = 1;
+		}
+		
+		System.out.println(re);
 		return re;
+	}
+
+	@Override
+	public int updateVoteTopic(VoteTopicVo vtv) {
+		// TODO Auto-generated method stub
+		return votetopicDao.updateVoteTopic(vtv);
 	}
 
 }

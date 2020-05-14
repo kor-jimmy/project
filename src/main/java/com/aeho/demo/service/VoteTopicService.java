@@ -16,7 +16,7 @@ public interface VoteTopicService {
 	
 	int insertVoteTopic(VoteTopicVo vtv);
 
-	//int updateVoteTopic(VoteTopicVo vtv);
+	int updateVoteTopic(VoteTopicVo vtv);
 	
 	int deleteVoteTopic(VoteTopicVo vtv);
 	

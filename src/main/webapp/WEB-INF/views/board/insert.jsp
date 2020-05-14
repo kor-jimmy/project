@@ -11,15 +11,15 @@
 <table class="table table-bordered">
 	<tr>
 		<td>게시물 제목</td>
-		<td><input type="text" name="b_title" required="required" style="width:40%;"></td>
+		<td><input type="text" name="b_title" id="b_title" required="required" style="width:40%;"></td>
 	</tr>
 	<tr>
 		<td>작성자</td>
-		<td><input type="text" name="m_id" style="width:40%;" readonly="readonly" value="tiger"></td>
+		<td><input type="text" name="m_id" id="m_id" style="width:40%;" readonly="readonly" value="tiger"></td>
 	</tr>
 	<tr>
 		<td>내용</td>
-		<td><textarea class="text_content" id="b_content" name="b_content" rows="30%" cols="100%"></textarea></td>
+		<td><textarea class="text_content" id="b_content" name="b_content" required="required" rows="30%" cols="100%"></textarea></td>
 	</tr>
 </table>
 <button type="submit" id="insertBtn" class="btn btn-outline-dark">게시물 등록</button>
@@ -99,6 +99,11 @@
 
 		//폼태그 기본속성 제거
 		$("#insertBtn").on("click",function(e){
+			if($("#b_title").val() == null || $("#b_title").val() == "" || 
+					$("#b_content").val() == null || $("#b_content").val() == ""){
+				alert("제목이나 글 내용을 비워둘 수는 없습니다.");
+				return;
+			}
 			e.preventDefault();
 			var myInsert = $("#insertForm").serialize();
 			var date = new Date();
