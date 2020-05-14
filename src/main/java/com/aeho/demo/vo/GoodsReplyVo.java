@@ -20,5 +20,8 @@ public class GoodsReplyVo {
 	private String m_id;
 	private String gr_content;
 	private Date gr_date;
+	private int gr_ref;
+	private int gr_level;
+	private int gr_step;
 }
 

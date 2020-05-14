@@ -4,12 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aeho.demo.dao.GoodsReplyDao">
   <select id="listGoodsReply" resultType="com.aeho.demo.vo.GoodsReplyVo">
-  	select * from goodsReply where g_no=#{g_no}
+<!--
+  	select * from goodsReply where g_no=#{g_no}  -->
+  	select * from goodsReply where g_no=#{g_no} order by gr_no,gr_level
   </select>
-  
+  <select id="getGoodsReply" resultType="com.aeho.demo.vo.GoodsReplyVo">
+  	select * from goodsReply where gr_no=#{gr_no}
+  </select>
   <insert id="insertGoodsReply">
-  	insert into goodsReply(gr_no, g_no, m_id, gr_content)
-  	values(seq_goodsreply.nextval, #{g_no}, #{m_id}, #{gr_content})
+  	insert into goodsReply(gr_no, g_no, m_id, gr_content,gr_ref,gr_level,gr_step)
+  	values(seq_goodsreply.nextval, #{g_no}, #{m_id}, #{gr_content},#{gr_ref},#{gr_level},#{gr_step})
   </insert>
   
   <!-- m_id 확인 쿼리 추가 예정 -->
@@ -22,8 +26,11 @@
   	delete goodsReply where gr_no = #{gr_no}
   </delete>
   
-    <delete id="deleteGoods">
+  <delete id="deleteGoods">
   	delete goodsReply where g_no=#{g_no}
   </delete>
   
+  <update id="updateGstep">
+  	update goodsReply set gr_step=gr_step+1 where gr_no=#{gr_no}
+  </update>
 </mapper>

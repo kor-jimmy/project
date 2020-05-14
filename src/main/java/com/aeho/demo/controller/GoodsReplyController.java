@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aeho.demo.service.GoodsReplyService;
+import com.aeho.demo.service.GoodsService;
 import com.aeho.demo.vo.GoodsReplyVo;
 import com.aeho.demo.vo.HateVo;
 import com.google.gson.Gson;
@@ -22,7 +23,7 @@ import lombok.AllArgsConstructor;
 public class GoodsReplyController {
 	@Autowired
 	private GoodsReplyService goodsReplyService;
-
+	
 	public void setGoodsReplyService(GoodsReplyService goodsReplyService) {
 		this.goodsReplyService = goodsReplyService;
 	}
@@ -60,6 +61,13 @@ public class GoodsReplyController {
 	@GetMapping("/insertReply")
 	@ResponseBody
 	public String insertReply(GoodsReplyVo gv) {
+		int gr_level = goodsReplyService.getGoodsReply(gv.getGr_ref()).getGr_level();
+//		if(gv.getGr_ref() != 0) {
+//			gv.setGr_level(gr_level+1);
+//			System.out.println("레벨 ! ! !  :"+gv.getGr_level());
+//			GoodsReplyVo grv = goodsReplyService.getGoodsReply(gv.getGr_ref());
+//			goodsReplyService.updateGstep(grv);
+//		}
 		String result = "0";
 		int re = goodsReplyService.insertGoodsReply(gv);
 		if( re > 0 ) {
@@ -79,4 +87,14 @@ public class GoodsReplyController {
 		return result;
 	}
 	
+	@GetMapping("/getGoodsReply")
+	@ResponseBody
+	public String getGoodsReply(int gr_no) {
+		GoodsReplyVo grv = goodsReplyService.getGoodsReply(gr_no);
+		String goodsReply = new Gson().toJson(grv);
+		return goodsReply;
+	}
+	
+	
+
 }

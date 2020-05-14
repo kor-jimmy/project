@@ -12,4 +12,8 @@ public interface GoodsReplyService {
 	int deleteGoodsReply(GoodsReplyVo gv);
 	
 	int deleteGoods(int g_no);
+	
+	GoodsReplyVo getGoodsReply(int gr_no);
+	
+	int updateGstep(GoodsReplyVo gv);
 }
