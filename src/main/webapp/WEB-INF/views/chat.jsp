@@ -51,18 +51,18 @@
 
 <script type="text/javascript">
 	var ws;
-
 	function wsOpen(){
-		ws = new WebSocket("ws://" + location.host + "/chat");
+		ws = new WebSocket("ws://"+location.host+"/chat/"+$("#cr_num").val());
 		wsEvt();
 	}
 		
 	function wsEvt() {
 		ws.onopen = function(data){
-			//소켓이 열리면 초기화 세팅하기
+			//소켓이 열리면 동작
 		}
 		
 		ws.onmessage = function(data) {
+			//메세지를 받으면 동작
 			var msg = data.data;
 			if(msg != null && msg.trim() != ''){
 				var d = JSON.parse(msg);
@@ -103,8 +103,10 @@
 	}
 
 	function send() {
+//		console.log($("#cr_num").val());
 	var option ={
 		type:"message",
+		cr_num : $("#cr_num").val(),
 		sessionId : $("#sessionId").val(),
 		userName : $("#userName").val(),
 		msg : $("#chatting").val()
@@ -115,8 +117,10 @@
 </script>
 <body>
 	<div id="container" class="container">
-		<h1>채팅</h1>
-		<input type="hidden" id="sessionId" value=""></input>
+		<h1>${cr_name}의 채팅방</h1>
+		<input type="hidden" id="sessionId" value=""></input><!-- 
+		<input type="hidden" id="cr_num" value="${cr_num }"></input> -->		
+		
 		<div id="chating" class="chating">
 		</div>
 		
@@ -133,6 +137,7 @@
 			<table class="inputTable">
 				<tr>
 					<th>메시지</th>
+					<input type="hidden" id="cr_num" value="${cr_num }"></input>
 					<th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
 					<th><button onclick="send()" id="sendBtn">보내기</button></th>
 				</tr>
