@@ -178,7 +178,7 @@
             <!--인기글 일간,주간,월간-->
             <div class="col-sm-5">
             	<div>
-            		<h2>Ae!-HO? 인기글</h2>
+            		<h3>Ae?-HO! 인기글</h3>
 	                <p>
 	                    <button id="todayBestBtn" type="button" class="btn btn-light">today</button>
 	                    <button id="weekBestBtn" type="button" class="btn btn-light">week</button>
@@ -190,15 +190,15 @@
             	</div>
                 <hr>
                 <div>
-                	<h3>사이드 메뉴</h3>
-	                <p>사이드 메뉴에서 여러 소식을 확인해 보세요!</p>
+                	<h3>AE-HO가들의 pic!</h3>
+	                <p>현재 진행중인 투표에 참여해 보세요!</p>
 	                <ul class="list-group">
-	                    <li class="list-group-item list-group-item-action"><a href="#">Ae-Ho 공지사항</a></li>
-	                    <li class="list-group-item list-group-item-action"><a href="#">이벤트</a></li>
-	                    <li class="list-group-item list-group-item-action"><a href="#">일정확인</a></li>
+	                    <li class="list-group-item list-group-item-action"><a href="#">짜장면vs짬뽕</a></li>
+	                    <li class="list-group-item list-group-item-action"><a href="#">팹시vs코카콜라</a></li>
+	                    <li class="list-group-item list-group-item-action"><a href="#">소녀시대vs원더걸스</a></li>
 	                </ul>
 	                <hr>
-	                <h3>오늘의 영상</h3>
+	                <h3>추천 영상</h3>
 	                <div id="iframe">
 	                    
 	                </div>
