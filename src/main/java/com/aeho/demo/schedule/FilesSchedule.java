@@ -22,7 +22,7 @@ public class FilesSchedule {
 	@Autowired
 	private BoardFilesSevice boardFilesService;
 
-	@Scheduled(cron="0 59 * * * *")
+	@Scheduled(cron="0 0 * * * *")
 	public void removeFiles() {
 		
 		System.out.println("스케줄링 작동중");
