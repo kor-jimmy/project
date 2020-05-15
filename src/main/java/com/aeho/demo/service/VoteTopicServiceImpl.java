@@ -53,18 +53,20 @@ public class VoteTopicServiceImpl implements VoteTopicService {
 	public int deleteVoteTopic(VoteTopicVo vtv) {
 		// TODO Auto-generated method stub
 		int re = 0;
+		int result_deleteV = 0;
 		VoteVo vv = new VoteVo();
 		vv.setVt_no(vtv.getVt_no());
-		if(voteDao.findByVoteTopic(vv) != null) {
-			int result_deleteV = voteDao.deleteVote(vv);
+		if(voteDao.findByVoteTopic(vv).size() > 0) {
+			result_deleteV = voteDao.deleteVote(vv);
 			System.out.println("투표 삭제 결과: " + result_deleteV);
-		}else {
+		}else if(voteDao.findByVoteTopic(vv).size() == 0){
+			result_deleteV = 1;
 		}
 		 
 		System.out.println("voteDao.findByVoteTopic(vv): " + voteDao.findByVoteTopic(vv));
 		int result_deleteVT = votetopicDao.deleteVoteTopic(vtv);
 
-		if( result_deleteVT > 0 ) {
+		if( result_deleteVT > 0 && result_deleteV > 0) {
 			re = 1;
 		}
 		

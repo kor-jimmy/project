@@ -3,7 +3,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="../includes/header.jsp"%>
-
+<style>
+	#container{
+		height: 600px;
+	}
+</style>
 <script type="text/javascript">
 	$(function(){
 	
@@ -193,13 +197,13 @@
 		//0514 일단 location으로 처리
 	});
 </script>
-
-<h2>투표</h2>
-<div id="insertDiv">
+<div  id="container">
+	<h2>투표</h2>
+	<div id="insertDiv">
+	</div>
+	<table class="table table-hover" id="ingTable">
+	</table>
 </div>
-<table class="table table-hover" id="ingTable">
-
-</table>
 <hr>
 
 <!-- modal -->

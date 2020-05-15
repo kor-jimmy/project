@@ -56,6 +56,11 @@
 		topicList();
 
 		var vt;
+
+		$("#voteModal").on('hidden.bs.modal', function(e){
+			self.location = "/vote/vote";
+			e.stopImmediatePropagation(); 
+		});
 		
 		$(".modalTr").on("click", function(){
 			$("#voteModal").modal('show');
@@ -124,12 +129,11 @@
 							data = {m_id: m_id, vt_no: vt.vt_no, v_result: 2};
 						}
 						$.ajax("/vote/update", {data: data, success: function(map){
-							alert(map.msg);
 							$("#countA").html(map.resultA);
 							$("#countB").html(map.resultB);
 							isChecked(m_id, vt.vt_no);
+							alert(map.msg);
 						}});
-						$("#voteModal").modal("hide");
 					}
 					if(!re){
 						option = '';				
