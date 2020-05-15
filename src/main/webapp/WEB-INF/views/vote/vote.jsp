@@ -39,7 +39,7 @@
 				$.each(list, function(idx, v){
 					trList.push(v);
 					var tr = $('<tr class="modalTr" data-toggle="modal" data-target="#voteModal"></tr>').attr("data-index", idx);
-					var content = $("<td></td>").html(v.vt_content);
+					var content = $("<td></td>").html(v.vt_content.split("/")[0] + " VS " + v.vt_content.split("/")[1]);
 					tr.append(content);
 					$("#ingTable").append(tr);
 					/*
@@ -68,9 +68,9 @@
 			vt = trList[idx];
 			console.log(vt);
 			isChecked(m_id, vt.vt_no);
-			modal.find('.modalheader #myModalLabel').html(vt.vt_content);
-			modal.find('.modal-body #option_A').html("<img id='optionAImg' width='300px' height='300px' style='border-radius: 50%;' src='/img/vote/jajangmyeon.jpg'/><br><h4 style='color:gray'>♥ <b id='countA'>"+vt.vt_count_a+"</b></h4>").attr("idx", idx).attr("option", "a");
-			modal.find('.modal-body #option_B').html("<img id='optionBImg' width='300px' height='300px' style='border-radius: 50%;' src='/img/vote/jjambbong.jpg'/><br><h4 style='color:gray'>♥ <b id='countB'>"+vt.vt_count_b+"</b></h4>").attr("idx", idx).attr("option", "b");
+			modal.find('.modalheader #myModalLabel').html(vt.vt_content.split("/")[0] + " VS " + vt.vt_content.split("/")[1]);
+			modal.find('.modal-body #option_A').html("<img id='optionAImg' width='300px' height='300px' style='border-radius: 50%;' src='/img/vote/"+vt.vt_img_a+"'/><br><h4 style='color:gray'>♥ <b id='countA'>"+vt.vt_count_a+"</b></h4>").attr("idx", idx).attr("option", "a");
+			modal.find('.modal-body #option_B').html("<img id='optionBImg' width='300px' height='300px' style='border-radius: 50%;' src='/img/vote/"+vt.vt_img_b+"'/><br><h4 style='color:gray'>♥ <b id='countB'>"+vt.vt_count_b+"</b></h4>").attr("idx", idx).attr("option", "b");
 		});
 		
 		var option = '';
@@ -152,7 +152,7 @@
 <div class="modal fade" id="voteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-centered">
 		<div class="modal-content">
-			<div class="modalheader">
+			<div class="modalheader" align="center" style="padding: 20px;">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h5 class="modal-title" id="myModalLabel"></h5>
 			</div>
