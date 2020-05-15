@@ -66,13 +66,15 @@
 			$.each(reply, function(idx,r){
  				var tr = $("<tr class='rep'></tr>");
 				var button= $("<button class='deleteReply'></button>").text("삭제").attr("r_no",r.r_no);
+ 				var buttonRe = $("<button class='reReply'></button>").text("답글").attr("r_no",r.r_no);
+				
 				var td1 = $("<td width=10%></td>").html(r.m_id);
 				var td2 = $("<td width=50%></td>").html(r.r_content);
 				//날짜 양식 맞춰야함.
 				var td3 = $("<td width=20%></td>").html(r.r_date);
 				var td4 = $("<td width=10%></td>").html("신고버튼");
 				var td5 = $("<td width=10%></td>");
-				td5.append(button);
+				td5.append(buttonRe,button);
 				tr.append(td1,td2,td3,td4,td5);
 				$("#replyTable").append(tr);
 			})

@@ -30,7 +30,7 @@
 			$.each(goodsReply, function(idx,r){
  				var tr = $("<tr></tr>");
  				var button = $("<button class='deleteReply'></button>").text("삭제").attr("gr_no",r.gr_no);
- 				var buttonRe = $("<button class='reReply'></button>").text("대댓글").attr("gr_no",r.gr_no);
+ 				var buttonRe = $("<button class='reReply'></button>").text("답글").attr("gr_no",r.gr_no);
 				var td1 = $("<td></td>").html(r.gr_no);
 				var td2 = $("<td></td>").html(r.g_no);
 				var td3 = $("<td></td>").html(r.m_id);
