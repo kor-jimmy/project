@@ -6,7 +6,7 @@
   <select id="listGoodsReply" resultType="com.aeho.demo.vo.GoodsReplyVo">
 <!--
   	select * from goodsReply where g_no=#{g_no}  -->
-  	select * from goodsReply where g_no=#{g_no} order by gr_step,gr_level,gr_no
+  	select * from goodsReply where g_no=#{g_no} order by gr_ref,gr_step,gr_level,gr_no
   </select>
   
   <select id="getGoodsReply" resultType="com.aeho.demo.vo.GoodsReplyVo">
@@ -20,7 +20,7 @@
   	insert into goodsReply(gr_no, g_no, m_id, gr_content,gr_ref,gr_level,gr_step)
       	values(#{gr_no}, #{g_no}, #{m_id}, #{gr_content},
       	<choose>
-      		<when test="gr_ref.equals('0')">
+      		<when test="gr_ref==0">
       			#{gr_no}
       		</when>
       		<otherwise>
