@@ -74,6 +74,29 @@
 				var td3 = $("<td width=20%></td>").html(r.r_date);
 				var td4 = $("<td width=10%></td>").html("신고버튼");
 				var td5 = $("<td width=10%></td>");
+				$(buttonRe).on("click",function(){
+					$("#rereplyInput").remove();
+					var par = $(this).parent().parent();
+					var r_no = par.children(":eq(0)").html();//댓글번호
+					var b_no = par.children(":eq(1)").html();//상품 글 번호
+					var tr = $("<tr id='rereplyInput'><td>tiger:</td></tr>");
+					var input = $("<input type='text'>");
+					var btnReInsert = $("<button class='insertReReply'>등록</button>");
+					$(tr).append(input,btnReInsert);
+					$(btnReInsert).on("click",function(){
+						var re = confirm("댓글을 등록하시겠습니까? 한 번 입력한 댓글은 수정이 불가하므로 신중하게 입력해 주세요.");
+						var data = {b_no:b_no , m_id:'tiger', r_content:$(input).val(),r_ref:r_no};
+						if(re){
+							$.ajax("/reply/insert",{type:"POST",data:data, success:function(result){
+								alert(result);
+								location.href="/goods/get?b_no="+b_no;
+							}})
+						}				
+						$(this).parent().remove();
+					})
+					var table=$(par).parent();
+					$(table).append(tr);
+				})
 				td5.append(buttonRe,button);
 				tr.append(td1,td2,td3,td4,td5);
 				$("#replyTable").append(tr);

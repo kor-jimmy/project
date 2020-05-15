@@ -36,9 +36,6 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 
 			gv.setGr_ref(grv.getGr_ref());
 		}
-		else {
-//			gv.setGr_ref(gv.getGr_no());//여기 gr_no 먼저 얻을거 생각하기 (부모댓글이 없는 경우)
-		}
 		int re = goodsReplyDao.insertGoodsReply(gv);
 		String cntKeyword = "reply";
 		goodsDao.updateCnt(gv.getG_no(), cntKeyword);

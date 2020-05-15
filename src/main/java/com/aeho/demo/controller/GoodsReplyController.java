@@ -61,13 +61,6 @@ public class GoodsReplyController {
 	@GetMapping("/insertReply")
 	@ResponseBody
 	public String insertReply(GoodsReplyVo gv) {
-		int gr_level = goodsReplyService.getGoodsReply(gv.getGr_ref()).getGr_level();
-//		if(gv.getGr_ref() != 0) {
-//			gv.setGr_level(gr_level+1);
-//			System.out.println("레벨 ! ! !  :"+gv.getGr_level());
-//			GoodsReplyVo grv = goodsReplyService.getGoodsReply(gv.getGr_ref());
-//			goodsReplyService.updateGstep(grv);
-//		}
 		String result = "0";
 		int re = goodsReplyService.insertGoodsReply(gv);
 		if( re > 0 ) {

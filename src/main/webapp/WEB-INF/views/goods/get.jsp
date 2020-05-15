@@ -43,7 +43,6 @@
 				//채은) 05/13 대댓글작업 시작~!
 				$(buttonRe).on("click",function(){
 					$("#rereplyInput").remove();
-					
 					var par = $(this).parent().parent();
 					var gr_no = par.children(":eq(0)").html();//댓글번호
 					var g_no = par.children(":eq(1)").html();//상품 글 번호
