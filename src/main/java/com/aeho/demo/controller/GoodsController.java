@@ -156,6 +156,7 @@ public class GoodsController {
 	}
 	
 	@PostMapping("/update")
+	@ResponseBody
 	public String update(GoodsVo gv, RedirectAttributes rttr) {
 		String str ="상품 수정 실패";
 		int re = goodsService.updateGoods(gv);

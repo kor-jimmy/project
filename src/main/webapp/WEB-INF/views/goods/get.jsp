@@ -12,7 +12,6 @@
 		$("#updateBtn").on("click",function(){
 			self.location = "/goods/update?g_no="+g_no;
 		})
-		
 		$("#deleteBtn").on("click",function(){
 			console.log(g_no);
 			var re = confirm("정말로 삭제하시겠습니까?");
@@ -87,11 +86,12 @@
 			var grno = $(this).attr("gr_no");
 			var re = confirm("진짜로 댓글을 삭제하겠습니까?");
 			if(re){
-				$.ajax("/goodsReply/delete", {type:"GET", data:{gr_no:grno}, success:function(result){
-						alert(result);
-						location.href="/goods/get?g_no="+g_no;
+				$.ajax("/goodsReply/delete", {type:"GET", data:{gr_no:grno, g_no:g_no}, success:function(result){
+					alert(result);
+					location.href="/goods/get?g_no="+g_no;
 				}})
 			}
+			
 		})
 	})
 </script>

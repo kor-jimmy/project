@@ -98,13 +98,14 @@
   	update goods set g_title = #{g_title}, g_content=#{g_content}, g_price=#{g_price}
   	where g_no = #{g_no}
   </update>
-  
   <update id="updateCnt">
   	update goods set
-  	<if test="cntKeyword != null and cntKeyword.equals('reply')">
-            g_replycnt = (select count(*) from goodsReply where g_no = #{g_no})
-    </if>
-  	where g_no = #{g_no}
+  	<choose>
+  		<when test="cntKeyword != null and cntKeyword.equals('reply')">
+  			g_replycnt = (select count(*) from goodsReply where g_no = #{g_no})
+  		</when>
+  	</choose> 
+    where g_no=#{g_no}
   </update>
   
   <delete id="deleteGoods">

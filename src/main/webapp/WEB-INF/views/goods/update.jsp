@@ -136,7 +136,10 @@
 						console.log(uploadFileList);
 						$.ajax({
 							data : JSON.stringify(uploadFileList),
-							dataType : "goods/fileDBupload",
+							dataType : "json",
+							contentType:"application/json; charset=utf-8",
+							type: "POST",
+							url:"/goods/fileDBupload",
 							success : function(msg){
 								location.href="/goods/get?g_no="+goodsNum;
 							}

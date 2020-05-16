@@ -18,4 +18,5 @@ public interface GoodsService {
 	int updateGoods(GoodsVo gv);
 	
 	int deleteGoods(GoodsVo gv);
+	
 }

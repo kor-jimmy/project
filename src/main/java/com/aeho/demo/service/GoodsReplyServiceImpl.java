@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.aeho.demo.dao.GoodsDao;
 import com.aeho.demo.dao.GoodsReplyDao;
@@ -23,6 +24,7 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	}
 
 	@Override
+	@Transactional(rollbackFor=Exception.class)
 	public int insertGoodsReply(GoodsReplyVo gv) {
 		if(gv.getGr_ref() != 0) {
 			GoodsReplyVo grv = goodsReplyDao.getGoodsReply(gv.getGr_ref());
@@ -36,24 +38,43 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 
 			gv.setGr_ref(grv.getGr_ref());
 		}
-		int re = goodsReplyDao.insertGoodsReply(gv);
-		String cntKeyword = "reply";
-		goodsDao.updateCnt(gv.getG_no(), cntKeyword);
+		int re = 0;
+		try {
+			int result_insert = goodsReplyDao.insertGoodsReply(gv);
+			String cntKeyword = "reply";
+			int result_update = goodsDao.updateCnt(gv.getG_no(), cntKeyword);
+			if( result_insert > 0 && result_update > 0)
+				re = 1;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
+		
 		return re;
 	}
 
 	@Override
 	public int deleteGoodsReply(GoodsReplyVo gv) {
-		int re = goodsReplyDao.deleteGoodsReply(gv);
-		String cntKeyword = "reply";
-		goodsDao.updateCnt(gv.getG_no(), cntKeyword);
+		int re=0;
+		try {
+			int result_delete = goodsReplyDao.deleteGoodsReply(gv);
+			String cntKeyword="reply";
+			System.out.println("gno:"+gv.getG_no());
+			int result_update = goodsDao.updateCnt(gv.getG_no(), cntKeyword);
+			
+			if(result_delete > 0 && result_update > 0)
+				re=1;
+			
+			System.out.println("업데이트결과:"+result_update);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());// TODO: handle exception
+		}
 		return re;
 	}
 
 	@Override
-	public int deleteGoods(int g_no) {
+	public int deleteGoodsandReply(int g_no) {
 		// TODO Auto-generated method stub
-		return goodsReplyDao.deleteGoods(g_no);
+		return goodsReplyDao.deleteGoodsandReply(g_no);
 	}
 
 	@Override

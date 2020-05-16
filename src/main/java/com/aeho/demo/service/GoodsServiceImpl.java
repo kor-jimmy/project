@@ -61,7 +61,7 @@ public class GoodsServiceImpl implements GoodsService {
 			int result_files=goodsFilesDao.deleteByGno(gv.getG_no());	//파일 삭제 번호
 		}
 		if(goodsReplyDao.listGoodsReply(gv.getG_no()) != null) {
-			int result_goodsReply = goodsReplyDao.deleteGoods(gv.getG_no());//댓글 삭제 번호
+			int result_goodsReply = goodsReplyDao.deleteGoodsandReply(gv.getG_no());//댓글 삭제 번호
 		}
 //		int result_goodsReply = goodsReplyDao.deleteGoods(gv.getG_no());
 		int result_goods = goodsDao.deleteGoods(gv);

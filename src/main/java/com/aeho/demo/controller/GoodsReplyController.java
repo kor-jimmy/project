@@ -35,13 +35,11 @@ public class GoodsReplyController {
 		return gson.toJson(list);
 	}
 	
-	@GetMapping("/insert")
-	public void insert() {}
 	
 	@PostMapping("/insert")
 	public String insert(GoodsReplyVo gv) {
-		int re = goodsReplyService.insertGoodsReply(gv);
 		String str = "댓글등록 실패";
+		int re = goodsReplyService.insertGoodsReply(gv);
 		if(re>0) {
 			str = "댓글등록에 성공했습니다.";
 		}
@@ -57,29 +55,7 @@ public class GoodsReplyController {
 		}
 		return str;
 	}
-	
-	@GetMapping("/insertReply")
-	@ResponseBody
-	public String insertReply(GoodsReplyVo gv) {
-		String result = "0";
-		int re = goodsReplyService.insertGoodsReply(gv);
-		if( re > 0 ) {
-			result = "1";
-		}
-		return result;
-	}
-	
-	@GetMapping("/deleteReply")
-	@ResponseBody
-	public String deleteReply(GoodsReplyVo gv) {
-		String result = "0";
-		int re = goodsReplyService.deleteGoodsReply(gv);
-		if(re > 0) {
-			result = "1";
-		}
-		return result;
-	}
-	
+		
 	@GetMapping("/getGoodsReply")
 	@ResponseBody
 	public String getGoodsReply(int gr_no) {
