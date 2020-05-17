@@ -28,6 +28,10 @@
 		var fileList = [];
 		var uploadFileList = [];
 
+		//시큐리티 csrf
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
 		//이미지 파일 유효성 검사
 		var imgCheck = new RegExp("^(image)/(.*?)");
 		var maxSize = 10485760;
@@ -79,6 +83,10 @@
 				url : "/board/testUpload",
 				contentType : false,
 				processData : false,
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token)	
+				},
+				cache:false,
 				success : function(data) {
 	            	//항상 업로드된 파일의 url이 있어야 한다.
 					$(editor).summernote('insertImage', data.url);
@@ -103,6 +111,10 @@
 				data : myInsert,
 				type : "POST",
 				url : "/board/update",
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token)	
+				},
+				cache:false,
 				success : function(boardNum){
 					console.log(boardNum);
 					if(boardNum>0){
@@ -119,11 +131,15 @@
 						})
 						console.log(uploadFileList);
 						$.ajax({
+							url : "/board/fileDBupload",
 							data : JSON.stringify(uploadFileList),
 							dataType : "json",
 							contentType:"application/json; charset=utf-8",
 							type : "POST",
-							url : "/board/fileDBupload",
+							beforeSend: function(xhr){
+								xhr.setRequestHeader(header,token)	
+							},
+							cache:false,
 							success : function(msg){
 								location.href="/board/get?b_no="+boardNum;
 							}

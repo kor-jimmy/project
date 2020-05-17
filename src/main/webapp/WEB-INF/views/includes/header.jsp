@@ -128,7 +128,7 @@
 					</div>
                 </form>
          		<div>
-	         		<sec:authorize access="hasRole('MASTER')">
+	         		<sec:authorize access="hasRole('ROLE_MASTER')">
 	         			<a href="/admin">관리자 페이지</a>
 	         		</sec:authorize>
 
