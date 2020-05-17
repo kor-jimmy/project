@@ -2,10 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 
 <head>
+
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
+</head>
+
     <meta charset="UTF-8">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <title>AE-HO!</title>
@@ -18,12 +25,7 @@
  	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->  
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"> -->
 <!-- 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-  	<style>
-  	#topicon{
-  		margin-right: 20px;
-	    margin-bottom: 21px;
-  	}
-  	</style>
+  
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -35,8 +37,8 @@
     </script>
     
     <!-- summer note -->
-    <script src="/resources/editor/summernote-lite.js"></script>
-	<script src="/resources/editor/lang/summernote-ko-KR.js"></script>
+    <script src="../resources/editor/summernote-lite.js"></script>
+	<script src="../resources/editor/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/resources/editor/summernote-lite.css">
 	<style>
         #searchDiv{
@@ -125,7 +127,20 @@
 	                    </button>	
 					</div>
                 </form>
-               
+         		<div>
+	         		<sec:authorize access="hasRole('MASTER')">
+	         			<a href="/admin">관리자 페이지</a>
+	         		</sec:authorize>
+
+	         		<sec:authorize access="isAnonymous()">
+						<a href="/loginCustom">로그인</a>
+					</sec:authorize>
+					
+					<sec:authorize access="isAuthenticated()">
+						<a href="/logout">로그아웃</a>   
+						<div id="user_id"><sec:authentication property="principal.username"/></div>
+					</sec:authorize>
+         		</div>
             </div>
         </div>
     </div>
@@ -182,7 +197,7 @@
     </nav>
     <!--end menu -->
 	
-	<a style="display:scroll;position:fixed;bottom:10px;right:10px;z-index: 1000" href="#" title="맨위로"><img width=70 height=70 id="topicon" src="/img/topIcon2.png"></a>
+	<a style="display:scroll;position:fixed;bottom:10px;right:10px;z-index: 1000" href="#" title="맨위로"><img width=40 height=40 src="/img/topicon.png"></a>
 
 	
     <!--content-->

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="../includes/header.jsp"%>
 <style>
 
@@ -15,7 +16,7 @@
 	</tr>
 	<tr>
 		<td>작성자</td>
-		<td><input type="text" name="m_id" id="m_id" style="width:40%;" readonly="readonly" value="tiger"></td>
+		<td><input type="text" name="m_id" id="m_id" style="width:40%;" readonly="readonly" value="<sec:authentication property="principal.username"/>"></td>
 	</tr>
 	<tr>
 		<td>내용</td>
@@ -87,6 +88,9 @@
 				url : "/board/testUpload",
 				contentType : false,
 				processData : false,
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header,token)
+				},
 				success : function(data) {
 	            	//항상 업로드된 파일의 url이 있어야 한다.
 					$(editor).summernote('insertImage', data.url);
@@ -97,6 +101,12 @@
 			});
 		}
 
+		//시큐리티 csrf 
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		console.log(token)
+		console.log(header)
+		
 		//폼태그 기본속성 제거
 		$("#insertBtn").on("click",function(e){
 			if($("#b_title").val() == null || $("#b_title").val() == "" || 
@@ -111,11 +121,15 @@
 			var month = date.getMonth()+1;
 			if( month < 10 ) {
 				month = "0"+month;
-			}
+			}	
 			$.ajax({
+				url : "/board/insert",
 				data : myInsert,
 				type : "POST",
-				url : "/board/insert",
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header,token)
+				},
+				cache : false,
 				success : function(boardNum){
 					console.log(boardNum);
 					if(boardNum>0){
@@ -132,11 +146,15 @@
 						})
 						console.log(uploadFileList);
 						$.ajax({
+							url : "/board/fileDBupload",
 							data : JSON.stringify(uploadFileList),
 							dataType : "json",
 							contentType:"application/json; charset=utf-8",
 							type : "POST",
-							url : "/board/fileDBupload",
+							beforeSend : function(xhr){
+								xhr.setRequestHeader(header,token)
+							},
+							cache : false,
 							success : function(msg){
 								location.href="/board/get?b_no="+boardNum;
 							}

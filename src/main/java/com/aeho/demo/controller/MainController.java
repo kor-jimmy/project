@@ -3,12 +3,16 @@ package com.aeho.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aeho.demo.domain.CategoryDTO;
+import com.aeho.demo.security.MemberPrincipal;
 import com.aeho.demo.service.MainServcie;
 import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.CategoryVo;
@@ -67,4 +71,25 @@ public class MainController {
 		System.out.println(menuCategoryList);
 		return menuCategoryList;
 	}
+	
+	@GetMapping("/checkAuth")
+	public String loadExceptionPage(ModelMap model) throws Exception{
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		MemberPrincipal memberPrincipal = (MemberPrincipal) auth.getPrincipal();
+		
+		System.out.println(memberPrincipal.getUsername());
+		System.out.println(memberPrincipal.getAuthorities());
+		
+		model.addAttribute("name",memberPrincipal.getUsername());
+		model.addAttribute("auth",memberPrincipal.getAuthorities());
+		
+		return "redirect:/loginError";
+	}
+	
+	@GetMapping("/access-denied")
+	public String loadAccessdeniedPage() throws Exception{
+		return "redirect:/loginError";
+	}
+
 }

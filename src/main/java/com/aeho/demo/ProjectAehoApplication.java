@@ -14,7 +14,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 @SpringBootApplication
 @Configuration
 public class ProjectAehoApplication {
-
+ 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectAehoApplication.class, args);
 	}

@@ -13,68 +13,28 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeho.demo.service.MemberService;
+import com.aeho.demo.service.MemberServiceSecurity;
 import com.aeho.demo.vo.MemberVo;
 
 import lombok.AllArgsConstructor;
 
 @Controller
 @RequestMapping("/member/*")
-@AllArgsConstructor
 public class MemberController {
+	
 	@Autowired
-	private MemberService memberService;
-	
-	public void setMemberService(MemberService memberService) {
-		this.memberService = memberService;
-	}
-	
-	@GetMapping("/list")
-	public void list(Model model) {
-		model.addAttribute("list", memberService.listMember());
-	}
-	
-	@GetMapping({"/get","/update"})
-	public void getMember(MemberVo mv, Model model) {
-		model.addAttribute("member", memberService.getMember(mv));
-	}
-	
+	private MemberServiceSecurity memberServiceSecurity;
+
 	@GetMapping("/insert")
-	public void insert() {
+	public void insertMember() {
+		
 	}
 	
 	@PostMapping("/insert")
-	public String insert(MemberVo mv, RedirectAttributes rttr) {
-		String str = "회원 등록 실패";
-		int re = memberService.insertMember(mv);
-		if(re > 0) {
-			str="회원 등록 성공";
-		}
-		rttr.addFlashAttribute("result", str);
-		return "redirect:/member/list";
+	public String insertMember(MemberVo mv, RedirectAttributes rttr) {
+		System.out.println("컨트롤러 동작중");
+		memberServiceSecurity.insertMember(mv);
+		return "redirect:/aeho";
 	}
 	
-	@PostMapping("/update")
-	public String update(MemberVo mv, RedirectAttributes rttr) {
-		String str ="회원 수정 실패";
-		int re = memberService.updateMember(mv);
-		if(re > 0) {
-			str="회원 수정 성공";
-		}
-		rttr.addFlashAttribute("result",str);
-		return "redirect:/member/get?m_id="+mv.getM_id();
-	}
-	
-	@GetMapping("/delete")
-	@ResponseBody
-	public String delete(MemberVo mv) {
-		String str = "회원 삭제 실패";
-		int re = memberService.deleteMember(mv);
-		if(re > 0) {
-			str = "회원 삭제 성공";
-		}
-		return str;
-	}
-	
-	
-
 }

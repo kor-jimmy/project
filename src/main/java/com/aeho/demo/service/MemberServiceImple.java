@@ -20,8 +20,8 @@ public class MemberServiceImple implements MemberService {
 	}
 
 	@Override
-	public MemberVo getMember(MemberVo mv) {
-		return m_dao.getMember(mv);
+	public MemberVo getMember(String m_id) {
+		return m_dao.getMember(m_id);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ public interface MemberService {
 
 	List<MemberVo> listMember();
 	
-	MemberVo getMember(MemberVo mv);
+	MemberVo getMember(String m_id);
 	
 	int insertMember(MemberVo mv);
 	
