@@ -38,16 +38,21 @@
 				var list = JSON.parse(list);
 				$.each(list, function(idx, v){
 					trList.push(v);
+					var radiusContainer = $('<div style="width: 100%; height: 150px; display: inline-block; border-radius: 30px; overflow: hidden;"></div>');
+					var imglocBox = $('<div style="width: 110%; height: 150px; margin-left: -5%;display: inline-block; text-align: center;"></div>');
+					var divA = $('<div class="divA" style="width: 49%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;"></div>');
+					var divB = $('<div class="divB" style="width: 49%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;"></div>');
+					var imgA = $('<img src="/img/vote/'+v.vt_img_a+'" style="width: 100%; margin-right: 50%; margin-top: -15%;">');
+					var imgB = $('<img src="/img/vote/'+v.vt_img_b+'" style="width: 100%; margin-right: 50%; margin-top: -15%;">');
+					divA.append(imgA);
+					divB.append(imgB);
+					imglocBox.append(divA, divB);
+					radiusContainer.append(imglocBox);
 					var tr = $('<tr class="modalTr" data-toggle="modal" data-target="#voteModal"></tr>').attr("data-index", idx);
-					var content = $("<td></td>").html(v.vt_content.split("/")[0] + " VS " + v.vt_content.split("/")[1]);
-					tr.append(content);
+					var tdBox = $("<td></td>").html(radiusContainer);
+					tr.append(tdBox);
 					$("#ingTable").append(tr);
-					/*
-					$(tr).click(function(){
-						$("#option_A").append("<img width='100px' height='100px' src='/img/jajangmyeon.jpg'/>");
-						$("#option_B").append("<img width='100px' height='100px' src='/img/jjambbong.jpg'/>");
-						$("#voteModal").modal({keyboard: true});
-					})*/
+					
 				});
 				console.log(trList);
 			}});
@@ -56,11 +61,6 @@
 		topicList();
 
 		var vt;
-
-		$("#voteModal").on('hidden.bs.modal', function(e){
-			self.location = "/vote/vote";
-			e.stopImmediatePropagation(); 
-		});
 		
 		$(".modalTr").on("click", function(){
 			$("#voteModal").modal('show');
@@ -73,7 +73,7 @@
 			vt = trList[idx];
 			console.log(vt);
 			isChecked(m_id, vt.vt_no);
-			modal.find('.modalheader #myModalLabel').html(vt.vt_content.split("/")[0] + " VS " + vt.vt_content.split("/")[1]);
+			modal.find('.modalheader #myModalLabel').html(vt.vt_content);
 			modal.find('.modal-body #option_A').html("<img id='optionAImg' width='300px' height='300px' style='border-radius: 50%;' src='/img/vote/"+vt.vt_img_a+"'/><br><h4 style='color:gray'>♥ <b id='countA'>"+vt.vt_count_a+"</b></h4>").attr("idx", idx).attr("option", "a");
 			modal.find('.modal-body #option_B').html("<img id='optionBImg' width='300px' height='300px' style='border-radius: 50%;' src='/img/vote/"+vt.vt_img_b+"'/><br><h4 style='color:gray'>♥ <b id='countB'>"+vt.vt_count_b+"</b></h4>").attr("idx", idx).attr("option", "b");
 		});
@@ -129,11 +129,12 @@
 							data = {m_id: m_id, vt_no: vt.vt_no, v_result: 2};
 						}
 						$.ajax("/vote/update", {data: data, success: function(map){
+							alert(map.msg);
 							$("#countA").html(map.resultA);
 							$("#countB").html(map.resultB);
 							isChecked(m_id, vt.vt_no);
-							alert(map.msg);
 						}});
+						$("#voteModal").modal("hide");
 					}
 					if(!re){
 						option = '';				
@@ -148,15 +149,29 @@
 </script>
 
 <h2>투표</h2>
-<table class="table table-hover" id="ingTable">
+<table>
+	<div style="padding: 20px;" id="ingTable"></div>
 </table>
-<hr>
+<!-- 
+<div style="padding: 20px;">
+	<div style="width: 100%; height: 150px; display: inline-block; border-radius: 30px; overflow: hidden;">
+		<div style="width: 110%; height: 150px; margin-left: -5%;display: inline-block; text-align: center;">
+			<div class="divA" style="width: 49%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;">
+				<img src="/img/vote/jajangmyeon.jpg" style="width: 100%; margin-right: 50%; margin-top: -15%;">
+			</div>
+			<div class="divB" style="width: 49%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;">
+				<img src="/img/vote/jajangmyeon.jpg" style="width: 100%; margin-right: 50%; margin-top: -15%;">
+			</div>
+		</div>
+	</div>
+</div>
+-->
 
 <!-- modal -->
 <div class="modal fade" id="voteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-centered">
 		<div class="modal-content">
-			<div class="modalheader" align="center" style="padding: 20px;">
+			<div class="modalheader">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h5 class="modal-title" id="myModalLabel"></h5>
 			</div>

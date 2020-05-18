@@ -54,6 +54,7 @@ public class VoteTopicServiceImpl implements VoteTopicService {
 		// TODO Auto-generated method stub
 		int re = 0;
 		int result_deleteV = 0;
+		int result_deleteVT = 0;
 		VoteVo vv = new VoteVo();
 		vv.setVt_no(vtv.getVt_no());
 		if(voteDao.findByVoteTopic(vv).size() > 0) {
@@ -64,8 +65,9 @@ public class VoteTopicServiceImpl implements VoteTopicService {
 		}
 		 
 		System.out.println("voteDao.findByVoteTopic(vv): " + voteDao.findByVoteTopic(vv));
-		int result_deleteVT = votetopicDao.deleteVoteTopic(vtv);
-
+		if(result_deleteV > 0) {
+			result_deleteVT = votetopicDao.deleteVoteTopic(vtv);
+		}
 		if( result_deleteVT > 0 && result_deleteV > 0) {
 			re = 1;
 		}

@@ -26,5 +26,7 @@
   	delete member where m_id=#{m_id}
   </delete>
   
-  
+  <select id="getMemberByNick" resultType="com.aeho.demo.vo.MemberVo">
+  	select * from member where m_nick = #{m_nick}
+  </select>
 </mapper>

@@ -7,12 +7,12 @@
 <script type="text/javascript">
 	$(function(){
 
-		var b_no = $("#b_no").val();
-		var m_id = "tiger";
-
 		//시큐리티 csrf
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
+
+		var b_no = $("#b_no").val();
+		var m_id = $("#m_id").val();
 		
 		$("#clickheart").hide();
 		$("#clickedhate").hide();
@@ -135,31 +135,63 @@
 		
 		//좋아요 등록
 		$(document).on("click","#heart",function(){
-			$.ajax("/board/insertLove",{data:{m_id:m_id, b_no:b_no}, success:function(result){
-				//alert(result);
-				if(result == 1){
-					$("#clickheart").show();
-					$("#heart").hide();
-					$("#loveCnt").html(eval($("#loveCnt").html())+1);
-				}
-				
-			}})
+			if(m_id == "" || m_id == null){
+				alert("로그인 후 이용해주세요.");
+			}else{
+				$.ajax({
+					url: "/board/insertLove",
+					type: "POST", 
+					data: {m_id: m_id, b_no: b_no},
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(header,token)	
+					},
+					cache: false, 
+					success: function(result){
+					//alert(result);
+					if(result == 1){
+						$("#clickheart").show();
+						$("#heart").hide();
+						$("#loveCnt").html(eval($("#loveCnt").html())+1);
+					}
+					
+				}});
+			}
 		})
 		
 		//싫어요 등록
 		$(document).on("click", "#hate", function(){
-			$.ajax("/board/insertHate", {data: {m_id: m_id, b_no: b_no}, success: function(result){
-				if(result == 1){
-					$("#clickedhate").show();
-					$("#hate").hide();
-					$("#hateCnt").html(eval($("#hateCnt").html())+1);
-				}
-			}});
+			if(m_id == "" || m_id == null){
+				alert("로그인 후 이용해주세요.");
+			}else{
+				$.ajax({
+					url: "/board/insertHate",
+					type: "POST", 
+					data: {m_id: m_id, b_no: b_no},
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(header,token)	
+					},
+					cache: false, 
+					success: function(result){
+					if(result == 1){
+						$("#clickedhate").show();
+						$("#hate").hide();
+						$("#hateCnt").html(eval($("#hateCnt").html())+1);
+					}
+				}});
+			}
 		});
 
 		//좋아요 취소
 		$(document).on("click","#clickheart",function(){
-			$.ajax("/board/deleteLove", {data: {m_id: m_id, b_no: b_no}, success: function(result){
+			$.ajax({
+				url: "/board/deleteLove",
+				type: "POST", 
+				data: {m_id: m_id, b_no: b_no},
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token)	
+				},
+				cache: false, 
+				success: function(result){
 				if(result == 1){
 					$("#clickheart").hide();
 					$("#heart").show();
@@ -170,7 +202,15 @@
 
 		//싫어요 취소
 		$(document).on("click","#clickedhate",function(){
-			$.ajax("/board/deleteHate", {data: {m_id: m_id, b_no: b_no}, success: function(result){
+			$.ajax({
+				url: "/board/deleteHate",
+				type: "POST", 
+				data: {m_id: m_id, b_no: b_no},
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token)	
+				},
+				cache: false,
+				success: function(result){
 				if(result == 1){
 					$("#clickedhate").hide();
 					$("#hate").show();
@@ -182,6 +222,12 @@
 </script>
 	<input type="hidden" id="b_no" value="${ board.b_no }">
 	<input type="hidden" id="c_no" value="${ board.c_no }">
+	<sec:authorize access="isAuthenticated()">
+		<input type="hidden" id="m_id" value="<sec:authentication property="principal.username"/>">
+	</sec:authorize>
+	<sec:authorize access="isAnonymous()">
+		<input type="hidden" id="m_id" value="">
+	</sec:authorize>
 	<table class="table table-bordered">
 		<tr>
 			<td colspan="3"><h3><c:out value="${board.b_title }"/></h3></td>

@@ -16,5 +16,5 @@ public interface MemberDao {
 	
 	int deleteMember(MemberVo mv);
 	
-
+	MemberVo getMemberByNick(String m_nick);
 }

@@ -15,4 +15,6 @@ public interface MemberService {
 	int updateMember(MemberVo mv);
 	
 	int deleteMember(MemberVo mv);
+	
+	MemberVo getMemberByNick(String m_nick);
 }

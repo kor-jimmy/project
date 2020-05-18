@@ -39,4 +39,9 @@ public class MemberServiceImple implements MemberService {
 		return m_dao.deleteMember(mv);
 	}
 
+	@Override
+	public MemberVo getMemberByNick(String m_nick) {
+		// TODO Auto-generated method stub
+		return m_dao.getMemberByNick(m_nick);
+	}
 }

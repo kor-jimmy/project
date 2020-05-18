@@ -59,5 +59,10 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 	public int deleteMember(MemberVo mv) {
 		return memberDao.deleteMember(mv);
 	}
+	
+	@Override
+	public MemberVo getMemberByNick(String m_nick) {
+		return memberDao.getMemberByNick(m_nick);
+	}
 
 }
