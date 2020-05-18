@@ -113,33 +113,49 @@
     <div class="jumbotron mb-0" id="headerTop" style="background-color: rgb(163, 161, 252);">
     	<div class="container">
             <div class="row">
-                <div class="col-4">
+                <div class="col-3">
                     <a href="/aeho">
                         <img src="/img/ma.png" width="200px" height="120px">
                     </a>
                 </div>
-                
-                <form class="form-inline">
-					<div class="form">
-					    <input type="text" size="50" class="form-control" id="mainSearch" placeholder="애호하는 것을 검색하세요!">
-						<button id="mainTotalSearch">
-	                        <img src="/img/search.png" width="20px" height="20px">
-	                    </button>	
-					</div>
-                </form>
-         		<div>
-	         		<sec:authorize access="hasRole('ROLE_MASTER')">
-	         			<a href="/admin">관리자 페이지</a>
-	         		</sec:authorize>
+                <div class="col-6">
+                	<form class="form-group">
+                		<div class="input-group mt-5">
+	                		<input type="text" class="form-control" id="mainSearch" placeholder="애호하는 것을 검색하세요!">
+	                		<div class="input-group-append">
+	                			<button type="button" id="mainTotalSearch">
+			            	    	<img src="/img/search.png" width="20px" height="20px">
+			              		</button>
+	                		</div>
+                		</div>
+               	 	</form>
+                </div>
+         		<div class="col-3">
+         			<div align="center" class="p-4">
+	         			<div>
+	         				<sec:authorize access="hasRole('ROLE_MASTER')">
+	         					<!-- <span class="badge badge-pill badge-warning">관리자가 로그인하였습니다.</span> -->
+		         				<a href="/admin" class="badge badge-pill badge-warning">관리자 페이지</a>
+		         			</sec:authorize>
+	         			</div>
+						<div>
+							<sec:authorize access="isAnonymous()">
+								<br><br>
+								<a href="/loginCustom" class="badge badge-light">로그인</a>
+								<a href="/member/insert" class="badge badge-light">회원가입</a>
+							</sec:authorize>
+						</div>
+						<div>
+							<sec:authorize access="isAuthenticated()">
+								<img src="/img/userICON.png" width="40" height="40"><br>
+								<span class="badge badge-pill badge-dark">
+									<sec:authentication property="principal.username"/>
+								</span>
+								<a href="/logout" class="badge badge-light">로그아웃</a>   
+							</sec:authorize>
+						</div>
+         			</div>
 
-	         		<sec:authorize access="isAnonymous()">
-						<a href="/loginCustom">로그인</a>
-					</sec:authorize>
-					
-					<sec:authorize access="isAuthenticated()">
-						<a href="/logout">로그아웃</a>   
-						<div id="user_id"><sec:authentication property="principal.username"/></div>
-					</sec:authorize>
          		</div>
             </div>
         </div>

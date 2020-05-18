@@ -72,24 +72,25 @@ public class MainController {
 		return menuCategoryList;
 	}
 	
-	@GetMapping("/checkAuth")
+	@GetMapping("/access-denied")
 	public String loadExceptionPage(ModelMap model) throws Exception{
-		
+		System.out.println("checkAuth작동중....");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		MemberPrincipal memberPrincipal = (MemberPrincipal) auth.getPrincipal();
+		MemberPrincipal memberPrincipal = (MemberPrincipal)auth.getPrincipal();
 		
-		System.out.println(memberPrincipal.getUsername());
-		System.out.println(memberPrincipal.getAuthorities());
+		System.out.println("checkAuth...."+memberPrincipal.getUsername());
+		System.out.println("checkAuth...."+memberPrincipal.getAuthorities());
 		
 		model.addAttribute("name",memberPrincipal.getUsername());
 		model.addAttribute("auth",memberPrincipal.getAuthorities());
+		model.addAttribute("msg","권한이 없는 접근입니다.");
 		
-		return "redirect:/loginError";
+		return "loginError";
 	}
 	
-	@GetMapping("/access-denied")
+	@GetMapping("/")
 	public String loadAccessdeniedPage() throws Exception{
-		return "redirect:/loginError";
+		return "loginError";
 	}
 
 }

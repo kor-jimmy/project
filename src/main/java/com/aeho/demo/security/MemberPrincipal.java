@@ -74,9 +74,9 @@ public class MemberPrincipal implements UserDetails {
 		// TODO Auto-generated method stub
 		boolean result = true;
 		System.out.println("계정 활성화 여부 체크==>" + memberVo.getM_id());
-		if(memberVo.getM_id().equals("test")) {
-			result = false;
-		}
+		/*
+		 * if(memberVo.getM_id().equals("test")) { result = false; }
+		 */
 		return result;
 	}
 
