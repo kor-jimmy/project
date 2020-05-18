@@ -148,8 +148,9 @@
 						<div>
 							<sec:authorize access="isAuthenticated()">
 								<img src="/img/userICON.png" width="40" height="40"><br>
+								<!-- 유저아이디 -->
 								<span class="badge badge-pill badge-dark">
-									<sec:authentication property="principal.username"/>
+									ID : <sec:authentication property="principal.username"/>
 								</span>
 								<a href="/logout" class="badge badge-light">로그아웃</a>   
 							</sec:authorize>
