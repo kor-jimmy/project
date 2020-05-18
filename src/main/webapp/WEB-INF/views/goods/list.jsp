@@ -18,14 +18,19 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 		//리스트 가져오기
 		var list = JSON.parse(result.list)
 	      $.each(list, function(idx,item){
+		  if(item.gc_code == 1)
+			  gc_dist = "[팝니다]";
+		  else
+			  gc_dist = "[삽니다]";
           //상품번호,제목,코드,가격,날짜
          var td1=$("<td align='center'></td>").html(item.g_no);
+         var td2=$("<td align='center'></td>").html(gc_dist);
          var a=$("<a>"+item.g_title+"["+item.g_replycnt+"]"+"</a>").attr("href","/goods/get?g_no="+item.g_no)
-         var td2=$("<td></td>").html(a);
-         var td3=$("<td align='center'></td>").html(item.gc_code);
-         var td4=$("<td align='center'></td>").html(item.g_price);
-         var td5=$("<td align='center'></td>").html(item.g_date);
-         var tr = $("<tr></tr>").append(td1,td2,td3,td4,td5);
+         var td3=$("<td></td>").html(a);
+         var td4=$("<td align='center'></td>").html(item.m_id);
+         var td5=$("<td align='center'></td>").html(item.g_price);
+         var td6=$("<td align='center'></td>").html(item.g_date);
+         var tr = $("<tr></tr>").append(td1,td2,td3,td4,td5,td6);
          $("#tb").append(tr);
       })
 
@@ -143,8 +148,9 @@ $(function(){
       <thead>
          <tr align="center">
             <td width="10%">상품번호</td>
+            <td width="10%">구분</td>
             <td width="50%">제목</td>
-            <td width="10%">코드</td>
+            <td width="10%">작성자</td>
             <td width="10%">가격</td>
             <td width="10%">날짜</td>
          </tr>

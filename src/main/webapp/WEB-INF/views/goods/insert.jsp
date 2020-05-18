@@ -26,7 +26,7 @@
 		</tr>
 		<tr>
 			<td>작성자</td>
-			<td><input type="text" id="m_id" name="m_id" value="<sec:authentication property="principal.username"/>" required="required"></td>
+			<td><input type="text" id="m_id" name="m_id" value="<sec:authentication property="principal.username"/>" required="required" readonly="readonly"></td>
 		</tr>
 		<tr>
 			<td>가격</td>
