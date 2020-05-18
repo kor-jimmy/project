@@ -1,29 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@include file="../includes/header.jsp"%>
-	<style>
-	.uploadResult {
-		width:100%;
-		background-color: gray;
-	}
-	.uploadResult ul{
-		display:flex;
-		flex-flow: row;
-		justify-content: center;
-		aling-items: center;
-	}
-	.uploadResult ul li{
-		list-style: none;
-		padding: 10px;
-	}
-	.uploadResult ul li img{
-		width:20px;
-	}
-</style>
+
 	<h2>상품등록</h2>
 	
 	<form id="insertForm" method="post" enctype="multipart/form-data">
-	
 	<table class="table table-bordered">
 		<tr>
 			<td>장터 카테고리</td>
@@ -31,7 +13,7 @@
 		</tr>
 		<tr>
 			<td>상품 제목</td>
-			<td><input type="text" id="g_title" name="g_title" required="required"></td>
+			<td><input type="text" id="g_title" name="g_title" required="required" style="width:40%;"></td>
 		</tr>
 		<tr>
 			<td>삽니다/팝니다</td>
@@ -44,7 +26,7 @@
 		</tr>
 		<tr>
 			<td>작성자</td>
-			<td><input type="text" id="m_id" name="m_id" required="required"></td>
+			<td><input type="text" id="m_id" name="m_id" value="<sec:authentication property="principal.username"/>" required="required"></td>
 		</tr>
 		<tr>
 			<td>가격</td>
@@ -113,6 +95,9 @@
 					url: "/goods/testUpload",
 					contentType: false,
 					processData: false,
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(header,token)
+					},
 					success: function(data){
 						$(editor).summernote('insertImage', data.url);
 						fileList.push(data);
@@ -121,10 +106,19 @@
 				});
 			}
 
+			//시큐리티
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			console.log("토큰 : "+token+" / 헤더:"+header);
+
 			$("#insertBtn").on("click",function(e){
-				console.log("클릭동작")
+				if($("#g_title").val() == null || $("#g_title").val() == "" || 
+						$("#g_content").val() == null || $("#g_content").val() == ""){
+					alert("제목이나 글 내용을 비워둘 수는 없습니다.");
+					return;
+				}
+//				console.log("클릭동작")
 				e.preventDefault();
-				var myInsert = $("#insertForm").serialize();
 				var myInsert = $("#insertForm").serialize();
 				var date = new Date();
 				var year = date.getYear()+1900;
@@ -133,11 +127,14 @@
 					month = "0"+month;
 				}
 				$.ajax({
+					url: "/goods/insert",
 					data:myInsert,
 					type: "POST",
-					url: "/goods/insert",
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(header,token)
+					},
+					cache: false,
 					success: function(goodsNum){
-						//console.log(goodsNum);
 						if(goodsNum > 0){
 							$.each(fileList,function(idx,f){
 								var url = f.url;
@@ -152,11 +149,15 @@
 							})
 							console.log(uploadFileList);
 							$.ajax({
+								url:"/goods/fileDBupload",
 								data: JSON.stringify(uploadFileList),
 								dataType: "json",
 								contentType: "application/json; charset=utf-8",
 								type: "POST",
-								url:"/goods/fileDBupload",
+								beforeSend: function(xhr){
+									xhr.setRequestHeader(header,token)
+								},
+								cache: false,
 								success: function(msg){
 									location.href="/goods/get?g_no="+goodsNum;
 								}
