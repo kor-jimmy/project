@@ -41,8 +41,8 @@
 		$("#b_content").summernote({
 			disableDragAndDrop : true,
 			height: 700,
-			minHeight:null,
-			maxHeight:null,
+			minHeight:700,
+			maxHeight:700,
 			focus:true,
 			lang:"ko-KR",
 			placeholder:"본문 내용을 입력해주세요.",

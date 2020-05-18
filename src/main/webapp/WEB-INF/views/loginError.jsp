@@ -3,11 +3,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="includes/header.jsp"%>
 <div class="d-flex justify-content-center">
-    <div>
-    	<h2><span class="badge badge-secondary">Error</span></h2>
-	    <p>접근 시도한 아이디 : ${name }</p>
-	    <p>권한 : ${auth }</p>
-	    <p>메세지 : ${msg }</p>
+    <div class="alert alert-danger" role="alert">
+    	<h2 class="alert-heading">
+    		<span class="badge badge-secondary">
+    			Error
+    		</span>
+    	</h2>
+    	<hr>
+	    <p class="mb-0">접근 아이디 : ${name }</p>
+	    <p class="mb-0">부여된 권한 : ${auth }</p>
+	    <p class="mb-0">메세지 : ${msg }</p>
 	    <hr>
 	    <a href="/aeho">
 	    	메인 페이지

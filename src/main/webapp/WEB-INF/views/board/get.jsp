@@ -245,7 +245,7 @@
 			<td width="25%">조회 <c:out value="${board.b_hit }"/>  / Love <c:out value="<span id='loveCnt'>${ board.b_lovecnt }</span>" escapeXml="false"/> / hate <c:out value="<span id='hateCnt'>${ board.b_hatecnt }</span>" escapeXml="false"/></td>
 		</tr>
 		<tr>
-			<td colspan="4">
+			<td colspan="4" height="500px">
 				<div>${board.b_content }</div>
 			</td>
 		</tr>
