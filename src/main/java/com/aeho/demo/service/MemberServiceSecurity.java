@@ -24,6 +24,7 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println("접속시도한 로그인 아이디 확인 ==>" + username);
 		MemberVo memberVo = memberDao.getMember(username);
 		if(memberVo == null) {
 			throw new UsernameNotFoundException(username+" id는 존재하지 않는 아이디 입니다!");
@@ -43,6 +44,7 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 
 	@Override
 	public int insertMember(MemberVo mv) {
+		System.out.println(mv.getM_pwd());
 		mv.setM_pwd(passwordEncoder.encode(mv.getM_pwd()));
 		System.out.println(mv.getM_pwd());
 		return memberDao.insertMember(mv);

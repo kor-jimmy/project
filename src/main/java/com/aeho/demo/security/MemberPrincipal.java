@@ -35,6 +35,7 @@ public class MemberPrincipal implements UserDetails {
 	public String getPassword() {
 		System.out.println("비밀번호 확인");
 		// TODO Auto-generated method stub
+		System.out.println(memberVo.getM_pwd());
 		return memberVo.getM_pwd();
 	}
 
@@ -71,7 +72,12 @@ public class MemberPrincipal implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return true;
+		boolean result = true;
+		System.out.println("계정 활성화 여부 체크==>" + memberVo.getM_id());
+		if(memberVo.getM_id().equals("test")) {
+			result = false;
+		}
+		return result;
 	}
 
 }
