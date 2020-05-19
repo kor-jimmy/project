@@ -18,7 +18,7 @@ public interface VoteTopicDao {
 
 	int updateVoteTopic(VoteTopicVo vtv);
 	
-	int deleteVoteTopic(VoteTopicVo vtv);
+	int deleteVoteTopic(int vt_no);
 	
 	int updateCount(int vt_no);
 	

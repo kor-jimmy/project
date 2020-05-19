@@ -18,6 +18,6 @@ public interface VoteTopicService {
 
 	int updateVoteTopic(VoteTopicVo vtv);
 	
-	int deleteVoteTopic(VoteTopicVo vtv);
+	int deleteVoteTopic(int vt_no);
 	
 }

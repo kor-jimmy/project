@@ -6,8 +6,11 @@
 
 <script type="text/javascript">
 	$(function(){
-	
-		var m_id = "tiger";
+
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
+		var m_id = $("#m_id").val();
 		var trList = [];
 
 		$("#addPhotoA").click(function(){
@@ -119,7 +122,7 @@
 			var optionAfile = $("#optionAImg").attr("src");
 			var optionBfile = $("#optionBImg").attr("src");
 
-			console.log(optionAfile);
+			//console.log(optionAfile);
 			console.log(typeof($("input[name='fileA']")[0].files[0]));
 
 			var form = new FormData();
@@ -148,6 +151,10 @@
 						type: "POST",
 						contentType: false,
 						processData: false,
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(header,token)	
+						},
+						cache: false, 
 			            enctype: 'multipart/form-data',
 			            url: "/vote/insertVoteTopic",
 						data: form, 
@@ -161,6 +168,10 @@
 						type: "POST",
 						contentType: false,
 						processData: false,
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(header,token)	
+						},
+						cache: false, 
 			            enctype: 'multipart/form-data',
 			            url: "/vote/updateVoteTopic",
 						data: form, 
@@ -180,11 +191,21 @@
 			var idx = $(this).attr("index");
 			var vt = trList[idx];
 			console.log("vt: "+vt);
+			console.log("vt_no: "+vt.vt_no);
+			
 			var re = confirm("해당 투표를 삭제하시겠습니까?");
 			if(re){
-				$.ajax("/vote/deleteVoteTopic", {data: vt, success: function(msg){
-					alert(msg);
-					self.location = "/vote/manage";
+				$.ajax( {
+					type: "POST",
+					url: "/vote/deleteVoteTopic",
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(header,token)	
+					},
+					cache: false, 
+					data: vt, 
+					success: function(msg){
+						alert(msg);
+						self.location = "/vote/manage";
 				}});
 			}
 		});
@@ -193,7 +214,12 @@
 		//0514 일단 location으로 처리
 	});
 </script>
-
+<sec:authorize access="isAuthenticated()">
+	<input type="hidden" id="m_id" value="<sec:authentication property="principal.username"/>">
+</sec:authorize>
+<sec:authorize access="isAnonymous()">
+	<input type="hidden" id="m_id" value="">
+</sec:authorize>
 <h2>투표</h2>
 <div id="insertDiv">
 </div>
@@ -213,8 +239,8 @@
 			</div>
 			
 			<div class="modal-body" style="padding: 20px 50px 0px 50px;">
-				<div id="option_A" class="option" align="center" style="display:inline-block; float:left; margin:0 auto;">
-					<img id='optionAImg' class="mb-3" style='width:300px; height: 300px; border: 8px solid #F0F0F0; border-radius: 50%;'/>
+				<div id="option_A" class="option" align="center" style="display:inline-block; float:left; margin:0 auto; overflow: hidden;">
+					<img id='optionAImg' class="mb-3" style='width:300px; height: 300px;border: 8px solid #F0F0F0; border-radius: 50%;'/>
 					<div>
 						<input type="text" id="optionAname" name="optionAname" class="form-control mb-3">
 					</div>
@@ -224,7 +250,7 @@
 					</div>
 				</div>
 				
-				<div id="option_B" class="option mb-5" align="center" style="display:inline-block; float:right; margin:0 auto;">
+				<div id="option_B" class="option mb-5" align="center" style="display:inline-block; float:right; margin:0 auto; overflow: hidden;">
 					<img id='optionBImg' class="mb-3" style='width:300px; height: 300px; border: 8px solid #F0F0F0; border-radius: 50%;'/>
 					<div>
 						<input type="text" id="optionBname" name="optionBname" class="form-control mb-3">
@@ -234,33 +260,11 @@
 						<input type="file" name="fileB" id="fileB" style="visibility: hidden;">
 					</div>
 				</div>
-				
-				<!--
-				<form id="voteForm" enctype="multipart/form-data">
-					<table class="table table-bordered">
-						<tr>
-							<td rowspan="2"><label for="optionAText">선택지 A</label></td>
-							<td><input type="text" id="optionAText" name="optionAText"></td>
-						</tr>
-						<tr>
-							<td><input type="file" id="optionAFile" name="optionAFile"></td>
-						</tr>
-						<tr>
-							<td rowspan="2"><label for="optionBText">선택지 B</label></td>
-							<td><input type="text" id="optionBText" name="optionBText"></td>
-						</tr>
-						<tr>
-							<td><input type="file" id="optionBFile" name="optionBFile"></td>
-						</tr>
-					</table>
-				</form>
-				-->
 			</div>
 			<div class="modal-footer" style="background: #642EFE; border: 2px solid #642EFE;">
 				<button type="button" class="btn btn-primary" style="width: 300px; background: #01DFA5; border: 1px solid #01DFA5; float:none; margin:0 auto;">등록</button>				
 			</div>
 		</div>
-		<!-- </form>-->
 	</div>
 </div>
 

@@ -4,26 +4,25 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.multi.MultiFileChooserUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.aeho.demo.dao.VoteTopicDao;
 import com.aeho.demo.domain.VoteDataDTO;
 import com.aeho.demo.service.VoteService;
 import com.aeho.demo.service.VoteTopicService;
@@ -115,7 +114,7 @@ public class VoteController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/insertVoteTopic")
+	@RequestMapping("/insertVoteTopic")
 	@ResponseBody
 	public String insertVoteTopic(VoteDataDTO vdd, HttpServletRequest request, HttpSession session) {
 		String msg = "예기치 않은 오류로 투표 주제 등록이 정상적으로 완료되지 못 했습니다.";
@@ -170,7 +169,7 @@ public class VoteController {
 		return msg;
 	}
 	
-	@RequestMapping("/updateVoteTopic")
+	@PostMapping("/updateVoteTopic")
 	@ResponseBody
 	public String updateVoteTopic(VoteDataDTO vdd, HttpServletRequest request) {
 		long time = System.currentTimeMillis();
@@ -277,7 +276,8 @@ public class VoteController {
 		String path = request.getRealPath("img/vote");
 		System.out.println(path);
 		System.out.println("vtv: "+vtv);
-		int re = voteTopicService.deleteVoteTopic(vtv);
+		
+		int re = voteTopicService.deleteVoteTopic(vtv.getVt_no());
 		if(re > 0) {
 			try {
 				File fileA = new File(path + "/" + vtv.getVt_img_a());

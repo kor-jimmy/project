@@ -50,23 +50,24 @@ public class VoteTopicServiceImpl implements VoteTopicService {
 	}
 
 	@Override
-	public int deleteVoteTopic(VoteTopicVo vtv) {
+	public int deleteVoteTopic(int vt_no) {
 		// TODO Auto-generated method stub
 		int re = 0;
 		int result_deleteV = 0;
 		int result_deleteVT = 0;
 		VoteVo vv = new VoteVo();
-		vv.setVt_no(vtv.getVt_no());
+		vv.setVt_no(vt_no);
 		if(voteDao.findByVoteTopic(vv).size() > 0) {
 			result_deleteV = voteDao.deleteVote(vv);
 			System.out.println("투표 삭제 결과: " + result_deleteV);
 		}else if(voteDao.findByVoteTopic(vv).size() == 0){
 			result_deleteV = 1;
 		}
-		 
+		System.out.println("result_deleteV: "+result_deleteV);
 		System.out.println("voteDao.findByVoteTopic(vv): " + voteDao.findByVoteTopic(vv));
 		if(result_deleteV > 0) {
-			result_deleteVT = votetopicDao.deleteVoteTopic(vtv);
+			System.out.println("result_deleteVT: "+result_deleteVT);
+			result_deleteVT = votetopicDao.deleteVoteTopic(vt_no);
 		}
 		if( result_deleteVT > 0 && result_deleteV > 0) {
 			re = 1;

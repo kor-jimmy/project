@@ -33,13 +33,9 @@ public class VoteServiceImpl implements VoteService {
 	@Override
 	public int insertVote(VoteVo vv) {
 		// TODO Auto-generated method stub
-		//int voteResult = vv.getV_result();
 		int result_insertVote = voteDao.insertVote(vv);
-		int result_updateCount = voteTopicDao.updateCount(vv.getV_no());
-//		switch (voteResult) {
-//			case 1:result_updateCount=voteTopicDao.updateCountA(vv.getVt_no());break;
-//			case 2:result_updateCount=voteTopicDao.updateCountB(vv.getVt_no());break;
-//		}
+		int result_updateCount = voteTopicDao.updateCount(vv.getVt_no());
+
 		int result = 0;
 		if(result_insertVote > 0 && result_updateCount > 0) {
 			result = 1;
