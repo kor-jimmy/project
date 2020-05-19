@@ -5,6 +5,7 @@ import java.util.List;
 import com.aeho.demo.vo.VoteVo;
 
 public interface VoteService {
+	
 	List<VoteVo> listVote();
 
 	VoteVo getVote(VoteVo vv);
@@ -18,4 +19,5 @@ public interface VoteService {
 	int deleteVote(VoteVo vv);
 	
 	List<VoteVo> isChecked(VoteVo vv);
+	
 }

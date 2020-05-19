@@ -70,7 +70,6 @@
 
 		$("#voteModal").on('hidden.bs.modal', function(e){
 			self.location = "/vote/manage";
-			//modal이 여러번 닫히는 동작을 실행할 때 위 함수를 한번만 호출하도록 하는 이벤트 핸들러
 			e.stopImmediatePropagation(); 
 		});
 

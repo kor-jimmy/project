@@ -243,7 +243,6 @@
 	<div style="padding: 20px;" id="ingTable"></div>
 </table>
 
-
 <!-- modal -->
 <div class="modal fade" id="voteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-centered">

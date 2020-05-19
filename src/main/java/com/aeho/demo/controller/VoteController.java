@@ -276,7 +276,6 @@ public class VoteController {
 		String path = request.getRealPath("img/vote");
 		System.out.println(path);
 		System.out.println("vtv: "+vtv);
-		
 		int re = voteTopicService.deleteVoteTopic(vtv.getVt_no());
 		if(re > 0) {
 			try {

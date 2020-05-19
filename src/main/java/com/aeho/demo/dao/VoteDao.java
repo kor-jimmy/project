@@ -6,6 +6,7 @@ import com.aeho.demo.vo.VoteVo;
 
 public interface VoteDao {
 	
+	
 	List<VoteVo> listVote();
 	
 	VoteVo getVote(VoteVo vv);

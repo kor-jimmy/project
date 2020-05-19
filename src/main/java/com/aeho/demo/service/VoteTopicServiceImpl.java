@@ -66,7 +66,6 @@ public class VoteTopicServiceImpl implements VoteTopicService {
 		System.out.println("result_deleteV: "+result_deleteV);
 		System.out.println("voteDao.findByVoteTopic(vv): " + voteDao.findByVoteTopic(vv));
 		if(result_deleteV > 0) {
-			System.out.println("result_deleteVT: "+result_deleteVT);
 			result_deleteVT = votetopicDao.deleteVoteTopic(vt_no);
 		}
 		if( result_deleteVT > 0 && result_deleteV > 0) {

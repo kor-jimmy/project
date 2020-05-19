@@ -49,6 +49,7 @@ public class VoteServiceImpl implements VoteService {
 		int re = 0;
 		int result_updateVote = voteDao.updateVote(vv);
 		int result_updateVoteTopic = voteTopicDao.updateCount(vv.getVt_no());
+		
 		if(result_updateVote > 0 && result_updateVoteTopic > 0) {
 			re = 1;
 		}

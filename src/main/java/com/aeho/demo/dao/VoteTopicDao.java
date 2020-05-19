@@ -6,6 +6,7 @@ import com.aeho.demo.vo.VoteTopicVo;
 
 public interface VoteTopicDao {
 	
+	
 	List<VoteTopicVo> listVoteTopic();
 	
 	List<VoteTopicVo> ongoingListVoteTopic();
