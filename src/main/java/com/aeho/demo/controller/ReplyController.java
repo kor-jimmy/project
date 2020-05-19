@@ -26,6 +26,7 @@ public class ReplyController {
 	@PostMapping("/insert")
 	public String insert(ReplyVo rv) {
 		System.out.println("리플라이 인서트 컨트롤러 동작중");
+		System.out.println(rv);
 		String msg = "댓글 등록에 실패하였습니다.";
 		int re  = replyService.insertReply(rv);
 		if(re>0) {
@@ -38,7 +39,7 @@ public class ReplyController {
 	public String list(ReplyVo rv) {
 		System.out.println("리플라이 리스트 컨트롤러 동작중");
 		List<ReplyVo> list = replyService.listReply(rv.getB_no());
-		System.out.println(list);
+		System.out.println();
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}

@@ -13,6 +13,9 @@
 
 		var b_no = $("#b_no").val();
 		var m_id = $("#m_id").val();
+
+		var logingID = "<sec:authorize access='isAuthenticated()'><sec:authentication property='principal.username'/></sec:authorize>";
+		var select_rno = "";
 		
 		$("#clickheart").hide();
 		$("#clickedhate").hide();
@@ -71,7 +74,47 @@
 			$.each(reply, function(idx,r){
 				var m_id = r.m_id
 				console.log(m_id)
- 				var tr = $("<tr class='rep'></tr>");	
+				// 댓글 ul로 수정.
+				var li = $("<li class='list-group-item rep' idx="+idx+" r_no="+r.r_no+"></li>")
+				var replyDiv = $("<div class='row'></div>");
+
+				if(r.r_level != 0){
+					var reReIcon = $("<div>-></div>")
+					replyDiv.append(reReIcon);
+				}
+				
+				//댓글 쓴 유저 아이디
+				var idDiv = $("<div class=col-2></div>");
+				var replyID = $("<p></p>").html(r.m_id);
+				idDiv.append(replyID);
+				
+				//댓글 본문
+				var contentDiv=$("<div class='col-6 reContent'></div>").attr("r_no",r.r_no);
+				var replyContent = $("<p></p>").html(r.r_content);
+				contentDiv.append(replyContent);
+
+				//댓글 날짜
+				var dateDiv=$("<div class=col-2></div>");
+				var replyDate = $("<p></p>").html(r.r_date);
+				dateDiv.append(replyDate)
+				
+				//삭제, 신고
+				var infoDiv=$("<div class=col-1></div>");
+				var replyInfo = $("<p></p>").html("신고 삭제");
+				infoDiv.append(replyInfo);
+
+				replyDiv.append(idDiv,contentDiv,dateDiv,infoDiv);
+
+
+
+				li.append(replyDiv);
+				
+				$("#replyList").append(li);
+				
+				
+				
+/*  				var tr = $("<tr class='rep' r_no="+r.r_no+"></tr>");
+ 				var reRe = $("<tr class='reReply' r_no="+r.r_no+" bgcolor=#BAE1FF></tr>").hide();	
 				//var button= $("<button class='deleteReply'></button>").text("삭제").attr("r_no",r.r_no);
 				var td1 = $("<td width=10%></td>").html(r.m_id);
 				var td2 = $("<td width=50%></td>").html(r.r_content);
@@ -79,6 +122,16 @@
 				var td3 = $("<td width=20%></td>").html(r.r_date);
 				var td4 = $("<td width=10%></td>").html("신고버튼");
 				var td5 = $("<td width=10%></td>");
+
+				var retd1=$("<td bgcolor=white></td>");
+				var retd2=$("<td></td>");
+				var reReContent = $("<input type=text id=r_contet>");
+				var retd3=$("<td></td>");
+				var retd4=$("<td></td>");
+				var retd5=$("<td></td>");
+				reRe.append(retd1,retd2,retd3,retd4,retd5)
+				
+				//댓글 번호 추가 05/19
 				var secStr = "";
 				secStr += "<sec:authorize access='isAuthenticated()'>"
 				if("<sec:authentication property='principal.username'/>"==r.m_id){
@@ -87,15 +140,82 @@
 				secStr += "</sec:authorize>"			
 				td5.append(secStr);
 				tr.append(td1,td2,td3,td4,td5);
-				$("#replyTable").append(tr);
+
+				
+				$("#replyTable").append(tr,reRe); */
 				
 			})
 		}})
+		
+		//대댓글작업
+		$(document).on("click",".reContent",function(e){
+			console.log(logingID);
+			$(".reInputDiv").remove();
+			select_rno = $(this).attr("r_no");
+			console.log(select_rno);
+
+			var reInputDiv = $("<div class='reInputDiv row'></div>");
+
+			//빈공간
+			var div = $("<div class='col-1'></div>");
+			
+			var idDiv = $("<div class='col-2'></div>");
+			var loginId = $("<p></p>").html(logingID)
+			idDiv.append(loginId);
+			
+			var contentDiv = $("<div class='col-7'></div>");
+			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
+			contentDiv.append(reReContent);
+
+			var buttenDiv = $("<div class='col-2'></div>");
+			var reButton = $("<button type='submit' id='insertReReply' class='btn btn-outline-dark'>등록</button>");
+			buttenDiv.append(reButton);
+
+			reInputDiv.append(div,idDiv,contentDiv,buttenDiv); 
+
+			//var secStr = "<sec:authorize access='isAuthenticated()'>"+reInputDiv+"</sec:authorize>"
+			
+			$(this).parent().parent().append(reInputDiv);
+			
+
+
+		})
+		
+		//대댓글 등록
+		$(document).on("click","#insertReReply",function(e){
+			if(logingID == null || logingID == ""){
+				alert("로그인해야 댓글 작성이 가능합니다!")
+				return;
+			}
+			
+			var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
+			var r_ref = select_rno;
+			console.log(r_ref)
+			var reReplyContent = $("#reReContent").val();
+			var reReplyData = {b_no:b_no, m_id:logingID, r_content:reReplyContent, r_ref:r_ref}
+
+			if(re){
+				$.ajax({
+					url:"/reply/insert",
+					type:"POST", 
+					data:reReplyData,
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(header,token)	
+					},
+					cache:false,
+					success:function(result){
+						alert(result);
+						location.href="/board/get?b_no="+b_no;
+				}})
+			} 
+		})
+		
+
 
 		//댓글 등록 ajax
-		$("#insertReply").on("click",function(){
+		$("#insertReply").on("click",function(e){
 			var r = $("#boardReply").serialize();
-			var re = confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?")
+			var re = confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
 			if(re){
 				$.ajax({
 					url:"/reply/insert",
@@ -261,13 +381,18 @@
     </div>
 
 	<hr>
-	<h4>댓글</h4>
-	<table id="replyTable" class="table table-bordered">
-	</table>
+	<!-- 댓글목록 -->
+	<h4>Comments</h4>
+	<br>
+	<ul id="replyList" class="list-group list-group-flush">
+	</ul>
+	<!-- end 댓글목록 -->
 	<hr>
 	<sec:authorize access="isAuthenticated()">
 		<form id="boardReply">
 			<input type="hidden" name="b_no" value="<c:out value='${board.b_no }'/>">
+			<input type="hidden" name="r_ref" value="0"/>
+			<input type="hidden" name="r_level" value="0"/>
 			<input type="text" name="m_id" value="<sec:authentication property="principal.username"/>" readonly="readonly">
 			<input type="text" name="r_content" required="required">
 		</form>

@@ -8,6 +8,8 @@ public interface ReplyDao {
 
 	List<ReplyVo> listReply(int b_no);
 	
+	ReplyVo getReply(int r_no);
+	
 	int insertReply(ReplyVo rv);
 	
 //	int updateReply(ReplyVo rv);
@@ -16,4 +18,6 @@ public interface ReplyDao {
 	
 	//게시물 삭제시 댓글 삭제
 	int deleteBoardReply(int b_no);
+	
+	int maxRstep(ReplyVo rv);
 }

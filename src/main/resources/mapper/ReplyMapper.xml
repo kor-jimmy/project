@@ -3,14 +3,31 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aeho.demo.dao.ReplyDao">
-  <select id="listReply" resultType="com.aeho.demo.vo.ReplyVo">
-  	select *from reply where b_no=#{b_no} order by r_date
-  </select>
+	<select id="listReply" resultType="com.aeho.demo.vo.ReplyVo">
+		select *from reply where b_no=#{b_no} order by r_ref asc, r_step, r_no
+	</select>
+	
+	<select id="getReply" resultType="com.aeho.demo.vo.ReplyVo">
+		select *from reply where r_no=#{r_no}
+	</select>
   
-  <insert id="insertReply">
-  	insert into reply(r_no, b_no, m_id, r_content)
-  	values(seq_reply.nextval,#{b_no},#{m_id},#{r_content})
-  </insert>
+	<insert id="insertReply">
+		<selectKey keyProperty="r_no" order="BEFORE" resultType="int">
+			select seq_reply.nextval from dual
+		</selectKey>
+		insert into reply(r_no, b_no, m_id, r_content, r_ref, r_level, r_step)
+		values(#{r_no},#{b_no},#{m_id},#{r_content},
+		<choose>
+			<when test="r_ref==0">
+				#{r_no}
+			</when>
+			<otherwise>
+				#{r_ref}
+			</otherwise>
+		</choose>
+		,#{r_level},#{r_step})
+	</insert>
+  
   
   <!-- 시큐리티시  id 추가. -->
   <delete id="deleteReply">
@@ -20,5 +37,9 @@
   <delete id="deleteBoardReply">
   	delete reply where b_no=#{b_no}
   </delete>
+  
+  <select id="maxRstep" resultType="int">
+	select max(r_step) from (select * from reply where r_ref=#{r_ref})
+  </select>
   
 </mapper>
