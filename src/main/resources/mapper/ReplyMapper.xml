@@ -43,7 +43,8 @@
   </delete>
   
   <select id="maxRstep" resultType="int">
-	select max(r_step) from (select * from reply where r_ref=#{r_ref})
+	select count(*)-1 from reply where b_no = #{b_no} and r_ref=#{r_ref}
   </select>
   
+
 </mapper>

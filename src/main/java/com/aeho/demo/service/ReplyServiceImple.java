@@ -30,23 +30,28 @@ public class ReplyServiceImple implements ReplyService {
 		
 		//답글 일때..
 		if(rv.getR_ref()!=0) {
-			
-			//조상부모댓글 소환  
-			System.out.println(rv.getR_no());
+			//부모 댓글
 			ReplyVo replyVo = replyDao.getReply(rv.getR_no());
+			System.out.println("replyVo"+replyVo);
+			rv.setR_step(replyVo.getR_step()+1);
+			
+			
+			System.out.println(rv);
+	
+			//부모댓글 소환  
+			System.out.println("누른댓글번호가옴!!==>"+rv.getR_no());
+			
+			
 			
 
 			rv.setR_level(replyVo.getR_level()+1);
 			
-			//부모댓글의 스텝이 0이 아니면
-			if(replyVo.getR_step() != 0) {
-				System.out.println("댓글의 댓글등록");
-				rv.setR_step(replyVo.getR_step()+1);
-				
-			}else {
-				System.out.println("그냥 댓글ㄷ등록");
-				rv.setR_step(replyDao.maxRstep(rv)+1);
-			}
+			//부모스탭
+			replyVo.getR_step();
+			
+			replyDao.updateStep(rv);
+			
+			//rv.setR_step(rv.getR_step()+1);
 			
 		}
 		
