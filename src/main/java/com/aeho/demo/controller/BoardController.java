@@ -179,7 +179,7 @@ public class BoardController {
 	}
 	
 	//love insert
-	@GetMapping("/insertLove")
+	@PostMapping("/insertLove")
 	@ResponseBody
 	public String insertLove(LoveVo lv) {
 		String result = "0";
@@ -192,7 +192,7 @@ public class BoardController {
 
 	
 	//love delete
-	@GetMapping("/deleteLove")
+	@PostMapping("/deleteLove")
 	@ResponseBody
 	public String deleteLove(LoveVo lv) {
 		String result = "0";
@@ -204,7 +204,7 @@ public class BoardController {
 	}
 	
 	//hate insert
-	@GetMapping("/insertHate")
+	@PostMapping("/insertHate")
 	@ResponseBody
 	public String insertHate(HateVo hv) {
 		String result = "0";
@@ -215,7 +215,7 @@ public class BoardController {
 		return result;
 	}
 	
-	@GetMapping("/deleteHate")
+	@PostMapping("/deleteHate")
 	@ResponseBody
 	public String deleteHate(HateVo hv) {
 		String result = "0";
