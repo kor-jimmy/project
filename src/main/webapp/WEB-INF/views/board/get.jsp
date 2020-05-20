@@ -91,6 +91,10 @@
 				
 				//댓글 본문
 				var contentDiv=$("<div class='col-6 reContent'></div>").attr("r_ref",r.r_ref).attr("r_no",r.r_no);
+				//현재 대댓글기능은 한번만 구현되도록 바꾸어 level이 1인 댓글의 클릭이벤트를 막음.
+				if(r.r_level>0){
+					contentDiv.removeClass("reContent");
+				}
 				var replyContent = $("<p></p>").html(r.r_content);
 				contentDiv.append(replyContent);
 
