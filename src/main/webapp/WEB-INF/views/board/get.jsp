@@ -15,6 +15,7 @@
 		var m_id = $("#m_id").val();
 
 		var logingID = "<sec:authorize access='isAuthenticated()'><sec:authentication property='principal.username'/></sec:authorize>";
+		var select_ref = "";
 		var select_rno = "";
 		
 		$("#clickheart").hide();
@@ -89,7 +90,7 @@
 				idDiv.append(replyID);
 				
 				//댓글 본문
-				var contentDiv=$("<div class='col-6 reContent'></div>").attr("r_no",r.r_no);
+				var contentDiv=$("<div class='col-6 reContent'></div>").attr("r_ref",r.r_ref).attr("r_no",r.r_no);
 				var replyContent = $("<p></p>").html(r.r_content);
 				contentDiv.append(replyContent);
 
@@ -151,8 +152,9 @@
 		$(document).on("click",".reContent",function(e){
 			console.log(logingID);
 			$(".reInputDiv").remove();
+			select_ref = $(this).attr("r_ref");
 			select_rno = $(this).attr("r_no");
-			console.log(select_rno);
+			console.log(select_ref);
 
 			var reInputDiv = $("<div class='reInputDiv row'></div>");
 
@@ -189,10 +191,11 @@
 			}
 			
 			var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
-			var r_ref = select_rno;
+			var r_ref = select_ref;
+			var r_no = select_rno;
 			console.log(r_ref)
 			var reReplyContent = $("#reReContent").val();
-			var reReplyData = {b_no:b_no, m_id:logingID, r_content:reReplyContent, r_ref:r_ref}
+			var reReplyData = {b_no:b_no, m_id:logingID, r_content:reReplyContent, r_ref:r_ref, r_no:r_no}
 
 			if(re){
 				$.ajax({

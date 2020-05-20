@@ -20,4 +20,6 @@ public interface ReplyDao {
 	int deleteBoardReply(int b_no);
 	
 	int maxRstep(ReplyVo rv);
+	
+	int updateStep(ReplyVo rv);
 }

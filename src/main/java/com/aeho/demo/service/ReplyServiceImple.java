@@ -27,16 +27,29 @@ public class ReplyServiceImple implements ReplyService {
 	@Override
 	@Transactional(rollbackFor=Exception.class)
 	public int insertReply(ReplyVo rv) {
+		
+		//답글 일때..
 		if(rv.getR_ref()!=0) {
-			ReplyVo replyVo = replyDao.getReply(rv.getR_ref());
+			
+			//조상부모댓글 소환  
+			System.out.println(rv.getR_no());
+			ReplyVo replyVo = replyDao.getReply(rv.getR_no());
+			
+
 			rv.setR_level(replyVo.getR_level()+1);
+			
+			//부모댓글의 스텝이 0이 아니면
 			if(replyVo.getR_step() != 0) {
-				rv.setR_step(replyVo.getR_step());
+				System.out.println("댓글의 댓글등록");
+				rv.setR_step(replyVo.getR_step()+1);
+				
 			}else {
+				System.out.println("그냥 댓글ㄷ등록");
 				rv.setR_step(replyDao.maxRstep(rv)+1);
 			}
 			
 		}
+		
 		int re = 0;
 		try {
 			int result_insert = replyDao.insertReply(rv);
