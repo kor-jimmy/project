@@ -23,5 +23,6 @@ public class GoodsReplyVo {
 	private int gr_ref;
 	private int gr_level;
 	private int gr_step;
+	private String gr_refid;
 }
 

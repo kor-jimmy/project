@@ -10,10 +10,12 @@
 		var parentNum;
 		var g_no = $("#g_no").val();
 		var gr_no = $("#gr_no").val();
-
+		var logingID="<sec:authorize access='isAuthenticated()'><sec:authentication property='principal.username'/></sec:authorize>";
 		//시큐리티
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
+		var select_gref;
+		var select_grno;
 		console.log("토큰 : "+token+" / 헤더:"+header);
 
 		
@@ -42,88 +44,92 @@
 			goodsReply = JSON.parse(goodsReply)		
 //			console.log(goodsReply);
 			$.each(goodsReply, function(idx,r){
- 				var tr = $("<tr></tr>");
- 				////댓글번호 보내기 (답댓글 달때 부모댓글 넣어주기위함)
- 				var hiddenNo = $("<input type='hidden' name='gr_no' value='"+r.gr_no+"'>");
- 				var td = $("<td></td>").append(hiddenNo);
- 				if(r.gr_level != 0){
- 	 				for(i=0;i<r.gr_level;i++){
- 	 	 				td.append($("<img src='/img/reply.png' width='45px' height='45px'>"));
- 	 	 			}
+				var li  =$("<li class='list-group-item rep' idx="+idx+" r_no="+r.gr_no+"></li>")
+			 	var replyDiv = $("<div class='row'></div>");
+			 	
+				var idDiv = $("<div class=col-2></div>");
+				var replyID=$("<p></p>").html(r.m_id);
+				idDiv.append(replyID);
+				var contentDiv=$("<div class='col-6 reContent'></div>").attr("gr_no",r.gr_no).attr("gr_ref",r.gr_ref);
+				var contentP = $("<p></p>");
+				var replyString="";
+				if(r.gr_level != 0){
+					contentDiv.append($("<p><img src='/img/reply.png' width='45px' height='45px' align='left'></p>"));
+					replyString ="@"+r.gr_refid+"&nbsp;&nbsp;";
  	 			}
- 				var td1 = $("<td></td>").html(r.m_id);
- 				
- 	 			
-				var td2 = $("<td></td>").html(r.gr_content);
-				var td3 = $("<td></td>").html(r.gr_date);
-	
-//				var buttonRe = $("<button class='reReply btn btn-outline-dark'></button>").text("답글").attr("gr_no",r.gr_no);
-//				var btnReport = $("<button class='reReport btn btn-outline-dark'></button>").text("신고").attr("gr_no",r.gr_no);			
+				contentP.html(replyString+r.gr_content);
+				contentDiv.append(contentP);
+
+				var dateDiv=$("<div class=col-2></div>");
+				var replyDate = $("<p></p>").html(r.gr_date);
+				dateDiv.append(replyDate);
+
+				var infoDiv=$("<div class=col-1></div>")
 				
-				var td4 = $("<td></td>");
+				//시큐리티 권한에 따라 보여지도록 하기위해 만드는 str
 				var secStr = "";
 				secStr += "<sec:authorize access='isAuthenticated()'>"
 				if("<sec:authentication property='principal.username'/>"==r.m_id){
 					secStr += "<button class='deleteReply btn btn-outline-dark' gr_no="+r.gr_no+">삭제</button>"
 				}
+				secStr += "<button class='reReport btn btn-outline-dark' gr_no="+r.gr_no+">신고</button>";
 				secStr += "</sec:authorize>";
-				td4.append(secStr);
+				infoDiv.append(secStr);
 
-				
-				var isMem = "";//로그인한 회원만 댓글에 대한 신고/답글 버튼 보이게 하기
-				isMem += "<sec:authorize access='isAuthenticated()'>";
-				isMem += "<button class='reReply btn btn-outline-dark' gr_no="+r.gr_no+">답글</button>";
-				isMem += "<button class='reReport btn btn-outline-dark' gr_no="+r.gr_no+">신고</button>";
-				isMem += "</sec:authorize>";
-				var td5 = $("<td></td>").append(isMem);			
-				tr.append(td,td1,td2,td3,td4,td5);
-
-				
-				//채은) 05/13 대댓글작업 시작~!
-				$(document).on("click",".reReply",function(){			
-					var id_find = "<sec:authorize access='isAuthenticated()'><sec:authentication property='principal.username'/></sec:authorize>";
-					var login_id = $("<div></div>").append(id_find);
-					$("#rereplyInput").remove();
-					
-					var par = $(this).parent().parent();
-					//원댓글의 댓글번호
-					var origin_gr_no = par.children(":eq(0)").children(":eq(0)").val();
-					//원댓글의 댓글쓴 id
-					var origin_id = par.children(":eq(1)").html();//댓글번호
-//					console.log("gr_no:"+origin_gr_no+"m_id:"+origin_id+" /g_no:"+g_no);
-					var id = "@"+origin_id+"&nbsp;&nbsp;"+login_id.html()+":";
-					var tr = $("<tr id='rereplyInput'><td></td></tr>");
-					var input = $("<input type='text'>");
-					var btnReInsert = $("<button class='insertReReply  btn btn-outline-dark'>등록</button>");
-					$(tr).append(id,input,btnReInsert);
-					
-					$(btnReInsert).on("click",function(){
-						console.log(login_id.html);
-						var re = confirm("댓글을 등록하시겠습니까? 한 번 입력한 댓글은 수정이 불가하므로 신중하게 입력해 주세요.");
-						var data = {g_no:g_no , m_id:login_id.html(), gr_content:$(input).val(),gr_ref:origin_gr_no};
-						if(re){
-							$.ajax({
-								url:"/goodsReply/insert",
-								type:"POST",
-								data:data,
-								beforeSend: function(xhr){
-									xhr.setRequestHeader(header,token)	
-								},
-								cache:false, 
-								success:function(result){
-								alert(result);
-								location.href="/goods/get?g_no="+g_no;
-							}})
-						}				
-						$(this).parent().remove();
-					})
-					var table=$(par).parent();
-					$(table).append(tr);
-				})
-				
-				$("#goodsReplyTable").append(tr);
+				replyDiv.append(idDiv,contentDiv,dateDiv,infoDiv);
+				li.append(replyDiv);
+				$("#goodsReplyList").append(li);
 			})
 		}})
+				
+		$(document).on("click",".reContent",function(){
+			$(".reInputDiv").remove();
+			select_gref=$(this).attr("gr_ref");
+			select_grno=$(this).attr("gr_no");
+			var reInputDiv = $("<div class='reInputDiv row'></div>");
+			
+			var div = $("<div class='col-1'></div>");
+			var idDiv = $("<div class='col-2'></div>");
+			var loginId = $("<p></p>").html(logingID);
+			idDiv.append(loginId);
+
+			var contentDiv = $("<div class='col-7'></div>");
+			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
+			contentDiv.append(reReContent);
+			var buttenDiv = $("<div class='col-2'></div>");
+			var reButton = $("<button type='submit' id='insertReReply' class='btn btn-outline-dark'>등록</button>");
+			buttenDiv.append(reButton);
+
+			reInputDiv.append(div,idDiv,contentDiv,buttenDiv); 
+			$(this).parent().parent().append(reInputDiv);	
+		})
+				
+		$(document).on("click","#insertReReply",function(){
+			if(logingID == null || logingID == ""){
+				alert("로그인해야 댓글 작성이 가능합니다.")
+				return;
+			}	
+			var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
+			var gr_ref=select_grno;
+//			var gr_no=select_grno;
+			var reReplyContent=$("#reReContent").val();
+			var reReplyData = {g_no:g_no , m_id:logingID, gr_content:reReplyContent,gr_ref:gr_ref};
+			if(re){
+				$.ajax({
+					url:"/goodsReply/insert",
+					type:"POST",
+					data:reReplyData,
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(header,token)	
+					},
+					cache:false, 
+					success:function(result){
+					alert(result);
+					location.href="/goods/get?g_no="+g_no;
+				}})
+			}				
+			$(this).parent().remove();
+		})
 		
 		$("#insertReply").on("click",function(){
 			var data = $("#reply").serialize();
@@ -195,10 +201,11 @@
 	</div>
 	
 	<hr>
-	<h4>댓글</h4>
-   <table id="goodsReplyTable">
-   </table>
-   <hr>
+	<h4>Comments</h4>
+	<br>
+	<ul id="goodsReplyList" class="list-group list-group-flush">
+	</ul>
+    <hr>
    <sec:authorize access="isAuthenticated()">
    <form id="reply">
       <input type="hidden" name="g_no" value="<c:out value='${goods.g_no }'/>">
@@ -207,7 +214,7 @@
       id:<input type="text" name="m_id" value="<sec:authentication property="principal.username"/>" readonly="readonly">
       content:<input type="text" name="gr_content" required="required">      
    </form>
-   <button type="submit" id="insertReply">댓글 등록</button>
+   <button type="submit" id="insertReply" class="btn btn-outline-dark">댓글 등록</button>
    </sec:authorize>
    
 	

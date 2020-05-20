@@ -25,7 +25,10 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
           //상품번호,제목,코드,가격,날짜
          var td1=$("<td align='center'></td>").html(item.g_no);
          var td2=$("<td align='center'></td>").html(gc_dist);
-         var a=$("<a>"+item.g_title+"["+item.g_replycnt+"]"+"</a>").attr("href","/goods/get?g_no="+item.g_no)
+//         var a=$("<a>"+item.g_title+"["+item.g_replycnt+"]"+"</a>").attr("href","/goods/get?g_no="+item.g_no)
+         var a=$("<a>"+item.g_title+"</a>").attr("href","/goods/get?g_no="+item.g_no)
+         var replyCnt=$("<span class='badge badge-light'></span>").html(item.g_replycnt)
+         a.append(replyCnt);
          var td3=$("<td></td>").html(a);
          var td4=$("<td align='center'></td>").html(item.m_id);
          var td5=$("<td align='center'></td>").html(item.g_price);

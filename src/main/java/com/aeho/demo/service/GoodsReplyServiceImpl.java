@@ -26,18 +26,19 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	@Override
 	@Transactional(rollbackFor=Exception.class)
 	public int insertGoodsReply(GoodsReplyVo gv) {
+		GoodsReplyVo grv = new GoodsReplyVo();
 		if(gv.getGr_ref() != 0) {
-			GoodsReplyVo grv = goodsReplyDao.getGoodsReply(gv.getGr_ref());
-			gv.setGr_level(grv.getGr_level()+1);
-			if(grv.getGr_step() != 0) {
+			grv = goodsReplyDao.getGoodsReply(gv.getGr_ref());
+			gv.setGr_level(1);
+/*			if(grv.getGr_step() != 0) {
 				gv.setGr_step(grv.getGr_step());
 			}
 			else {
 				gv.setGr_step(goodsReplyDao.maxGrstep(gv)+1);
-			}
-
+			}*/
 			gv.setGr_ref(grv.getGr_ref());
 		}
+		gv.setGr_refid(grv.getM_id());
 		int re = 0;
 		try {
 			int result_insert = goodsReplyDao.insertGoodsReply(gv);

@@ -167,7 +167,7 @@ public class GoodsController {
 		return gv.getG_no()+"";
 	}
 
-	@GetMapping("/delete")
+	@PostMapping("/delete")
 	@ResponseBody
 	public String delete(GoodsVo gv) {
 		String str = "0";
