@@ -17,7 +17,6 @@
 		var select_gref;
 		var select_grno;
 		console.log("토큰 : "+token+" / 헤더:"+header);
-
 		
 		$("#updateBtn").on("click",function(){
 			self.location = "/goods/update?g_no="+g_no;
@@ -64,20 +63,34 @@
 				var replyDate = $("<p></p>").html(r.gr_date);
 				dateDiv.append(replyDate);
 
-				var infoDiv=$("<div class=col-1></div>")
-				
-				//시큐리티 권한에 따라 보여지도록 하기위해 만드는 str
-				var secStr = "";
-				secStr += "<sec:authorize access='isAuthenticated()'>"
-				if("<sec:authentication property='principal.username'/>"==r.m_id){
-					secStr += "<button class='deleteReply btn btn-outline-dark' gr_no="+r.gr_no+">삭제</button>"
-				}
-				secStr += "<button class='reReport btn btn-outline-dark' gr_no="+r.gr_no+">신고</button>";
-				secStr += "</sec:authorize>";
-				infoDiv.append(secStr);
+				//신고
+				var reportDiv=$("<div class=col-1></div>");
+				var repStr = "<sec:authorize access='isAuthenticated()'>";
+				repStr += "<img class='reportICON' width=20px height=20px src='/img/reportICON.svg'></img>"
+				repStr +="</sec:authorize>";				
+				reportDiv.append(repStr);
 
-				replyDiv.append(idDiv,contentDiv,dateDiv,infoDiv);
-				li.append(replyDiv);
+				//삭제
+				var deleteDiv=$("<div class=col-1></div>");				
+				var delStr = "";
+				
+				delStr += "<sec:authorize access='isAuthenticated()'>"
+				if("<sec:authentication property='principal.username'/>"==r.m_id){
+					delStr += "<img class='delICON' width=20px height=20px src='/img/deleteICON.svg' r_no="+r.r_no+"></img></button>"
+				}
+				delStr += "</sec:authorize>"						
+				
+				deleteDiv.append(delStr)
+
+				replyDiv.append(idDiv,contentDiv,dateDiv,reportDiv,deleteDiv);
+				
+				if(r.gr_state == 1 && r.gr_reCnt != 0){
+					var deletedReply = $("<div></div>").html("삭제된 댓글입니다.");
+					li.append(deletedReply)
+				}
+				else{
+					li.append(replyDiv);
+				}
 				$("#goodsReplyList").append(li);
 			})
 		}})
@@ -165,7 +178,7 @@
 					},
 					cache:false,
 					success:function(result){
-						alert(result);
+						alert(result.str);
 						location.href="/goods/get?g_no="+g_no;
 					}})
 			}

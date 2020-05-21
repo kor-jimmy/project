@@ -26,26 +26,21 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	@Override
 	@Transactional(rollbackFor=Exception.class)
 	public int insertGoodsReply(GoodsReplyVo gv) {
-		GoodsReplyVo grv = new GoodsReplyVo();
-		if(gv.getGr_ref() != 0) {
-			grv = goodsReplyDao.getGoodsReply(gv.getGr_ref());
-			gv.setGr_level(1);
-/*			if(grv.getGr_step() != 0) {
-				gv.setGr_step(grv.getGr_step());
-			}
-			else {
-				gv.setGr_step(goodsReplyDao.maxGrstep(gv)+1);
-			}*/
-			gv.setGr_ref(grv.getGr_ref());
+		if(gv.getGr_ref() != 0) {	//답댓글일 경우
+			GoodsReplyVo grv = goodsReplyDao.getGoodsReply(gv.getGr_ref());	//부모댓글 get	
+			gv.setGr_level(1);	//답댓글은 level이 1임
+			gv.setGr_ref(grv.getGr_ref());//답댓글에는 ref를 부모번호 넣어줌
+			gv.setGr_refid(grv.getM_id());//태그할 댓글의 id
 		}
-		gv.setGr_refid(grv.getM_id());
 		int re = 0;
 		try {
 			int result_insert = goodsReplyDao.insertGoodsReply(gv);
 			String cntKeyword = "reply";
 			int result_update = goodsDao.updateCnt(gv.getG_no(), cntKeyword);
-			if( result_insert > 0 && result_update > 0)
+			if( result_insert > 0 && result_update > 0)	{
 				re = 1;
+				goodsReplyDao.updateCnt(gv.getGr_ref());
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());// TODO: handle exception
 		}
@@ -56,19 +51,32 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	@Override
 	public int deleteGoodsReply(GoodsReplyVo gv) {
 		int re=0;
-		try {
-			int result_delete = goodsReplyDao.deleteGoodsReply(gv);
-			String cntKeyword="reply";
-			System.out.println("gno:"+gv.getG_no());
-			int result_update = goodsDao.updateCnt(gv.getG_no(), cntKeyword);
-			
-			if(result_delete > 0 && result_update > 0)
-				re=1;
-			
-			System.out.println("업데이트결과:"+result_update);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());// TODO: handle exception
+		//delete수행시, 답댓글이 아닌 경우는 삭제가 아닌 상태를 1로 변경하고
+		//답댓글인 경우는 삭제를 진행하고, 원래 댓글의 cnt를 변경한다.
+		
+		if(gv.getGr_no() == gv.getGr_ref()) {//답댓글이 아닐때
+			goodsReplyDao.updateState(gv.getGr_no());
+			goodsDao.updateCnt(gv.getG_no(), "reply");
+			re=1;
 		}
+		else {
+			GoodsReplyVo grv = goodsReplyDao.getGoodsReply(gv.getGr_ref());	//부모댓글 get	
+			int gr_ref = gv.getGr_ref();	//지우고 나서도 이용할 수 있도록 미리 저장
+			try {
+				int result_delete = goodsReplyDao.deleteGoodsReply(gv);
+				String cntKeyword="reply";
+//				System.out.println("gno:"+gv.getG_no());
+				int result_update = goodsDao.updateCnt(gv.getG_no(), cntKeyword);
+				if(result_delete > 0 && result_update > 0) {
+					re = 1;
+					goodsReplyDao.updateCnt(gr_ref);
+				}			
+				System.out.println("re:"+re);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());// TODO: handle exception
+			}
+		}
+		
 		return re;
 	}
 
@@ -87,5 +95,16 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	public int maxGrstep(GoodsReplyVo gv) {
 		return goodsReplyDao.maxGrstep(gv);
 	}
+
+	@Override
+	public int updateCnt(int gr_ref) {
+		return goodsReplyDao.updateCnt(gr_ref);
+	}
+
+	@Override
+	public int updateState(int gr_no) {
+		return goodsReplyDao.updateState(gr_no);
+	}
+
 
 }

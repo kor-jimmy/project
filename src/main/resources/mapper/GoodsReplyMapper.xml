@@ -17,7 +17,7 @@
   	<selectKey keyProperty="gr_no" order="BEFORE" resultType="int">
   		select seq_goodsReply.nextval from dual
   	</selectKey>
-  	insert into goodsReply(gr_no, g_no, m_id, gr_content,gr_ref,gr_refid,gr_level,gr_step)
+  	insert into goodsReply(gr_no, g_no, m_id, gr_content,gr_ref,gr_refid,gr_level,gr_step,gr_reCnt,gr_state)
     values(#{gr_no}, #{g_no}, #{m_id}, #{gr_content},
      <choose>
      	<when test="gr_ref==0">
@@ -27,7 +27,7 @@
       		#{gr_ref},#{gr_refid}
       	</otherwise>
       </choose>
-      ,#{gr_level},#{gr_step})
+      ,#{gr_level},#{gr_step},#{gr_reCnt},#{gr_state})
   </insert>
     
   <delete id="deleteGoodsReply">
@@ -41,4 +41,16 @@
   <select id="maxGrstep" resultType="int">
 	select max(gr_step) from (select * from goodsReply where gr_ref=#{gr_ref})
   </select>
+ <!--  
+  <select id="cntRef" resultType="int">
+  	select count(*) from goodsReply where gr_ref=#{gr_ref} and gr_no != ${gr_ref}
+  </select>
+  --> 
+  <update id="updateCnt">
+  	update goodsReply set gr_reCnt=(select count(*) from goodsReply where gr_ref=#{gr_ref} and gr_no != ${gr_ref}) where gr_no=#{gr_ref}
+  </update>
+  
+  <update id="updateState">
+  	update goodsReply set gr_state=1 where gr_no=#{gr_no}
+  </update>
 </mapper>

@@ -102,7 +102,7 @@
   	update goods set
   	<choose>
   		<when test="cntKeyword != null and cntKeyword.equals('reply')">
-  			g_replycnt = (select count(*) from goodsReply where g_no = #{g_no})
+  			g_replycnt = (select count(*) from goodsReply where g_no = #{g_no} and gr_state != 1)
   		</when>
   	</choose> 
     where g_no=#{g_no}

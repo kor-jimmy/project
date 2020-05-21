@@ -1,5 +1,6 @@
 package com.aeho.demo.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +48,17 @@ public class GoodsReplyController {
 	}
 	
 	@PostMapping("/delete")
-	public String delete(GoodsReplyVo gv) {
+	public HashMap delete(int gr_no) {
+		GoodsReplyVo gv = goodsReplyService.getGoodsReply(gr_no);
 		String str = "댓글삭제 실패";
 		int re = goodsReplyService.deleteGoodsReply(gv);
 		if(re>0) {
 			str = "댓글삭제에 성공했습니다.";
 		}
-		return str;
+		HashMap map = new HashMap();
+		map.put("str", str);
+		map.put("re", re);
+		return map;
 	}
 		
 	@GetMapping("/getGoodsReply")
