@@ -16,6 +16,7 @@
 		var logingID = "<sec:authorize access='isAuthenticated()'><sec:authentication property='principal.username'/></sec:authorize>";
 		var select_ref = "";
 		var select_rno = "";
+		var select_mid = "";
 		
 		$("#clickheart").hide();
 		$("#clickedhate").hide();
@@ -53,9 +54,23 @@
 			self.location = "/board/update?b_no="+b_no;
 		})
 		$("#deleteBtn").on("click",function(){
+			var confirm = "";
+			
+			var swal = swal({
+			    title: "게시물을 삭제 하시겠습니까?",
+			    icon: "info",
+			    buttons: ["YES", "NO"]
+			}).then((YES) => {
+			    if (YES) {
+			    	confirm = true;        
+			    }else{
+			    	confirm = false;
+			    }
+			});
+			
 			console.log(b_no);
-			var re = confirm("정말로 삭제하시겠습니까?");
-			if(re){
+			//var re = confirm("정말로 삭제하시겠습니까?");
+			if(confirm==true){
 				$.ajax("/board/delete", {type: 'GET', data: {b_no: b_no}, success: function(result){
 					if( result == "0"){
 						alert("죄송합니다. 예기치 않은 오류가 발생했습니다. 게시물을 삭제하지 못 했습니다.");
@@ -82,8 +97,9 @@
 				var idDiv = $("<div class=col-2></div>");
 
 				//댓글 본문
-				var contentDiv=$("<div class='col-6 reContent'></div>").attr("r_ref",r.r_ref).attr("r_no",r.r_no);
-
+				var contentDiv=$("<div class='col-6 reContent'></div>").attr("r_ref",r.r_ref).attr("r_no",r.r_no).attr("m_id",r.m_id);
+				var replyContent = $("<span class='replyContent'></span>")
+				
 				//현재 대댓글기능은 한번만 구현되도록 바꾸어 level이 1인 댓글의 클릭이벤트를 막음.
 				if(r.r_level != 0){
 					var reReIcon = $("<img src='/img/replyICON.png' width=20px height=20px></img>")
@@ -95,7 +111,7 @@
 				var replyID = $("<span></span>").html(r.m_id);
 				idDiv.append(replyID);
 				
-				var replyContent = $("<span></span>").html(r.r_content);
+				replyContent.append(r.r_content);
 				contentDiv.append(replyContent);
 
 				//댓글 날짜
@@ -181,7 +197,10 @@
 			$(".reInputDiv").remove();
 			select_ref = $(this).attr("r_ref");
 			select_rno = $(this).attr("r_no");
+			select_mid = $(this).attr("m_id");
 			console.log(select_ref);
+
+			var reID = "@" +select_mid+"  ";
 
 			var reInputDiv = $("<div class='reInputDiv row'></div>");
 
@@ -193,7 +212,7 @@
 			idDiv.append(loginId);
 			
 			var contentDiv = $("<div class='col-7'></div>");
-			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
+			var reReContent = $("<input type='text' class='form-control' id='reReContent'>").val(reID);
 			contentDiv.append(reReContent);
 
 			var buttenDiv = $("<div class='col-2'></div>");
