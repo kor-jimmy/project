@@ -6,7 +6,6 @@
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript">
 	$(function(){
-
 		//시큐리티 csrf
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
