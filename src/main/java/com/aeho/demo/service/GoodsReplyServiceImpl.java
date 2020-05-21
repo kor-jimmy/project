@@ -51,9 +51,9 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	@Override
 	public int deleteGoodsReply(GoodsReplyVo gv) {
 		int re=0;
+		
 		//delete수행시, 답댓글이 아닌 경우는 삭제가 아닌 상태를 1로 변경하고
 		//답댓글인 경우는 삭제를 진행하고, 원래 댓글의 cnt를 변경한다.
-		
 		if(gv.getGr_no() == gv.getGr_ref()) {//답댓글이 아닐때
 			goodsReplyDao.updateState(gv.getGr_no());
 			goodsDao.updateCnt(gv.getG_no(), "reply");

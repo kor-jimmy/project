@@ -76,17 +76,20 @@
 				
 				delStr += "<sec:authorize access='isAuthenticated()'>"
 				if("<sec:authentication property='principal.username'/>"==r.m_id){
-					delStr += "<img class='delICON' width=20px height=20px src='/img/deleteICON.svg' r_no="+r.r_no+"></img></button>"
+					delStr += "<img class='delICON' width=20px height=20px src='/img/deleteICON.svg' gr_no="+r.gr_no+"></img></button>"
 				}
 				delStr += "</sec:authorize>"						
 				
 				deleteDiv.append(delStr)
 
-				replyDiv.append(idDiv,contentDiv,dateDiv,reportDiv,deleteDiv);
+				replyDiv.append(idDiv,contentDiv,reportDiv,deleteDiv,dateDiv);
 				
 				if(r.gr_state == 1 && r.gr_reCnt != 0){
 					var deletedReply = $("<div></div>").html("삭제된 댓글입니다.");
 					li.append(deletedReply)
+				}
+				else if(r.gr_state == 1){
+					
 				}
 				else{
 					li.append(replyDiv);
@@ -165,7 +168,7 @@
 			console.log("인서트끝:"+parentNum);
 		})
 		
-		$(document).on("click",".deleteReply",function(){
+		$(document).on("click",".delICON",function(){
 			var grno = $(this).attr("gr_no");
 			var re = confirm("진짜로 댓글을 삭제하겠습니까?");
 			if(re){
