@@ -18,7 +18,7 @@ public class ReplyVo {
 	private int b_no;
 	private String m_id;
 	private String r_content;
-	private Date r_date;
+	private String r_date;
 	private int r_ref;
 	private int r_level;
 	private int r_step;

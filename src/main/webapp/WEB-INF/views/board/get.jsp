@@ -74,49 +74,72 @@
 			console.log(reply);
 			$.each(reply, function(idx,r){
 				var m_id = r.m_id
-				console.log(m_id)
+				//console.log(m_id)
 				// 댓글 ul로 수정.
 				var li = $("<li class='list-group-item rep' idx="+idx+" r_no="+r.r_no+"></li>")
 				var replyDiv = $("<div class='row'></div>");
 
-				if(r.r_level != 0){
-					var reReIcon = $("<div>-></div>")
-					replyDiv.append(reReIcon);
-				}
-				
 				//댓글 쓴 유저 아이디
 				var idDiv = $("<div class=col-2></div>");
-				var replyID = $("<p></p>").html(r.m_id);
-				idDiv.append(replyID);
-				
+
 				//댓글 본문
 				var contentDiv=$("<div class='col-6 reContent'></div>").attr("r_ref",r.r_ref).attr("r_no",r.r_no);
+
 				//현재 대댓글기능은 한번만 구현되도록 바꾸어 level이 1인 댓글의 클릭이벤트를 막음.
-				if(r.r_level>0){
+				if(r.r_level != 0){
+					var reReIcon = $("<img src='/img/replyICON.png' width=20px height=20px></img>")
+					contentDiv.append(reReIcon);
 					contentDiv.removeClass("reContent");
+					li.addClass("list-group-item-dark");
 				}
-				var replyContent = $("<p></p>").html(r.r_content);
+				
+				var replyID = $("<span></span>").html(r.m_id);
+				idDiv.append(replyID);
+				
+				var replyContent = $("<span></span>").html(r.r_content);
 				contentDiv.append(replyContent);
 
 				//댓글 날짜
 				var dateDiv=$("<div class=col-2></div>");
 				var replyDate = $("<p></p>").html(r.r_date);
+				var date = new Date("yy/mm/dd");
+
+				console.log(date);
+				
+				
 				dateDiv.append(replyDate)
 				
-				//삭제, 신고
-				var infoDiv=$("<div class=col-1></div>");
-				var replyInfo = $("<p></p>").html("신고 삭제");
-				infoDiv.append(replyInfo);
+				//신고
+				var reportDiv=$("<div class=col-1></div>");
+				//var reportICON = $("<img width=20px height=20px></img>").attr("src","/img/reportICON.svg");
 
-				replyDiv.append(idDiv,contentDiv,dateDiv,infoDiv);
+				var repStr = "<sec:authorize access='isAuthenticated()'>";
+				repStr += "<img class='reportICON' width=20px height=20px src='/img/reportICON.svg'></img>"
+				repStr +="</sec:authorize>";
+				
+				reportDiv.append(repStr);
+				
 
+				//삭제
+				var deleteDiv=$("<div class=col-1></div>");
+				//var deleteICON=$("<img width=20px height=20px></img>").attr("src","/img/deleteICON.svg");
+				
+				var delStr = "";
+				
+				delStr += "<sec:authorize access='isAuthenticated()'>"
+				if("<sec:authentication property='principal.username'/>"==r.m_id){
+					delStr += "<img class='delICON' width=20px height=20px src='/img/deleteICON.svg' r_no="+r.r_no+"></img></button>"
+				}
+				delStr += "</sec:authorize>"						
+				
+				deleteDiv.append(delStr)
 
+				replyDiv.append(idDiv,contentDiv,dateDiv,reportDiv,deleteDiv);
 
 				li.append(replyDiv);
 				
 				$("#replyList").append(li);
-				
-				
+
 				
 /*  				var tr = $("<tr class='rep' r_no="+r.r_no+"></tr>");
  				var reRe = $("<tr class='reReply' r_no="+r.r_no+" bgcolor=#BAE1FF></tr>").hide();	
@@ -182,8 +205,6 @@
 			//var secStr = "<sec:authorize access='isAuthenticated()'>"+reInputDiv+"</sec:authorize>"
 			
 			$(this).parent().parent().append(reInputDiv);
-			
-
 
 		})
 		
@@ -240,7 +261,7 @@
 		})
 
 		//댓글 삭제 ajax 기능구현부터!
-		$(document).on("click",".deleteReply",function(){
+		$(document).on("click",".delICON",function(){
 			var rno = $(this).attr("r_no");
 			console.log(rno);
 			var re = confirm("해당 댓글을 삭제하시겠습니까?")
@@ -386,7 +407,7 @@
 			</c:if>
 		</sec:authorize>		
     </div>
-
+    
 	<hr>
 	<!-- 댓글목록 -->
 	<h4>Comments</h4>
@@ -396,13 +417,21 @@
 	<!-- end 댓글목록 -->
 	<hr>
 	<sec:authorize access="isAuthenticated()">
-		<form id="boardReply">
-			<input type="hidden" name="b_no" value="<c:out value='${board.b_no }'/>">
-			<input type="hidden" name="r_ref" value="0"/>
-			<input type="hidden" name="r_level" value="0"/>
-			<input type="text" name="m_id" value="<sec:authentication property="principal.username"/>" readonly="readonly">
-			<input type="text" name="r_content" required="required">
-		</form>
-		<button type="submit" id="insertReply" class="btn btn-outline-dark">댓글등록</button>
+			<form id="boardReply">
+				<div id="replyDiv" class="form-row align-items-center">
+					<input type="hidden" name="b_no" value="<c:out value='${board.b_no }'/>">
+					<input type="hidden" name="r_ref" value="0"/>
+					<input type="hidden" name="r_level" value="0"/>
+					<div class="col-sm-2 my-1">
+						<input class="form-control" type="text" name="m_id" value="<sec:authentication property="principal.username"/>" readonly="readonly">
+					</div>
+					<div class="col-sm-8 my-1"> 
+						<input class="form-control" type="text" name="r_content" required="required" placeholder="댓글을 입력하세요!">
+					</div>
+					<div class="col-sm-2 my-1">
+						<button type="submit" id="insertReply" class="btn btn-outline-dark">댓글등록</button>
+					</div>
+				</div>
+			</form>
 	</sec:authorize>
 <%@include file="../includes/footer.jsp"%>
