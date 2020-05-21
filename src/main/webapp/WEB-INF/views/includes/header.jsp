@@ -40,6 +40,10 @@
     <script src="../resources/editor/summernote-lite.js"></script>
 	<script src="../resources/editor/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/resources/editor/summernote-lite.css">
+	
+	<!-- alert창 디자인 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 	<style>
         #searchDiv{
             margin-top: 50px;
@@ -216,6 +220,6 @@
 	
 	<a style="display:scroll;position:fixed;bottom:10px;right:10px;z-index: 1000" href="#" title="맨위로"><img width=40 height=40 src="/img/topIcon2.png"></a>
 
-	
     <!--content-->
     <div class="container pt-3">
+    

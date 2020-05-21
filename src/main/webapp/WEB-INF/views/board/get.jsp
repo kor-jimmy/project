@@ -89,7 +89,7 @@
 					var reReIcon = $("<img src='/img/replyICON.png' width=20px height=20px></img>")
 					contentDiv.append(reReIcon);
 					contentDiv.removeClass("reContent");
-					li.addClass("list-group-item-dark");
+					li.addClass("list-group-item-secondary");
 				}
 				
 				var replyID = $("<span></span>").html(r.m_id);
@@ -105,7 +105,6 @@
 
 				console.log(date);
 				
-				
 				dateDiv.append(replyDate)
 				
 				//신고
@@ -113,7 +112,9 @@
 				//var reportICON = $("<img width=20px height=20px></img>").attr("src","/img/reportICON.svg");
 
 				var repStr = "<sec:authorize access='isAuthenticated()'>";
-				repStr += "<img class='reportICON' width=20px height=20px src='/img/reportICON.svg'></img>"
+				if("<sec:authentication property='principal.username'/>"!=r.m_id){
+					repStr += "<img class='reportICON' width=20px height=20px src='/img/reportICON.svg'></img>"
+				}
 				repStr +="</sec:authorize>";
 				
 				reportDiv.append(repStr);
@@ -133,7 +134,7 @@
 				
 				deleteDiv.append(delStr)
 
-				replyDiv.append(idDiv,contentDiv,dateDiv,reportDiv,deleteDiv);
+				replyDiv.append(idDiv,contentDiv,reportDiv,deleteDiv,dateDiv);
 
 				li.append(replyDiv);
 				
@@ -210,10 +211,15 @@
 		//대댓글 등록
 		$(document).on("click","#insertReReply",function(e){
 			if(logingID == null || logingID == ""){
-				alert("로그인해야 댓글 작성이 가능합니다!")
+				swal({
+					  title: "로그인이 필요한 서비스 입니다!",
+					  text: "댓글을 등록하기 위해서는 로그인이 필요 합니다.",
+					  icon: "warning",
+					  button: "확인"
+					})
 				return;
 			}
-			
+
 			var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
 			var r_ref = select_ref;
 			var r_no = select_rno;
@@ -375,7 +381,7 @@
 	<sec:authorize access="isAnonymous()">
 		<input type="hidden" id="m_id" value="">
 	</sec:authorize>
-	<table class="table table-bordered">
+	<table class="table">
 		<tr>
 			<td colspan="3"><h3><c:out value="${board.b_title }"/></h3></td>
 			<td>
@@ -387,8 +393,8 @@
 		</tr>
 		<tr>
 			<td width="45%"><c:out value="${board.m_id }"/></td>
-			<td width="15%"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
-			<td width="15%"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_updatedate }"/></td>
+			<td width="15%">작성일 <fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
+			<td width="15%">수정일 <fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_updatedate }"/></td>
 			<td width="25%">조회 <c:out value="${board.b_hit }"/>  / Love <c:out value="<span id='loveCnt'>${ board.b_lovecnt }</span>" escapeXml="false"/> / hate <c:out value="<span id='hateCnt'>${ board.b_hatecnt }</span>" escapeXml="false"/></td>
 		</tr>
 		<tr>
@@ -397,6 +403,7 @@
 			</td>
 		</tr>
 	</table>
+	<hr>
 	<div>			
 		<sec:authentication property="principal" var="pinfo"/>
 		<sec:authorize access="isAuthenticated()">

@@ -44,10 +44,21 @@
 			self.location = "/board/list?categoryNum="+c_no;
 		});
 	})
+	
 </script>
-    <h2><c:out value="${catkeyword}"/></h2>
-    <input type="hidden" name="c_no" id="c_no" value="${c_no}">
-    <hr>
+	<div class="row">
+		<div class="col">
+			 <h2><c:out value="${catkeyword}"/></h2>
+		</div>
+	    <!-- 게시물 인서트 -->
+	    <div class="col">
+	    	<sec:authorize access="isAuthenticated()">
+				<button id="insertBtn" type="button" class="btn btn-outline-dark float-right">게시물 등록</button>
+			</sec:authorize>
+	    </div>
+	    <!-- end 게시물 인서트 -->
+	</div>
+
     <table class="table table-hover">
         <thead>
             <tr align="center">
@@ -72,25 +83,38 @@
             </c:forEach>
         </tbody>
     </table>
+    
     <hr>
     <!-- 게시물 검색 -->
     <form id="searchForm" action="/board/list" method="get">
-    <input type="hidden" id="categoryNum" name="categoryNum" value="${ c_no }">
-    	<select name="searchField">
-    		<option value="all" <c:out value="${ pageMake.cri.searchField eq 'all'?'selected':'' }"/>>전체</option>
-    		<option value="b_title" <c:out value="${ pageMake.cri.searchField eq 'b_title'?'selected':'' }"/>>제목
-    		<option value="b_content" <c:out value="${ pageMake.cri.searchField eq 'b_content'?'selected':'' }"/>>내용</option>
-    		<option value="doc" <c:out value="${ pageMake.cri.searchField eq 'doc'?'selected':'' }"/>>제목+내용</option>
-    		<option value="m_id" <c:out value="${ pageMake.cri.searchField eq 'm_id'?'selected':'' }"/>>작성자</option>
-    	</select>
-    	<input type="text" id="keyword" name="keyword" value="${ pageMake.cri.keyword }">
-    	<input type="hidden" name="c_no" id="c_no" value="${c_no}">
-    	<input type="hidden" name="pageNum" id="pageNum" value="${pageMake.cri.pageNum}">
-    	<input type="hidden" name="amount" id="amount" value="${pageMake.cri.amount}">
-    	<button id="searchBtn" class="btn btn-outline-dark">검색</button>
-    	<button id="allBoardBtn" class="btn btn-outline-dark float-right">전체글</button>
+	    <div class="form-row align-items-center">
+	    	    <input type="hidden" id="categoryNum" name="categoryNum" value="${ c_no }">
+	    	    <input type="hidden" name="c_no" id="c_no" value="${c_no}">
+		    	<input type="hidden" name="pageNum" id="pageNum" value="${pageMake.cri.pageNum}">
+		    	<input type="hidden" name="amount" id="amount" value="${pageMake.cri.amount}">
+	    	    <div class="col-sm-2 my-1">
+	    	    	<select class="custom-select mr-sm-2" name="searchField">
+			    		<option value="all" <c:out value="${ pageMake.cri.searchField eq 'all'?'selected':'' }"/>>전체</option>
+			    		<option value="b_title" <c:out value="${ pageMake.cri.searchField eq 'b_title'?'selected':'' }"/>>제목
+			    		<option value="b_content" <c:out value="${ pageMake.cri.searchField eq 'b_content'?'selected':'' }"/>>내용</option>
+			    		<option value="doc" <c:out value="${ pageMake.cri.searchField eq 'doc'?'selected':'' }"/>>제목+내용</option>
+			    		<option value="m_id" <c:out value="${ pageMake.cri.searchField eq 'm_id'?'selected':'' }"/>>작성자</option>
+			    	</select>
+	    	    </div>
+				<div class="col-sm-6 my-1">
+					<input type="text" class="form-control" id="keyword" name="keyword" value="${ pageMake.cri.keyword }">
+				</div>
+		    	
+				<div class="col-sm-2 my-1">
+					<button id="searchBtn" class="btn btn-outline-dark">검색</button>
+				</div>
+		    	
+		    	<div class="col-sm-2 my-1">
+		    		<button id="allBoardBtn" class="btn btn-outline-dark float-right">전체글</button>
+		    	</div>
+	    </div>
     </form>
-    
+
     <hr>
     <!-- 페이징 -->
     <div class="float-right">
@@ -125,10 +149,6 @@
     	</form>
     </div>
     <!-- end 페이징 -->
-    <!-- 게시물 인서트 -->
-    <div>
-    	<button id="insertBtn" type="button" class="btn btn-outline-dark">게시물 등록</button>
-    </div>
-    <!-- end 게시물 인서트 -->
+
 
 <%@include file="../includes/footer.jsp"%>  
