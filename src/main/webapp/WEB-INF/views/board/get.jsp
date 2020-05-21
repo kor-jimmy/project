@@ -55,7 +55,7 @@
 		})
 		$("#deleteBtn").on("click",function(){
 			var confirm = "";
-			
+
 			var swal = swal({
 			    title: "게시물을 삭제 하시겠습니까?",
 			    icon: "info",
