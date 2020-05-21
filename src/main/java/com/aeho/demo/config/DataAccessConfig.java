@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @MapperScan(basePackages = "com.aeho.demo.dao")
 public class DataAccessConfig {
+	
 	@Bean
 	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception{
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
