@@ -36,6 +36,15 @@
 			}});
 		}
 
+		var isEnded = function(idx){
+			$("#timeText"+idx).html("00 : 00 : 00");
+			$(".divA img").css("filter", "grayscale(100%)");
+			$(".divB img").css("filter", "grayscale(100%)");
+			$(".progress-bar").css("filter", "grayscale(100%)");
+			$("tr[data-index="+idx+"]").removeClass("modalTr");
+			//self.location = "/vote/vote";
+		}
+
 		//진행중인 투표 목록
 		var topicList = function(){
 			$.ajax("/vote/list", {success: function(list){
@@ -47,10 +56,10 @@
 					var textBox = $('<div style="width: inherit; height: 150px; position: absolute; display: table; z-index: 10; color: white; text-shadow: 2px 2px 5px black;"></div>');
 					var text = $('<div style="display:table-cell; text-align:center; vertical-align:middle;"><h2 id="timeText'+idx+'" style="display: inline-block; text-align: center;"></h2></div>');
 					var imglocBox = $('<div style="width: 110%; height: 150px; margin-left: -5%; display: inline-block; text-align: center;"></div>');
-					var divA = $('<div class="divA" style="position:relative; width: 49%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;"></div>');
-					var divB = $('<div class="divB" style="position:relative; width: 49%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;"></div>');
-					var imgA = $('<img src="/img/vote/'+v.vt_img_a+'" style="width: 100%; margin-right: 50%; margin-top: -15%; opacity: 0.6;">');
-					var imgB = $('<img src="/img/vote/'+v.vt_img_b+'" style="width: 100%; margin-right: 50%; margin-top: -15%; opacity: 0.6;">');
+					var divA = $('<div class="divA" style="position:relative; width: 50%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;"></div>');
+					var divB = $('<div class="divB" style="position:relative; width: 50%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;"></div>');
+					var imgA = $('<img src="/img/vote/'+v.vt_img_a+'" style="width: 100%; margin-right: 30%; margin-top: -30%; opacity: 0.6;">');
+					var imgB = $('<img src="/img/vote/'+v.vt_img_b+'" style="width: 100%; margin-right: 30%; margin-top: -30%; opacity: 0.6;">');
 
 					divA.append(imgA);
 					divB.append(imgB);
@@ -82,6 +91,7 @@
 					$("#ingTable").append(tr);
 
 					start_timer(v.vt_end, idx);
+
 				});
 				console.log(trList);
 			}});
@@ -106,6 +116,20 @@
 
 			if(remain < 0){
 				clearInterval(remainInterval);
+				$.ajax({
+					type: "POST",
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(header,token)	
+					},
+					cache: false, 
+		            url: "/vote/updateState",
+					data: {vt_no: trList[idx].vt_no},
+					success: function(re){
+						if(re > 0){
+							isEnded(idx);							
+						}
+					}
+				});
 			}else{
 				remain = remain - 1000;
 			}
@@ -115,7 +139,58 @@
 			var remainInterval = setInterval( function(){ remainTime(endTime, idx); }, 1000 );
 		}
 
+
+		//마감된 투표 목록
+		var endedTopicList = function(){
+			$.ajax("/vote/listEnded", {success: function(list){
+				var list = JSON.parse(list);
+				$.each(list, function(idx, v){
+					
+					var radiusContainer = $('<div style="width: 100%; height: 150px; display: inline-block; position: relative; border-radius: 30px; overflow: hidden; margin: 5px 0px 5px 0px;"></div>').attr("idx", idx);
+					var textBox = $('<div style="width: inherit; height: 150px; position: absolute; display: table; z-index: 10; color: white; text-shadow: 2px 2px 5px black;"></div>');
+					var text = $('<div style="display:table-cell; text-align:center; vertical-align:middle;"><h2 id="timeText'+idx+'" style="display: inline-block; text-align: center;"></h2></div>');
+					var imglocBox = $('<div style="width: 110%; height: 150px; margin-left: -5%; display: inline-block; text-align: center;"></div>');
+					var divA = $('<div class="divA" style="position:relative; width: 49%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;"></div>');
+					var divB = $('<div class="divB" style="position:relative; width: 49%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;"></div>');
+					var imgA = $('<img src="/img/vote/'+v.vt_img_a+'" style="width: 100%; margin-right: 50%; margin-top: -50%; opacity: 0.6; filter: grayscale(100%);">');
+					var imgB = $('<img src="/img/vote/'+v.vt_img_b+'" style="width: 100%; margin-right: 50%; margin-top: -50%; opacity: 0.6; filter: grayscale(100%);">');
+
+					divA.append(imgA);
+					divB.append(imgB);
+					imglocBox.append(divA, divB);
+					textBox.append(text);
+					radiusContainer.append(textBox, imglocBox);
+
+					var a_per = 0;
+					var b_per = 0;
+					var a_html = "0%";
+					var b_html = "0%";
+					
+					if(v.vt_count_a != 0 || v.vt_count_b != 0){
+						a_per = v.vt_count_a / (v.vt_count_a + v.vt_count_b) * 100;
+						b_per = v.vt_count_b / (v.vt_count_a + v.vt_count_b) * 100;
+						a_html = v.vt_content.split("/")[0] + " " + a_per + "%";
+						b_html = v.vt_content.split("/")[1] + " " + b_per + "%";
+					}
+
+					var progress = $('<div class="progress mb-5"></div>');
+					var pro_barA = $('<div class="progress-bar" role="progressbar" aria-valuenow="'+a_per+'" aria-valuemin="0" aria-valuemax="100" style="width: '+a_per+'%; background: #a3a1fc; filter: grayscale(100%);"></div>').html(a_html);
+					var pro_barB = $('<div class="progress-bar" role="progressbar" aria-valuenow="'+b_per+'" aria-valuemin="0" aria-valuemax="100" style="width: '+b_per+'%; background: #d4f2f2; filter: grayscale(100%);"></div>').html(b_html);
+					progress.append(pro_barA, pro_barB);
+
+					$("#timeText"+idx).html("00 : 00 : 00");
+
+					var tr = $('<tr></tr>');
+					var tdBox = $("<td></td>").append(radiusContainer, progress);
+
+					tr.append(tdBox);
+					$("#endedTable").append(tr);
+				});
+			}});
+		}
+
 		topicList();
+		endedTopicList();
 
 		var vt;
 
@@ -239,8 +314,14 @@
 </sec:authorize>
 
 <h2>투표</h2>
+<h4 align="center">진행중 투표</h4>
 <table>
-	<div style="padding: 20px;" id="ingTable"></div>
+	<div style="padding: 30px;" id="ingTable"></div>
+</table>
+
+<h4 align="center">마감</h4>
+<table>
+	<div style="padding: 30px;" id="endedTable"></div>
 </table>
 
 <!-- modal -->

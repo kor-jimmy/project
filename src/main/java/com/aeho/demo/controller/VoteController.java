@@ -55,6 +55,14 @@ public class VoteController {
 		return gson.toJson(list);
 	}
 	
+	@GetMapping("/listEnded")
+	@ResponseBody
+	public String endedVote() {
+		List<VoteTopicVo> list = voteTopicService.endedListVoteTopic();
+		Gson gson = new Gson();
+		return gson.toJson(list);
+	}
+	
 	@GetMapping("/insert")
 	@ResponseBody
 	public HashMap<String, String> insertVote(VoteVo vv) {
@@ -104,6 +112,12 @@ public class VoteController {
 		return v;
 	}
 	
+	@RequestMapping("/updateState")
+	@ResponseBody
+	public int updateState(VoteTopicVo vtv) {
+		int re = voteTopicService.updateState(vtv);
+		return re;
+	}
 	
 	//관리자용
 	

@@ -23,4 +23,6 @@ public interface VoteTopicDao {
 	
 	int updateCount(int vt_no);
 	
+	int updateState(VoteTopicVo vtv);
+	
 }

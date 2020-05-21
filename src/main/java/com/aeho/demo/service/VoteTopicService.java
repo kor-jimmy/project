@@ -21,4 +21,6 @@ public interface VoteTopicService {
 	
 	int deleteVoteTopic(int vt_no);
 	
+	int updateState(VoteTopicVo vtv);
+	
 }

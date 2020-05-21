@@ -32,6 +32,10 @@
   	update votetopic set vt_count_a = (select count(*) from vote where v_result = 1 and vt_no = #{vt_no}), 
   	vt_count_b = (select count(*) from vote where v_result = 2 and vt_no = #{vt_no}) where vt_no = #{vt_no}
   </update>
+  
+  <update id="updateState">
+  	update votetopic set vs_no = 2 where vt_no = #{vt_no}
+  </update>
 
   <delete id="deleteVoteTopic">
   	delete votetopic where vt_no=#{vt_no}

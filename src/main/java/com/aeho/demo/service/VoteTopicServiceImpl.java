@@ -82,4 +82,9 @@ public class VoteTopicServiceImpl implements VoteTopicService {
 		return votetopicDao.updateVoteTopic(vtv);
 	}
 
+	@Override
+	public int updateState(VoteTopicVo vtv) {
+		return votetopicDao.updateState(vtv);
+	}
+
 }
