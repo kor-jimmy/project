@@ -212,8 +212,9 @@
 			idDiv.append(loginId);
 			
 			var contentDiv = $("<div class='col-7'></div>");
-			var reReContent = $("<input type='text' class='form-control' id='reReContent'>").val(reID);
-			contentDiv.append(reReContent);
+			var reContentLavel = $("<label for='reReContent'>"+reID+"</label>");
+			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
+			contentDiv.append(reContentLavel,reReContent);
 
 			var buttenDiv = $("<div class='col-2'></div>");
 			var reButton = $("<button type='submit' id='insertReReply' class='btn btn-outline-dark'>등록</button>");
