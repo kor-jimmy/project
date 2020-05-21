@@ -2,23 +2,162 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../includes/header.jsp"%>
+<style>
+	#container{
+
+	}
+	a, li{
+		text-decoration: none;
+		list-style: none;
+		display: inline-block;
+		float: left;
+	}
+	.cat{
+		padding: 15px;
+		margin: 10px;
+		border: 1.5px solid #01DFA5;
+		border-radius: 50px;
+		text-align: center;
+		background: white;
+		opacity: 0.9;
+		display: inline-block;
+		color: gray;
+	}
+	#box{
+		
+		margin: 20px;
+	}
+	.head{
+		margin-bottom: 20px;
+		padding: 20px;
+		border: 1px solid #642EFE;
+		border-radius: 20px;
+		width: 20%;
+		height: 100px;
+		display: table;
+		font-size: 15px;
+		color: slategray;
+	}
+	.clicked_head{
+		color: white;
+		background: linear-gradient( 15deg, #642EFE, #8FBCFF );
+	}
+	.around{
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+	}
+	.contents{
+		margin-left: 20px;
+		padding: 20px;
+		width: 70%;
+		float: right;
+	}
+</style>
 <script type="text/javascript">
 $(function(){
-	// $(".categories").on("click", function(){
-	// 	var dist = $(this).attr("id");
-	// 	$.ajax("/board/list", {data: {c_dist: dist}, success: function(cat){
-	// 		$("#c_no").val(cat.c_no);
-	// 		$("#c_dist").val(cat.c_dist);
-	// 	}});
-	// });
+	$(".contents").hide();
+
+	$(".head").click(function(){
+		$(this).toggleClass("clicked_head");
+		$(this).next(".contents").slideToggle(500);
+	});
 });
 </script>
-<h2>카테고리 목록</h2>
-<ul>
-	<c:forEach var="cat" items="${ list }">
-		<a href="/board/list?categoryNum=${cat.c_no }">
-			<li><div class="categories" id="${ cat.c_dist }"><c:out value="${ cat.c_dist }"/></div></li>
-		</a>
-	</c:forEach>
-</ul>
+<div id="container">
+	<h2>카테고리 목록</h2>
+	<br>
+	<ul>
+		<div id="box">
+		<nav>
+		  <ul class="nav nav-stacked">
+		    <li class="head nav-link"><span class="around"><b>방송</b></span></li>
+		   	<div class="contents">
+				<c:forEach var="cat" items="${ list }">
+					<c:if test="${ cat.c_no <= 100 }">
+						
+							<a href="/board/list?categoryNum=${cat.c_no }">
+								<div class="cat">
+									<li><div class="categories" id="${ cat.c_dist }"><c:out value="${ cat.c_dist }"/></div></li>
+								</div>
+							</a>
+						
+					</c:if>
+				</c:forEach>
+			</div>
+		  </ul>
+		</nav>
+		
+		<nav>
+		  <ul class="nav nav-stacked">
+		    <li class="head nav-link"><span class="around"><b>연예</b></span></li>
+		    <div class="contents">
+				<c:forEach var="cat" items="${ list }">
+					<c:if test="${ cat.c_no <= 200 && cat.c_no > 100 }">
+						<a href="/board/list?categoryNum=${cat.c_no }">
+							<div class="cat">
+								<li><div class="categories" id="${ cat.c_dist }"><c:out value="${ cat.c_dist }"/></div></li>
+							</div>
+						</a>
+					</c:if>
+				</c:forEach>
+			</div>
+		  </ul>
+		</nav>
+		
+		<nav>
+		  <ul class="nav nav-stacked">
+		    <li class="head nav-link"><span class="around"><b>영화</b></span></li>
+		    <div class="contents">
+				<c:forEach var="cat" items="${ list }">
+					<c:if test="${ cat.c_no <= 300 && cat.c_no > 200 }">
+						<a href="/board/list?categoryNum=${cat.c_no }">
+							<div class="cat">
+								<li><div class="categories" id="${ cat.c_dist }"><c:out value="${ cat.c_dist }"/></div></li>
+							</div>
+						</a>
+					</c:if>
+				</c:forEach>
+			</div>
+		  </ul>
+		</nav>
+		
+		<nav>
+		  <ul class="nav nav-stacked">
+		    <li class="head nav-link"><span class="around"><b>게임 / 취미</b></span></li>
+		    <div class="contents">
+				<c:forEach var="cat" items="${ list }">
+					<c:if test="${ cat.c_no <= 400 && cat.c_no > 300 }">
+						<a href="/board/list?categoryNum=${cat.c_no }">
+							<div class="cat">
+								<li><div class="categories" id="${ cat.c_dist }"><c:out value="${ cat.c_dist }"/></div></li>
+							</div>
+						</a>
+					</c:if>
+				</c:forEach>
+			</div>
+		  </ul>
+		</nav>
+		
+		<nav>
+		  <ul class="nav nav-stacked">
+		    <li class="head nav-link"><span class="around"><b>스포츠 / 기타</b></span></li>
+		    <div class="contents">
+				<c:forEach var="cat" items="${ list }">
+					<c:if test="${ cat.c_no <= 500 && cat.c_no > 400 }">
+						<a href="/board/list?categoryNum=${cat.c_no }">
+							<div class="cat">
+								<li><div class="categories" id="${ cat.c_dist }"><c:out value="${ cat.c_dist }"/></div></li>
+							</div>
+						</a>
+					</c:if>
+				</c:forEach>
+			</div>
+		  </ul>
+		</nav>
+
+		</div>
+	</ul>
+	
+</div>
 <%@include file="../includes/footer.jsp"%>
