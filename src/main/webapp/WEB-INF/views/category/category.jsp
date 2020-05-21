@@ -30,7 +30,7 @@
 	.head{
 		margin-bottom: 20px;
 		padding: 20px;
-		border: 1px solid #642EFE;
+		border: 1px solid #a3a1fc;
 		border-radius: 20px;
 		width: 20%;
 		height: 100px;
@@ -39,8 +39,8 @@
 		color: slategray;
 	}
 	.clicked_head{
-		color: white;
-		background: linear-gradient( 15deg, #642EFE, #8FBCFF );
+		color: #642EFE;
+		border: 2px solid #642EFE;
 	}
 	.around{
 		display: table-cell;
