@@ -15,7 +15,7 @@
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		var select_gref;
-		var select_grno;
+		var select_grno; 
 		console.log("토큰 : "+token+" / 헤더:"+header);
 		
 		$("#updateBtn").on("click",function(){
@@ -88,8 +88,8 @@
 					var deletedReply = $("<div></div>").html("삭제된 댓글입니다.");
 					li.append(deletedReply)
 				}
-				else if(r.gr_state == 1){
-					
+				else if(r.gr_state == 1 && r.gr_reCnt == 0){
+					return false;
 				}
 				else{
 					li.append(replyDiv);
