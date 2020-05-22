@@ -22,8 +22,6 @@ public class GoodsReplyVo {
 	private String gr_date;
 	private int gr_ref;
 	private int gr_level;
-	private int gr_step;
-	private String gr_refid;
 	private int gr_reCnt;
 	private int gr_state;
 }

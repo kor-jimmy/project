@@ -30,7 +30,6 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 			GoodsReplyVo grv = goodsReplyDao.getGoodsReply(gv.getGr_ref());	//부모댓글 get	
 			gv.setGr_level(1);	//답댓글은 level이 1임
 			gv.setGr_ref(grv.getGr_ref());//답댓글에는 ref를 부모번호 넣어줌
-			gv.setGr_refid(grv.getM_id());//태그할 댓글의 id
 		}
 		int re = 0;
 		try {
@@ -89,11 +88,6 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	@Override
 	public GoodsReplyVo getGoodsReply(int gr_no) {
 		return goodsReplyDao.getGoodsReply(gr_no);
-	}
-
-	@Override
-	public int maxGrstep(GoodsReplyVo gv) {
-		return goodsReplyDao.maxGrstep(gv);
 	}
 
 	@Override

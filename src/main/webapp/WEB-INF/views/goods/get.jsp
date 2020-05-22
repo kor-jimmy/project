@@ -16,6 +16,7 @@
 		var header = $("meta[name='_csrf_header']").attr("content");
 		var select_gref;
 		var select_grno; 
+		var select_mid="";
 		console.log("토큰 : "+token+" / 헤더:"+header);
 		
 		$("#updateBtn").on("click",function(){
@@ -49,14 +50,19 @@
 				var idDiv = $("<div class=col-2></div>");
 				var replyID=$("<p></p>").html(r.m_id);
 				idDiv.append(replyID);
-				var contentDiv=$("<div class='col-6 reContent'></div>").attr("gr_no",r.gr_no).attr("gr_ref",r.gr_ref);
+				var contentDiv=$("<div class='col-6 reContent'></div>").attr("gr_no",r.gr_no).attr("gr_ref",r.gr_ref).attr("m_id",r.m_id);
 				var contentP = $("<p></p>");
 				var replyString="";
 				if(r.gr_level != 0){
 					contentDiv.append($("<p><img src='/img/reply.png' width='45px' height='45px' align='left'></p>"));
-					replyString ="@"+r.gr_refid+"&nbsp;&nbsp;";
+					var tagID = (r.gr_content).split("/")[0];
+					console.log(tagID);
+					replyString ="@"+tagID+"&nbsp;&nbsp;";
+					contentP.html(replyString+(r.gr_content).split("/")[1]);
  	 			}
-				contentP.html(replyString+r.gr_content);
+				else{
+					contentP.html(r.gr_content);
+				}
 				contentDiv.append(contentP);
 
 				var dateDiv=$("<div class=col-2></div>");
@@ -102,6 +108,7 @@
 			$(".reInputDiv").remove();
 			select_gref=$(this).attr("gr_ref");
 			select_grno=$(this).attr("gr_no");
+			select_mid = $(this).attr("m_id");
 			var reInputDiv = $("<div class='reInputDiv row'></div>");
 			
 			var div = $("<div class='col-1'></div>");
@@ -110,7 +117,7 @@
 			idDiv.append(loginId);
 
 			var contentDiv = $("<div class='col-7'></div>");
-			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
+			var reReContent = $("<input type='text' class='form-control' id='reReContent'>").val(select_mid+"/ ");
 			contentDiv.append(reReContent);
 			var buttenDiv = $("<div class='col-2'></div>");
 			var reButton = $("<button type='submit' id='insertReReply' class='btn btn-outline-dark'>등록</button>");

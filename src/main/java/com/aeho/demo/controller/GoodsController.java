@@ -170,10 +170,10 @@ public class GoodsController {
 	@PostMapping("/delete")
 	@ResponseBody
 	public String delete(GoodsVo gv) {
-		String str = "0";
+		String str = "오류로 인해 게시물 삭제에 실패했습니다.";
 		int re = goodsService.deleteGoods(gv);
 		if(re > 0) {
-			str="1";
+			str="게시물이 삭제되었습니다.";
 		}
 		return str;
 	}

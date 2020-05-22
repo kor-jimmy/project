@@ -18,8 +18,6 @@ public interface GoodsReplyDao {
 
 	GoodsReplyVo getGoodsReply(int gr_no);
 
-	int maxGrstep(GoodsReplyVo gv);
-
 	int updateCnt(int gr_ref);
 
 	int updateState(int gr_no);

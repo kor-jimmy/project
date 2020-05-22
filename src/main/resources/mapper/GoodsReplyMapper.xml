@@ -17,17 +17,17 @@
   	<selectKey keyProperty="gr_no" order="BEFORE" resultType="int">
   		select seq_goodsReply.nextval from dual
   	</selectKey>
-  	insert into goodsReply(gr_no, g_no, m_id, gr_content,gr_ref,gr_refid,gr_level,gr_step,gr_reCnt,gr_state)
+  	insert into goodsReply(gr_no, g_no, m_id, gr_content,gr_ref,gr_level,gr_reCnt,gr_state)
     values(#{gr_no}, #{g_no}, #{m_id}, #{gr_content},
      <choose>
      	<when test="gr_ref==0">
-     		#{gr_no},#{m_id}
+     		#{gr_no}
      	</when>
       	<otherwise>
-      		#{gr_ref},#{gr_refid}
+      		#{gr_ref}
       	</otherwise>
       </choose>
-      ,#{gr_level},#{gr_step},#{gr_reCnt},#{gr_state})
+      ,#{gr_level},#{gr_reCnt},#{gr_state})
   </insert>
     
   <delete id="deleteGoodsReply">
@@ -38,14 +38,6 @@
   	delete goodsReply where g_no = #{g_no}
   </delete>
 
-  <select id="maxGrstep" resultType="int">
-	select max(gr_step) from (select * from goodsReply where gr_ref=#{gr_ref})
-  </select>
- <!--  
-  <select id="cntRef" resultType="int">
-  	select count(*) from goodsReply where gr_ref=#{gr_ref} and gr_no != ${gr_ref}
-  </select>
-  --> 
   <update id="updateCnt">
   	update goodsReply set gr_reCnt=(select count(*) from goodsReply where gr_ref=#{gr_ref} and gr_no != ${gr_ref}) where gr_no=#{gr_ref}
   </update>
