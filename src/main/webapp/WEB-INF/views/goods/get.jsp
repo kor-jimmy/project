@@ -4,6 +4,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@include file="../includes/header.jsp"%>
+<style>
+	#reReContent{
+		float:left;
+		width:80%;
+	}
+	#labelForRe{
+		float:left;
+	}
+</style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -117,8 +126,9 @@
 			idDiv.append(loginId);
 
 			var contentDiv = $("<div class='col-7'></div>");
-			var reReContent = $("<input type='text' class='form-control' id='reReContent'>").val(select_mid+"/ ");
-			contentDiv.append(reReContent);
+			var reReLabel = $("<label for='reReContent' id='labelForRe'></label>").text(select_mid+"/ ");
+			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
+			contentDiv.append(reReLabel,reReContent);
 			var buttenDiv = $("<div class='col-2'></div>");
 			var reButton = $("<button type='submit' id='insertReReply' class='btn btn-outline-dark'>등록</button>");
 			buttenDiv.append(reButton);
@@ -135,7 +145,8 @@
 			var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
 			var gr_ref=select_grno;
 //			var gr_no=select_grno;
-			var reReplyContent=$("#reReContent").val();
+			var reReplyContent=$("label[for='reReContent']").text()+$("#reReContent").val();
+			console.log(reReplyContent);
 			var reReplyData = {g_no:g_no , m_id:logingID, gr_content:reReplyContent,gr_ref:gr_ref};
 			if(re){
 				$.ajax({
