@@ -96,6 +96,12 @@
 				console.log(trList);
 			}});
 		}
+		
+		var remainInterval;
+
+		var start_timer = function(endTime, idx){
+			remainInterval = setInterval( function(){ remainTime(endTime, idx); }, 1000 );
+		}
 
 		var remainTime = function(endTime, idx){
 			var start = new Date().getTime();
@@ -113,7 +119,7 @@
 			var text_time = hours + " : " + min + " : " + sec;
 
 			$("#timeText"+idx).html(text_time);
-
+			
 			if(remain < 0){
 				clearInterval(remainInterval);
 				$.ajax({
@@ -126,7 +132,7 @@
 					data: {vt_no: trList[idx].vt_no},
 					success: function(re){
 						if(re > 0){
-							isEnded(idx);							
+							self.location = "/vote/vote";							
 						}
 					}
 				});
@@ -135,9 +141,7 @@
 			}
 		}
 
-		var start_timer = function(endTime, idx){
-			var remainInterval = setInterval( function(){ remainTime(endTime, idx); }, 1000 );
-		}
+		
 
 
 		//마감된 투표 목록
@@ -148,12 +152,12 @@
 					
 					var radiusContainer = $('<div style="width: 100%; height: 150px; display: inline-block; position: relative; border-radius: 30px; overflow: hidden; margin: 5px 0px 5px 0px;"></div>').attr("idx", idx);
 					var textBox = $('<div style="width: inherit; height: 150px; position: absolute; display: table; z-index: 10; color: white; text-shadow: 2px 2px 5px black;"></div>');
-					var text = $('<div style="display:table-cell; text-align:center; vertical-align:middle;"><h2 id="timeText'+idx+'" style="display: inline-block; text-align: center;"></h2></div>');
+					var text = $('<div style="display:table-cell; text-align:center; vertical-align:middle;"><h2 id="endedtimeText'+idx+'" style="display: inline-block; text-align: center;"></h2></div>');
 					var imglocBox = $('<div style="width: 110%; height: 150px; margin-left: -5%; display: inline-block; text-align: center;"></div>');
 					var divA = $('<div class="divA" style="position:relative; width: 49%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;"></div>');
 					var divB = $('<div class="divB" style="position:relative; width: 49%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;"></div>');
-					var imgA = $('<img src="/img/vote/'+v.vt_img_a+'" style="width: 100%; margin-right: 50%; margin-top: -50%; opacity: 0.6; filter: grayscale(100%);">');
-					var imgB = $('<img src="/img/vote/'+v.vt_img_b+'" style="width: 100%; margin-right: 50%; margin-top: -50%; opacity: 0.6; filter: grayscale(100%);">');
+					var imgA = $('<img src="/img/vote/'+v.vt_img_a+'" style="width: 100%; margin-right: 50%; margin-top: -20%; opacity: 0.6; filter: grayscale(100%);">');
+					var imgB = $('<img src="/img/vote/'+v.vt_img_b+'" style="width: 100%; margin-right: 50%; margin-top: -20%; opacity: 0.6; filter: grayscale(100%);">');
 
 					divA.append(imgA);
 					divB.append(imgB);
@@ -178,13 +182,14 @@
 					var pro_barB = $('<div class="progress-bar" role="progressbar" aria-valuenow="'+b_per+'" aria-valuemin="0" aria-valuemax="100" style="width: '+b_per+'%; background: #d4f2f2; filter: grayscale(100%);"></div>').html(b_html);
 					progress.append(pro_barA, pro_barB);
 
-					$("#timeText"+idx).html("00 : 00 : 00");
+					
 
 					var tr = $('<tr></tr>');
 					var tdBox = $("<td></td>").append(radiusContainer, progress);
 
 					tr.append(tdBox);
 					$("#endedTable").append(tr);
+					$("#endedtimeText"+idx).html("00 : 00 : 00");
 				});
 			}});
 		}

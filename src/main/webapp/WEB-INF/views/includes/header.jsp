@@ -108,6 +108,11 @@
 				var key = "sMenu";
 				menuCategory(info,key);
 			})
+			//검색
+			$("#mainTotalSearch").on("click", function(){
+				var search_keyword = $("#mainSearch").val();
+				location.href="/search/search?keyword="+search_keyword;
+			});
 		})
     </script>
 </head>

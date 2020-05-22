@@ -15,13 +15,19 @@
 	.cat{
 		padding: 15px;
 		margin: 10px;
-		border: 1.5px solid #01DFA5;
+		border: 1.5px solid #5FEAC9;
 		border-radius: 50px;
 		text-align: center;
 		background: white;
 		opacity: 0.9;
 		display: inline-block;
 		color: gray;
+	}
+	.cat:hover{
+		box-shadow: 0px 0px 10px #ECECEC;
+		cursor: pointer;
+		background: linear-gradient(15deg, #a3a1fc, #5FEAC9);
+		color: white;
 	}
 	#box{
 		
@@ -38,9 +44,13 @@
 		font-size: 15px;
 		color: slategray;
 	}
+	.head:hover{
+		box-shadow: 0px 0px 10px #ECECEC;
+		cursor: pointer;
+	}
 	.clicked_head{
-		color: #642EFE;
-		border: 2px solid #642EFE;
+		color: #8882F8;
+		border: 2px solid #8882F8;
 	}
 	.around{
 		display: table-cell;
@@ -53,6 +63,7 @@
 		width: 70%;
 		float: right;
 	}
+	
 </style>
 <script type="text/javascript">
 $(function(){
