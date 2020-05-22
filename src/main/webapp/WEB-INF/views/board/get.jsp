@@ -310,7 +310,8 @@
 							    buttons: "YES"
 							}) */
 							location.href="/board/get?b_no="+b_no;
-					}})      
+						}
+					})      
 			    }else{
 			    	
 			    }

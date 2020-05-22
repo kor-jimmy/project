@@ -139,7 +139,7 @@
 	         			<div>
 	         				<sec:authorize access="hasRole('ROLE_MASTER')">
 	         					<!-- <span class="badge badge-pill badge-warning">관리자가 로그인하였습니다.</span> -->
-		         				<a href="/admin" class="badge badge-pill badge-warning">관리자 페이지</a>
+		         				<a href="/admin/admin" class="badge badge-pill badge-warning">관리자 페이지</a>
 		         			</sec:authorize>
 	         			</div>
 						<div>
