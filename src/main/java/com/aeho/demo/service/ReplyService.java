@@ -17,4 +17,8 @@ public interface ReplyService {
 	int deleteBoardReply(int b_no);
 	
 	int maxRstep(ReplyVo rv);
+	
+	int updateCnt(int r_ref);
+	
+	int updateState(int r_no);
 }

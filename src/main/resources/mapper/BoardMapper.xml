@@ -77,7 +77,7 @@
 	  		b_hit = b_hit + 1
 	  	</when>
 	  	<when test="cntkeyword != null and cntkeyword.equals('reply')">
-	  		b_replycnt = (select count(*) from reply where b_no = #{b_no})
+	  		b_replycnt = (select count(*) from reply where b_no = #{b_no} and r_state != 1)
 	  	</when>
   	</choose>
   	where b_no = #{b_no}

@@ -26,7 +26,7 @@
 		var select_gref;
 		var select_grno; 
 		var select_mid="";
-		console.log("토큰 : "+token+" / 헤더:"+header);
+//		console.log("토큰 : "+token+" / 헤더:"+header);
 		
 		$("#updateBtn").on("click",function(){
 			self.location = "/goods/update?g_no="+g_no;
@@ -53,29 +53,34 @@
 			goodsReply = JSON.parse(goodsReply)		
 //			console.log(goodsReply);
 			$.each(goodsReply, function(idx,r){
+//				console.log(r.gr_content);
 				var li  =$("<li class='list-group-item rep' idx="+idx+" r_no="+r.gr_no+"></li>")
 			 	var replyDiv = $("<div class='row'></div>");
-			 	
 				var idDiv = $("<div class=col-2></div>");
 				var replyID=$("<p></p>").html(r.m_id);
 				idDiv.append(replyID);
 				var contentDiv=$("<div class='col-6 reContent'></div>").attr("gr_no",r.gr_no).attr("gr_ref",r.gr_ref).attr("m_id",r.m_id);
-				var contentP = $("<p></p>");
+				var replyContent = $("<span class='replyContent'></span>")
 				var replyString="";
 				if(r.gr_level != 0){
-					contentDiv.append($("<p><img src='/img/reply.png' width='45px' height='45px' align='left'></p>"));
+					contentDiv.append($("<img src='/img/re.png' width='45px' height='45px'>"));
 					var tagID = (r.gr_content).split("/")[0];
+					var indexID = (r.gr_content).indexOf("/");
+					var realContent = (r.gr_content).substring(indexID+1);
 					console.log(tagID);
-					replyString ="@"+tagID+"&nbsp;&nbsp;";
-					contentP.html(replyString+(r.gr_content).split("/")[1]);
+					replyString =tagID+"&nbsp;&nbsp;";
+					replyContent.html(replyString+realContent);
+					li.addClass("list-group-item-warning");
  	 			}
 				else{
-					contentP.html(r.gr_content);
+					replyContent.html(r.gr_content);
 				}
-				contentDiv.append(contentP);
+				
+				contentDiv.append(replyContent);
 
 				var dateDiv=$("<div class=col-2></div>");
 				var replyDate = $("<p></p>").html(r.gr_date);
+				var date = new Date("yy/mm/dd");
 				dateDiv.append(replyDate);
 
 				//신고
@@ -100,7 +105,7 @@
 				replyDiv.append(idDiv,contentDiv,reportDiv,deleteDiv,dateDiv);
 				
 				if(r.gr_state == 1 && r.gr_reCnt != 0){
-					var deletedReply = $("<div></div>").html("삭제된 댓글입니다.");
+					var deletedReply = $("<div style='text-align: center; color: gray;'></div>").html("삭제된 댓글입니다.");
 					li.append(deletedReply)
 				}
 				else if(r.gr_state == 1 && r.gr_reCnt == 0){
@@ -126,7 +131,7 @@
 			idDiv.append(loginId);
 
 			var contentDiv = $("<div class='col-7'></div>");
-			var reReLabel = $("<label for='reReContent' id='labelForRe'></label>").text(select_mid+"/ ");
+			var reReLabel = $("<label for='reReContent' id='labelForRe'></label>").text("@"+select_mid+"/ ");
 			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
 			contentDiv.append(reReLabel,reReContent);
 			var buttenDiv = $("<div class='col-2'></div>");
@@ -139,16 +144,27 @@
 				
 		$(document).on("click","#insertReReply",function(){
 			if(logingID == null || logingID == ""){
-				alert("로그인해야 댓글 작성이 가능합니다.")
+				swal({
+					  title: "로그인이 필요한 서비스 입니다!",
+					  text: "댓글을 등록하기 위해서는 로그인이 필요 합니다.",
+					  icon: "warning",
+					  button: "확인"
+					})
 				return;
-			}	
-			var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
+			}
+//			var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
 			var gr_ref=select_grno;
 //			var gr_no=select_grno;
 			var reReplyContent=$("label[for='reReContent']").text()+$("#reReContent").val();
 			console.log(reReplyContent);
 			var reReplyData = {g_no:g_no , m_id:logingID, gr_content:reReplyContent,gr_ref:gr_ref};
-			if(re){
+			swal({
+			    title: "대댓글 등록",
+			    text: "Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?",
+			    icon: "info",
+			    buttons: ["NO", "YES"]
+			}).then((YES) => {
+			    if (YES) {
 				$.ajax({
 					url:"/goodsReply/insert",
 					type:"POST",
@@ -158,54 +174,71 @@
 					},
 					cache:false, 
 					success:function(result){
-					alert(result);
+//					alert(result);
 					location.href="/goods/get?g_no="+g_no;
 				}})
-			}				
-			$(this).parent().remove();
+				}else{
+		    	
+			    }
+			});				
+//			$(this).parent().remove();
 		})
 		
 		$("#insertReply").on("click",function(){
 			var data = $("#reply").serialize();
-			var re = confirm("댓글을 등록하시겠습니까? 한 번 입력한 댓글은 수정이 불가하므로 신중하게 입력해 주세요.");
-			if(re){
-				$.ajax({
-					url:"/goodsReply/insert",
-					type:"POST",
-					data:data,
-					beforeSend: function(xhr){
+//			var re = confirm("댓글을 등록하시겠습니까? 한 번 입력한 댓글은 수정이 불가하므로 신중하게 입력해 주세요.");
+			swal({
+			    title: "댓글 등록",
+			    text: "Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?",
+			    icon: "info",
+			    buttons: ["NO", "YES"]
+			}).then((YES) => {
+			    if (YES) {
+					$.ajax({
+						url:"/goodsReply/insert",
+						type:"POST",
+						data:data,
+						beforeSend: function(xhr){
 						xhr.setRequestHeader(header,token)	
-					},
-					cache:false,
-					success:function(result){
-					alert(result);
-					location.href="/goods/get?g_no="+g_no;
-				}})
-			}
+						},
+						cache:false,
+						success:function(result){
+							location.href="/goods/get?g_no="+g_no;
+						}})
+				}else{	    	
+			    }
+			});
 			parentNum=0;
-			console.log("인서트끝:"+parentNum);
 		})
 		
 		$(document).on("click",".delICON",function(){
 			var grno = $(this).attr("gr_no");
-			var re = confirm("진짜로 댓글을 삭제하겠습니까?");
-			if(re){
-				$.ajax({
-					url:"/goodsReply/delete",
-					type:"POST",
-					data:{gr_no:grno, g_no:g_no}, 
-					beforeSend: function(xhr){
-						xhr.setRequestHeader(header,token)	
-					},
-					cache:false,
-					success:function(result){
-						alert(result.str);
-						location.href="/goods/get?g_no="+g_no;
-					}})
-			}
-			
-		})
+//			var re = confirm("진짜로 댓글을 삭제하겠습니까?");
+			swal({
+			    title: "댓글 삭제",
+			    text: "해당 댓글을 삭제하시겠습니까?",
+			    icon: "info",
+			    buttons: ["NO", "YES"]
+			}).then((YES) => {
+			    if (YES) {
+					$.ajax({
+						url:"/goodsReply/delete",
+						type:"POST",
+						data:{gr_no:grno, g_no:g_no}, 
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(header,token)	
+						},
+						cache:false,
+						success:function(result){
+							location.href="/goods/get?g_no="+g_no;
+						}
+					})
+				}else{
+			    }
+			});
+		});
 	})
+
 </script>
 	<h2>상품 상세</h2>
 	<input type="hidden" id="g_no" value="${ goods.g_no }">

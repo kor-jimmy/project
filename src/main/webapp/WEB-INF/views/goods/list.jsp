@@ -79,10 +79,10 @@ $(function(){
    
    $.ajax("/category/goodsCateList",{success:function(result){
 //      console.log(result)
-      var b=$("<button id='tot' class='btn btn-outline-dark dist' style='background: lightyellow;'></button>").html('전체보기');
+      var b=$("<button id='tot' class='btn btn-outline-dark dist' style='background: #d4f0f3;'></button>").html('전체보기');
       $(b).on("click",function(){
     	  $(".dist").css("background","white");
-    	  $(this).css("background","lightyellow");
+    	  $(this).css("background","#d4f0f3");
     	  var nokey;	//keyword에 null을 넣어주기 위한 변수 (null로 대입하면 적용안됨)
     	  keyword=nokey;
     	  listGoods(gc_code,keyword,1,searchField,searchKeyword);
@@ -97,7 +97,7 @@ $(function(){
             $(".dist").css("background","white");
             keyword=$(this).text();
             c_no=result[idx].c_no;
-            $(this).css("background","lightyellow");
+            $(this).css("background","#d4f0f3");
             listGoods(gc_code,keyword,1,searchField,searchKeyword);
          })
       })
@@ -110,7 +110,7 @@ $(function(){
    $(".typeBtn").on("click",function(){
 	   $(".typeBtn").css("background","white");
 		var noCode;
-	   $(this).css("background","pink");
+	   $(this).css("background","#a3a1fc");
 		if($(this).val()==0)
 			gc_code= noCode;
 		else
@@ -134,7 +134,7 @@ $(function(){
    <h2>상품목록</h2><div id=state></div>
    <p>상품 등록을 원하시면 카테고리를 선택해주세요.</p>
    <hr>
-   <button id="allBtn" type="button" class="btn btn-outline-dark typeBtn" value="0" style="background: pink;">전체보기</button>
+   <button id="allBtn" type="button" class="btn btn-outline-dark typeBtn" value="0" style="background: #a3a1fc;">전체보기</button>
    <button id="buyBtn" type="button" class="btn btn-outline-dark typeBtn" value="2">삽니다</button>
    <button id="sellBtn" type="button" class="btn btn-outline-dark typeBtn" value="1">팝니다</button>
    <br><br>

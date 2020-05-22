@@ -47,6 +47,7 @@ public class ReplyController {
 	@PostMapping("/delete")
 	public String delete(ReplyVo rv) {
 		System.out.println("리플라이 딜리트 컨트롤러 동작중");
+		System.out.println(rv.getR_no());
 		String msg = "댓글 삭제에 실패하였습니다.";
 		int re = replyService.deleteReply(rv);
 		if (re>0) {

@@ -56,7 +56,10 @@
 			padding-left:200px;
 			padding-right: 200px;
         }	 */
-
+		#topIcon{
+			margin-right: 31px;
+    		margin-bottom: 30px
+		}
     </style>
     <script>
 		$(function(){
@@ -223,7 +226,7 @@
     </nav>
     <!--end menu -->
 	
-	<a style="display:scroll;position:fixed;bottom:10px;right:10px;z-index: 1000" href="#" title="맨위로"><img width=40 height=40 src="/img/topIcon2.png"></a>
+	<a style="display:scroll;position:fixed;bottom:10px;right:10px;z-index: 1000" href="#" title="맨위로"><img width=60 height=60 id='topIcon' src="/img/topIcon2.png"></a>
 
     <!--content-->
     <div class="container pt-3">

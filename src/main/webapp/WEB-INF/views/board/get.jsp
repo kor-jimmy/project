@@ -4,6 +4,15 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="../includes/header.jsp"%>
+<style>
+	#reReContent{
+		float:left;
+		width:80%;
+	}
+	#labelForRe{
+		float:left;
+	}
+</style>
 <script type="text/javascript">
 	$(function(){
 		//시큐리티 csrf
@@ -107,21 +116,26 @@
 				//댓글 본문
 				var contentDiv=$("<div class='col-6 reContent'></div>").attr("r_ref",r.r_ref).attr("r_no",r.r_no).attr("m_id",r.m_id);
 				var replyContent = $("<span class='replyContent'></span>")
-				
-				//현재 대댓글기능은 한번만 구현되도록 바꾸어 level이 1인 댓글의 클릭이벤트를 막음.
+				var replyString="";
 				if(r.r_level != 0){
-					var reReIcon = $("<img src='/img/replyICON.png' width=20px height=20px></img>")
+					var reReIcon = $("<img src='/img/re.png' width=45px height=45px></img>")
+					var tagID = (r.r_content).split("/")[0];
+					var indexID = (r.r_content).indexOf("/");
+					var realContent = (r.r_content).substring(indexID+1);
+					replyString = tagID+"&nbsp;&nbsp;";
+					replyContent.html(replyString+realContent);
 					contentDiv.append(reReIcon);
-					contentDiv.removeClass("reContent");
+//					contentDiv.removeClass("reContent");
 					li.addClass("list-group-item-secondary");
 				}
+				else{
+					replyContent.html(r.r_content);
+				}
+				contentDiv.append(replyContent);
 				
 				var replyID = $("<span></span>").html(r.m_id);
 				idDiv.append(replyID);
 				
-				replyContent.append(r.r_content);
-				contentDiv.append(replyContent);
-
 				//댓글 날짜
 				var dateDiv=$("<div class=col-2></div>");
 				var replyDate = $("<p></p>").html(r.r_date);
@@ -160,8 +174,16 @@
 
 				replyDiv.append(idDiv,contentDiv,reportDiv,deleteDiv,dateDiv);
 
-				li.append(replyDiv);
-				
+				if(r.r_state == 1 && r.r_reCnt != 0){
+					var deletedReply = $("<div style='text-align: center; color: gray;'></div>").html("삭제된 댓글입니다.");
+					li.append(deletedReply);
+				}
+				else if(r.r_state == 1 && r.r_reCnt == 0){
+					return false;
+				}
+				else{
+					li.append(replyDiv);
+				}				
 				$("#replyList").append(li);
 
 				
@@ -200,15 +222,15 @@
 		}})
 		
 		//대댓글작업
-		$(document).on("click",".reContent",function(e){
-			console.log(logingID);
+		$(document).on("click",".reContent",function(){
+//			console.log(logingID);
 			$(".reInputDiv").remove();
 			select_ref = $(this).attr("r_ref");
 			select_rno = $(this).attr("r_no");
 			select_mid = $(this).attr("m_id");
 			console.log(select_ref);
 
-			var reID = $("<span></span>").text("@" +select_mid+" ");
+			var reID ="@" +select_mid+"/";
 
 			var reInputDiv = $("<div class='reInputDiv row'></div>");
 
@@ -220,9 +242,9 @@
 			idDiv.append(loginId);
 			
 			var contentDiv = $("<div class='col-7'></div>");
-			//var reContentLavel = $("<label for='reReContent'>"+reID+"</label>");
+			var reContentLabel = $("<label for='reReContent' id='labelForRe'></label>").text(reID);
 			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
-			contentDiv.append(reID,reReContent);
+			contentDiv.append(reContentLabel,reReContent);
 
 			var buttenDiv = $("<div class='col-2'></div>");
 			var reButton = $("<button type='submit' id='insertReReply' class='btn btn-outline-dark'>등록</button>");
@@ -251,7 +273,7 @@
 			var r_ref = select_ref;
 			var r_no = select_rno;
 			console.log(r_ref)
-			var reReplyContent = $("#reReContent").val();
+			var reReplyContent = $("label[for='reReContent']").text()+$("#reReContent").val();
 			var reReplyData = {b_no:b_no, m_id:logingID, r_content:reReplyContent, r_ref:r_ref, r_no:r_no}
 
 			swal({
@@ -310,8 +332,7 @@
 							    buttons: "YES"
 							}) */
 							location.href="/board/get?b_no="+b_no;
-						}
-					})      
+					}})      
 			    }else{
 			    	
 			    }

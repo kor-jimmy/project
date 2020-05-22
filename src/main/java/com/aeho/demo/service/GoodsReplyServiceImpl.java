@@ -59,7 +59,7 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 			re=1;
 		}
 		else {
-			GoodsReplyVo grv = goodsReplyDao.getGoodsReply(gv.getGr_ref());	//부모댓글 get	
+//			GoodsReplyVo grv = goodsReplyDao.getGoodsReply(gv.getGr_ref());	//부모댓글 get	
 			int gr_ref = gv.getGr_ref();	//지우고 나서도 이용할 수 있도록 미리 저장
 			try {
 				int result_delete = goodsReplyDao.deleteGoodsReply(gv);

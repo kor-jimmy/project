@@ -22,5 +22,7 @@ public class ReplyVo {
 	private int r_ref;
 	private int r_level;
 	private int r_step;
+	private int r_reCnt;
+	private int r_state;
 }
 

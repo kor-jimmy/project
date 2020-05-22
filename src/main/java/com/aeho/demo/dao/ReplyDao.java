@@ -22,4 +22,8 @@ public interface ReplyDao {
 	int maxRstep(ReplyVo rv);
 	
 	int updateStep(ReplyVo rv);
+
+	int updateCnt(int r_ref);
+
+	int updateState(int r_no);
 }
