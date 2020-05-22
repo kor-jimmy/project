@@ -34,15 +34,11 @@ public class ReplyServiceImple implements ReplyService {
 			ReplyVo replyVo = replyDao.getReply(rv.getR_no());
 			System.out.println("replyVo"+replyVo);
 			rv.setR_step(replyVo.getR_step()+1);
-			
-			
+
 			System.out.println(rv);
 	
 			//부모댓글 소환  
 			System.out.println("누른댓글번호가옴!!==>"+rv.getR_no());
-			
-			
-			
 
 			rv.setR_level(replyVo.getR_level()+1);
 			

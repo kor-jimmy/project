@@ -141,7 +141,7 @@ public class BoardController {
 		return bv.getB_no()+"";
 	}
 	
-	@GetMapping("/delete")
+	@PostMapping("/delete")
 	@ResponseBody
 	public String delete(BoardVo bv) throws Exception{
 		String msg = "0";

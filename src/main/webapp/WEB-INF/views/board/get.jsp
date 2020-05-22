@@ -49,37 +49,45 @@
 
 		isLoved(m_id, b_no);
 		isHated(m_id, b_no);
-		
+
+		//게시물 수정
 		$("#updateBtn").on("click",function(){
 			self.location = "/board/update?b_no="+b_no;
 		})
+		
+		
+		//게시물 삭제
 		$("#deleteBtn").on("click",function(){
-			var confirm = "";
-
-			var swal = swal({
+			swal({
 			    title: "게시물을 삭제 하시겠습니까?",
 			    icon: "info",
-			    buttons: ["YES", "NO"]
+			    buttons: ["NO", "YES"]
 			}).then((YES) => {
 			    if (YES) {
-			    	confirm = true;        
+			    	flag = "true";
+					$.ajax("/board/delete", {
+						type: 'POST', 
+						data: {b_no: b_no},
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(header,token)	
+						},
+						cache:false, 
+						success: function(result){
+						if( result == "0"){
+							swal({
+								  title: "게시물 삭제에 실패 하였습니다.",
+								  icon: "warning",
+								  button: "확인"
+								})
+						}else{
+							location.href="/board/list?categoryNum="+$("#c_no").val();
+						}
+					}});        
 			    }else{
-			    	confirm = false;
+			    	
 			    }
 			});
 			
-			console.log(b_no);
-			//var re = confirm("정말로 삭제하시겠습니까?");
-			if(confirm==true){
-				$.ajax("/board/delete", {type: 'GET', data: {b_no: b_no}, success: function(result){
-					if( result == "0"){
-						alert("죄송합니다. 예기치 않은 오류가 발생했습니다. 게시물을 삭제하지 못 했습니다.");
-					}else{
-						alert("게시물을 성공적으로 삭제했습니다.");
-						location.href="/board/list?categoryNum="+$("#c_no").val();
-					}
-				}});
-			}
 		})
 		
 		//댓글 목록 ajax
@@ -200,7 +208,7 @@
 			select_mid = $(this).attr("m_id");
 			console.log(select_ref);
 
-			var reID = "@" +select_mid+"  ";
+			var reID = $("<span></span>").text("@" +select_mid+" ");
 
 			var reInputDiv = $("<div class='reInputDiv row'></div>");
 
@@ -208,13 +216,13 @@
 			var div = $("<div class='col-1'></div>");
 			
 			var idDiv = $("<div class='col-2'></div>");
-			var loginId = $("<p></p>").html(logingID)
+			var loginId = $("<p></p>").html(logingID);
 			idDiv.append(loginId);
 			
 			var contentDiv = $("<div class='col-7'></div>");
-			var reContentLavel = $("<label for='reReContent'>"+reID+"</label>");
+			//var reContentLavel = $("<label for='reReContent'>"+reID+"</label>");
 			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
-			contentDiv.append(reContentLavel,reReContent);
+			contentDiv.append(reID,reReContent);
 
 			var buttenDiv = $("<div class='col-2'></div>");
 			var reButton = $("<button type='submit' id='insertReReply' class='btn btn-outline-dark'>등록</button>");
@@ -225,7 +233,6 @@
 			//var secStr = "<sec:authorize access='isAuthenticated()'>"+reInputDiv+"</sec:authorize>"
 			
 			$(this).parent().parent().append(reInputDiv);
-
 		})
 		
 		//대댓글 등록
@@ -240,70 +247,104 @@
 				return;
 			}
 
-			var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
+			//var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
 			var r_ref = select_ref;
 			var r_no = select_rno;
 			console.log(r_ref)
 			var reReplyContent = $("#reReContent").val();
 			var reReplyData = {b_no:b_no, m_id:logingID, r_content:reReplyContent, r_ref:r_ref, r_no:r_no}
 
-			if(re){
-				$.ajax({
-					url:"/reply/insert",
-					type:"POST", 
-					data:reReplyData,
-					beforeSend: function(xhr){
-						xhr.setRequestHeader(header,token)	
-					},
-					cache:false,
-					success:function(result){
-						alert(result);
-						location.href="/board/get?b_no="+b_no;
-				}})
-			} 
+			swal({
+			    title: "대댓글 등록",
+			    text: "Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?",
+			    icon: "info",
+			    buttons: ["NO", "YES"]
+			}).then((YES) => {
+			    if (YES) {
+			    	$.ajax({
+						url:"/reply/insert",
+						type:"POST", 
+						data:reReplyData,
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(header,token)	
+						},
+						cache:false,
+						success:function(result){
+							/*	swal({
+							    title: "댓글 등록에 성공하였습니다!",
+							    icon: "success",
+							    buttons: "YES"
+							}) */
+							location.href="/board/get?b_no="+b_no;
+					}})      
+			    }else{
+			    	
+			    }
+			});
+			
 		})
-		
-
 
 		//댓글 등록 ajax
 		$("#insertReply").on("click",function(e){
 			var r = $("#boardReply").serialize();
-			var re = confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
-			if(re){
-				$.ajax({
-					url:"/reply/insert",
-					type:"POST", 
-					data:r,
-					beforeSend: function(xhr){
-						xhr.setRequestHeader(header,token)	
-					},
-					cache:false,
-					success:function(result){
-						alert(result);
-						location.href="/board/get?b_no="+b_no;
-				}})
-			}
+			console.log(r);
+			swal({
+			    title: "댓글 등록",
+			    text: "Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?",
+			    icon: "info",
+			    buttons: ["NO", "YES"]
+			}).then((YES) => {
+			    if (YES) {
+			    	$.ajax({
+						url:"/reply/insert",
+						type:"POST", 
+						data:r,
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(header,token)	
+						},
+						cache:false,
+						success:function(result){
+							/*	swal({
+							    title: "댓글 등록에 성공하였습니다!",
+							    icon: "success",
+							    buttons: "YES"
+							}) */
+							location.href="/board/get?b_no="+b_no;
+					}})      
+			    }else{
+			    	
+			    }
+			});
 		})
 
 		//댓글 삭제 ajax 기능구현부터!
 		$(document).on("click",".delICON",function(){
 			var rno = $(this).attr("r_no");
-			console.log(rno);
-			var re = confirm("해당 댓글을 삭제하시겠습니까?")
-			if(re){
-				$.ajax({
-					url:"/reply/delete",
-					type:"POST",
-					data:{r_no:rno, b_no:b_no},
-					beforeSend: function(xhr){
-						xhr.setRequestHeader(header,token)	
-					},
-					cache:false,
-					success:function(result){
-						alert(result);
-						location.href="/board/get?b_no="+b_no;
-				}})
-			}
+			
+			swal({
+			    title: "댓글 삭제",
+			    text: "해당 댓글을 삭제하시겠습니까?",
+			    icon: "info",
+			    buttons: ["NO", "YES"]
+			}).then((YES) => {
+			    if (YES) {
+					$.ajax({
+						url:"/reply/delete",
+						type:"POST",
+						data:{r_no:rno, b_no:b_no},
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(header,token)	
+						},
+						cache:false,
+						success:function(result){
+							location.href="/board/get?b_no="+b_no;
+						}
+					})    
+			    }else{
+			    	
+			    }
+			});
+			
 		})
 		
 		//좋아요 등록
@@ -455,9 +496,10 @@
 						<input class="form-control" type="text" name="r_content" required="required" placeholder="댓글을 입력하세요!">
 					</div>
 					<div class="col-sm-2 my-1">
-						<button type="submit" id="insertReply" class="btn btn-outline-dark">댓글등록</button>
+						<a href="#" id="insertReply" class="badge badge-light">댓글등록</a>
 					</div>
 				</div>
 			</form>
+			
 	</sec:authorize>
 <%@include file="../includes/footer.jsp"%>
