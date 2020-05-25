@@ -52,9 +52,15 @@
 		</div>
 	    <!-- 게시물 인서트 -->
 	    <div class="col">
-	    	<sec:authorize access="isAuthenticated()">
-				<button id="insertBtn" type="button" class="btn btn-outline-dark float-right">게시물 등록</button>
-			</sec:authorize>
+	    	<c:choose>
+	    		<c:when test="${catkeyword == '공지사항'}">
+	    		</c:when>
+	    		<c:when test="${catkeyword != '공지사항'}">
+	    		<sec:authorize access="isAuthenticated()">
+						<button id="insertBtn" type="button" class="btn btn-outline-dark float-right">게시물 등록</button>
+					</sec:authorize>
+	    		</c:when>
+	    	</c:choose>
 	    </div>
 	    <!-- end 게시물 인서트 -->
 	</div>

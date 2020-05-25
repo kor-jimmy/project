@@ -25,4 +25,3 @@ public class ReplyVo {
 	private int r_reCnt;
 	private int r_state;
 }
-

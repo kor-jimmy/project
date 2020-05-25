@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+	    </div>
+	    <!-- /.container-fluid -->
+    
       </div>
       <!-- End of Main Content -->
 

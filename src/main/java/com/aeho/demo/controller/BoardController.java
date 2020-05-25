@@ -84,7 +84,6 @@ public class BoardController {
 	@GetMapping("/list")
 	public void list (Criteria cri, Model model) {
 		int total = boardService.getTotalCount(cri);
-		System.out.println(total);
 		System.out.println("list:"+cri);
 		model.addAttribute("list", boardService.getList(cri));
 		model.addAttribute("pageMake", new PageDto(cri, total));

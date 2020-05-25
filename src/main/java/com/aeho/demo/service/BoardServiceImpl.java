@@ -102,12 +102,6 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 
-//	@Override
-//	public List<BoardVo> listCatBoard(String catkeyword){
-//		List<BoardVo> list = boardDao.listCatBoard(catkeyword);
-//		return list;
-//	}
-
 	@Override
 	public List<BoardVo> getList(Criteria cri) {
 		return boardDao.getListWithPaging(cri);

@@ -10,6 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta name="_csrf" content="${_csrf.token}"/>
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
   <title>Ae-Ho 관리자 모드</title>
 
@@ -36,7 +38,12 @@
   <!-- Page level custom scripts -->
   <script src="/resources/admin/js/demo/chart-area-demo.js"></script>
   <script src="/resources/admin/js/demo/chart-pie-demo.js"></script>
-
+  
+      <!-- summer note -->
+    <script src="/resources/editor/summernote-lite.js"></script>
+	<script src="/resources/editor/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/resources/editor/summernote-lite.css">
+	<!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
 </head>
 
 <body id="page-top">
@@ -87,7 +94,7 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">게시물  관리</h6>
-            <a class="collapse-item" href="#">공지사항 관리</a>
+            <a class="collapse-item" href="/admin/notice/notice?categoryNum=10000">공지사항 관리</a>
             <a class="collapse-item" href="#">게시물 목록</a>
             <a class="collapse-item" href="#">신고 접수</a>
           </div>
@@ -187,4 +194,6 @@
 
       <!-- Main Content -->
       <div id="content">
+      	<!-- Begin Page Content -->
+        <div class="container-fluid">
 
