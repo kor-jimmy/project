@@ -116,6 +116,13 @@
 				var search_keyword = $("#mainSearch").val();
 				location.href="/search/search?keyword="+search_keyword;
 			});
+
+			$('#mainSearch').keypress(function(event){
+			     if ( event.which == 13 ) {
+			         $('#mainTotalSearch').click();
+			         return false;
+			     }
+			});
 		})
     </script>
 </head>

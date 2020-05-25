@@ -3,14 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../includes/header.jsp"%>
 <style>
-	#container{
-
-	}
 	a, li{
 		text-decoration: none;
 		list-style: none;
-		display: inline-block;
-		float: left;
 	}
 	.cat{
 		padding: 15px;

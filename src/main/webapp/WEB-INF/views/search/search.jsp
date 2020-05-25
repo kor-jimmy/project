@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="../includes/header.jsp"%>
+<script src="https://cdn.jsdelivr.net/npm/inko@1.1.1/inko.min.js"></script>
 <style>
 	li{
 		list-style: none;
@@ -12,6 +13,9 @@
 	}
 	#containerBox{
 		padding: 20px 10px 20px 10px;
+	}
+	#modifiedKeyword{
+		color: #8882F8;
 	}
 
 	#newsBox{
@@ -47,7 +51,7 @@
 	}
 	#nullnews{
 		text-align: center;
-		padding-top: 30%;
+		padding-top: 25%;
 		color: lightgray;
 	}
 	
@@ -85,21 +89,45 @@
 		color: #8882F8;
 		opacity: 0.8;
 	}
+	#goodsList{
+		width: 70%;
+	}
+	#goodsList li{
+		display: inline-block;
+		width: 45%;
+		margin-right: 20px;
+	}
+	.goodsImg{
+		width: 150px;
+		height: 150px;
+		border: 1px solid lightgray;
+	}
 </style>
 <script type="text/javascript">
 $(function(){
-	var keyword = $("#keyword").val();
+
+	var inko = new Inko();
 	
-	if( keyword == "" || keyword == null ){
-		var text = "검색어가 올바르지 않습니다.";
-		$("#containerBox").html(text);
-	}
+	var keyword = $("#keyword").val();
 	
 	$("#mainSearch").val(keyword);
 	$("#categoryBox").hide();
 	$("#boardBox").hide();
 	$("#goodsBox").hide();
+	$("#modified").hide();
 
+	if( keyword == "" || keyword == null ){
+		var text = "검색어가 올바르지 않습니다.";
+		$("#containerBox").html(text);
+	}
+	if(/^[a-zA-Z]+$/.test(keyword)){
+		var transKeyword = inko.en2ko(keyword);
+		if(/[가-힣]+$/.test(transKeyword)){
+			$("#modified").show();
+			$("#modifiedKeyword").html(transKeyword);
+			$("#linkForKeyword").attr("href", "/search/search?keyword="+transKeyword);
+		}
+	}
 
 	//네이버
 	$("#news_naver").click(function(){
@@ -195,14 +223,23 @@ $(function(){
 					return false;
 				}
 				console.log(g);
-				var img = g.g_content
-				var li = $("<li></li>");
+				var db_con = g.g_content;
+				var div_img = $("<div></div>");
+				var img;
+				if(db_con.indexOf("<img src=") != -1){
+					img = $(db_con.substring(db_con.indexOf("<img src="), db_con.indexOf("style"))+"></img>").addClass("goodsImg");
+				}else{
+					img = $("<img src='/img/no_image.png' class='goodsImg'></img>");
+				}
+				console.log("img: " + img);
+				div_img.append(img);
+				var li = $("<li></li>").addClass("mb-3");
 				var category = $("<span class='badge badge-info'></span>").html(g.c_dist);
 				var a = $("<a class='goodsTitle'></a>").attr("href", "../goods/get?g_no="+g.g_no);
 				var title = $("<b></b>").html(g.g_title);
 				var goodsDate = $("<p></p>").html(g.g_updatedate).css("color", "lightgray");
 				a.append(title);
-				li.append(category, "&nbsp;", a, goodsDate);
+				li.append(div_img, "<br>", category, "&nbsp;", a, goodsDate);
 				$("#goodsList").append(li);
 				
 			});
@@ -216,6 +253,8 @@ $(function(){
 
 <input type="hidden" id="keyword" value="${ keyword }">
 <div id="containerBox">
+	
+	<p id="modified"><b>검색어 제안</b> <a id="linkForKeyword"><span id="modifiedKeyword"></span></a>(으)로 검색하시겠습니까?</p><br>
 	
 	<div id="categoryBox" class="mb-5">
 		<h3>카테고리</h3>

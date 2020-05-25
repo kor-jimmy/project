@@ -1,6 +1,8 @@
 package com.aeho.demo.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -69,20 +71,52 @@ public class SearchController {
 	@RequestMapping("/getCategory")
 	@ResponseBody
 	public List<CategoryVo> getCategory(String keyword) {
+		if(getRightKeyword(keyword) != null) {
+			keyword = getRightKeyword(keyword);
+		}
 		return searchService.getCategory(keyword);
 	}
 	
 	@RequestMapping("/getBoard")
 	@ResponseBody
 	public List<BoardVo> getBoard(String keyword){
-		return searchService.getBoard(keyword);
+		List<BoardVo> list = searchService.getBoard(keyword);
+		if(getRightKeyword(keyword) != null) {
+			for(BoardVo b : searchService.getBoard(getRightKeyword(keyword))) {
+				list.add(b);
+			}
+		}
+		return list;
 	}
 	
 	@RequestMapping("/getGoods")
 	@ResponseBody
 	public List<GoodsVo> getGoods(String keyword){
-		return searchService.getGoods(keyword);
+		List<GoodsVo> list = searchService.getGoods(keyword);
+		if(getRightKeyword(keyword) != null && list.size() < 1) {
+			for(GoodsVo g : searchService.getGoods(getRightKeyword(keyword))) {
+				list.add(g);
+			}
+		}
+		return list;
 	}
 	
+	public String getRightKeyword(String keyword) {
+		String str = "";
+		HashMap<String, String> map = new HashMap();
+		
+		map.put("방탄", "BTS");
+		map.put("방찬", "BTS");
+		map.put("방탄소년단", "BTS");
+		map.put("ㅂㅌㅅㄴㄷ", "BTS");
+		map.put("bts", "BTS");
+		map.put("twice", "트와이스");
+		map.put("ㅌㅇㅇㅅ", "트와이스");
+		map.put("엑소", "EXO");
+		
+		
+		str = map.get(keyword);
+		return str;
+	}
 
 }
