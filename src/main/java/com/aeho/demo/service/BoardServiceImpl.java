@@ -112,4 +112,12 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.getTotalCount(cri);
 	}
 
+	@Override
+	public int getReportCount() {
+		// TODO Auto-generated method stub
+		return boardDao.getReportCount();
+	}
+	
+	
+
 }

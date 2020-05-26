@@ -25,6 +25,7 @@ public class BoardVo {
 	private int b_replycnt;
 	private int b_lovecnt;
 	private int b_hatecnt;
+	private int b_reportcnt;
 	
 	//vo에 파일 리스트 추가.
 	private List<BoardFilesVo> fileList;

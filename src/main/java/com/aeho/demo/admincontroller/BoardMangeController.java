@@ -1,4 +1,4 @@
-package com.aeho.demo.controller;
+package com.aeho.demo.admincontroller;
 
 import java.io.File;
 import java.io.InputStream;
@@ -33,7 +33,7 @@ import com.google.gson.JsonObject;
 
 @Controller
 @RequestMapping("/admin/*")
-public class AdminController {
+public class BoardMangeController {
 	
 	@Autowired
 	BoardService boardService;
@@ -43,11 +43,6 @@ public class AdminController {
 	
 	@Autowired
 	CategoryService categoryService;
-
-	@GetMapping("/admin")
-	public void admin() {
-		
-	}
 	
 	@GetMapping("/notice/notice")
 	public void notice(Criteria cri, Model model) {
@@ -66,6 +61,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("/notice/insert")
+	@ResponseBody
 	public String insertNotice(BoardVo bv, RedirectAttributes rttr) {
 		System.out.println("공지사항 등록 아이디==>"+bv.getM_id());
 		System.out.println("등록될 C_NO=>"+bv.getC_no());
@@ -125,4 +121,5 @@ public class AdminController {
 		}
 		return "msg";
 	}
+
 }

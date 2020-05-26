@@ -5,6 +5,7 @@
 
 <%@include file="../header.jsp"%>
 
+
 <script type="text/javascript">
 	$(function(){
 		//페이징 관련 내용
@@ -26,11 +27,10 @@
 		<!-- Card Header - Dropdown -->
 		<div
 			class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-			<h6 class="m-0 font-weight-bold text-primary">공지 사항</h6>
+			<h6 class="m-0 font-weight-bold text-primary">신고 게시물</h6>
 		</div>
 		<!-- Card Body -->
 		<div class="card-body">
-			<a href="/admin/notice/insert?c_no=10000">공지사항 등록</a>
 			<table class="table table-hover">
 				<thead>
 					<tr align="center">
@@ -38,7 +38,7 @@
 						<th width="50%">제목</th>
 						<th width="10%">작성자</th>
 						<th width="10%">날짜</th>
-						<th width="10%">조회수</th>
+						<th width="10%">신고수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -55,7 +55,7 @@
 							<td align="center">
 								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }" />
 							</td>
-							<td align="center"><c:out value="${board.b_hit }" /></td>
+							<td align="center"><c:out value="${board.b_reportcnt }" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -84,15 +84,17 @@
 					</c:if>
 				</ul>
 				<!-- 페이징 관련 a태그 속성 관리 -->
-				<form id="actionForm" action="/admin/notice/notice" method="get">
+				<form id="actionForm" action="/admin/report/board" method="get">
 					<input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
 					<input type="hidden" name="amount" value="${pageMake.cri.amount }"> 
-					<input type="hidden" name="categoryNum" value="${pageMake.cri.categoryNum }">
+					<%-- <input type="hidden" name="categoryNum" value="${pageMake.cri.categoryNum }"> --%>
 				</form>
 			</nav>
 			<!-- end 페이징 -->
 		</div>
 	</div>
 </div>
+
+
 
 <%@include file="../footer.jsp"%>

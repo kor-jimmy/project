@@ -27,4 +27,7 @@ public interface BoardDao {
 	
 	//카테고리별 토탈 게시물 수를 구하기 위한거
 	int getTotalCount(Criteria cri);
+	
+	//신고 5이상 게시물 총 개수 페이징을 위한 토탈
+	int getReportCount();
 }

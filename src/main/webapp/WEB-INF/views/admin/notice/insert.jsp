@@ -167,10 +167,11 @@
 							},
 							cache : false,
 							success : function(msg){
-								location.href="/admin/notice/notice?categoryNum=10000";
+								alert(msg);
 							}
 						})
 					}
+					location.href="/admin/notice/notice?categoryNum=10000";
 				}
 			})
 		})

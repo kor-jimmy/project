@@ -10,6 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  
   <meta name="_csrf" content="${_csrf.token}"/>
   <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
@@ -95,8 +96,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">게시물  관리</h6>
             <a class="collapse-item" href="/admin/notice/notice?categoryNum=10000">공지사항 관리</a>
-            <a class="collapse-item" href="#">게시물 목록</a>
-            <a class="collapse-item" href="#">신고 접수</a>
+            <a class="collapse-item" href="/admin/report/board">신고 접수</a>
           </div>
         </div>
       </li>
