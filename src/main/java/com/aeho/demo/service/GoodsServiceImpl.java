@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.aeho.demo.dao.GoodsDao;
 import com.aeho.demo.dao.GoodsFilesDao;
 import com.aeho.demo.dao.GoodsReplyDao;
+import com.aeho.demo.dao.MemberDao;
 import com.aeho.demo.domain.Criteria2;
 import com.aeho.demo.vo.BoardFilesVo;
 import com.aeho.demo.vo.GoodsFilesVo;
@@ -23,14 +24,25 @@ public class GoodsServiceImpl implements GoodsService {
 	@Autowired
 	private GoodsFilesDao goodsFilesDao;
 	
-	
+	public void setGoodsDao(GoodsDao goodsDao) {
+		this.goodsDao = goodsDao;
+	}
+
+	public void setGoodsReplyDao(GoodsReplyDao goodsReplyDao) {
+		this.goodsReplyDao = goodsReplyDao;
+	}
+
+	public void setGoodsFilesDao(GoodsFilesDao goodsFilesDao) {
+		this.goodsFilesDao = goodsFilesDao;
+	}
+
 	@Override
 	public List<GoodsVo> listGoods(Criteria2 cri) {
 		return goodsDao.paging(cri);
 	}
 
 	@Override
-	public GoodsVo getGoods(GoodsVo gv) {
+	public GoodsVo getGoods(GoodsVo gv) {	
 		return goodsDao.getGoods(gv);
 	}
 

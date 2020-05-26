@@ -30,7 +30,8 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
          var replyCnt=$("<span class='badge badge-light'></span>").html(item.g_replycnt)
          a.append(replyCnt);
          var td3=$("<td></td>").html(a);
-         var td4=$("<td align='center'></td>").html(item.m_id);
+//         console.log("닉:"+item.m_nick)
+         var td4=$("<td align='center'></td>").html(item.m_nick);
          var td5=$("<td align='center'></td>").html(item.g_price);
          var td6=$("<td align='center'></td>").html(item.g_date);
          var tr = $("<tr></tr>").append(td1,td2,td3,td4,td5,td6);

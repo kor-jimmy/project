@@ -32,6 +32,7 @@ import com.aeho.demo.domain.PageDto2;
 import com.aeho.demo.service.CategoryService;
 import com.aeho.demo.service.GoodsFilesSevice;
 import com.aeho.demo.service.GoodsService;
+import com.aeho.demo.service.MemberService;
 import com.aeho.demo.vo.CategoryVo;
 import com.aeho.demo.vo.GoodsFilesVo;
 import com.aeho.demo.vo.GoodsVo;
@@ -49,7 +50,7 @@ public class GoodsController {
 	public void setGoodsService(GoodsService goodsService) {
 		this.goodsService = goodsService;
 	}
-	
+		
 	@Autowired
 	public CategoryService categoryService;
 	public void setCategoryService(CategoryService categoryService) {
@@ -77,11 +78,15 @@ public class GoodsController {
 	@ResponseBody
 	public HashMap listGoods(Criteria2 cri) {
 		int total = goodsService.getTotalCount(cri);		
+		List<GoodsVo> l = goodsService.listGoods(cri);
+		for (GoodsVo g : l) {
+			System.out.println(g.getM_nick());
+			System.out.println("글번호:"+g.getG_no());
+		}
 		PageDto2 dto = new PageDto2(cri, total);
 		System.out.println(total);
 		String list = new Gson().toJson(goodsService.listGoods(cri));
-//		System.out.println("컨트롤에서 start:"+dto.getStartPage());
-//		System.out.println("컨트롤에서 end:"+dto.getEndPage());
+		System.out.println(list);
 		HashMap hm = new HashMap();
 		hm.put("dto", dto);
 		hm.put("list", list);
@@ -182,5 +187,6 @@ public class GoodsController {
 	public void get(GoodsVo gv,Model model) {
 		model.addAttribute("goods", goodsService.getGoods(gv));
 	}
+
 	
 }

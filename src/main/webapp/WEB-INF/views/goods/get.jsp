@@ -57,9 +57,9 @@
 				var li  =$("<li class='list-group-item rep' idx="+idx+" r_no="+r.gr_no+"></li>")
 			 	var replyDiv = $("<div class='row'></div>");
 				var idDiv = $("<div class=col-2></div>");
-				var replyID=$("<p></p>").html(r.m_id);
+				var replyID=$("<p></p>").html(r.m_nick);
 				idDiv.append(replyID);
-				var contentDiv=$("<div class='col-6 reContent'></div>").attr("gr_no",r.gr_no).attr("gr_ref",r.gr_ref).attr("m_id",r.m_id);
+				var contentDiv=$("<div class='col-6 reContent'></div>").attr("gr_no",r.gr_no).attr("gr_ref",r.gr_ref).attr("m_nick",r.m_nick);
 				var replyContent = $("<span class='replyContent'></span>")
 				var replyString="";
 				if(r.gr_level != 0){
@@ -73,9 +73,9 @@
 					li.addClass("list-group-item-warning");
  	 			}
 				else{
+					console.log("답댓글아닐때"+r.gr_no);
 					replyContent.html(r.gr_content);
 				}
-				
 				contentDiv.append(replyContent);
 
 				var dateDiv=$("<div class=col-2></div>");
@@ -122,7 +122,7 @@
 			$(".reInputDiv").remove();
 			select_gref=$(this).attr("gr_ref");
 			select_grno=$(this).attr("gr_no");
-			select_mid = $(this).attr("m_id");
+			select_mnick = $(this).attr("m_nick");
 			var reInputDiv = $("<div class='reInputDiv row'></div>");
 			
 			var div = $("<div class='col-1'></div>");
@@ -131,7 +131,7 @@
 			idDiv.append(loginId);
 
 			var contentDiv = $("<div class='col-7'></div>");
-			var reReLabel = $("<label for='reReContent' id='labelForRe'></label>").text("@"+select_mid+"/ ");
+			var reReLabel = $("<label for='reReContent' id='labelForRe'></label>").text("@"+select_mnick+"/ ");
 			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
 			contentDiv.append(reReLabel,reReContent);
 			var buttenDiv = $("<div class='col-2'></div>");
@@ -248,7 +248,7 @@
 		</tr>
 		<tr>
 			<td width="25%">작성자</td>
-			<td width="25%"><c:out value="${goods.m_id }"/></td>
+			<td width="25%"><c:out value="${goods.m_nick }"/></td>
 			<td width="25%">작성시간</td>
 			<td width="25%"><c:out value="${goods.g_date }"/></td>
 		</tr>
@@ -275,13 +275,22 @@
     <hr>
    <sec:authorize access="isAuthenticated()">
    <form id="reply">
+   <div id="replyDiv" class="form-row align-items-center">
       <input type="hidden" name="g_no" value="<c:out value='${goods.g_no }'/>">
       <input type="hidden" name="gr_ref" value="0">
       <input type="hidden" name="gr_level" value="0">
-      id:<input type="text" name="m_id" value="<sec:authentication property="principal.username"/>" readonly="readonly">
-      content:<input type="text" name="gr_content" required="required">      
+     <div class="col-sm-2 my-1">
+      <input class="form-control" type="text" name="m_id" value="<sec:authentication property="principal.username"/>" readonly="readonly">
+      </div>
+      <div class="col-sm-8 my-1">
+      <input class="form-control" type="text" name="gr_content" required="required" placeholder="댓글을 입력하세요.">
+      </div>      
+   </div>
+   <div class="col-sm-2 my-1">
+   		<a href="#" id="insertReply" class="badge badge-light">댓글등록</a>
+   </div>
    </form>
-   <button type="submit" id="insertReply" class="btn btn-outline-dark">댓글 등록</button>
+   
    </sec:authorize>
    
 	

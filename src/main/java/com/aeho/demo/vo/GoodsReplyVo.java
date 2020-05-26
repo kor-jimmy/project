@@ -24,5 +24,6 @@ public class GoodsReplyVo {
 	private int gr_level;
 	private int gr_reCnt;
 	private int gr_state;
+	private String m_nick;
 }
 

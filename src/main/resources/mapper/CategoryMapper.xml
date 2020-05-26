@@ -10,7 +10,9 @@
   </select>
   
   <select id="listGoodsCategory" resultType="com.aeho.demo.vo.CategoryVo">
-  	select * from category where c_no > 1000
+  	<![CDATA[
+  	select * from category where c_no > 1000 and c_no < 10000
+  	]]>
   </select>
   
   <select id="getCategory" resultType="com.aeho.demo.vo.CategoryVo">

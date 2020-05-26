@@ -17,7 +17,7 @@
 		</tr>
 		<tr>
 			<td>삽니다/팝니다</td>
-			<td><select name="gc_code">
+			<td><select id="gc_code" name="gc_code">
 				<option value="0" disabled="disabled" selected="selected">=선택=</option>
 				<option value="1">팝니다</option>
 				<option value="2">삽니다</option>
@@ -112,10 +112,11 @@
 			console.log("토큰 : "+token+" / 헤더:"+header);
 
 			$("#insertBtn").on("click",function(e){
+				var gc_code = $("#gc_code option:selected").val();
 				if($("#g_title").val() == null || $("#g_title").val() == "" || 
-						$("#g_content").val() == null || $("#g_content").val() == ""){
-					alert("제목이나 글 내용을 비워둘 수는 없습니다.");
-					return;
+						$("#g_content").val() == null || $("#g_content").val() == "" || gc_code == "0"){
+					alert("제목,글 내용, 삽니다/팝니다 코드가 비어있는지 확인해주세요.");
+					return false;
 				}
 //				console.log("클릭동작")
 				e.preventDefault();

@@ -6,11 +6,11 @@
   <select id="listGoodsReply" resultType="com.aeho.demo.vo.GoodsReplyVo">
 <!--
   	select * from goodsReply where g_no=#{g_no}  -->
-  	select * from goodsReply where g_no=#{g_no} order by gr_ref,gr_no
+  	select g.*,m_nick from goodsReply g,member m where g_no=#{g_no} and m.m_id=g.m_id order by gr_ref,gr_no
   </select>
   
   <select id="getGoodsReply" resultType="com.aeho.demo.vo.GoodsReplyVo">
-  	select * from goodsReply where gr_no=#{gr_no}
+  	select g.*,m_nick from goodsReply g, member m where g.gr_no=#{gr_no} and m.m_id=g.m_id
   </select>
   
   <insert id="insertGoodsReply">
