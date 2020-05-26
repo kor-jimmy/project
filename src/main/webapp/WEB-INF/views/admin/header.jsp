@@ -81,8 +81,7 @@
         <div id="categoryEdit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">카테고리 관리</h6>
-            <a class="collapse-item" href="buttons.html">카테고리 목록/수정 삭제</a>
-            <a class="collapse-item" href="cards.html">신규 카테고리 등록</a>
+            <a class="collapse-item" href="/admin/category/manage">카테고리 정보 관리</a>
           </div>
         </div>
       </li>
@@ -124,8 +123,7 @@
         <div id="voteEdit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">투표 관리</h6>
-            <a class="collapse-item" href="#">투표 목록</a>
-            <a class="collapse-item" href="#">투표 등록</a>
+            <a class="collapse-item" href="/admin/vote/manage">투표 정보 관리</a>
           </div>
         </div>
       </li>

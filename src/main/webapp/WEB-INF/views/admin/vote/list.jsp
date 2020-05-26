@@ -1,9 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@include file="../includes/header.jsp"%>
+<%@include file="../header.jsp"%>
 
+<style>
+	.card-body{
+		padding: 50px 70px 50px 70px;
+	}
+	#insertDiv{
+		margin-right: 20px;
+	}
+	.deleteBtn{
+		margin-right: 20px;
+	}
+	.modalTr{
+		margin-left: 20px;
+		cursor: pointer;
+	}
+</style>
 <script type="text/javascript">
 	$(function(){
 
@@ -55,7 +70,7 @@
 					trList.push(v);
 					var delBtn = $('<button type="button" class="deleteBtn btn btn-outline-dark float-right">삭제</button>').attr("index", idx);
 					var tr = $('<tr></tr>');
-					var content = $('<td class="modalTr" data-toggle="modal" data-target="#voteModal"></td>').html(v.vt_content).attr("data-index", idx).attr("root", "getValue");
+					var content = $('<td class="modalTr" data-toggle="modal" data-target="#voteModal"></td>').html(v.vt_content.split("/")[0]+" VS "+v.vt_content.split("/")[1]).attr("data-index", idx).attr("root", "getValue");
 					var btnTd = $('<td></td>').append(delBtn);
 					tr.append(content, btnTd);
 					$("#ingTable").append(tr);
@@ -69,7 +84,7 @@
 		var vt;
 
 		$("#voteModal").on('hidden.bs.modal', function(e){
-			self.location = "/vote/manage";
+			self.location = "/admin/vote/manage";
 			e.stopImmediatePropagation(); 
 		});
 
@@ -204,7 +219,7 @@
 					data: vt, 
 					success: function(msg){
 						alert(msg);
-						self.location = "/vote/manage";
+						self.location = "admin/vote/manage";
 				}});
 			}
 		});
@@ -213,58 +228,69 @@
 		//0514 일단 location으로 처리
 	});
 </script>
+<!-- 
 <sec:authorize access="isAuthenticated()">
 	<input type="hidden" id="m_id" value="<sec:authentication property="principal.username"/>">
 </sec:authorize>
-<sec:authorize access="isAnonymous()">
-	<input type="hidden" id="m_id" value="">
-</sec:authorize>
-<h2>투표</h2>
-<div id="insertDiv">
-</div>
-<table class="table table-hover" id="ingTable">
+ -->
 
-</table>
-<hr>
-
-<!-- modal -->
-<div class="modal fade" id="voteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg modal-dialog-centered">
-		<!-- <form id="form" name="form" method="POST" enctype="multipart/form-data">-->
-		<div class="modal-content">
-			<div class="modalheader" style="padding: 20px;">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h5 class="modal-title" id="myModalLabel" align="center">투표 등록</h5>
+<div class="col mt-4">
+	<div class="card shadow mb-4">
+		<!-- Card Header - Dropdown -->
+		<div
+			class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+			<h6 class="m-0 font-weight-bold text-primary">투표 관리</h6>
+		</div>
+		<!-- Card Body -->
+		<div class="card-body">
+			<div id="insertDiv">
 			</div>
+			<table class="table table-hover" id="ingTable">
 			
-			<div class="modal-body" style="padding: 20px 50px 0px 50px;">
-				<div id="option_A" class="option" align="center" style="display:inline-block; float:left; margin:0 auto; overflow: hidden;">
-					<img id='optionAImg' class="mb-3" style='width:300px; height: 300px;border: 8px solid #F0F0F0; border-radius: 50%;'/>
-					<div>
-						<input type="text" id="optionAname" name="optionAname" class="form-control mb-3">
-					</div>
-					<div class="addPhotoBtn">
-						<button type="button" id="addPhotoA" class="addPhoto btn btn-outline-dark">사진 추가</button><br>
-						<input type="file" name="fileA" id="fileA" style="visibility: hidden;">
+			</table>
+			<hr>
+			
+			<!-- modal -->
+			<div class="modal fade" id="voteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg modal-dialog-centered">
+					<!-- <form id="form" name="form" method="POST" enctype="multipart/form-data">-->
+					<div class="modal-content">
+						<div class="modalheader" style="padding: 20px;">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h5 class="modal-title" id="myModalLabel" align="center">투표 등록</h5>
+						</div>
+						
+						<div class="modal-body" style="padding: 20px 50px 0px 50px;">
+							<div id="option_A" class="option" align="center" style="display:inline-block; float:left; margin:0 auto; overflow: hidden;">
+								<img id='optionAImg' class="mb-3" style='width:300px; height: 300px;border: 8px solid #F0F0F0; border-radius: 50%;'/>
+								<div>
+									<input type="text" id="optionAname" name="optionAname" class="form-control mb-3">
+								</div>
+								<div class="addPhotoBtn">
+									<button type="button" id="addPhotoA" class="addPhoto btn btn-outline-dark">사진 추가</button><br>
+									<input type="file" name="fileA" id="fileA" style="visibility: hidden;">
+								</div>
+							</div>
+							
+							<div id="option_B" class="option mb-5" align="center" style="display:inline-block; float:right; margin:0 auto; overflow: hidden;">
+								<img id='optionBImg' class="mb-3" style='width:300px; height: 300px; border: 8px solid #F0F0F0; border-radius: 50%;'/>
+								<div>
+									<input type="text" id="optionBname" name="optionBname" class="form-control mb-3">
+								</div>
+								<div class="addPhotoBtn">
+									<button type="button" id="addPhotoB" class="addPhoto btn btn-outline-dark">사진 추가</button><br>
+									<input type="file" name="fileB" id="fileB" style="visibility: hidden;">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer" style="background: #642EFE; border: 2px solid #642EFE;">
+							<button type="button" class="btn btn-primary" style="width: 300px; background: #01DFA5; border: 1px solid #01DFA5; float:none; margin:0 auto;">등록</button>				
+						</div>
 					</div>
 				</div>
-				
-				<div id="option_B" class="option mb-5" align="center" style="display:inline-block; float:right; margin:0 auto; overflow: hidden;">
-					<img id='optionBImg' class="mb-3" style='width:300px; height: 300px; border: 8px solid #F0F0F0; border-radius: 50%;'/>
-					<div>
-						<input type="text" id="optionBname" name="optionBname" class="form-control mb-3">
-					</div>
-					<div class="addPhotoBtn">
-						<button type="button" id="addPhotoB" class="addPhoto btn btn-outline-dark">사진 추가</button><br>
-						<input type="file" name="fileB" id="fileB" style="visibility: hidden;">
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer" style="background: #642EFE; border: 2px solid #642EFE;">
-				<button type="button" class="btn btn-primary" style="width: 300px; background: #01DFA5; border: 1px solid #01DFA5; float:none; margin:0 auto;">등록</button>				
 			</div>
 		</div>
 	</div>
 </div>
 
-<%@include file="../includes/footer.jsp"%>  
+<%@include file="../footer.jsp"%>
