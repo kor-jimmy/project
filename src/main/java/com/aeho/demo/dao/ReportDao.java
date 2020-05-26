@@ -8,12 +8,15 @@ public interface ReportDao {
 
 	List<ReportVo> listReport();
 	
-//	ReportVo getReport();
+	int insertBoardReport(ReportVo rev);
 	
-	int insertReport(ReportVo rev);
+	int insertReplyReport(ReportVo rev);
 	
-//	int updateReport();
+	int insertGoodsReport(ReportVo rev);
 	
-//	int deleteReport();
+	int isCheckedBoard(ReportVo rev);
 	
+	int isCheckedReply(ReportVo rev);
+	
+	int isCheckedGoods(ReportVo rev);
 }

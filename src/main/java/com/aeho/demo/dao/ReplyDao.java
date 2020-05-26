@@ -26,4 +26,6 @@ public interface ReplyDao {
 	int updateCnt(int r_ref);
 
 	int updateState(int r_no);
+	
+	int updateReportCnt(int r_no);
 }

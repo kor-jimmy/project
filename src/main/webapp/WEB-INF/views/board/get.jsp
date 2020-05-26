@@ -151,7 +151,7 @@
 
 				var repStr = "<sec:authorize access='isAuthenticated()'>";
 				if("<sec:authentication property='principal.username'/>"!=r.m_id){
-					repStr += "<img class='reportICON' width=20px height=20px src='/img/reportICON.svg'></img>"
+					repStr += "<img class='replyReport' width=20px height=20px src='/img/reportICON.svg' r_no="+r.r_no+"></img>"
 				}
 				repStr +="</sec:authorize>";
 				
@@ -462,6 +462,101 @@
 				}
 			}});
 		})
+
+		//게시물 신고
+		$("#boardReport").click(function(e){
+			//rc_code 1번은 게시물.
+			var report = {rc_code:1,m_id:logingID,b_no:b_no}
+			console.log(report);
+
+			swal({
+			    title: "게시물 신고",
+			    text: "해당 게시물을 신고 하시겠습니까? 신고는 취소가 불가능합니다.",
+			    icon: "info",
+			    buttons: ["NO", "YES"]
+			}).then((YES) => {
+			    if (YES) {
+					$.ajax({
+						url: "/report/boardreport",
+						type: "POST", 
+						data: report,
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(header,token)	
+						},
+						cache: false,
+						success: function(result){				
+							location.href="/board/get?b_no="+b_no;
+						}
+					});    
+			    }else{
+			    	return;
+			    }
+			});
+		});
+
+		//게시물 신고 한번만 가능하도록
+		var reportBoard = function(m_id, b_no){
+			$.ajax("/report/checkBoard", {data: {m_id: m_id, b_no: b_no}, success: function(re){
+				if(re == 1){	
+					$("#boardReport").hide();
+				}else{
+					$("#boardReport").show();
+				}
+			}});
+		}
+		
+		reportBoard(m_id,b_no);
+
+		//댓글신고
+		$(document).on("click",".replyReport",function(e){
+			//rc_code 3번은 댓글.
+			var r_no = $(this).attr("r_no");
+			var report = {rc_code:3,m_id:logingID,r_no:r_no}
+			console.log(report);
+
+			swal({
+			    title: "댓글 신고",
+			    text: "해당 댓글을 신고 하시겠습니까? 신고는 취소가 불가능합니다.",
+			    icon: "info",
+			    buttons: ["NO", "YES"]
+			}).then((YES) => {
+			    if (YES) {
+			    	$.ajax({
+						url:"/report/checkReply",
+						data:report,
+						type:"GET",
+						cache: false,
+						success: function(result){				
+							if(result==0){
+								$.ajax({
+									url: "/report/replyreport",
+									type: "POST", 
+									data: report,
+									beforeSend: function(xhr){
+										xhr.setRequestHeader(header,token)	
+									},
+									cache: false,
+									success: function(result){				
+										location.href="/board/get?b_no="+b_no;
+									}
+								});  
+							}else{
+								swal({
+									  title: "이미 신고한 댓글입니다.",
+									  icon: "warning",
+									  button: "확인"
+								})
+							}
+						}
+					})
+					  
+			    }else{
+			    	return;
+			    }
+			});
+		})
+
+
 	})
 </script>
 	<input type="hidden" id="b_no" value="${ board.b_no }">
@@ -479,7 +574,13 @@
 				<img id="heart" src="/img/heart.png" width="30" height="30">
 				<img id="clickheart" src="/img/clickheart.png" width="30" height="30">
 				<img id="hate" src="/img/hate.png" width="30" height="30">
-				<img id="clickedhate" src="/img/clickedhate.png" width="30" height="30">		
+				<img id="clickedhate" src="/img/clickedhate.png" width="30" height="30">
+				<sec:authentication property="principal" var="pinfo"/>
+				<sec:authorize access="isAuthenticated()">
+					<c:if test="${pinfo.username != board.m_id}">
+						<img id='boardReport' width=20px height=20px src='/img/reportICON.svg'>	
+					</c:if>
+				</sec:authorize>		
 			</td>
 		</tr>
 		<tr>

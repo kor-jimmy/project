@@ -93,7 +93,7 @@
 	  		b_replycnt = (select count(*) from reply where b_no = #{b_no} and r_state != 1)
 	  	</when>
 	  	<when test="cntkeyword != null and cntkeyword.equals('report')">
-	  		b_reprotcnt = b_reportcnt+1
+	  		b_reportcnt = b_reportcnt+1
 	  	</when>
   	</choose>
   	where b_no = #{b_no}

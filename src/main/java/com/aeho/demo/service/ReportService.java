@@ -8,5 +8,15 @@ public interface ReportService {
 
 	List<ReportVo> listReport();
 	
-	int insertReport(ReportVo rev);
+	int insertBoardReport(ReportVo rev);
+	
+	int insertReplyReport(ReportVo rev);
+	
+	int insertGoodsReport(ReportVo rev);
+	
+	int isCheckedBoard(ReportVo rev);
+	
+	int isCheckedReply(ReportVo rev);
+	
+	int isCheckedGoods(ReportVo rev);
 }

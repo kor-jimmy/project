@@ -96,7 +96,8 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">게시물  관리</h6>
             <a class="collapse-item" href="/admin/notice/notice?categoryNum=10000">공지사항 관리</a>
-            <a class="collapse-item" href="/admin/report/board">신고 접수</a>
+            <a class="collapse-item" href="/admin/report/board">게시물 신고</a>
+            <a class="collapse-item" href="/admin/report/reply">댓글 신고</a>
           </div>
         </div>
       </li>

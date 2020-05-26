@@ -46,7 +46,7 @@
 						<tr>
 							<td align="center"><c:out value="${board.b_no }" /></td>
 							<td>
-								<a class="" href="/board/get?b_no=${board.b_no }">
+								<a class="" href="/board/get?b_no=${board.b_no }" target="_blank">
 									<c:out value="${board.b_title }" />
 									<span class="badge badge-light">${board.b_replycnt }</span>
 								</a>

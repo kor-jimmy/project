@@ -50,7 +50,7 @@
 			var re = confirm("선택된 게시물을 삭제하시겠습니까?")
 			if(re){
 				$.ajax({
-					url:"/admin/report/chooseBoardDelete",
+					url:"/admin/report/choosedelete",
 					type:"POST",
 					data:checkBoxList,
 					beforeSend: function(xhr){

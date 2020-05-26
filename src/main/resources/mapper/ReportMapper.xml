@@ -7,9 +7,31 @@
   	select *from report
   </select>
   
-  <insert id="insertReport">
-  	insert into report(re_no, rc_code, m_id, b_no, g_no, r_no)
-  	values(seq_report.nextval,#{rc_code},#{m_id},#{b_no},#{g_no},#{r_no})
+  <insert id="insertBoardReport">
+  	insert into report(re_no, rc_code, m_id, b_no)
+  	values(seq_report.nextval,#{rc_code},#{m_id},#{b_no})
   </insert>
+  
+  <insert id="insertReplyReport">
+  	insert into report(re_no, rc_code, m_id, r_no)
+  	values(seq_report.nextval,#{rc_code},#{m_id},#{r_no})
+  </insert>
+  
+  <insert id="insertGoodsReport">
+  	insert into report(re_no, rc_code, m_id, g_no)
+  	values(seq_report.nextval,#{rc_code},#{m_id},#{g_no})
+  </insert>
+  
+  <select id="isCheckedBoard" resultType="java.lang.Integer">
+  	select count(*) from report where b_no = #{b_no} and m_id = #{m_id}
+  </select>
+  
+  <select id="isCheckedReply" resultType="java.lang.Integer">
+  	select count(*) from report where r_no = #{r_no} and m_id = #{m_id}
+  </select>
+  
+  <select id="isCheckedGoods" resultType="java.lang.Integer">
+  	select count(*) from report where g_no = #{g_no} and m_id = #{m_id}
+  </select>
   
 </mapper>

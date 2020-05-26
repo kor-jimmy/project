@@ -50,6 +50,10 @@
   	update reply set r_reCnt=(select count(*) from reply where r_ref=#{r_no} and r_no != #{r_ref}) where r_no=#{r_ref}
   </update>
   
+  <update id="updateReportCnt">
+  	update reply set b_reportcnt = b_reportcnt+1 where r_no = #{r_no}
+  </update>
+  
   <update id="updateState">
   	update reply set r_state=1 where r_no=#{r_no}
   </update>
