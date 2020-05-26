@@ -74,11 +74,8 @@ public class VoteController {
 		int v_result = vv.getV_result();
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("msg", msg);
-		if( v_result == 1 ) {
-			map.put("result", voteTopicService.getVoteTopic(vv.getVt_no()).getVt_count_a()+"");
-		}else if( v_result == 2 ) {
-			map.put("result", voteTopicService.getVoteTopic(vv.getVt_no()).getVt_count_b()+"");
-		}
+		map.put("result_a", voteTopicService.getVoteTopic(vv.getVt_no()).getVt_count_a()+"");
+		map.put("result_b", voteTopicService.getVoteTopic(vv.getVt_no()).getVt_count_b()+"");
 		return map;
 	}
 	

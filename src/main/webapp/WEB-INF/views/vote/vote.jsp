@@ -3,9 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="../includes/header.jsp"%>
-<style>
-	.movetotop { z-index: 10; }
-</style>
 <script type="text/javascript">
 	$(function(){
 
@@ -226,7 +223,11 @@
 		//modal의 선택지 중 하나를 선택
 		$(".option").on("click", function(){
 			if(m_id == "" || m_id == null){
-				alert("로그인 후 이용해주세요.");
+				swal({
+					  text: "로그인 후 이용 가능한 서비스입니다.",
+					  icon: "warning",
+					  button: "확인"
+					});
 				return false;
 			}
 			option= $(this).attr("option");
@@ -239,13 +240,21 @@
 		//[투표] 버튼을 클릭
 		$(".btn-primary").click(function(){
 			if(m_id == "" || m_id == null){
-				alert("로그인 후 이용해주세요.");
+				swal({
+					  text: "로그인 후 이용 가능한 서비스입니다.",
+					  icon: "warning",
+					  button: "확인"
+					});
 				return false;
 			}else{
 				isChecked(m_id, vt.vt_no);
 				console.log(option);
 				if( option == '' ){
-					alert("선택해주세요!");
+					swal({
+						  text: "선택해주세요!",
+						  icon: "warning",
+						  button: "확인"
+						});
 				}else{
 					//한번도 이 주제에 투표한 적이 없다면
 					if(usersChoice == 0){
@@ -265,45 +274,64 @@
 							data: data, 
 							success: function(map){
 								console.log(map);
-								alert(map.msg);
-								if( option == 'a' ){
-									$("#countA").html(map.result);
-								}else if( option == 'b' ){
-									$("#countB").html(map.result);
+								swal({
+									  text: map.msg,
+									  icon: "success",
+									  button: "확인"
+								}).then((확인)=>{
+								if(확인){
+									$("#countA").html(map.result_a);
+									$("#countB").html(map.result_b);
+									isChecked(m_id, vt.vt_no);
+									$("#voteModal").modal("hide");
 								}
-								isChecked(m_id, vt.vt_no);
+							});
 						}});
-						$("#voteModal").modal("hide");
+						
 					//새로 고른 선택지와 DB의 선택지가 동일하다면
 					}else if((usersChoice == 1 && option == 'a')||(usersChoice == 2 && option == 'b')){
-						alert("이미 투표된 선택지입니다.");
+						swal({
+							  text: "이미 투표된 선택지입니다.",
+							  icon: "warning",
+							  button: "확인"
+							});
 					}else{
-						var re = confirm("선택지를 변경하시겠습니까?");
-						if(re){
-							var data;
-							if( option == 'a' ){
-								data = {m_id: m_id, vt_no: vt.vt_no, v_result: 1};
-							}else if( option == 'b' ){
-								data = {m_id: m_id, vt_no: vt.vt_no, v_result: 2};
-							}
-							$.ajax({
-								url: "/vote/update",
-								beforeSend: function(xhr){
-									xhr.setRequestHeader(header,token)	
-								},
-								cache: false, 
-								data: data, 
-								success: function(map){
-									alert(map.msg);
-									$("#countA").html(map.resultA);
-									$("#countB").html(map.resultB);
-									isChecked(m_id, vt.vt_no);
-							}});
-							$("#voteModal").modal("hide");
-						}
-						if(!re){
-							option = '';				
-						}
+						swal({
+							  text: "선택지를 변경하시겠습니까?",
+							  icon: "info",
+							  buttons: ["아니오", "예"],
+							}).then((예) => {
+							if (예) {
+								var data;
+								if( option == 'a' ){
+									data = {m_id: m_id, vt_no: vt.vt_no, v_result: 1};
+								}else if( option == 'b' ){
+									data = {m_id: m_id, vt_no: vt.vt_no, v_result: 2};
+								}
+								$.ajax({
+									url: "/vote/update",
+									beforeSend: function(xhr){
+										xhr.setRequestHeader(header,token)	
+									},
+									cache: false, 
+									data: data, 
+									success: function(map){
+										swal(map.msg, {
+										      icon: "success",
+										      button: "확인"
+										}).then((확인)=>{
+											if(확인){
+												$("#countA").html(map.resultA);
+												$("#countB").html(map.resultB);
+												isChecked(m_id, vt.vt_no);
+												$("#voteModal").modal("hide");
+											}
+										});
+								}});
+							  } else {
+								  option = '';
+							  }
+						});
 					}
 				}
 			}

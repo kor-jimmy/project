@@ -372,7 +372,11 @@
 		//좋아요 등록
 		$(document).on("click","#heart",function(){
 			if(m_id == "" || m_id == null){
-				alert("로그인 후 이용해주세요.");
+				swal({
+					  text: "로그인 후 이용 가능한 서비스입니다.",
+					  icon: "warning",
+					  button: "확인"
+					});
 			}else{
 				$.ajax({
 					url: "/board/insertLove",
@@ -397,7 +401,11 @@
 		//싫어요 등록
 		$(document).on("click", "#hate", function(){
 			if(m_id == "" || m_id == null){
-				alert("로그인 후 이용해주세요.");
+				swal({
+					  text: "로그인 후 이용 가능한 서비스입니다.",
+					  icon: "warning",
+					  button: "확인"
+					});
 			}else{
 				$.ajax({
 					url: "/board/insertHate",
