@@ -37,6 +37,10 @@
   </select>  
   
   <select id="getMember" resultType="com.aeho.demo.vo.MemberVo">
+  	select *from member where m_id=#{m_id}
+  </select>
+  
+  <select id="checkMemberState" resultType="com.aeho.demo.vo.MemberVo">
   	select *from member where m_id=#{m_id} and m_pwd=#{m_pwd}
   </select>
   

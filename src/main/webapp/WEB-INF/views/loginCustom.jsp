@@ -3,6 +3,30 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="includes/header.jsp"%>
 
+<script>
+	$(function(){
+		$("#loginButton").click(function(e){
+			e.preventDefault();
+
+			var m_id = $("#m_id").val();
+			var m_pwd = $("#m_pwd").val();
+			var member = {m_id:m_id,m_pwd:m_pwd}
+			console.log(member);
+			
+/* 			$.ajax({
+				url:"/checkMemberSatate",
+				type:"GET",
+				data:checkBoxList,
+				cache:false,
+				success:function(result){
+					location.href="/admin/report/board";
+				}
+			})
+			$(this).submit(); */
+		})
+	})
+</script>
+
 <div align="center">
 	<h2 class="h2">
 		AE?-Ho!에 접속하세요!
@@ -33,7 +57,7 @@
 			  <!-- 시큐리티 토큰 -->
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 			<div align="center">
-			<button type="submit" class="btn btn-primary">로그인</button>
+			<button id="loginButton" type="submit" class="btn btn-primary">로그인</button>
 			</div>
 			
 		</form>

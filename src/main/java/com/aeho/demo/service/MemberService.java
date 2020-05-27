@@ -11,6 +11,8 @@ public interface MemberService {
 	
 	MemberVo getMember(String m_id);
 	
+	MemberVo checkMemberState(MemberVo mv);
+	
 	int insertMember(MemberVo mv);
 	
 	int updateMember(MemberVo mv);
