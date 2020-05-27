@@ -157,9 +157,7 @@
         <div id="userEdit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">회원관리</h6>
-            <a class="collapse-item" href="#">유저 목록</a>
-            <a class="collapse-item" href="#">유저 등급</a>
-            <a class="collapse-item" href="#">블랙리스트</a>
+            <a class="collapse-item" href="/admin/member/list">회원 목록/관리</a>
           </div>
         </div>
       </li>

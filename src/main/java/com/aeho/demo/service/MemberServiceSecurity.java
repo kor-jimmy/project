@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.aeho.demo.dao.MemberDao;
+import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.security.MemberPrincipal;
 import com.aeho.demo.vo.MemberVo;
 
@@ -64,5 +65,24 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 	public MemberVo getMemberByNick(String m_nick) {
 		return memberDao.getMemberByNick(m_nick);
 	}
+
+	@Override
+	public int totalMember() {
+		return memberDao.totalMember();
+	}
+
+	@Override
+	public List<MemberVo> getListWithPaging(Criteria cri) {
+		// TODO Auto-generated method stub
+		return memberDao.getListWithPaging(cri);
+	}
+
+	@Override
+	public int updateMemberState(MemberVo mv) {
+		// TODO Auto-generated method stub
+		return memberDao.updateMemberState(mv);
+	}
+	
+	
 
 }

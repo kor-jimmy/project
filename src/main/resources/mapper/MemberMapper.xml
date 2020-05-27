@@ -4,11 +4,40 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aeho.demo.dao.MemberDao">
   <select id="listMember" resultType="com.aeho.demo.vo.MemberVo">
-  	select *from member
+  	select m_id,m_nick,m_phone,m_rate,m_store,role,m_reportcnt,m_lovecnt,m_hatecnt,m_state,m_bandate from member
   </select>
   
+   <sql id="searchSql">
+  	<choose>
+  		<when test="searchField != null and !searchField.equals('') and searchField.equals('all')">
+			and (m_id like '%'||#{keyword}||'%' or m_nick like '%'||#{keyword}||'%')
+		</when>
+		<when test="searchField != null and !searchField.equals('') and (searchField.equals('m_id') or searchField.equals('m_nick') or searchField.equals('role') or searchField.equals('m_state'))">
+			and ${searchField} like '%'||#{keyword}||'%'
+		</when>
+  	</choose>
+  </sql>
+  
+   <select id="getListWithPaging" resultType="com.aeho.demo.vo.MemberVo">
+  	<![CDATA[
+  		select
+  			m_id,m_nick,m_phone,m_rate,m_store,role,m_reportcnt,m_lovecnt,m_hatecnt,m_state,m_bandate
+  		from
+  			(
+  				select /*+ INDEX_DESC(member pk_member)*/
+  					rownum rn, m_id,m_nick,m_phone,m_rate,m_store,role,m_reportcnt,m_lovecnt,m_hatecnt,m_state,m_bandate
+  				from member
+  				where rownum <= #{pageNum} * #{amount} 
+  				]]>
+  				<include refid="searchSql"></include>
+  	<![CDATA[
+  			)
+  		where rn > (#{pageNum}-1) * #{amount}  
+  	]]>
+  </select>  
+  
   <select id="getMember" resultType="com.aeho.demo.vo.MemberVo">
-  	select *from member where m_id=#{m_id}
+  	select *from member where m_id=#{m_id} and m_pwd=#{m_pwd}
   </select>
   
   <insert id="insertMember">
@@ -21,6 +50,10 @@
   	where m_id = #{m_id}
   </update>
   
+  <update id="updateMemberState">
+  	update member set m_state = #{m_state}, role=#{role}, m_bandate=#{m_bandate} where m_id=#{m_id}
+  </update>
+  
   <!-- 시큐리티시 코드 추가. -->
   <delete id="deleteMember">
   	delete member where m_id=#{m_id}
@@ -28,5 +61,10 @@
   
   <select id="getMemberByNick" resultType="com.aeho.demo.vo.MemberVo">
   	select * from member where m_nick = #{m_nick}
+  </select>
+  
+  <!-- 유저 총 숫자 페이징을 위한거 -->
+  <select id="totalMember" resultType="int">
+  	select count(*) from member
   </select>
 </mapper>

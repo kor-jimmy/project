@@ -57,7 +57,12 @@ public class MemberPrincipal implements UserDetails {
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return true;
+		boolean result = true;
+		if(memberVo.getM_state().equals("DEACTIVATE") || memberVo.getM_state().equals("BAN")) {
+			result = false;
+		}
+		
+		return result;
 	}
 
 	// 비밀번호 만료 여부

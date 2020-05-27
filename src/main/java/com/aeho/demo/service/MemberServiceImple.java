@@ -1,3 +1,4 @@
+/*
 package com.aeho.demo.service;
 
 import java.util.List;
@@ -45,3 +46,4 @@ public class MemberServiceImple implements MemberService {
 		return m_dao.getMemberByNick(m_nick);
 	}
 }
+*/

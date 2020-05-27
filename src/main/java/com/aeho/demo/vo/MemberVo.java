@@ -1,5 +1,7 @@
 package com.aeho.demo.vo;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -24,5 +26,12 @@ public class MemberVo {
 	//회원 장터 등급
 	private int m_store;
 	private String role;
+	
+	private int m_reportcnt;
+	private int m_lovecnt;
+	private int m_hatecnt;
+	
+	private String m_state;
+	private Date m_bandate; 
 	
 }
