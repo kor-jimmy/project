@@ -8,6 +8,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
 //마이페이지 -닉네임유효성/비밀번호 검사/새 비밀번호 유효성/새비밀번호 확인 비교/전화번호 유효성/이메일유효성
+//마이페이지 시큐리티 추가하기
 	$(function(){
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
