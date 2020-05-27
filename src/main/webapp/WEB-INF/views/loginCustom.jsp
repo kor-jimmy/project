@@ -2,27 +2,76 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="includes/header.jsp"%>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script>
 	$(function(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
 		$("#loginButton").click(function(e){
 			e.preventDefault();
 
 			var m_id = $("#m_id").val();
-			var m_pwd = $("#m_pwd").val();
-			var member = {m_id:m_id,m_pwd:m_pwd}
-			console.log(member);
+			var loginMember = {m_id:m_id}
 			
-/* 			$.ajax({
+ 			$.ajax({
 				url:"/checkMemberSatate",
 				type:"GET",
-				data:checkBoxList,
+				data:loginMember,
 				cache:false,
 				success:function(result){
-					location.href="/admin/report/board";
+					if(result=="null"){
+						$("#loginForm").submit();
+						return false;
+					} 
+					
+					var member = JSON.parse(result);
+
+					if(member.m_state=="ACTIVATE"){
+						$("#loginForm").submit();
+					}
+
+					if(member.m_state=="DEACTIVATE"){
+						var banDate = moment(member.m_bandate).format('YYYY-MM-DD');
+						var today = new Date();
+						var checkDate = moment(today).format('YYYY-MM-DD');
+						if(checkDate>=banDate){
+							$.ajax({
+								url:"/updateRelease",
+								type:"POST",
+								beforeSend: function(xhr){
+									xhr.setRequestHeader(header,token)	
+								},	
+								data:loginMember,
+								cache:false,
+								success:function(result){
+									$("#loginForm").submit();
+									return false;
+								}
+							})
+						}
+						swal({
+							  title: "일시 정지된 계정입니다.",
+							  text: member.m_id+" 회원님은 약관 위반으로 "+banDate+" 까지 일시 정지 되었습니다. ",
+							  icon: "warning",
+							  button: "확인"
+							})
+						
+						return false;
+					}
+
+					if(member.m_state=="BAN"){
+						swal({
+							  title: "영구 정지된 계정입니다.",
+							  text: member.m_id+" 회원님은 약관 위반으로 영구 정지 되었습니다.",
+							  icon: "warning",
+							  button: "확인"
+							})
+						return false;
+					}
 				}
 			})
-			$(this).submit(); */
+
 		})
 	})
 </script>
@@ -42,7 +91,7 @@
 </div>
 <div class="d-flex justify-content-center">
 	<div class="">
-		<form  action="/login" method="post" class="form-group">
+		<form id="loginForm" action="/login" method="post" class="form-group">
 			<div class="form-group">	
 			    <input type="text" class="form-control form-control-lg" placeholder="아이디" id="m_id" name="username" required="required">
 			</div>

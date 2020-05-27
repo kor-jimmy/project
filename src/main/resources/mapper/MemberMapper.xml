@@ -58,6 +58,10 @@
   	update member set m_state = #{m_state}, role=#{role}, m_bandate=#{m_bandate} where m_id=#{m_id}
   </update>
   
+  <update id="updateRelease">
+  	update member set m_state=#{m_state} where m_id=#{m_id}
+  </update>
+  
   <!-- 시큐리티시 코드 추가. -->
   <delete id="deleteMember">
   	delete member where m_id=#{m_id}

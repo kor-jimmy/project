@@ -26,4 +26,6 @@ public interface MemberService {
 	List<MemberVo> getListWithPaging(Criteria cri);
 	
 	int updateMemberState(MemberVo mv);
+	
+	int updateRelease(MemberVo mv);
 }

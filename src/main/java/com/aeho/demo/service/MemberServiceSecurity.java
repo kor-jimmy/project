@@ -88,6 +88,12 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 		// TODO Auto-generated method stub
 		return memberDao.checkMemberState(mv);
 	}
+
+	@Override
+	public int updateRelease(MemberVo mv) {
+		// TODO Auto-generated method stub
+		return memberDao.updateRelease(mv);
+	}
 	
 	
 
