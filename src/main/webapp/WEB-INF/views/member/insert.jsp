@@ -224,6 +224,7 @@
 	<hr>
 	<div style="width: 40%;">
 		<form id="signupForm" class='needs-validation' novalidate>
+			<input type="hidden" id="m_state" name="m_state" value="ACTIVATE">
 			<div>
 			  <div class="form-group">
 			    <label for="m_id">ID</label>
