@@ -21,7 +21,7 @@ public class Criteria2 {
 	private String searchKeyword;
 	
 	public Criteria2() {
-		this(1,10,0,null,"all",null);
+		this(1,12,0,null,"all",null);
 	}
 
 	public Criteria2(int pageNum, int amount, int gc_code, String keyword, String searchField, String searchKeyword) {

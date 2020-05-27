@@ -66,7 +66,7 @@
   				 and m.m_id=g.m_id
   			<![CDATA[
   			)
-  		where rn > (#{pageNum}-1) * #{amount}
+  		where rn > (#{pageNum}-1) * #{amount} order by g_date desc
   	]]>  
   </select>
   <select id="getTotalCount" resultType="int">

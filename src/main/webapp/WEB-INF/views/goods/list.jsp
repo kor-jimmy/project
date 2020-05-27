@@ -6,9 +6,29 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
 <style>
+	li{
+		list-style: none !important;
+	}
+	a{
+		text-decoration: none !important;
+		color: dimgray;
+	}
+	
+	#goodsDiv{
+		display: flex;
+	}
+	#goodsList{
+		width: 100%;
+		padding-left: 5%;
+	}
+	.goodsBox{
+		float: left;
+		margin: 5px 20px 30px 20px;
+		width: 200px;
+	}
 	.goodsImg{
-		width: 150px;
-		height: 150px;
+		width: 200px;
+		height: 200px;
 		border: 1px solid lightgray;
 	}
 </style>
@@ -22,17 +42,43 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
       $("#insertBtn").css("visibility","visible");
    }
    var dto;
-   $("#tb").empty();
+   $("#goodsList").empty();
    $.ajax("/goods/listGoods",{data:{gc_code:gc_code,keyword:keyword,pageNum:pageNum,searchField:searchField,searchKeyword:searchKeyword}, success:function(result){
 		//리스트 가져오기
 		var list = JSON.parse(result.list)
 	    $.each(list, function(idx,item){
-    
-			if(item.gc_code == 1)
-				gc_dist = "[팝니다]";
-			else
-				gc_dist = "[삽니다]";
+			var g = item;
+
+			var div = $("<div class='goodsBox mb-5'></div>");
 			
+	    	var con = g.g_content;
+	    	var img;
+			if(con.indexOf("<img src=") != -1){
+				img = $(con.substring(con.indexOf("<img src="), con.indexOf("style"))+"></img>").addClass("rounded goodsImg mb-2");
+			}else{
+				img = $("<img src='/img/no_image.png' class='rounded goodsImg mb-3'></img>");
+			}
+
+		    var gc_dist = $("<small class='text-muted'></small>");
+			if(g.gc_code == 1)
+				gc_dist.html("[팝니다] ");
+			else
+				gc_dist.html("[삽니다] ");
+
+			var title = $("<b></b>").html(g.g_title);
+			var writer = $("<p></p>").html(g.m_nick);
+			var g_date = moment(item.g_date).format('YYYY-MM-DD');
+			var date = $("<span></span>").html(g_date);
+			var replyCnt = $("<span class='badge badge-light'></span>").html(g.g_replycnt);
+
+			var a = $("<a></a>").attr("href","/goods/get?g_no="+g.g_no);
+			var li = $("<li></li>").append(img, "<br>", gc_dist, title, "&nbsp;", replyCnt, writer, date);
+			a.append(li);
+			div.append(a);
+			$("#goodsList").append(div);
+			
+			
+			/*
 			//상품번호,제목,코드,가격,날짜
 			var td1=$("<td align='center'></td>").html(item.g_no);
 			var td2=$("<td align='center'></td>").html(gc_dist);
@@ -45,11 +91,12 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 			var td4=$("<td align='center'></td>").html(item.m_nick);
 			var td5=$("<td align='center'></td>").html(item.g_price);
 			
-			var g_date = moment(item.g_date).format('YYYY-MM-DD');
+			
 			
 			var td6=$("<td align='center'></td>").html(g_date);
-			var tr = $("<tr></tr>").append(td1,td2,td3,td4,td5,td6);
+			var tr = $("<tr></tr>").append(img, td1,td2,td3,td4,td5,td6);
 			$("#tb").append(tr);
+			*/
 		});
 
     //페이징
@@ -83,6 +130,7 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 	  }
    }})
 }
+
 $(function(){
    var c_no;
    var keyword;
@@ -94,7 +142,7 @@ $(function(){
    
    $.ajax("/category/goodsCateList",{success:function(result){
 //      console.log(result)
-      var b=$("<button id='tot' class='btn btn-outline-dark dist' style='background: #d4f0f3;'></button>").html('전체보기');
+      var b=$("<button id='tot' class='btn btn-outline-dark mr-2 dist' style='background: #d4f0f3;'></button>").html('전체보기');
       $(b).on("click",function(){
     	  $(".dist").css("background","white");
     	  $(this).css("background","#d4f0f3");
@@ -146,55 +194,64 @@ $(function(){
 })
 </script>
 	
-   <h2>상품목록</h2><div id=state></div>
-   <p>상품 등록을 원하시면 카테고리를 선택해주세요.</p>
-   <hr>
-   <button id="allBtn" type="button" class="btn btn-outline-dark typeBtn" value="0" style="background: #a3a1fc;">전체보기</button>
-   <button id="buyBtn" type="button" class="btn btn-outline-dark typeBtn" value="2">삽니다</button>
-   <button id="sellBtn" type="button" class="btn btn-outline-dark typeBtn" value="1">팝니다</button>
-   <br><br>
-   <div>
-   <div id="goodsType" style="display: inline-block;">
-   <h4>상품 종류별 보기</h4>
-   </div>
-   <div style="display: inline-block; float: right;">
-   <button id="insertBtn" type="button" class="btn btn-outline-dark">상품등록</button>
-   </div>
-   </div>
-   <hr>
-   <table class="table table-hover">
-      <thead>
-         <tr align="center">
-            <td width="10%">상품번호</td>
-            <td width="10%">구분</td>
-            <td width="50%">제목</td>
-            <td width="10%">작성자</td>
-            <td width="10%">가격</td>
-            <td width="10%">날짜</td>
-         </tr>
-      </thead>
-      <tbody id="tb">
-         
-      </tbody>
-   </table>
-   <hr>
-   <!-- 게시물 검색 -->
-  	<select id="searchField">
-			<option value="all" class="sf">전체보기</option>
-			<option value="g_title" class="sf">제목</option>
-			<option value="g_content" class="sf">내용</option>
-			<option value="m_id" class="sf">작성자</option>
-			<option value="doc" class="sf">제목+내용</option>
-		</select>
-		<input type="text" id="searchKeyword" name="searchKeyword">
-		<button id="searchBtn" class="btn btn_outline-dark">검색</button>
-   <!-- 페이징 -->
-   <div class="float-right">
-   	<ul class="pagination">
-   		
-   	</ul>
-   </div>
-   <!-- paging end -->
-   <hr>
-   <hr>
+	<h2>상품목록</h2><div id=state></div>
+	<p>상품 등록을 원하시면 카테고리를 선택해주세요.</p>
+	<hr>
+	
+	<button id="allBtn" type="button" class="btn btn-outline-dark typeBtn" value="0" style="background: #a3a1fc;">전체보기</button>
+	<button id="buyBtn" type="button" class="btn btn-outline-dark typeBtn" value="2">삽니다</button>
+	<button id="sellBtn" type="button" class="btn btn-outline-dark typeBtn" value="1">팝니다</button>
+	<br><br>
+	
+	<div>
+		<div id="goodsType" style="display: inline-block;">
+			<h4>상품 종류별 보기</h4>
+		</div>
+		<div style="display: inline-block; float: right;">
+			<button id="insertBtn" type="button" class="btn btn-outline-dark">상품등록</button>
+		</div>
+	</div>
+	<hr>
+	<div id="goodsDiv" align="center">
+		<ul id="goodsList" class="mt-5">
+
+		</ul>
+	</div>
+	<!--  
+	<table class="table table-hover">
+	   <thead>
+	      <tr align="center">
+	         <td width="10%">상품번호</td>
+	         <td width="10%">구분</td>
+	         <td width="50%">제목</td>
+	         <td width="10%">작성자</td>
+	         <td width="10%">가격</td>
+	         <td width="10%">날짜</td>
+	      </tr>
+	   </thead>
+	   <tbody id="tb">
+	      
+	   </tbody>
+	</table>
+	-->
+	<hr>
+	<br>
+	<!-- 게시물 검색 -->
+		<select id="searchField">
+		<option value="all" class="sf">전체보기</option>
+		<option value="g_title" class="sf">제목</option>
+		<option value="g_content" class="sf">내용</option>
+		<option value="m_id" class="sf">작성자</option>
+		<option value="doc" class="sf">제목+내용</option>
+	</select>
+	<input type="text" id="searchKeyword" name="searchKeyword">
+	<button id="searchBtn" class="btn btn_outline-dark">검색</button>
+	 <!-- 페이징 -->
+	<div class="float-right">
+		<ul class="pagination">
+			
+		</ul>
+	</div>
+	<!-- paging end -->
+	<hr>
 <%@include file="../includes/footer.jsp"%>
