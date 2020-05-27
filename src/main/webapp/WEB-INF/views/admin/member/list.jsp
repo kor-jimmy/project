@@ -133,7 +133,7 @@
 								<input type="date" name ="m_bandate" id="m_bandate">
 							</td>
 							<td align="center">
-								<button class="editMember" class="btn btn-outline-dark" m_id="${member.m_id }">수정</button>
+								<button class="editMember btn btn-outline-dark" m_id="${member.m_id }">수정</button>
 							</td>
 						</tr>
 					</c:forEach>

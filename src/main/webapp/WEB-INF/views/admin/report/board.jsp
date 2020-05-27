@@ -4,11 +4,19 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@include file="../header.jsp"%>
-
+	<style>
+		a{
+			text-decoration: none !important;
+			color: dimgray;
+		}
+		.page-link{
+			background-color: #000000;
+			border-color: #000000;
+		}
+	</style>
 
 <script type="text/javascript">
 	$(function(){
-
 		//시큐리티 csrf
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
@@ -103,7 +111,11 @@
 									<span class="badge badge-light">${board.b_replycnt }</span>
 								</a>
 							</td>	
-							<td align="center"><c:out value="${board.m_id }" /></td>
+							<td align="center">
+								<a href="/admin/member/list?pageNum=1&amount=10&searchField=m_id&keyword=${board.m_id }">
+									<c:out value="${board.m_id }" />
+								</a>
+							</td>
 							<td align="center">
 								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }" />
 							</td>

@@ -119,7 +119,12 @@
 									<!-- <span class="badge badge-light">${board.b_replycnt }</span> -->
 								</a>
 							</td>	
-							<td align="center"><c:out value="${ re.m_id }" /></td>
+							<td align="center">
+								<a href="/admin/member/list?pageNum=1&amount=10&searchField=m_id&keyword=${re.m_id }">
+									<c:out value="${ re.m_id }" />
+								</a>
+								
+							</td>
 							<td align="center">
 								<fmt:formatDate pattern="yyyy-MM-dd" value="${ re.r_date }" />
 							</td>
