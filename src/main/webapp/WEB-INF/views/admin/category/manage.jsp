@@ -55,10 +55,7 @@ $(function(){
 	
 	$("#insertBtn").on("click", function(){
 
-		if($("#c_no").val() != 0){
-			alert("등록 화면에서 등록해주세요.");
-			return false;
-		}else if($("#c_dist").val() == null || $("#c_dist").val() == ""){
+		if($("#c_dist").val() == null || $("#c_dist").val() == ""){
 			alert("입력이 바르지 않습니다.");
 			return false;
 		}
@@ -93,8 +90,10 @@ $(function(){
 
 		if(isclicked.indexOf("clickedCategory") == -1){
 			$("#section").hide();
+			$("#insertBtn").hide();
 			$(".cat").removeClass("clickedCategory");
 			$(this).addClass("clickedCategory");
+			
 
 			$.ajax("/category/get", {data: {c_no: id}, success: function(cat){
 				var cat = JSON.parse(cat);
@@ -104,6 +103,7 @@ $(function(){
 		}else{
 			$(this).removeClass("clickedCategory");
 			$("#section").show();
+			$("#insertBtn").show();
 			$("#c_no").val("0");
 			$("#c_dist").val("");
 		}
@@ -166,7 +166,8 @@ $(function(){
 						<c:forEach var="cat" items="${ list }">
 							<c:if test="${ cat.c_no > 0 && cat.c_no <= 100 }">
 								<div class="cat" id="${ cat.c_no }">
-									<li><div class="categories" id="${ cat.c_no }"><c:out value="${ cat.c_no } :  ${ cat.c_dist }"/></div></li>
+									<li><div class="categories" id="${ cat.c_no }">
+									<c:out value="${ cat.c_dist }"/></div></li>
 								</div>
 							</c:if>
 						</c:forEach>
@@ -179,10 +180,10 @@ $(function(){
 						<c:forEach var="cat" items="${ list }">
 							<c:if test="${ cat.c_no > 100 && cat.c_no <= 200 }">
 								<div class="cat" id="${ cat.c_no }">
-									<li><div class="categories" id="${ cat.c_no }"><c:out value="${ cat.c_no } :  ${ cat.c_dist }"/></div></li>
+									<li><div class="categories" id="${ cat.c_no }"><c:out value="${ cat.c_dist }"/></div></li>
 								</div>
 							</c:if>
-						</c:forEach>
+						</c:forEach>ㄴ
 					</ul>
 				</div>
 				<br>
@@ -192,7 +193,7 @@ $(function(){
 						<c:forEach var="cat" items="${ list }">
 							<c:if test="${ cat.c_no > 200 && cat.c_no <= 300 }">
 								<div class="cat" id="${ cat.c_no }">
-									<li><div class="categories"><c:out value="${ cat.c_no } :  ${ cat.c_dist }"/></div></li>
+									<li><div class="categories"><c:out value="${ cat.c_dist }"/></div></li>
 								</div>
 							</c:if>
 						</c:forEach>
@@ -205,7 +206,7 @@ $(function(){
 						<c:forEach var="cat" items="${ list }">
 							<c:if test="${ cat.c_no > 300 && cat.c_no <= 400 }">
 								<div class="cat" id="${ cat.c_no }">
-									<li><div class="categories" id="${ cat.c_no }"><c:out value="${ cat.c_no } :  ${ cat.c_dist }"/></div></li>
+									<li><div class="categories" id="${ cat.c_no }"><c:out value="${ cat.c_dist }"/></div></li>
 								</div>
 							</c:if>
 						</c:forEach>
@@ -218,7 +219,7 @@ $(function(){
 						<c:forEach var="cat" items="${ list }">
 							<c:if test="${ cat.c_no > 400 && cat.c_no <= 500 }">
 								<div class="cat" id="${ cat.c_no }">
-									<li><div class="categories" ><c:out value="${ cat.c_no } :  ${ cat.c_dist }"/></div></li>
+									<li><div class="categories" ><c:out value="${ cat.c_dist }"/></div></li>
 								</div>
 							</c:if>
 						</c:forEach>

@@ -12,6 +12,9 @@
 	#labelForRe{
 		float:left;
 	}
+	.list-group-item-secondary{
+		background: #F4F4F4;
+	}
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -21,6 +24,7 @@
 
 		var b_no = $("#b_no").val();
 		var m_id = $("#m_id").val();
+		var selected = $("#selected").val();
 
 		var logingID = "<sec:authorize access='isAuthenticated()'><sec:authentication property='principal.username'/></sec:authorize>";
 		var select_ref = "";
@@ -119,11 +123,11 @@
 				var replyString="";
 				if(r.r_level != 0){
 					var reReIcon = $("<img src='/img/re.png' width=45px height=45px></img>")
-					var tagID = (r.r_content).split("/")[0];
-					var indexID = (r.r_content).indexOf("/");
-					var realContent = (r.r_content).substring(indexID+1);
-					replyString = tagID+"&nbsp;&nbsp;";
-					replyContent.html(replyString+realContent);
+					//var tagID = (r.r_content).split("/")[0];
+					//var indexID = (r.r_content).indexOf("/");
+					//var realContent = (r.r_content).substring(indexID+1);
+					//replyString = tagID+"&nbsp;&nbsp;";
+					replyContent.html(r.r_content);
 					contentDiv.append(reReIcon);
 //					contentDiv.removeClass("reContent");
 					li.addClass("list-group-item-secondary");
@@ -185,6 +189,14 @@
 					li.append(replyDiv);
 				}				
 				$("#replyList").append(li);
+
+				//관리자 페이지에서 신고된 댓글이 달린 게시물로 이동할 때 해당 댓글에 표시
+				if(selected == r.r_no){
+					li.css("background", "#FFFBDE");
+					var offset = li.offset();
+					console.log(offset);
+					$("html").animate({scrollTop : offset.top}, 300);
+				}
 
 				
 /*  				var tr = $("<tr class='rep' r_no="+r.r_no+"></tr>");
@@ -559,6 +571,7 @@
 
 	})
 </script>
+	<input type="hidden" id="selected" value=<%= request.getParameter("selected") %>>
 	<input type="hidden" id="b_no" value="${ board.b_no }">
 	<input type="hidden" id="c_no" value="${ board.c_no }">
 	<sec:authorize access="isAuthenticated()">

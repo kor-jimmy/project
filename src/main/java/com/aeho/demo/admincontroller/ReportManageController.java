@@ -1,5 +1,7 @@
 package com.aeho.demo.admincontroller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aeho.demo.domain.Criteria;
+import com.aeho.demo.domain.CriteriaForReply;
 import com.aeho.demo.domain.PageDto;
+import com.aeho.demo.domain.PageDtoForReply;
 import com.aeho.demo.service.BoardService;
+import com.aeho.demo.service.ReplyService;
 import com.aeho.demo.service.ReportService;
 import com.aeho.demo.vo.BoardVo;
+import com.aeho.demo.vo.ReplyVo;
 
 @RequestMapping("/admin/report/*")
 @Controller
@@ -28,6 +34,9 @@ public class ReportManageController {
 	
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	ReplyService replyService;
 	
 	@GetMapping("/board")
 	public void reportBoard(Criteria cri, Model model) {
@@ -53,8 +62,38 @@ public class ReportManageController {
 		//return "";
 	}
 	
-	@GetMapping("/reply")
-	public void reportList() {
+	@PostMapping("/chooseReplydelete")
+	@ResponseBody
+	public void chooseReplydelete(@RequestParam(value = "list[]") List<Integer> chooseRno) {
+		for(int i=0; i<chooseRno.size(); i++) {
+			ReplyVo rv = new ReplyVo();
+			rv.setR_no(chooseRno.get(i));
+			replyService.deleteReply(rv);
+		}
+	}
+	
+	@RequestMapping("reply")
+	public void getReportReply(Model model){
+		
+		CriteriaForReply cri = new CriteriaForReply();
+		cri.setAmount(30);
+		System.out.println(cri);
+		
+		int total = replyService.getReportCnt();
+		
+		List<ReplyVo> replyList = replyService.getReportReply(cri);
+		List<BoardVo> boardList = new ArrayList<BoardVo>();
+		
+		for( int i = 0; i < replyList.size() ; i++) {
+			BoardVo bv = new BoardVo();
+			bv.setB_no(replyList.get(i).getB_no());
+			boardList.add(boardService.getBoard(bv));
+		}
+		
+		model.addAttribute("pageMake", new PageDtoForReply(cri, total));
+		model.addAttribute("replyList", replyList);
+		model.addAttribute("boardList", boardList);
 		
 	}
+
 }

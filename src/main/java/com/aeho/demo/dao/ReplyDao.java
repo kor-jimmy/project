@@ -2,6 +2,7 @@ package com.aeho.demo.dao;
 
 import java.util.List;
 
+import com.aeho.demo.domain.CriteriaForReply;
 import com.aeho.demo.vo.ReplyVo;
 
 public interface ReplyDao {
@@ -28,4 +29,8 @@ public interface ReplyDao {
 	int updateState(int r_no);
 	
 	int updateReportCnt(int r_no);
+	
+	int getReportCnt();
+	
+	List<ReplyVo> getReportReply(CriteriaForReply cri);
 }

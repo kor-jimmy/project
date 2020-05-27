@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aeho.demo.dao.BoardDao;
 import com.aeho.demo.dao.ReplyDao;
+import com.aeho.demo.domain.CriteriaForReply;
 import com.aeho.demo.vo.ReplyVo;
 
 @Service
@@ -118,6 +119,18 @@ public class ReplyServiceImple implements ReplyService {
 	@Override
 	public int updateState(int r_no) {
 		return replyDao.updateState(r_no);
+	}
+
+	//관리자 페이지 신고 댓글 목록
+	@Override
+	public List<ReplyVo> getReportReply(CriteriaForReply cri) {
+		return replyDao.getReportReply(cri);
+	}
+
+	//관리자 페이지 신고 댓글 수
+	@Override
+	public int getReportCnt() {
+		return replyDao.getReportCnt();
 	}
 
 }

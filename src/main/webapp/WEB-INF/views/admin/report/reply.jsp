@@ -5,6 +5,11 @@
 
 <%@include file="../header.jsp"%>
 
+<style>
+	a{
+		text-decoration: none;
+	}
+</style>
 
 <script type="text/javascript">
 	$(function(){
@@ -45,12 +50,17 @@
 				checkList.push($(this).val());
 			})
 			
+			if(checkList.length <= 0){
+				alert("선택된 댓글이 없습니다.");
+				return false;
+			}
+			
 			var checkBoxList = {list:checkList};
 			console.log(checkBoxList);
-			var re = confirm("선택된 게시물을 삭제하시겠습니까?")
+			var re = confirm("선택된 댓글을 삭제하시겠습니까?")
 			if(re){
 				$.ajax({
-					url:"/admin/report/choosedelete",
+					url:"/admin/report/chooseReplydelete",
 					type:"POST",
 					data:checkBoxList,
 					beforeSend: function(xhr){
@@ -58,7 +68,8 @@
 					},
 					cache:false,
 					success:function(result){
-						location.href="/admin/report/board";
+						alert("삭제되었습니다.");
+						location.href="/admin/report/reply";
 					}
 				})
 			}				  
@@ -77,7 +88,7 @@
 		<!-- Card Header - Dropdown -->
 		<div
 			class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-			<h6 class="m-0 font-weight-bold text-primary">신고 게시물</h6>
+			<h6 class="m-0 font-weight-bold text-primary">신고 댓글</h6>
 		</div>
 		<!-- Card Body -->
 		<div class="card-body">
@@ -86,35 +97,35 @@
 					<tr align="center">
 						<th width="5%"><input type="checkbox" id="checkAll"></th>
 						<th width="10%">번호</th>
-						<th width="45%">제목</th>
+						<th width="45%">댓글 내용</th>
 						<th width="10%">작성자</th>
 						<th width="10%">날짜</th>
 						<th width="10%">신고수</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${list }" var="board">
+					<c:forEach items="${ replyList }" var="re" >
 						<tr>
-							<td align="center"><input type="checkbox" value="${board.b_no }" name="choose"></td>
-							<td align="center"><c:out value="${board.b_no }" /></td>
+							<td align="center"><input type="checkbox" value="${ re.r_no }" name="choose"></td>
+							<td align="center"><c:out value="${ re.r_no }" /></td>
 							<td>
-								<a class="" href="/board/get?b_no=${board.b_no } " target="_blank">
-									<c:out value="${board.b_title }" />
-									<span class="badge badge-light">${board.b_replycnt }</span>
+								<a class="" href="/board/get?b_no=${ re.b_no }&selected=${ re.r_no }" target="_blank">
+									<c:out value="${ re.r_content }" />
+									<!-- <span class="badge badge-light">${board.b_replycnt }</span> -->
 								</a>
 							</td>	
-							<td align="center"><c:out value="${board.m_id }" /></td>
+							<td align="center"><c:out value="${ re.m_id }" /></td>
 							<td align="center">
-								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }" />
+								<fmt:formatDate pattern="yyyy-MM-dd" value="${ re.r_date }" />
 							</td>
-							<td align="center"><c:out value="${board.b_reportcnt }" /></td>
+							<td align="center"><c:out value="${ re.r_reportcnt }" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 
 			<hr>
-			<button id="chooseDelete">선택 삭제</button>
+			<button class="btn btn-outline-secondary" id="chooseDelete">선택 삭제</button>
 			<!-- 페이징 -->
 			<nav ria-label="Page navigation example">
 			

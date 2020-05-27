@@ -219,7 +219,7 @@
 					data: vt, 
 					success: function(msg){
 						alert(msg);
-						self.location = "admin/vote/manage";
+						self.location = "/admin/vote/manage";
 				}});
 			}
 		});

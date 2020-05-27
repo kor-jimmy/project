@@ -13,8 +13,11 @@
 		$(".invalid-feedback").hide();
 		var result_checkID = false;
 		var result_checkNick = false;
+		
 		var idRegEx = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi;
 		var passwordRegEx =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
+		var phoneRegEx = /^[0-9]{3}-[0-9]{4}-[0-9]{4}/;
+		var emailRegEx = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
 		var validity_ID = false;
 		var validity_Pwd = false;
@@ -144,19 +147,32 @@
 			//email
 			if($("#m_email").val() == null || $("#m_email").val().trim() == ""){
 				$("#m_email").css("border", "1px solid #FF2121");
+				$("#feedbackForEmail").html("이메일을 입력해주세요.").show();
+				validity_Email = false;
+			}else if(!emailRegEx.test($("#m_email").val())){
+				$("#m_email").css("border", "1px solid #FF2121");
+				$("#feedbackForEmail").html("이메일을 양식에 맞게 입력해주세요.").show();
 				validity_Email = false;
 			}else{
 				$("#m_email").css("border", "1px solid #ced4da");
+				$("#feedbackForEmail").hide();
 				validity_Email = true;
 			}
 			//phone
 			if($("#m_phone").val() == null || $("#m_phone").val().trim() == ""){
 				$("#m_phone").css("border", "1px solid #FF2121");
+				$("#feedbackForPhone").html("휴대폰 번호를 입력해주세요.");
+				validity_Phone = false;
+			}else if(!phoneRegEx.test($("#m_phone").val())){
+				$("#m_phone").css("border", "1px solid #FF2121");
+				$("#feedbackForPhone").html("하이픈(-)을 포함해 양식을 지켜주세요.")
 				validity_Phone = false;
 			}else{
 				$("#m_phone").css("border", "1px solid #ced4da");
+				$("#feedbackForPhone").hide();
 				validity_Phone = true;
 			}
+			//약관
 			if($("#gridCheck").is(":checked")){
 				$("#feedbackForCheck").hide();
 				validity_CheckBox = true;
@@ -245,7 +261,7 @@
 			</div>
 			<div class="form-group">
 				<label for="m_email">Email</label>
-				<input type="email" class="form-control" id="m_email" name="m_email" placeholder="이메일" required>
+				<input type="email" class="form-control" id="m_email" name="m_email" placeholder="aeho@example.com" required>
 				<font id="feedbackForEmail" class="invalid-feedback" color="red">
 			    	이메일 주소를 입력해주세요.
 				</font>
@@ -253,7 +269,7 @@
 			<div class="form-group">
 				<label for="m_phone">Phone</label>
 				<div class="input-group">
-					<input type="tel" class="form-control" id="m_phone" name="m_phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>
+					<input type="tel" class="form-control" id="m_phone" name="m_phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="000-0000-0000" required>
 					<div class="input-group-append">
 						<button id="sendAuthPhone" class="btn btn-outline-secondary" type="button">인증번호 보내기</button>
 					</div>

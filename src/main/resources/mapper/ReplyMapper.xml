@@ -51,10 +51,29 @@
   </update>
   
   <update id="updateReportCnt">
-  	update reply set b_reportcnt = b_reportcnt+1 where r_no = #{r_no}
+  	update reply set r_reportcnt = r_reportcnt+1 where r_no = #{r_no}
   </update>
   
   <update id="updateState">
   	update reply set r_state=1 where r_no=#{r_no}
   </update>
+  
+  <select id="getReportCnt" resultType="java.lang.Integer">
+  	select count(*) from reply where r_reportcnt >= 5
+  </select>
+  
+  <select id="getReportReply" resultType="com.aeho.demo.vo.ReplyVo">
+  <![CDATA[
+  	select
+  			r_no, b_no, m_id, r_content, r_date, r_state, r_reportcnt
+  		from
+  			(
+  				select /*+ INDEX_DESC(board pk_board)*/
+  					rownum rn, r_no, b_no, m_id, r_content, r_date, r_state, r_reportcnt
+  				from reply
+  				where r_reportcnt >= 5 and rownum <= #{pageNum} * #{amount} 
+  			)
+  		where rn > (#{pageNum}-1) * #{amount} order by r_date desc
+  	]]>
+  </select>
 </mapper>

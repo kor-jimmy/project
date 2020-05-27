@@ -2,6 +2,7 @@ package com.aeho.demo.service;
 
 import java.util.List;
 
+import com.aeho.demo.domain.CriteriaForReply;
 import com.aeho.demo.vo.ReplyVo;
 
 public interface ReplyService {
@@ -21,4 +22,8 @@ public interface ReplyService {
 	int updateCnt(int r_ref);
 	
 	int updateState(int r_no);
+	
+	int getReportCnt();
+	
+	List<ReplyVo> getReportReply(CriteriaForReply cri);
 }
