@@ -123,6 +123,11 @@
 			         return false;
 			     }
 			});
+			$("#mypage").on("click",function(){
+				var id = ($("#userId").html()).split(":")[1];
+				console.log(id);
+				location.href="/member/get?m_id="+id;
+			})
 		})
     </script>
 </head>
@@ -166,10 +171,10 @@
 						</div>
 						<div>
 							<sec:authorize access="isAuthenticated()">
-								<img src="/img/userICON.png" width="40" height="40"><br>
+								<img src="/img/userICON.png" width="40" height="40" id="mypage"><br>
 								<!-- 유저아이디 -->
 								<span class="badge badge-pill badge-dark">
-									ID : <sec:authentication property="principal.username"/>
+									<div id="userId">ID :<sec:authentication property="principal.username"/></div>
 								</span>
 								<a href="/logout" class="badge badge-light">로그아웃</a>   
 							</sec:authorize>
