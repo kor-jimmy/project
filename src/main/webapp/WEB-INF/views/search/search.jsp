@@ -97,11 +97,7 @@
 		width: 45%;
 		margin-right: 20px;
 	}
-	.goodsImg{
-		width: 150px;
-		height: 150px;
-		border: 1px solid lightgray;
-	}
+
 </style>
 <script type="text/javascript">
 $(function(){

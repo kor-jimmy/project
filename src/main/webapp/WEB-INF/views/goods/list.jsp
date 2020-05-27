@@ -3,6 +3,15 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+<style>
+	.goodsImg{
+		width: 150px;
+		height: 150px;
+		border: 1px solid lightgray;
+	}
+</style>
 <script type="text/javascript">
 function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 //	c_no를 강제로 넣어주기 위해 카테고리 설정시에만 글쓰기 버튼 보이게 / 검색을 위해 searchKeyword 추가
@@ -17,26 +26,31 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
    $.ajax("/goods/listGoods",{data:{gc_code:gc_code,keyword:keyword,pageNum:pageNum,searchField:searchField,searchKeyword:searchKeyword}, success:function(result){
 		//리스트 가져오기
 		var list = JSON.parse(result.list)
-	      $.each(list, function(idx,item){
-		  if(item.gc_code == 1)
-			  gc_dist = "[팝니다]";
-		  else
-			  gc_dist = "[삽니다]";
-          //상품번호,제목,코드,가격,날짜
-         var td1=$("<td align='center'></td>").html(item.g_no);
-         var td2=$("<td align='center'></td>").html(gc_dist);
-//         var a=$("<a>"+item.g_title+"["+item.g_replycnt+"]"+"</a>").attr("href","/goods/get?g_no="+item.g_no)
-         var a=$("<a>"+item.g_title+"</a>").attr("href","/goods/get?g_no="+item.g_no)
-         var replyCnt=$("<span class='badge badge-light'></span>").html(item.g_replycnt)
-         a.append(replyCnt);
-         var td3=$("<td></td>").html(a);
-//         console.log("닉:"+item.m_nick)
-         var td4=$("<td align='center'></td>").html(item.m_nick);
-         var td5=$("<td align='center'></td>").html(item.g_price);
-         var td6=$("<td align='center'></td>").html(item.g_date);
-         var tr = $("<tr></tr>").append(td1,td2,td3,td4,td5,td6);
-         $("#tb").append(tr);
-      })
+	    $.each(list, function(idx,item){
+    
+			if(item.gc_code == 1)
+				gc_dist = "[팝니다]";
+			else
+				gc_dist = "[삽니다]";
+			
+			//상품번호,제목,코드,가격,날짜
+			var td1=$("<td align='center'></td>").html(item.g_no);
+			var td2=$("<td align='center'></td>").html(gc_dist);
+			//var a=$("<a>"+item.g_title+"["+item.g_replycnt+"]"+"</a>").attr("href","/goods/get?g_no="+item.g_no)
+			var a=$("<a>"+item.g_title+"</a>").attr("href","/goods/get?g_no="+item.g_no)
+			var replyCnt=$("<span class='badge badge-light'></span>").html(item.g_replycnt)
+			a.append(replyCnt);
+			var td3=$("<td></td>").html(a);
+			//console.log("닉:"+item.m_nick)
+			var td4=$("<td align='center'></td>").html(item.m_nick);
+			var td5=$("<td align='center'></td>").html(item.g_price);
+			
+			var g_date = moment(item.g_date).format('YYYY-MM-DD');
+			
+			var td6=$("<td align='center'></td>").html(g_date);
+			var tr = $("<tr></tr>").append(td1,td2,td3,td4,td5,td6);
+			$("#tb").append(tr);
+		});
 
     //페이징
       dto=result.dto;

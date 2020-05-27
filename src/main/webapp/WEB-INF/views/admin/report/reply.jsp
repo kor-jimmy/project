@@ -7,7 +7,12 @@
 
 <style>
 	a{
-		text-decoration: none;
+		text-decoration: none !important;
+		color: dimgray;
+	}
+	.page-link{
+		background-color: #000000;
+		border-color: #000000;
 	}
 </style>
 
@@ -21,7 +26,7 @@
 		//페이징 관련 내용
 		var actionForm = $("#actionForm");
 		
-		$(".page-link").on("click", function(e){
+		$(".btn").on("click", function(e){
 			//a태그 기본 속성 제거
 			e.preventDefault();
 			console.log("click");
@@ -88,7 +93,7 @@
 		<!-- Card Header - Dropdown -->
 		<div
 			class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-			<h6 class="m-0 font-weight-bold text-primary">신고 댓글</h6>
+			<h6 class="m-0 font-weight-bold text-dark">신고 댓글</h6>
 		</div>
 		<!-- Card Body -->
 		<div class="card-body">
@@ -138,7 +143,7 @@
 					</c:if>
 					<c:forEach var="num" begin="${pageMake.startPage }" end="${pageMake.endPage }">
 						<li class="page-item ${pageMake.cri.pageNum==num ? "active": ""}">
-							<a class="page-link" href="${num }">${num }</a>
+							<a class="btn btn-outline-secondary" href="${num }">${num }</a>
 						</li>
 						<!-- <li>&nbsp;/&nbsp;</li> -->
 					</c:forEach>
@@ -149,7 +154,7 @@
 					</c:if>
 				</ul>
 				<!-- 페이징 관련 a태그 속성 관리 -->
-				<form id="actionForm" action="/admin/report/board" method="get">
+				<form id="actionForm" action="/admin/report/reply" method="get">
 					<input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
 					<input type="hidden" name="amount" value="${pageMake.cri.amount }"> 
 					<%-- <input type="hidden" name="categoryNum" value="${pageMake.cri.categoryNum }"> --%>
