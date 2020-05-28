@@ -52,6 +52,9 @@
 $(function(){
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
+
+	$("#updateBtn").hide();
+	$("#deleteBtn").hide();
 	
 	$("#insertBtn").on("click", function(){
 
@@ -91,6 +94,8 @@ $(function(){
 		if(isclicked.indexOf("clickedCategory") == -1){
 			$("#section").hide();
 			$("#insertBtn").hide();
+			$("#updateBtn").show();
+			$("#deleteBtn").show();
 			$(".cat").removeClass("clickedCategory");
 			$(this).addClass("clickedCategory");
 			
@@ -104,6 +109,8 @@ $(function(){
 			$(this).removeClass("clickedCategory");
 			$("#section").show();
 			$("#insertBtn").show();
+			$("#updateBtn").hide();
+			$("#deleteBtn").hide();
 			$("#c_no").val("0");
 			$("#c_dist").val("");
 		}
@@ -183,7 +190,7 @@ $(function(){
 									<li><div class="categories" id="${ cat.c_no }"><c:out value="${ cat.c_dist }"/></div></li>
 								</div>
 							</c:if>
-						</c:forEach>ㄴ
+						</c:forEach>
 					</ul>
 				</div>
 				<br>

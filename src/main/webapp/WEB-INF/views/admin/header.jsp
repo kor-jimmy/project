@@ -109,8 +109,7 @@
         <div id="goodsEdit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">굿즈 관리</h6>
-            <a class="collapse-item" href="#">굿즈 목록</a>
-            <a class="collapse-item" href="#">신고 접수</a>
+            <a class="collapse-item" href="/admin/report/goods">신고 접수</a>
           </div>
         </div>
       </li>

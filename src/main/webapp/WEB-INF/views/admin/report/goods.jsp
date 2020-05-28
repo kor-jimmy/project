@@ -24,7 +24,7 @@
 		//페이징 관련 내용
 		var actionForm = $("#actionForm");
 		
-		$(".page-link").on("click", function(e){
+		$(".btn").on("click", function(e){
 			//a태그 기본 속성 제거
 			e.preventDefault();
 			console.log("click");
@@ -127,9 +127,9 @@
 			</table>
 
 			<hr>
-			<button id="chooseDelete">선택 삭제</button>
+			<button class="btn btn-outline-secondary" id="chooseDelete">선택 삭제</button>
 			<!-- 페이징 -->
-			<nav ria-label="Page navigation example">
+			<nav aria-label="Page navigation example">
 			
 				<ul class="pagination justify-content-end">
 					<c:if test="${ pageMake.prev }">
@@ -140,7 +140,7 @@
 					</c:if>
 					<c:forEach var="num" begin="${ pageMake.startPage }" end="${ pageMake.endPage }">
 						<li class="page-item ${ pageMake.cri.pageNum==num ? "active": ""}">
-							<a class="page-link" href="${ num }">${ num }</a>
+							<a class="btn btn-outline-secondary" href="${ num }">${ num }</a>
 						</li>
 						<!-- <li>&nbsp;/&nbsp;</li> -->
 					</c:forEach>
@@ -151,7 +151,7 @@
 					</c:if>
 				</ul>
 				<!-- 페이징 관련 a태그 속성 관리 -->
-				<form id="actionForm" action="/admin/report/board" method="get">
+				<form id="actionForm" action="/admin/report/goods" method="get">
 					<input type="hidden" name="pageNum" value="${ pageMake.cri.pageNum }">
 					<input type="hidden" name="amount" value="${ pageMake.cri.amount }"> 
 				</form>

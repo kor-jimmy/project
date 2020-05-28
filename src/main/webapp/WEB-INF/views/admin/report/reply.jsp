@@ -137,7 +137,7 @@
 			<hr>
 			<button class="btn btn-outline-secondary" id="chooseDelete">선택 삭제</button>
 			<!-- 페이징 -->
-			<nav ria-label="Page navigation example">
+			<nav aria-label="Page navigation example">
 			
 				<ul class="pagination justify-content-end">
 					<c:if test="${pageMake.prev }">
