@@ -9,10 +9,12 @@ import com.aeho.demo.dao.GoodsDao;
 import com.aeho.demo.dao.GoodsFilesDao;
 import com.aeho.demo.dao.GoodsReplyDao;
 import com.aeho.demo.dao.MemberDao;
+import com.aeho.demo.dao.ReportDao;
 import com.aeho.demo.domain.Criteria2;
 import com.aeho.demo.vo.BoardFilesVo;
 import com.aeho.demo.vo.GoodsFilesVo;
 import com.aeho.demo.vo.GoodsVo;
+import com.aeho.demo.vo.ReportVo;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
@@ -23,6 +25,8 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsReplyDao goodsReplyDao;
 	@Autowired
 	private GoodsFilesDao goodsFilesDao;
+	@Autowired
+	private ReportDao reportDao;
 	
 	public void setGoodsDao(GoodsDao goodsDao) {
 		this.goodsDao = goodsDao;
@@ -75,6 +79,9 @@ public class GoodsServiceImpl implements GoodsService {
 		if(goodsReplyDao.listGoodsReply(gv.getG_no()) != null) {
 			int result_goodsReply = goodsReplyDao.deleteGoodsandReply(gv.getG_no());//댓글 삭제 번호
 		}
+		if(reportDao.listReport(gv.getG_no(), "goods") != null) {
+			int result_report = reportDao.deleteReport(gv.getG_no(), "goods");//신고 삭제 번호
+		}
 //		int result_goodsReply = goodsReplyDao.deleteGoods(gv.getG_no());
 		int result_goods = goodsDao.deleteGoods(gv);
 		if(result_goods > 0)
@@ -85,6 +92,11 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public int getTotalCount(Criteria2 cri) {
 		return goodsDao.getTotalCount(cri);
+	}
+
+	@Override
+	public List<GoodsVo> getReportGoods(Criteria2 cri) {
+		return goodsDao.getReportGoods(cri);
 	}
 
 	

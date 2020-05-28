@@ -19,4 +19,6 @@ public interface GoodsService {
 	
 	int deleteGoods(GoodsVo gv);
 	
+	List<GoodsVo> getReportGoods(Criteria2 cri);
+	
 }

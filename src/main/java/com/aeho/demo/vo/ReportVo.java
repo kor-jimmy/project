@@ -15,7 +15,7 @@ import lombok.ToString;
 public class ReportVo {
 	
 	//신고 번호
-	private int r_no;
+	private int re_no;
 	//신고 코드 번호( 게시물 / 굿즈 )
 	private int rc_code;
 	private String m_id;

@@ -46,7 +46,7 @@
   				select /*+ INDEX_DESC(goods pk_goods)*/
   					rownum rn, g_no, gc_code, g.m_id, g_title, g_content, g_price, g_date, g_updatedate, g_replycnt, c_no, m_nick
   				from goods g, member m 
-  				where rownum <= #{pageNum} * #{amount}
+  				where rownum <= #{pageNum} * #{amount} 
   				]]>
   				
   				<choose>
@@ -66,7 +66,7 @@
   				 and m.m_id=g.m_id
   			<![CDATA[
   			)
-  		where rn > (#{pageNum}-1) * #{amount} order by g_date desc
+  		where rn > (#{pageNum}-1) * #{amount} 
   	]]>  
   </select>
   <select id="getTotalCount" resultType="int">
@@ -99,11 +99,15 @@
   	update goods set g_title = #{g_title}, g_content=#{g_content}, g_price=#{g_price}
   	where g_no = #{g_no}
   </update>
+  
   <update id="updateCnt">
   	update goods set
   	<choose>
   		<when test="cntKeyword != null and cntKeyword.equals('reply')">
   			g_replycnt = (select count(*) from goodsReply where g_no = #{g_no} and gr_state != 1)
+  		</when>
+  		<when test="cntKeyword != null and cntKeyword.equals('report')">
+  			g_reportcnt = (select count(*) from report where g_no = #{g_no})
   		</when>
   	</choose> 
     where g_no=#{g_no}
@@ -113,4 +117,17 @@
   	delete goods where g_no = #{g_no}
   </delete>
   
+  <select id="getReportGoods" resultType="com.aeho.demo.vo.GoodsVo">
+   <![CDATA[
+  	select g_no, gc_code, m_id, g_title, g_content, g_price, g_date, g_updatedate, g_replycnt, c_no, g_reportcnt
+  		from
+  			(
+  				select
+  					rownum rn, g_no, gc_code, m_id, g_title, g_content, g_price, g_date, g_updatedate, g_replycnt, c_no, g_reportcnt
+  				from (select * from goods order by g_date desc)
+  				where g_reportcnt >= 5 and rownum <= #{pageNum} * #{amount} 
+  			)
+  		where rn > (#{pageNum}-1) * #{amount}
+  ]]>
+  </select>
 </mapper>

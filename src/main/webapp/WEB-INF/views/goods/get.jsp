@@ -12,25 +12,39 @@
 	#labelForRe{
 		float:left;
 	}
+	#content{
+		padding: 20px;
+	}
+	#goodsReport{
+		cursor: pointer;
+	}
+	.grayscale{
+		filter: grayscale(100%);
+	}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		
 		var parentNum;
 		var g_no = $("#g_no").val();
 		var gr_no = $("#gr_no").val();
 		var logingID="<sec:authorize access='isAuthenticated()'><sec:authentication property='principal.username'/></sec:authorize>";
+
 		//시큐리티
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
+		
 		var select_gref;
 		var select_grno; 
 		var select_mid="";
-//		console.log("토큰 : "+token+" / 헤더:"+header);
+		//console.log("토큰 : "+token+" / 헤더:"+header);
 		
+		//게시물 수정
 		$("#updateBtn").on("click",function(){
 			self.location = "/goods/update?g_no="+g_no;
-		})
+		});
+		//게시물 삭제
 		$("#deleteBtn").on("click",function(){
 			console.log(g_no);
 			var re = confirm("정말로 삭제하시겠습니까?");
@@ -44,16 +58,22 @@
 					},
 					cache:false, 
 					success: function(result){
-						alert(result);
+						swal({
+						    text: result,
+						    icon: "success",
+						    buttons: "확인"
+						})
 						location.href="/goods/list";
 					}});
 			}
 		})
+		
+		//댓글 목록
 		$.ajax("/goodsReply/list",{type:"GET",data:{g_no:g_no}, success: function(goodsReply){
 			goodsReply = JSON.parse(goodsReply)		
-//			console.log(goodsReply);
+			//console.log(goodsReply);
 			$.each(goodsReply, function(idx,r){
-//				console.log(r.gr_content);
+				//console.log(r.gr_content);
 				var li  =$("<li class='list-group-item rep' idx="+idx+" r_no="+r.gr_no+"></li>")
 			 	var replyDiv = $("<div class='row'></div>");
 				var idDiv = $("<div class=col-2></div>");
@@ -70,7 +90,7 @@
 					console.log(tagID);
 					replyString =tagID+"&nbsp;&nbsp;";
 					replyContent.html(replyString+realContent);
-					li.addClass("list-group-item-warning");
+					//li.addClass("list-group-item-warning");
  	 			}
 				else{
 					console.log("답댓글아닐때"+r.gr_no);
@@ -117,7 +137,8 @@
 				$("#goodsReplyList").append(li);
 			})
 		}})
-				
+		
+		//대댓글
 		$(document).on("click",".reContent",function(){
 			$(".reInputDiv").remove();
 			select_gref=$(this).attr("gr_ref");
@@ -141,7 +162,8 @@
 			reInputDiv.append(div,idDiv,contentDiv,buttenDiv); 
 			$(this).parent().parent().append(reInputDiv);	
 		})
-				
+		
+		//대댓글 등록
 		$(document).on("click","#insertReReply",function(){
 			if(logingID == null || logingID == ""){
 				swal({
@@ -152,9 +174,9 @@
 					})
 				return;
 			}
-//			var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
+			//var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
 			var gr_ref=select_grno;
-//			var gr_no=select_grno;
+			//var gr_no=select_grno;
 			var reReplyContent=$("label[for='reReContent']").text()+$("#reReContent").val();
 			console.log(reReplyContent);
 			var reReplyData = {g_no:g_no , m_id:logingID, gr_content:reReplyContent,gr_ref:gr_ref};
@@ -174,19 +196,20 @@
 					},
 					cache:false, 
 					success:function(result){
-//					alert(result);
+					//alert(result);
 					location.href="/goods/get?g_no="+g_no;
 				}})
 				}else{
 		    	
 			    }
 			});				
-//			$(this).parent().remove();
+			//$(this).parent().remove();
 		})
 		
+		//댓글 등록
 		$("#insertReply").on("click",function(){
 			var data = $("#reply").serialize();
-//			var re = confirm("댓글을 등록하시겠습니까? 한 번 입력한 댓글은 수정이 불가하므로 신중하게 입력해 주세요.");
+			//var re = confirm("댓글을 등록하시겠습니까? 한 번 입력한 댓글은 수정이 불가하므로 신중하게 입력해 주세요.");
 			swal({
 			    title: "댓글 등록",
 			    text: "Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?",
@@ -211,9 +234,10 @@
 			parentNum=0;
 		})
 		
+		//댓글 삭제
 		$(document).on("click",".delICON",function(){
 			var grno = $(this).attr("gr_no");
-//			var re = confirm("진짜로 댓글을 삭제하겠습니까?");
+			//var re = confirm("진짜로 댓글을 삭제하겠습니까?");
 			swal({
 			    title: "댓글 삭제",
 			    text: "해당 댓글을 삭제하시겠습니까?",
@@ -237,24 +261,79 @@
 			    }
 			});
 		});
-	})
+
+		var checkReport = function(logingID, g_no){
+			$.ajax("/report/checkGoods", {data: {m_id: logingID, g_no: g_no}, success: function(re){
+				if(re == 1){	
+					$("#goodsReport").removeClass("grayscale");
+				}else{
+					$("#goodsReport").addClass("grayscale");
+				}
+			}});
+		}
+
+		checkReport(logingID, g_no);
+
+		//굿즈 게시물 신고
+		$("#goodsReport").on("click", function(){
+			if(logingID == null || logingID == ""){
+				swal({
+					  text: "로그인 후 이용 가능한 서비스입니다.",
+					  icon: "warning",
+					  button: "확인"
+				});
+				return false;
+			}
+
+			var data = {rc_code: 2, m_id: logingID, g_no: g_no};
+			var isClicked = $(this).attr("class");
+
+			if(isClicked.indexOf("grayscale") == -1){
+				swal({
+					  text: "이미 신고한 게시물입니다.",
+					  icon: "warning",
+					  button: "확인"
+				});
+			}else{
+				swal({
+				    title: "굿즈 신고",
+				    text: "신고는 취소가 불가능합니다.\n해당 상품 게시물을 신고 하시겠습니까?",
+				    icon: "info",
+				    buttons: ["아니오", "예"]
+				}).then((예) => {
+					if(예){
+						$.ajax("/report/insertGoodsReport", {data: data, success: function(msg){
+							swal({
+								  text: msg,
+								  icon: "success",
+								  button: "확인"
+							});
+							checkReport(logingID, g_no);
+						}});
+						
+					}
+				});
+			}
+		});
+	});
 
 </script>
-	<h2>상품 상세</h2>
 	<input type="hidden" id="g_no" value="${ goods.g_no }">
 	<table class="table table-bordered">
 		<tr>
-			<td colspan="4"><h3><c:out value="${goods.g_title }"/></h3></td>
+			<td colspan="6"><h3><c:out value="${goods.g_title }"/></h3></td>
 		</tr>
 		<tr>
-			<td width="25%">작성자</td>
-			<td width="25%"><c:out value="${goods.m_nick }"/></td>
-			<td width="25%">작성시간</td>
-			<td width="25%"><c:out value="${goods.g_date }"/></td>
+			<td width="15%" align="center"><b>작성자</b></td>
+			<td width="20%"><c:out value="${goods.m_nick }"/></td>
+			<td width="15%" align="center"><b>작성시간</b></td>
+			<td width="30%"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${goods.g_date }"/></td>
+			<td width="10%" align="center">신고</td>
+			<td width="10%" align="center"><img id='goodsReport' class="goodsReport" width=20px height=20px src='/img/reportICON.svg'>	</td>
 		</tr>
 		<tr>
-			<td colspan="4">
-			<div>${goods.g_content }</div></td>
+			<td colspan="6" height="500px">
+			<div id="content">${goods.g_content }</div></td>
 		</tr>
 	</table>
 	<div>

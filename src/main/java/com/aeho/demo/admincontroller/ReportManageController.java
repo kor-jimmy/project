@@ -16,13 +16,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aeho.demo.domain.Criteria;
+import com.aeho.demo.domain.Criteria2;
 import com.aeho.demo.domain.CriteriaForReply;
 import com.aeho.demo.domain.PageDto;
+import com.aeho.demo.domain.PageDto2;
 import com.aeho.demo.domain.PageDtoForReply;
 import com.aeho.demo.service.BoardService;
+import com.aeho.demo.service.GoodsService;
 import com.aeho.demo.service.ReplyService;
 import com.aeho.demo.service.ReportService;
 import com.aeho.demo.vo.BoardVo;
+import com.aeho.demo.vo.GoodsVo;
 import com.aeho.demo.vo.ReplyVo;
 
 @RequestMapping("/admin/report/*")
@@ -30,13 +34,16 @@ import com.aeho.demo.vo.ReplyVo;
 public class ReportManageController {
 	
 	@Autowired
-	ReportService reportService;
+	private ReportService reportService;
 	
 	@Autowired
-	BoardService boardService;
+	private BoardService boardService;
 	
 	@Autowired
-	ReplyService replyService;
+	private ReplyService replyService;
+	
+	@Autowired
+	private GoodsService goodsService;
 	
 	@GetMapping("/board")
 	public void reportBoard(Criteria cri, Model model) {
@@ -94,6 +101,36 @@ public class ReportManageController {
 		model.addAttribute("replyList", replyList);
 		model.addAttribute("boardList", boardList);
 		
+	}
+	
+	@RequestMapping("goods")
+	public void getReportGoods(Model model) {
+		
+		Criteria2 cri = new Criteria2();
+		
+		List<GoodsVo> goodsList = goodsService.getReportGoods(cri);
+		int total = goodsService.getReportGoods(cri).size();
+		
+		model.addAttribute("pageMake", new PageDto2(cri, total));
+		model.addAttribute("goodsList", goodsList);
+	}
+	
+	@PostMapping("/chooseGoodsDelete")
+	@ResponseBody
+	public String chooseGoodsdelete(@RequestParam(value = "list[]") List<Integer> chooseGno) {
+		String msg = "삭제되지 못 한 게시글이 존재합니다.";
+		int re = 0;
+		for( int i=0; i<chooseGno.size(); i++ ) {
+			GoodsVo gv = new GoodsVo();
+			gv.setG_no(chooseGno.get(i));
+			re = re + goodsService.deleteGoods(gv);
+		}
+		
+		if( re == chooseGno.size() ) {
+			msg = "삭제가 모두 완료되었습니다.";
+		}
+		System.out.println("re: " + re + "/ chooseGno: "+chooseGno);
+		return msg;
 	}
 
 }

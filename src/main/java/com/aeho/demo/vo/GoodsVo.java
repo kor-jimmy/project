@@ -26,5 +26,6 @@ public class GoodsVo {
 	private int c_no;
 	private String m_nick;
 	private String c_dist;
+	private int g_reportcnt;
 }
 

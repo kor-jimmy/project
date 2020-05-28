@@ -22,9 +22,14 @@
 		padding-left: 5%;
 	}
 	.goodsBox{
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		word-wrap:normal;
+		overflow: hidden;
 		float: left;
 		margin: 5px 20px 30px 20px;
 		width: 200px;
+		color: dimgray;
 	}
 	.goodsImg{
 		width: 200px;
@@ -69,12 +74,11 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 			var writer = $("<p></p>").html(g.m_nick);
 			var g_date = moment(item.g_date).format('YYYY-MM-DD');
 			var date = $("<span></span>").html(g_date);
-			var replyCnt = $("<span class='badge badge-light'></span>").html(g.g_replycnt);
+			//var replyCnt = $("<span class='badge badge-light'></span>").html(g.g_replycnt);
 
-			var a = $("<a></a>").attr("href","/goods/get?g_no="+g.g_no);
-			var li = $("<li></li>").append(img, "<br>", gc_dist, title, "&nbsp;", replyCnt, writer, date);
-			a.append(li);
-			div.append(a);
+			var a = $("<a></a>").attr("href","/goods/get?g_no="+g.g_no).append(title);
+			var li = $("<li></li>").append(img, "<br>", gc_dist, a, "&nbsp;", writer, date);
+			div.append(li);
 			$("#goodsList").append(div);
 			
 			

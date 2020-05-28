@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aeho.demo.dao.BoardDao;
+import com.aeho.demo.dao.GoodsDao;
 import com.aeho.demo.dao.ReplyDao;
 import com.aeho.demo.dao.ReportDao;
 import com.aeho.demo.vo.ReportVo;
@@ -22,9 +23,13 @@ public class ReportServiceImple implements ReportService {
 	@Autowired
 	private ReplyDao replyDao;
 	
+	@Autowired
+	private GoodsDao goodsDao;
+	
 	@Override
 	public List<ReportVo> listReport() {
-		return reportDao.listReport();
+		//return reportDao.listReport();
+		return null;
 	}
 
 	@Override
@@ -38,14 +43,15 @@ public class ReportServiceImple implements ReportService {
 	public int insertReplyReport(ReportVo rev) {
 		// TODO Auto-generated method stub
 		int re = reportDao.insertReplyReport(rev);
-		int cnt = replyDao.updateReportCnt(rev.getR_no());
+		int cnt = replyDao.updateReportCnt(rev.getRe_no());
 		return re;
 	}
 
 	@Override
 	public int insertGoodsReport(ReportVo rev) {
-		// TODO Auto-generated method stub
-		return 0;
+		int re = reportDao.insertGoodsReport(rev);
+		goodsDao.updateCnt(rev.getG_no(), "report");
+		return re;
 	}
 
 	@Override

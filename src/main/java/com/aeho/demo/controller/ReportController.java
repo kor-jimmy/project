@@ -16,6 +16,8 @@ public class ReportController {
 	
 	@Autowired
 	ReportService reportService;
+	
+	/*게시물*/
 
 	//게시물신고
 	@PostMapping("/boardreport")
@@ -66,5 +68,30 @@ public class ReportController {
 		return result;
 	}
 	
+	/*굿즈*/
+	
+	@RequestMapping("/checkGoods")
+	@ResponseBody
+	public String checkGoods(ReportVo rev) {
+		String result = "0";
+		int re = reportService.isCheckedGoods(rev);
+		if(re > 0) {
+			result = "1";
+		}
+		return result;
+	}
+	
+	@RequestMapping("/insertGoodsReport")
+	@ResponseBody
+	public String insertGoodsReport(ReportVo rev) {
+		System.out.println(rev);
+		String msg = "신고 접수에 실패했습니다.";
+		int re = reportService.insertGoodsReport(rev);
+		System.out.println(re);
+		if( re > 0 ) {
+			msg = "신고 접수가 완료되었습니다.\n더욱 깨끗한 커뮤니티가 될 수 있도록 노력하겠습니다.\n감사합니다.";
+		}
+		return msg;
+	}
 	
 }

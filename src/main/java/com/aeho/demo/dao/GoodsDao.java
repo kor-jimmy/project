@@ -7,7 +7,7 @@ import com.aeho.demo.vo.GoodsVo;
 
 public interface GoodsDao {
 
-	List<GoodsVo> listGoods(int gc_code,String keyword);
+	List<GoodsVo> listGoods(int gc_code, String keyword);
 	
 	GoodsVo getGoods(GoodsVo gv);
 	
@@ -22,5 +22,7 @@ public interface GoodsDao {
 	List<GoodsVo> paging(Criteria2 cri);
 
 	int getTotalCount(Criteria2 cri);
+	
+	List<GoodsVo> getReportGoods(Criteria2 cri);
 	
 }

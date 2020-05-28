@@ -6,7 +6,7 @@ import com.aeho.demo.vo.ReportVo;
 
 public interface ReportDao {
 
-	List<ReportVo> listReport();
+	List<ReportVo> listReport(int no, String wherekey);
 	
 	int insertBoardReport(ReportVo rev);
 	
@@ -19,4 +19,6 @@ public interface ReportDao {
 	int isCheckedReply(ReportVo rev);
 	
 	int isCheckedGoods(ReportVo rev);
+	
+	int deleteReport(int no, String wherekey);
 }
