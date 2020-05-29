@@ -114,6 +114,7 @@ input[id="mainTotalSearch"]{
 	background: #A3A1FC;
 	text-align: center;
 	color: white;
+	transition: all ease 0.2s 0s;
 }
 input[id="mainTotalSearch"]:hover {
 	background: #CBCAFF;

@@ -68,10 +68,17 @@
 			border: 1.5px solid #5FEAC9;
 			border-radius: 50px;
 			text-align: center;
-			background: white;
+			background: rgb(255,255,255,0.7);
 			opacity: 0.9;
 			display: inline-block;
 			color: gray;
+			transition: all ease 0.2s 0s;
+		}
+		
+		.topPick:hover{
+			cursor: pointer;
+			background: linear-gradient(15deg, #a3a1fc, #5FEAC9);
+			color: white;
 		}
 		
 		#topPicksLabel{
