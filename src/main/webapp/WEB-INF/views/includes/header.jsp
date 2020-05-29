@@ -59,7 +59,7 @@
 			padding-right: 200px;
         }	 */
 		#topIcon{
-			margin-right: 31px;
+			margin-right: 30px;
     		margin-bottom: 30px
 		}
     </style>
@@ -113,6 +113,7 @@
 				var key = "sMenu";
 				menuCategory(info,key);
 			})
+			
 			//검색
 			$("#mainTotalSearch").on("click", function(){
 				var search_keyword = $("#mainSearch").val();
@@ -125,10 +126,18 @@
 			         return false;
 			     }
 			});
+			
 			$("#mypage").on("click",function(){
 				var id = ($("#userId").html()).split(":")[1];
 				console.log(id);
 				location.href="/member/get?m_id="+id;
+			})
+			
+			$("#userMenu").hide();
+			
+			$("#fixedMenu").on("click",function(e){
+				$("#userMenu").show();
+				
 			})
 
 		})
@@ -140,7 +149,9 @@
     <div class="mb-0" id="headerTop" style="background-color: rgb(163, 161, 252);">
     	<div class="container">
             <div class="row">
-            	<div class="col-sm"></div>
+            	<div class="col-sm">
+
+            	</div>
                 <div class="col-sm" align="center">
                     <a href="/aeho">
                         <img src="/img/ma.png" width="200px" height="120px">
@@ -148,10 +159,12 @@
                 </div>
                 <div class="col-sm" align="right">
                 	<div class="pt-5">
-                		<p id="serachIcon">
-                			<span>SEARCH</span>
-                			<img src="/img/search.png" width="20px" height="20px">
-                		</p>
+                		<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+                			<p id="serachIcon">
+                				<span>SEARCH</span>
+                				<img src="/img/search.png" width="20px" height="20px">
+                			</p>
+                		</button>
                 	</div>
                 </div>
             </div>
@@ -268,8 +281,50 @@
     </nav>
     <!--end menu -->
 	
-	<a style="display:scroll;position:fixed;bottom:10px;right:10px;z-index: 1000" href="#" title="맨위로"><img width=60 height=60 id='topIcon' src="/img/topIcon2.png"></a>
+	<a style="display:scroll;position:fixed;bottom:10px;right:10px;z-index: 1000" href="#" title="맨위로">
+		<img width=60 height=60 id='topIcon' src="/img/topIcon2.png">
+	</a>
 
+	<a style="position: fixed; bottom: 10px; left: 10px; z-index: 1000">
+		<!-- side menu -->
+		<div style="margin-left: 30px; margin-bottom: 30px">
+			<div id="userMenu">
+				
+			</div>
+			<div id="fixedMenu">
+				<input type="checkbox" id="menuicon">
+				<label for="menuicon">
+					<span></span>
+					<span></span>
+					<span></span>
+				</label>
+			</div>
+		</div>
+	</a>
+
+
+	<!-- Modal -->
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" align="center">
+ 				<div class="serachBox">
+					<!-- <h1 id="serachBoxH1">Search</h1> -->
+					<br>
+					<form>
+						<input type="text" id="mainSearch"  name="" placeholder="AE-HO하는 것을 검색해주세요!">
+						<input id="mainTotalSearch" name="" value="Search">
+					</form>
+					<br><br><br>
+					<div>
+						인기검색어
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end Modal -->
+	
     <!--content-->
     <div class="container pt-3">
     

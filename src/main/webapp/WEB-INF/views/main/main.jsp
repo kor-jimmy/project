@@ -173,7 +173,6 @@
         <!-- end 이미지 슬라이드 -->
         <hr>
         <div class="row">
-
             <!--left content-->
             <!--인기글 일간,주간,월간-->
             <div class="col-sm-5">
