@@ -25,6 +25,7 @@
 		width: 50%;
 		height: 500px;
 		box-shadow: 0px 0px 10px #F3F3F3;
+		background: rgba(255, 255, 255, 0.7);
 	}
 	#tab-contentBox{
 		height: 350px;
@@ -111,7 +112,7 @@
 	#vLiveBox{
 		border: 1px solid lightgray;
 		border-radius: 20px;
-		background: white;
+		background: rgba(255, 255, 255, 0.7);
 		width: 40%;
 		height: 500px;
 		box-shadow: 0px 0px 10px #F3F3F3;

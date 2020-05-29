@@ -111,10 +111,12 @@ input[id="mainTotalSearch"]{
 	border: none;
 	outline: none;
 	cursor: pointer;
-	background: #ffc107;
+	background: #A3A1FC;
+	text-align: center;
+	color: white;
 }
 input[id="mainTotalSearch"]:hover {
-	background: #ff5722;
+	background: #CBCAFF;
 }
 
 .modal-content{

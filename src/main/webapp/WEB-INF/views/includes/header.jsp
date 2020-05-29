@@ -60,8 +60,25 @@
         }	 */
 		#topIcon{
 			margin-right: 30px;
-    		margin-bottom: 30px
+    		margin-bottom: 30px;
 		}
+		.topPick{
+			padding: 12px 18px 12px 18px;
+			margin: 10px;
+			border: 1.5px solid #5FEAC9;
+			border-radius: 50px;
+			text-align: center;
+			background: white;
+			opacity: 0.9;
+			display: inline-block;
+			color: gray;
+		}
+		
+		#topPicksLabel{
+			font-weight: bold;
+			color: gray;
+		}
+
     </style>
     <script>
 		$(function(){
@@ -126,6 +143,16 @@
 			         return false;
 			     }
 			});
+
+			$.ajax("/search/listPicks", {success: function(data){
+				console.log(data);
+				$.each(data, function(idx, p){
+					var keyword = $("<div class='topPick'></div>").html(p.p_keyword);
+					var a = $("<a></a>").attr("href", "/search/search?keyword=" + p.p_keyword);
+					a.append(keyword);
+					$("#topPicksList").append(a);
+				});
+			}});
 			
 			$("#mypage").on("click",function(){
 				var id = ($("#userId").html()).split(":")[1];
@@ -309,7 +336,7 @@
 	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
 		aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
-			<div class="modal-content" align="center">
+			<div class="modal-content p-5" align="center">
  				<div class="serachBox">
 					<!-- <h1 id="serachBoxH1">Search</h1> -->
 					<br>
@@ -319,8 +346,9 @@
 					</form>
 					<br><br><br>
 					<div>
-						인기검색어
+						<h5 id="topPicksLabel" class="mb-3">인기검색어</h5>
 					</div>
+					<div id="topPicksList"></div>
 				</div>
 			</div>
 		</div>

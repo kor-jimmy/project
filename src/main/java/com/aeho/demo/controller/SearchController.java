@@ -32,6 +32,7 @@ public class SearchController {
 
 	@RequestMapping("/search")
 	public void getSearch(String keyword, Model model) {
+		insertPicks(keyword);
 		model.addAttribute("keyword", keyword);
 	}
 	
@@ -175,10 +176,10 @@ public class SearchController {
 		return list;
 	}
 	
-	@RequestMapping("/insertPicks")
-	@ResponseBody
-	public int insertPicks(PicksVo pv) {
-		return picksService.insertPicks(pv);
+	public void insertPicks(String keyword) {
+		PicksVo pv = new PicksVo();
+		pv.setP_keyword(keyword);
+		picksService.insertPicks(pv);
 	}
 
 }
