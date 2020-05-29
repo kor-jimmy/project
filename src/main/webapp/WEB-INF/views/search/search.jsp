@@ -21,13 +21,13 @@
 	#newsBox{
 		border: 1px solid lightgray;
 		border-radius: 20px;
-		padding: 20px;
+		padding: 30px;
 		width: 50%;
-		height: 400px;
+		height: 500px;
 		box-shadow: 0px 0px 10px #F3F3F3;
 	}
 	#tab-contentBox{
-		height: 280px;
+		height: 350px;
 		overflow: auto;
 	}
 	
@@ -60,6 +60,7 @@
 		margin: 10px;
 		border: 2px solid #5FEAC9;
 		border-radius: 50px;
+		background: white;
 		text-align: center;
 		background: white;
 		color: gray;
@@ -90,14 +91,61 @@
 		opacity: 0.8;
 	}
 	#goodsList{
-		width: 70%;
+		width: 100%;
 	}
 	#goodsList li{
 		display: inline-block;
-		width: 45%;
+		width: 25%;
 		margin-right: 20px;
 	}
-
+	.goodsImg{
+		width: 200px;
+		height: 200px;
+		border: 1px solid lightgray;
+	}
+	
+	#vLiveBox a{
+		color: #8882F8;
+	}
+	
+	#vLiveBox{
+		border: 1px solid lightgray;
+		border-radius: 20px;
+		background: white;
+		width: 40%;
+		height: 500px;
+		box-shadow: 0px 0px 10px #F3F3F3;
+		float: right;
+		padding: 30px;
+		margin-right: 40px;
+	}
+	#vLiveList{
+		height: 400px;
+		overflow: auto;
+	}
+	.video_list{
+		padding: 20px;
+	}
+	
+	#vLiveList::-webkit-scrollbar{
+		height: 400px;
+	}
+	#vLiveList::-webkit-scrollbar-thumb{
+		background: #86F3D9;
+		border-radius: 20px;
+	}
+	#vLiveList::-webkit-scrollbar-track{
+		background: #F3F3F3;
+	}
+	.video_list_cont{
+		width: 300px;
+	}
+	.video_list_cont img{
+		width: 300px;
+	}
+	#vLives{
+		overflow: hidden;
+	}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -170,6 +218,36 @@ $(function(){
 	});
 
 	$("#news_naver").click();
+
+	//V Live
+	$.ajax("/search/getVLive", {data: {keyword: keyword}, success: function(data){
+		//console.log(data);
+		if( data.trim() == ""){
+			$("#vLiveBox").hide();
+			return false;
+		}
+		$("#vLives").html(data);
+		$(".icon_box").remove();
+		$(".video_info").remove();
+		$(".video_tit").css({"display": "block", "font-weight": "bold"});
+		$(".video_date").attr("class", "mb-3");
+		//$(".video_list_cont").attr("class", "mb-3");
+
+		var list = $("#vLiveList li");
+		$.each(list, function(idx, li){
+			console.log(li);
+			
+			//a 태그 주소 수정
+			var href = $(this).children("a").attr("href");
+			$(this).children("a").attr("href", "https://www.vlive.tv"+href);
+			var uploadName = $(this).children(".video_date").children("a").attr("href");
+			$(this).children(".video_date").children("a").attr("href", "https://www.vlive.tv"+uploadName);
+			console.log(li);
+			
+		});
+		
+		
+	}});
 
 	//카테고리
 	$.ajax("/search/getCategory", {data: {keyword: keyword}, success: function(data){
@@ -252,10 +330,27 @@ $(function(){
 	
 	<p id="modified"><b>검색어 제안</b> <a id="linkForKeyword"><span id="modifiedKeyword"></span></a>(으)로 검색하시겠습니까?</p><br>
 	
+	<div id="peopleInfo">
+	
+	</div>
+	
+	
 	<div id="categoryBox" class="mb-5">
 		<h3>카테고리</h3>
 		<br>
 	</div>
+	
+	<div>
+	<div id="vLiveBox">
+		<h4 align="right">V Live</h4>
+		<hr class="mb-0">
+		<div id="vLiveList">
+			<div id="vLives">
+			
+			</div>
+		</div>
+	</div>
+	
 	<div id="newsBox" class="mb-5">
 		<h3>뉴스</h3>
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -274,6 +369,8 @@ $(function(){
 		</div>
 		</div>
 	</div>
+	</div>
+	
 	
 	<div id="boardBox" class="mb-5">
 		<h3>게시물 검색 결과</h3>

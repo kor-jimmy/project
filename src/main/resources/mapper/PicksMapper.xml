@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aeho.demo.dao.PicksDao">
+  <select id="listPicks" resultType="com.aeho.demo.vo.PicksVo">
+  	select p_keyword, count(p_no) cnt from picks group by p_keyword order by cnt desc;
+  </select>
+  
+  <insert id="insertPicks">
+  	insert into picks values(seq_picks.nextval, #{p_keyword}, sysdate)
+  </insert>
+  
+</mapper>
