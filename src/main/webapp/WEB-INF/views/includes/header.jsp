@@ -19,8 +19,10 @@
     <!-- 글꼴 -->
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link href="/resources/css/total.css" rel="stylesheet">
+    <link href="/resources/css/header.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 	<!-- 페이징 때문에 넣어논거 충돌나서 다시 닫음. --> 
  	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->  
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"> -->
@@ -128,13 +130,34 @@
 				console.log(id);
 				location.href="/member/get?m_id="+id;
 			})
+
 		})
     </script>
 </head>
 
 <body>
     <!--header-->
-    <div class="jumbotron mb-0" id="headerTop" style="background-color: rgb(163, 161, 252);">
+    <div class="mb-0" id="headerTop" style="background-color: rgb(163, 161, 252);">
+    	<div class="container">
+            <div class="row">
+            	<div class="col-sm"></div>
+                <div class="col-sm" align="center">
+                    <a href="/aeho">
+                        <img src="/img/ma.png" width="200px" height="120px">
+                    </a>
+                </div>
+                <div class="col-sm" align="right">
+                	<div class="pt-5">
+                		<p id="serachIcon">
+                			<span>SEARCH</span>
+                			<img src="/img/search.png" width="20px" height="20px">
+                		</p>
+                	</div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%--<div class="mb-0" id="headerTop" style="background-color: rgb(163, 161, 252);">
     	<div class="container">
             <div class="row">
                 <div class="col-3">
@@ -156,6 +179,13 @@
                 </div>
          		<div class="col-3">
          			<div align="center" class="p-4">
+         				<!-- side menu -->
+						<input type="checkbox" id="menuicon">
+						<label for="menuicon">
+							<span></span>
+							<span></span>
+							<span></span>
+						</label>
 	         			<div>
 	         				<sec:authorize access="hasRole('ROLE_MASTER')">
 	         					<!-- <span class="badge badge-pill badge-warning">관리자가 로그인하였습니다.</span> -->
@@ -184,9 +214,9 @@
          		</div>
             </div>
         </div>
-    </div>
+    </div> --%>
     <!--end header-->
-    
+
     <!--menu -->
     <nav class="navbar justify-content-center" id="customNav" style="background-color: #D4F2F2">
     	<div>

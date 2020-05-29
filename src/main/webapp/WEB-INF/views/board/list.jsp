@@ -155,6 +155,6 @@
     	</form>
     </div>
     <!-- end 페이징 -->
-
+	<br>
 
 <%@include file="../includes/footer.jsp"%>  
