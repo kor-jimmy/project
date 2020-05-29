@@ -12,10 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.aeho.demo.service.PicksService;
 import com.aeho.demo.service.SearchService;
 import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.CategoryVo;
 import com.aeho.demo.vo.GoodsVo;
+import com.aeho.demo.vo.PicksVo;
+
+import lombok.var;
 
 @Controller
 @RequestMapping("/search")
@@ -23,6 +27,8 @@ public class SearchController {
 	
 	@Autowired
 	private SearchService searchService;
+	@Autowired
+	private PicksService picksService;
 
 	@RequestMapping("/search")
 	public void getSearch(String keyword, Model model) {
@@ -68,6 +74,48 @@ public class SearchController {
 		return str;
 	}
 	
+	@RequestMapping("getVLive")
+	@ResponseBody
+	public String getVLive(String keyword) {
+		String str = "";
+		//String vList = "";
+		System.out.println("keyword:"+keyword);
+		try {
+			Document doc = Jsoup.connect("https://www.vlive.tv/search/all?query="+keyword).get();
+			//System.out.println("doc:"+doc);
+			str = doc.select("#content > div.search_result.all > div.video_area.channel > div.inner").html();
+			//System.out.println("getInfo: "+str);
+			
+			//String [] list = str.split(">,");
+			
+			/*
+			for(String d : list) {
+				String text = d.substring(d.indexOf(">"), d.indexOf("</"));
+				//System.out.println(text);
+				//System.out.println(text.indexOf("LIVE"));
+				if( text.indexOf("LIVE") != -1 ){
+					//System.out.println("v live!!!!!");
+					System.out.println(d);
+					String vLiveID = (d.substring(d.indexOf("http://www.vlive.tv/channels/")+29, d.indexOf(" target=")-1));
+					String vLiveAddress = "https://channels.vlive.tv/"+vLiveID+"/home";
+					System.out.println(vLiveAddress);
+					Document vLiveDoc = Jsoup.connect(vLiveAddress).get();
+					System.out.println(vLiveDoc);
+					vList = vLiveDoc.select("#container > channel > div > home-content-list > div > div > ul").html();
+				}
+			}
+			*/
+			
+			
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+		
+		return str;
+	}
+	
 	@RequestMapping("/getCategory")
 	@ResponseBody
 	public List<CategoryVo> getCategory(String keyword) {
@@ -81,7 +129,7 @@ public class SearchController {
 	@ResponseBody
 	public List<BoardVo> getBoard(String keyword){
 		List<BoardVo> list = searchService.getBoard(keyword);
-		if(getRightKeyword(keyword) != null) {
+		if(getRightKeyword(keyword) != null && list.size() < 1) {
 			for(BoardVo b : searchService.getBoard(getRightKeyword(keyword))) {
 				list.add(b);
 			}
@@ -117,6 +165,20 @@ public class SearchController {
 		
 		str = map.get(keyword);
 		return str;
+	}
+	
+	//인기 검색어
+	@RequestMapping("/listPicks")
+	@ResponseBody
+	public List<PicksVo> listPicks(){
+		List<PicksVo> list = picksService.listPicks();
+		return list;
+	}
+	
+	@RequestMapping("/insertPicks")
+	@ResponseBody
+	public int insertPicks(PicksVo pv) {
+		return picksService.insertPicks(pv);
 	}
 
 }
