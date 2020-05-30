@@ -167,11 +167,16 @@
 				location.href="/member/get?m_id="+id;
 			})
 			
-			$("#userMenu").hide();
-			
-			$("#fixedMenu").on("click",function(e){
-				$("#userMenu").show();
-				
+
+			//$("#userMenu").hide();
+			//$("#fixedMenu").on("click",function(e){
+				//if($("#userMenu").attr("class").indexOf("clickedUserMenu") == -1){
+
+				//	$("#userMenu").slideToggle(500);
+				//}else{
+					//$("#userMenu").hide();
+				//	$("#userMenu").removeClass(500);
+				//}
 			})
 
 		})
@@ -324,10 +329,23 @@
 	<a style="position: fixed; bottom: 10px; left: 10px; z-index: 1000">
 		<!-- side menu -->
 		<div style="margin-left: 30px; margin-bottom: 30px">
-			<div id="userMenu">
-				
+			<!-- 
+			<div id="userMenu" class="">
+				<div id="login_out" class="userMenuBtn mb-1">로그인</div>
+				<div id="login_out" class="userMenuBtn mb-1">마이페이지</div>
 			</div>
-			<div id="fixedMenu">
+			-->
+			<div class="row">
+				<div class="col">
+					<div class="collapse" id="collapseBox">
+						<div id="userMenu">
+							<div id="login_out" class="userMenuBtn mb-1">로그인</div>
+							<div id="login_out" class="userMenuBtn mb-1">마이페이지</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="fixedMenu" data-toggle="collapse" href="#collapseBox" role="button" aria-expanded="false" aria-controls="collapseBox">
 				<input type="checkbox" id="menuicon">
 				<label for="menuicon">
 					<span></span>
@@ -335,6 +353,7 @@
 					<span></span>
 				</label>
 			</div>
+			
 		</div>
 	</a>
 

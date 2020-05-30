@@ -30,7 +30,7 @@ input[id="menuicon"] + label span{
 	width: 100%;
 	height: 5px;
 	border-radius: 30px;
-	background: #000;
+	background: #A3A1FC;
 	transition:all .35s;
 }
 
@@ -59,10 +59,22 @@ input[id="menuicon"]:checked + label span:nth-child(3) {
 
 #userMenu{
 	display: inline-block;
-	width: 300px;
-	height: 300px;
-	background: red;
+	width: 150px;
+	height: 150px;
 }
+
+.userMenuBtn{
+	padding: 15px;
+	margin: 10px;
+	width: 150px;
+	border: 1.5px solid #F4F4F4;
+	border-radius: 20px;
+	text-align: center;
+	background: #F4F4F4;
+	display: inline-block;
+	color: gray;
+}
+
 
 
 
