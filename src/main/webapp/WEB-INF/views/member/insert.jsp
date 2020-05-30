@@ -2,15 +2,42 @@
     pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<style>
+	#mainBox{
+		width: 100%;
+		height: 700px;
+	}
+	#insertMemberBox{
+		text-align: left;
+		width: 40%;
+	}
+	.btn-outline-secondary{
+		background: white;
+	}
+	#insertBtn{
+		background: lightgray;
+		color: white;
+	}
+	.insertBtnActive{
+		background: #A3A1FC;
+	}
+	
+	/*#insertBtn:hover{
+		background: #CBCAFF;
+	}*/
+</style>
 <script type="text/javascript">
 	$(function(){
 
 		//email과 phone 유효성 검사는 아직. 비워놓지만 않으면 다 들어가는 상태.
+		
+		$("#insertBtn").attr("disable", true);
 
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 
 		$(".invalid-feedback").hide();
+		$("#afterSendEmail").hide();
 		var result_checkID = false;
 		var result_checkNick = false;
 		
@@ -27,7 +54,12 @@
 		var validity_CheckBox = false;
 
 		$("#m_id").on("blur keyup", function() {
-			  $(this).val( $(this).val().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣| ]/g, "" ) );
+			result_checkID = false;
+			$(this).val( $(this).val().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣| ]/g, "" ) );  
+		});
+
+		$("#m_password").on("blur keyup", function() {
+			 
 		});
 
 		var checkID = function(e){
@@ -92,6 +124,79 @@
 			checkNick();
 		});
 
+		var authNumber = 0;
+
+		var sendEmail = function(m_email){
+			$.ajax("/member/sendMail", {data: {email: m_email}, success: function(authNum){
+				console.log(authNum);
+				authNumber = authNum;
+				
+				swal({
+					  text: "인증번호를 보냈습니다.",
+					  icon: "info",
+					  button: "확인"
+					});
+				$("#afterSendEmail").show();
+			}});
+		}
+
+		var checkAuthNum = function(){
+			var inputNum = $("#authNum").val();
+			console.log(inputNum);
+			console.log(authNumber);
+			if(inputNum == authNumber){
+				swal({
+					  text: "인증번호가 확인되었습니다.\n감사합니다!",
+					  icon: "success",
+					  button: "확인"
+					});
+				$("#authNum").attr("readonly", "readonly");
+			}else{
+				$("#feedbackForAuthNum").show();
+			}
+		}
+		
+		
+		$("#sendAuthMail").click(function(e){
+			e.preventDefault();
+			var email = $("#m_email").val();
+			if(email == null || email.trim() == ""){
+				swal({
+					  text: "메일 주소를 입력해주세요.",
+					  icon: "warning",
+					  button: "확인"
+					});
+				return false;
+			}
+			sendEmail(email);
+		});
+
+		$("#checkAuthNum").click(function(e){
+			e.preventDefault();
+			checkAuthNum();
+		});
+
+		var checkValidityOfPWD = function(){
+			//password
+			if($("#m_pwd").val() == null || $("#m_pwd").val().trim() == ""){
+				$("#m_pwd").css("border", "1px solid #FF2121");
+				$("#feedbackForPwd").html("※비밀번호를 입력해주세요.").show();
+				validity_Pwd = false;
+			}else if($("#m_pwd").val().length < 5 || $("#m_pwd").val().length > 20){
+				$("#m_pwd").css("border", "1px solid #FF2121");
+				$("#feedbackForPwd").html("※비밀번호는 5자 이상 20자 이하로 제한되어있습니다. ").show();
+				validity_Pwd = false;
+			}else if(!passwordRegEx.test($("#m_pwd").val())){
+				$("#m_pwd").css("border", "1px solid #FF2121");
+				$("#feedbackForPwd").html("※비밀번호가 양식에 맞지 않습니다.<br>영문, 숫자, 특수문자가 포함되어야 합니다.").show();
+				validity_Pwd = false;
+			}else{
+				$("#m_pwd").css("border", "1px solid #8FFFCA");
+				$("#feedbackForPwd").html("※유효한 비밀번호입니다.").show();
+				validity_Pwd = true;
+			}
+		}
+
 		var checkValidity = function(){
 			//ID
 			if($("#m_id").val() == null || $("#m_id").val().trim() == ""){
@@ -126,24 +231,7 @@
 				validity_Nick = true;
 				
 			}
-			//password
-			if($("#m_pwd").val() == null || $("#m_pwd").val().trim() == ""){
-				$("#m_pwd").css("border", "1px solid #FF2121");
-				$("#feedbackForPwd").html("※비밀번호를 입력해주세요.").show();
-				validity_Pwd = false;
-			}else if($("#m_pwd").val().length < 5 || $("#m_pwd").val().length > 20){
-				$("#m_pwd").css("border", "1px solid #FF2121");
-				$("#feedbackForPwd").html("※비밀번호는 5자 이상 20자 이하로 제한되어있습니다. ").show();
-				validity_Pwd = false;
-			}else if(!passwordRegEx.test($("#m_pwd").val())){
-				$("#m_pwd").css("border", "1px solid #FF2121");
-				$("#feedbackForPwd").html("※비밀번호가 양식에 맞지 않습니다.<br>영문, 숫자, 특수문자가 포함되어야 합니다.").show();
-				validity_Pwd = false;
-			}else{
-				$("#m_pwd").css("border", "1px solid #ced4da");
-				$("#feedbackForPwd").hide();
-				validity_Pwd = true;
-			}
+			
 			//email
 			if($("#m_email").val() == null || $("#m_email").val().trim() == ""){
 				$("#m_email").css("border", "1px solid #FF2121");
@@ -220,9 +308,10 @@
 		});
 	});
 </script>
-	<h2>회원등록</h2>
-	<hr>
-	<div style="width: 40%;">
+<div id="mainBox" align="center">
+	<h2 class="mt-2">회원등록</h2>
+	<hr class="mb-5">
+	<div id="insertMemberBox">
 		<form id="signupForm" class='needs-validation' novalidate>
 			<input type="hidden" id="m_state" name="m_state" value="ACTIVATE">
 			<div>
@@ -262,11 +351,28 @@
 			</div>
 			<div class="form-group">
 				<label for="m_email">Email</label>
-				<input type="email" class="form-control" id="m_email" name="m_email" placeholder="aeho@example.com" required>
+				<div class="input-group">
+					<input type="email" class="form-control" id="m_email" name="m_email" placeholder="aeho@example.com" required>
+					<div class="input-group-append">
+						<button id="sendAuthMail" class="btn btn-outline-secondary" type="button">인증번호 보내기</button>
+					</div>
+				</div>
 				<font id="feedbackForEmail" class="invalid-feedback" color="red">
 			    	이메일 주소를 입력해주세요.
 				</font>
 			</div>
+			<div class="form-group" id="afterSendEmail">
+				<div class="input-group">
+					<input type="number" class="form-control" id="authNum" name="authNum" placeholder="인증번호 입력" required>
+					<div class="input-group-append">
+						<button id="checkAuthNum" class="btn btn-outline-secondary" type="button">확인</button>
+					</div>
+				</div>
+				<font id="feedbackForAuthNum" class="invalid-feedback" color="red">
+			    	인증 번호가 일치하지 않습니다.
+				</font>
+			</div>
+			<!-- 
 			<div class="form-group">
 				<label for="m_phone">Phone</label>
 				<div class="input-group">
@@ -279,6 +385,7 @@
 			    	휴대폰 번호를 입력해주세요.
 				</font>
 			</div>
+			-->
 			<div class="form-group">
 				<div class="form-check">
 					<input class="form-check-input" type="checkbox" id="gridCheck">
@@ -290,46 +397,9 @@
 					※이용약관에 동의해주세요.
 				</font>
 			</div>
-			<button type="submit" class="btn btn-primary" id="insertBtn">회원가입</button>
+			<button type="submit" class="btn" id="insertBtn" disabled="disabled">회원가입</button>
 		</form>
+
 	</div>
-	<!-- 
-	<form id="signupForm" method="post">
-	<table>
-		<tr>
-			<td>아이디</td>
-			<td>
-				<input type="text" id="m_id" name="m_id" required="required">
-				<button id="isExistID">중복 확인</button>
-			</td>
-		</tr>
-		<tr>
-			<td>비밀번호</td>
-			<td><input type="password" id="m_pwd" name="m_pwd" required="required" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{5,20}$"></td>
-		</tr>
-		<tr>
-			<td>닉네임</td>
-			<td>
-				<input type="text" id="m_nick" name="m_nick" required="required">
-				<button id="isExistNick">중복 확인</button>
-			</td>
-		</tr>
-		<tr>
-			<td>이메일</td>
-			<td>
-				<input type="email" id="m_email" name="m_email" required="required">
-				<button id="sendAuthEmail">인증번호 보내기</button>
-			</td>
-		</tr>
-		<tr>
-			<td>전화번호</td>
-			<td>
-				<input type="text" id="m_phone" name="m_phone" required="required">
-				<button id="sendAuthPhone">인증번호 보내기</button>
-			</td>
-		</tr>
-	</table>
-	<button id="insertBtn" disabled="true">회원등록</button>
-	</form>
-	-->
+</div>
 <%@include file="../includes/footer.jsp"%>

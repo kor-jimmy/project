@@ -2,7 +2,7 @@
 
 body{
 	margin:0px;
-	background-image: url('/img/background3.png');
+	//background-image: url('/img/background3.png');
 }
 
 #header{
@@ -60,12 +60,12 @@ input[id="menuicon"]:checked + label span:nth-child(3) {
 #userMenu{
 	display: inline-block;
 	width: 150px;
-	height: 150px;
+	height: auto;
 }
 
 .userMenuBtn{
 	padding: 15px;
-	margin: 10px;
+	margin: 10px 10px 5px 0px;
 	width: 150px;
 	border: 1.5px solid #F4F4F4;
 	border-radius: 20px;
@@ -73,12 +73,18 @@ input[id="menuicon"]:checked + label span:nth-child(3) {
 	background: #F4F4F4;
 	display: inline-block;
 	color: gray;
+	cursor: pointer;
+}
+
+#mypageImg{
+	background: white;
+	border-radius: 100%;
+	border: 3px solid #5FEAC9;
 }
 
 
 
-
-
+/* 검색 */
 #serachIcon{
 	cursor: pointer;
 }

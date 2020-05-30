@@ -166,6 +166,18 @@
 				console.log(id);
 				location.href="/member/get?m_id="+id;
 			})
+			
+
+			//$("#userMenu").hide();
+			//$("#fixedMenu").on("click",function(e){
+				//if($("#userMenu").attr("class").indexOf("clickedUserMenu") == -1){
+
+				//	$("#userMenu").slideToggle(500);
+				//}else{
+					//$("#userMenu").hide();
+				//	$("#userMenu").removeClass(500);
+				//}
+			//})
 
 		})
     </script>
@@ -314,9 +326,9 @@
 		<img width=60 height=60 id='topIcon' src="/img/topIcon2.png">
 	</a>
 
-	<a style="position: fixed; bottom: 10px; left: 10px; z-index: 1000">
+	<div style="position: fixed; bottom: 10px; left: 10px; z-index: 1000">
 		<!-- side menu -->
-		<div style="margin-left: 30px; margin-bottom: 30px">
+		<div style="margin-left: 30px; margin-bottom: 30px;">
 			<!-- 
 			<div id="userMenu" class="">
 				<div id="login_out" class="userMenuBtn mb-1">로그인</div>
@@ -327,12 +339,29 @@
 				<div class="col">
 					<div class="collapse" id="collapseBox">
 						<div id="userMenu">
-							<div id="login_out" class="userMenuBtn mb-1">로그인</div>
-							<div id="login_out" class="userMenuBtn mb-1">마이페이지</div>
+							<sec:authorize access="hasRole('ROLE_MASTER')">
+	         					<!-- <span class="badge badge-pill badge-warning">관리자가 로그인하였습니다.</span> -->
+		         				<a href="/admin/admin"><div id="admin_page" class="userMenuBtn">관리자 페이지</div></a>
+		         			</sec:authorize>
+							<sec:authorize access="isAnonymous()">
+								<a href="/loginCustom"><div id="login" class="userMenuBtn">로그인</div></a>
+								<a href="/member/insert"><div id="sign_up" class="userMenuBtn">회원가입</div></a>
+							</sec:authorize>
+							<sec:authorize access="isAuthenticated()">
+								<div id="my_page" class="userMenuBtn mb-1">
+									<img src="/img/userICON.png" width="30" height="30" id="mypageImg">
+									<span id="userId"> <sec:authentication property="principal.username"/></span>
+								</div>
+								<a href="/logout"><div id="logout" class="userMenuBtn mb-1">로그아웃</div></a>   
+							</sec:authorize>
+							
+							<!-- <div id="login_out" class="userMenuBtn mb-1">로그인</div>
+							<div id="mypage" class="userMenuBtn mb-1">마이페이지</div> -->
 						</div>
 					</div>
 				</div>
 			</div>
+			
 			<div id="fixedMenu" data-toggle="collapse" href="#collapseBox" role="button" aria-expanded="false" aria-controls="collapseBox">
 				<input type="checkbox" id="menuicon">
 				<label for="menuicon">
@@ -343,7 +372,7 @@
 			</div>
 			
 		</div>
-	</a>
+	</div>
 
 
 	<!-- Modal -->

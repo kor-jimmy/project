@@ -1,8 +1,14 @@
 package com.aeho.demo.controller;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +29,21 @@ public class MemberController {
 	
 	@Autowired
 	private MemberServiceSecurity memberServiceSecurity;
+	
+	@Autowired
+	private MailSender javaMailSender;
+	
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	public void setMailSender(JavaMailSender mailSender) {
+		this.mailSender = mailSender;
+	}
+	
+	public void setJavaMailSender(MailSender javaMailSender) {
+		this.javaMailSender = javaMailSender;
+	}
+
 
 	@GetMapping("/insert")
 	public void insertMember(HttpServletRequest request ) {
@@ -92,4 +113,40 @@ public class MemberController {
 		MemberVo mv = memberServiceSecurity.getMember(m_id);
 		model.addAttribute("member", mv);
 	}
+	
+	//메일 발송
+	@RequestMapping("/sendMail")
+	@ResponseBody
+	public String sendMail(HttpServletRequest request, String email) {
+		System.out.println(email);
+		
+		int first = (int)(Math.random()*10)*1000;
+		int second = (int)(Math.random()*10)*100;
+		int third = (int)(Math.random()*10)*10;
+		int fourth = (int)(Math.random()*10);
+		
+		final int authNum = first + second + third + fourth;
+		
+		mailSender.send(new MimeMessagePreparator() {
+			
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+
+				System.out.println(authNum);
+				
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom("team.demo2020@gmail.com");
+				message.setTo(email);
+			    message.setSubject("[Aeho] 인증번호 안내 메일입니다.");
+				String str = "<h2><i>Welcome!</i></h2><p>인증번호는 ["+authNum+"]입니다.</p>";
+			    message.setText(str, true);
+			    //message.addInline("aeho", new ClassPathResource("/project/src/main/webapp/img/AEHO_for_EMAIL.png"));
+			}
+			
+			
+		});
+		
+		return authNum+"";
+	}
+
 }
