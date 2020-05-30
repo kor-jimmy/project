@@ -14,8 +14,19 @@
   </insert>
   
   <select id="listPicksForAdmin">
-  <![CDATA[
-  	select rownum, p_keyword, cnt from (select p_keyword, count(p_no) cnt from picks where p_date >= (sysdate-7) group by p_keyword order by cnt desc) where rownum <= 5
+  	select rownum, p_keyword, cnt from (select p_keyword, count(p_no) cnt from picks where p_date
+  	<if test="chartCondition != null and chartCondition.equals('weekly')">
+  		<![CDATA[
+  			 >= (sysdate-7)
+  		]]>
+  	</if>
+  	<if test="chartCondition != null and chartCondition.equals('monthly')">
+  		<![CDATA[
+  			>= (sysdate-30)
+  		]]>
+  	</if>
+  	<![CDATA[
+  	 group by p_keyword order by cnt desc) where rownum <= 5
   	]]>
   </select>
   

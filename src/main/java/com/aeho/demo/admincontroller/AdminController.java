@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeho.demo.dao.CategoryDao;
 import com.aeho.demo.dao.LogDao;
+import com.aeho.demo.dao.PicksDao;
 import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.domain.PageDto;
 import com.aeho.demo.service.BoardFilesSevice;
@@ -33,6 +34,7 @@ import com.aeho.demo.vo.BoardFilesVo;
 import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.CategoryVo;
 import com.aeho.demo.vo.LogVo;
+import com.aeho.demo.vo.PicksVo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -45,6 +47,11 @@ public class AdminController {
 	
 	@Autowired
 	CategoryDao categoryDao;
+	
+	@Autowired
+	private PicksDao picksDao;
+	
+	
 	
 	@GetMapping("/admin")
 	public void admin() {
@@ -66,6 +73,28 @@ public class AdminController {
 	@ResponseBody
 	public String popCategory() {
 		List<CategoryVo> list = categoryDao.popCategory();
+		Gson gson = new Gson();
+		String str = gson.toJson(list);
+		return str;
+	}
+	
+	// 주별 인기 검색어
+	@RequestMapping("/listWeeklyPicks")
+	@ResponseBody
+	public String listWeeklyPicks() {
+		String chartCondition = "weekly";
+		List<PicksVo> list = picksDao.listPicksForAdmin(chartCondition);
+		Gson gson = new Gson();
+		String str = gson.toJson(list);
+		return str;
+	}
+	
+	// 월별 인기 검색어
+	@RequestMapping("/listMonthlyPicks")
+	@ResponseBody
+	public String listMonthlyPicks() {
+		String chartCondition = "monthly";
+		List<PicksVo> list = picksDao.listPicksForAdmin(chartCondition);
 		Gson gson = new Gson();
 		String str = gson.toJson(list);
 		return str;

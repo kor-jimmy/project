@@ -9,4 +9,6 @@ public interface PicksDao {
 	List<PicksVo> listPicks();
 	
 	int insertPicks(PicksVo pv);
+	
+	List<PicksVo> listPicksForAdmin(String chartCondition);
 }

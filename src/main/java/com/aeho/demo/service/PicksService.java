@@ -9,5 +9,6 @@ public interface PicksService {
 	List<PicksVo> listPicks();
 	
 	int insertPicks(PicksVo pv);
+	
 
 }
