@@ -7,4 +7,8 @@
 		insert into log(log_no,log_uri,log_ip,log_time)
 		values(seq_log.nextval,#{log_uri},#{log_ip},#{log_time})
 	</insert>
+	
+	<select id="listLogs" resultType="com.aeho.demo.vo.LogVo">
+		select log_uri, count(*) cnt from log group by log_uri order by cnt desc
+	</select>
 </mapper>

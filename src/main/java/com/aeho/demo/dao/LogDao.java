@@ -8,4 +8,6 @@ import com.aeho.demo.vo.LogVo;
 
 public interface LogDao {
 	int insertLog(LogVo logVo);
+	
+	List<LogVo> listLogs();
 }
