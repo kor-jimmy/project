@@ -50,10 +50,24 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 		System.out.println(mv.getM_pwd());
 		return memberDao.insertMember(mv);
 	}
+	
 
 	@Override
 	public int updateMember(MemberVo mv) {
-		return memberDao.updateMember(mv);
+		int re = 0;
+		String m_id = mv.getM_id();
+		MemberVo member = memberDao.getMember(m_id);
+		//입력받은 암호와 저장된 암호 비교
+		boolean pwdChk = passwordEncoder.matches(mv.getM_pwd(), member.getM_pwd());
+		//입력받은 비밀번호가 올바르면 받아온 정보들로 update를 진행한다
+		//이때, newPwd값이 null이 아니라면 pwd에 newPwd값을 set해주어 비밀번호 수정
+		if(pwdChk) {
+			if(mv.getNewPwd() != null) {
+				mv.setM_pwd(mv.getNewPwd());
+			}
+			re = memberDao.updateMember(mv);
+		}
+		return re;
 	}
 
 	@Override

@@ -34,4 +34,7 @@ public class MemberVo {
 	private String m_state;
 	private Date m_bandate; 
 	
+	//수정할 비밀번호
+	private String newPwd;
+	
 }
