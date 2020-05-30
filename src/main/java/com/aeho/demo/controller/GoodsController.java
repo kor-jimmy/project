@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 import javax.management.loading.PrivateClassLoader;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
@@ -47,24 +48,24 @@ import lombok.AllArgsConstructor;
 public class GoodsController {
 	@Autowired
 	public GoodsService goodsService;	
-	public void setGoodsService(GoodsService goodsService) {
+	public void setGoodsService(HttpServletRequest request, GoodsService goodsService) {
 		this.goodsService = goodsService;
 	}
 		
 	@Autowired
 	public CategoryService categoryService;
-	public void setCategoryService(CategoryService categoryService) {
+	public void setCategoryService(HttpServletRequest request, CategoryService categoryService) {
 		this.categoryService = categoryService;
 	}
 	
 	@Autowired
 	public GoodsFilesSevice goodsFilesService;
-	public void setGoodsFilesService(GoodsFilesSevice goodsFilesService) {
+	public void setGoodsFilesService(HttpServletRequest request, GoodsFilesSevice goodsFilesService) {
 		this.goodsFilesService = goodsFilesService;
 	}
 	
 	@GetMapping("/list")
-	public void list() {
+	public void list(HttpServletRequest request) {
 	}
 /*
 	@GetMapping(value = "/listGoods", produces = "application/json; charset=utf-8")
@@ -76,7 +77,7 @@ public class GoodsController {
 */
 	@GetMapping(value = "/listGoods", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public HashMap listGoods(Criteria2 cri) {
+	public HashMap listGoods(HttpServletRequest request, Criteria2 cri) {
 		int total = goodsService.getTotalCount(cri);		
 		List<GoodsVo> l = goodsService.listGoods(cri);
 		for (GoodsVo g : l) {
@@ -93,14 +94,14 @@ public class GoodsController {
 		return hm;
 	}
 	@GetMapping("/insert")
-	public void insert(Model model, @Param("c_no")int c_no) {
+	public void insert(HttpServletRequest request, Model model, @Param("c_no")int c_no) {
 		CategoryVo cv = categoryService.getCategory(c_no);
 		model.addAttribute("cv", cv);
 	}
 
 	@PostMapping(value = "/insert")
 	@ResponseBody
-	public String insert(GoodsVo gv, RedirectAttributes rttr) throws Exception {
+	public String insert(HttpServletRequest request, GoodsVo gv, RedirectAttributes rttr) throws Exception {
 //		String msg = "상품 등록에 실패했습니다.";
 		int re = goodsService.insertGoods(gv);
 //		if(re > 0) {
@@ -115,7 +116,7 @@ public class GoodsController {
 	
 	@PostMapping(value = "/testUpload", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+	public JsonObject uploadSummernoteImageFile(HttpServletRequest request, @RequestParam("file") MultipartFile multipartFile) {
 		JsonObject jsonObject = new JsonObject();
 		
 		Date date = new Date();
@@ -148,7 +149,7 @@ public class GoodsController {
 	
 	@PostMapping(value = "fileDBupload")
 	@ResponseBody
-	public String FileDBupload(@RequestBody List<GoodsFilesVo> files) {
+	public String FileDBupload(HttpServletRequest request, @RequestBody List<GoodsFilesVo> files) {
 		for(GoodsFilesVo gfv : files) {
 			goodsFilesService.insert(gfv);
 		}
@@ -156,13 +157,13 @@ public class GoodsController {
 	}
 
 	@GetMapping("/update")
-	public void update(GoodsVo gv, Model model) {
+	public void update(HttpServletRequest request, GoodsVo gv, Model model) {
 		model.addAttribute("goods", goodsService.getGoods(gv));
 	}
 	
 	@PostMapping("/update")
 	@ResponseBody
-	public String update(GoodsVo gv, RedirectAttributes rttr) {
+	public String update(HttpServletRequest request, GoodsVo gv, RedirectAttributes rttr) {
 		String str ="상품 수정 실패";
 		int re = goodsService.updateGoods(gv);
 		if(re > 0) {
@@ -174,7 +175,7 @@ public class GoodsController {
 
 	@PostMapping("/delete")
 	@ResponseBody
-	public String delete(GoodsVo gv) {
+	public String delete(HttpServletRequest request, GoodsVo gv) {
 		String str = "오류로 인해 게시물 삭제에 실패했습니다.";
 		int re = goodsService.deleteGoods(gv);
 		if(re > 0) {
@@ -184,7 +185,7 @@ public class GoodsController {
 	}
 
 	@GetMapping("/get")
-	public void get(GoodsVo gv,Model model) {
+	public void get(HttpServletRequest request, GoodsVo gv,Model model) {
 		model.addAttribute("goods", goodsService.getGoods(gv));
 	}
 

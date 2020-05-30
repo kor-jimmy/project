@@ -82,7 +82,7 @@ public class BoardController {
 //	}
 	
 	@GetMapping("/list")
-	public void list (Criteria cri, Model model) {
+	public void list (HttpServletRequest request, Criteria cri, Model model) {
 		int total = boardService.getTotalCount(cri);
 		System.out.println("list:"+cri);
 		model.addAttribute("list", boardService.getList(cri));
@@ -92,21 +92,21 @@ public class BoardController {
 	}
 	
 	@GetMapping("/get")
-	public void getBoard(BoardVo bv, Model model) {
+	public void getBoard(HttpServletRequest request, BoardVo bv, Model model) {
 		model.addAttribute("board", boardService.getBoard(bv));
 	}
 	
 	
 	
 	@GetMapping("/insert")
-	public void insert(Model model, @Param("c_no") int c_no) {
+	public void insert(HttpServletRequest request,Model model, @Param("c_no") int c_no) {
 		System.out.println(c_no);
 		model.addAttribute("c_no",c_no);
 	}
 	
 	@PostMapping(value="/insert")
 	@ResponseBody
-	public String insert(BoardVo bv, RedirectAttributes rttr) throws Exception {
+	public String insert(HttpServletRequest request, BoardVo bv, RedirectAttributes rttr) throws Exception {
 		String msg = "게시물 등록에 실패했습니다.";
 		int re = boardService.insertBoard(bv);
 		if( re > 0 ) {
@@ -123,13 +123,13 @@ public class BoardController {
 	}
 	
 	@GetMapping("/update")
-	public void update(BoardVo bv, Model model) {
+	public void update(HttpServletRequest request, BoardVo bv, Model model) {
 		model.addAttribute("board", boardService.getBoard(bv));
 	}
 	
 	@PostMapping("/update")
 	@ResponseBody
-	public String update(BoardVo bv, RedirectAttributes rttr) {
+	public String update(HttpServletRequest request, BoardVo bv, RedirectAttributes rttr) {
 		System.out.println("게시물 수정!");
 		String msg = "게시물 수정에 실패했습니다.";
 		int re = boardService.updateBoard(bv);
@@ -142,7 +142,7 @@ public class BoardController {
 	
 	@PostMapping("/delete")
 	@ResponseBody
-	public String delete(BoardVo bv) throws Exception{
+	public String delete(HttpServletRequest request, BoardVo bv) throws Exception{
 		String msg = "0";
 		System.out.println(bv.getB_no());
 		int result = boardService.deleteBoard(bv);
@@ -156,7 +156,7 @@ public class BoardController {
 	//해당 멤버가 해당 게시물에 love를 누른 적 있는지 판단 
 	@GetMapping("/isLoved")
 	@ResponseBody
-	public String loveCheck(LoveVo lv) {
+	public String loveCheck(HttpServletRequest request, LoveVo lv) {
 		String result = "0";
 		int cnt = loveService.isChecked(lv);
 		if(cnt > 0) {
@@ -168,7 +168,7 @@ public class BoardController {
 	// 해당 멤버가 해당 게시물에 hate를 누른 적 있는지 판단
 	@GetMapping("/isHated")
 	@ResponseBody
-	public String hateCheck(HateVo hv) {
+	public String hateCheck(HttpServletRequest request, HateVo hv) {
 		String result = "0";
 		int cnt = hateService.isChecked(hv);
 		if(cnt > 0) {
@@ -180,7 +180,7 @@ public class BoardController {
 	//love insert
 	@PostMapping("/insertLove")
 	@ResponseBody
-	public String insertLove(LoveVo lv) {
+	public String insertLove(HttpServletRequest request, LoveVo lv) {
 		String result = "0";
 		int re = loveService.insertLove(lv);
 		if( re > 0 ) {
@@ -193,7 +193,7 @@ public class BoardController {
 	//love delete
 	@PostMapping("/deleteLove")
 	@ResponseBody
-	public String deleteLove(LoveVo lv) {
+	public String deleteLove(HttpServletRequest request, LoveVo lv) {
 		String result = "0";
 		int re = loveService.deleteLove(lv);
 		if(re > 0) {
@@ -205,7 +205,7 @@ public class BoardController {
 	//hate insert
 	@PostMapping("/insertHate")
 	@ResponseBody
-	public String insertHate(HateVo hv) {
+	public String insertHate(HttpServletRequest request, HateVo hv) {
 		String result = "0";
 		int re = hateService.insertHate(hv);
 		if( re > 0 ) {
@@ -216,7 +216,7 @@ public class BoardController {
 	
 	@PostMapping("/deleteHate")
 	@ResponseBody
-	public String deleteHate(HateVo hv) {
+	public String deleteHate(HttpServletRequest request, HateVo hv) {
 		String result = "0";
 		int re = hateService.deleteHate(hv);
 		if(re > 0) {
@@ -228,7 +228,7 @@ public class BoardController {
 	//게시물 등록 이미지 콜백 컨트롤러.
 	@PostMapping(value="/testUpload", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+	public JsonObject uploadSummernoteImageFile(HttpServletRequest request, @RequestParam("file") MultipartFile multipartFile) {
 		JsonObject jsonObject = new JsonObject();
 		
 		Date date = new Date();
@@ -264,7 +264,7 @@ public class BoardController {
 	// file DB upload
 	@PostMapping(value="fileDBupload")
 	@ResponseBody
-	public String FileDBupload(@RequestBody List<BoardFilesVo> files) {
+	public String FileDBupload(HttpServletRequest request, @RequestBody List<BoardFilesVo> files) {
 		System.out.println(files);
 		for(BoardFilesVo bfv : files) {
 			boardFilesService.insert(bfv);

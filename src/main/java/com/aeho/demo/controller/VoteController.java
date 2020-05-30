@@ -43,11 +43,11 @@ public class VoteController {
 	private VoteTopicService voteTopicService;
 	
 	@RequestMapping("/vote")
-	public void list() {}
+	public void list(HttpServletRequest request) {}
 	
 	@GetMapping("/list")
 	@ResponseBody
-	public String listVote(Model model) {
+	public String listVote(HttpServletRequest request, Model model) {
 		List<VoteTopicVo> list = voteTopicService.ongoingListVoteTopic();
 //		model.addAttribute("list", list);
 		Gson gson = new Gson();
@@ -57,7 +57,7 @@ public class VoteController {
 	
 	@GetMapping("/listEnded")
 	@ResponseBody
-	public String endedVote() {
+	public String endedVote(HttpServletRequest request) {
 		List<VoteTopicVo> list = voteTopicService.endedListVoteTopic();
 		Gson gson = new Gson();
 		return gson.toJson(list);
@@ -65,7 +65,7 @@ public class VoteController {
 	
 	@GetMapping("/insert")
 	@ResponseBody
-	public HashMap<String, String> insertVote(VoteVo vv) {
+	public HashMap<String, String> insertVote(HttpServletRequest request, VoteVo vv) {
 		String msg = "예기치 않은 오류로 인해 투표가 반영되지 못했습니다! 다시 한번 시도해주세요!";
 		int re = voteService.insertVote(vv);
 		if(re > 0) {
@@ -81,9 +81,9 @@ public class VoteController {
 	
 	@GetMapping("/update")
 	@ResponseBody
-	public HashMap<String, String> updateVote(VoteVo vv) {
+	public HashMap<String, String> updateVote(HttpServletRequest request, VoteVo vv) {
 		String msg = "예기치 않은 오류로 인해 투표 수정이 반영되지 못했습니다. 다시 한번 시도해주세요!";
-		VoteVo v = isChecked(vv);
+		VoteVo v = isChecked(request, vv);
 		vv.setV_no(v.getV_no());
 		int re = voteService.updateVote(vv);
 		if(re > 0) {
@@ -98,7 +98,7 @@ public class VoteController {
 	
 	@GetMapping("/isChecked")
 	@ResponseBody
-	public VoteVo isChecked(VoteVo vv) {
+	public VoteVo isChecked(HttpServletRequest request,VoteVo vv) {
 		String re = "";
 		List<VoteVo> list = voteService.isChecked(vv);
 		System.out.println(list);
@@ -111,7 +111,7 @@ public class VoteController {
 	
 	@RequestMapping("/updateState")
 	@ResponseBody
-	public int updateState(VoteTopicVo vtv) {
+	public int updateState(HttpServletRequest request,VoteTopicVo vtv) {
 		int re = voteTopicService.updateState(vtv);
 		return re;
 	}
@@ -119,7 +119,7 @@ public class VoteController {
 	//관리자용
 	
 	@RequestMapping("/manage")
-	public ModelAndView listAdmin() {
+	public ModelAndView listAdmin(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("vote/list");
 		return mav;
@@ -127,7 +127,7 @@ public class VoteController {
 	
 	@RequestMapping("/insertVoteTopic")
 	@ResponseBody
-	public String insertVoteTopic(VoteDataDTO vdd, HttpServletRequest request, HttpSession session) {
+	public String insertVoteTopic(HttpServletRequest request,VoteDataDTO vdd, HttpSession session) {
 		String msg = "예기치 않은 오류로 투표 주제 등록이 정상적으로 완료되지 못 했습니다.";
 		
 		long time = System.currentTimeMillis();
@@ -182,7 +182,7 @@ public class VoteController {
 	
 	@PostMapping("/updateVoteTopic")
 	@ResponseBody
-	public String updateVoteTopic(VoteDataDTO vdd, HttpServletRequest request) {
+	public String updateVoteTopic(HttpServletRequest request, VoteDataDTO vdd) {
 		long time = System.currentTimeMillis();
 		int rand = (int)(Math.random()*1000000);
 		
@@ -282,7 +282,7 @@ public class VoteController {
 	
 	@RequestMapping("/deleteVoteTopic")
 	@ResponseBody
-	public String deleteVoteTopic(VoteTopicVo vtv, HttpServletRequest request) {
+	public String deleteVoteTopic(HttpServletRequest request, VoteTopicVo vtv) {
 		String msg = "예기치 않은 오류로 투표 주제 삭제가 정상적으로 완료되지 못 했습니다.";
 		String path = request.getRealPath("img/vote");
 		System.out.println(path);

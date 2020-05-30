@@ -1,5 +1,7 @@
 package com.aeho.demo.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,18 +25,18 @@ public class MemberController {
 	private MemberServiceSecurity memberServiceSecurity;
 
 	@GetMapping("/insert")
-	public void insertMember() {
+	public void insertMember(HttpServletRequest request ) {
 		
 	}
 	
 	@GetMapping("/delete")
-	public void deleteMember() {
+	public void deleteMember(HttpServletRequest request ) {
 		
 	}
 	
 	@PostMapping("/insert")
 	@ResponseBody
-	public String insertMember(MemberVo mv, RedirectAttributes rttr){
+	public String insertMember(HttpServletRequest request, MemberVo mv, RedirectAttributes rttr){
 		System.out.println("컨트롤러 동작중");
 		String msg = "예기치 않은 오류로 회원가입에 실패했습니다. 잠시 후 다시 시도해주시기 바랍니다. 불편을 드려 죄송합니다.";
 		int re = memberServiceSecurity.insertMember(mv);
@@ -47,7 +49,7 @@ public class MemberController {
 	//id 존재 여부 검사
 	@GetMapping("/isExistMember")
 	@ResponseBody
-	public String isExistMember(String m_id) {
+	public String isExistMember(HttpServletRequest request,String m_id) {
 		String result = "0";
 		//0: 사용 가능하고 글자수 적합 / 1: 사용중인 아이디 / 2: 사용 가능하나 글자수 미달 / 3: 사용 가능하나 글자수 초과 
 		if(memberServiceSecurity.getMember(m_id) != null) {
@@ -65,7 +67,7 @@ public class MemberController {
 	//닉네임 존재여부
 	@GetMapping("/isExistNick")
 	@ResponseBody
-	public String isExistNick(String m_nick) {
+	public String isExistNick(HttpServletRequest request, String m_nick) {
 		String result = "0";
 		if(memberServiceSecurity.getMemberByNick(m_nick) != null) {
 			result = "1";
@@ -79,14 +81,14 @@ public class MemberController {
 		return result;
 	}
 	@GetMapping("/get")
-	public void get(@RequestParam("m_id") String m_id,Model model) {
+	public void get(HttpServletRequest request, @RequestParam("m_id") String m_id,Model model) {
 		System.out.println("member get");
 		MemberVo mv = memberServiceSecurity.getMember(m_id);
 		model.addAttribute("member", mv);
 	}
 	
 	@GetMapping("/mypage")
-	public void myPage(@RequestParam("m_id") String m_id,Model model) {
+	public void myPage(HttpServletRequest request, @RequestParam("m_id") String m_id,Model model) {
 		MemberVo mv = memberServiceSecurity.getMember(m_id);
 		model.addAttribute("member", mv);
 	}

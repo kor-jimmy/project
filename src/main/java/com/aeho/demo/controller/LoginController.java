@@ -1,5 +1,7 @@
 package com.aeho.demo.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,18 +21,18 @@ public class LoginController {
 
 
 	@GetMapping("/loginCustom")
-	public void login() {
+	public void login(HttpServletRequest request) {
 		
 	}
 	
 	@GetMapping("/loginError")
-	public void loginError() {
+	public void loginError(HttpServletRequest request) {
 		
 	}
 	
 	@GetMapping("/checkMemberSatate")
 	@ResponseBody
-	public String checkMemberState(MemberVo mv) {
+	public String checkMemberState(HttpServletRequest request, MemberVo mv) {
 		System.out.println("회원 상테 체크...컨트롤ㄹ..동작중....");
 		System.out.println(mv);
 		MemberVo memberVo = memberService.getMember(mv.getM_id());
@@ -43,7 +45,7 @@ public class LoginController {
 	}
 	
 	@PostMapping("/updateRelease")
-	public void updateRelease(MemberVo mv) {
+	public void updateRelease(HttpServletRequest request, MemberVo mv) {
 		System.out.println("릴리즈 작동중.....");
 		mv.setM_state("ACTIVATE"); 
 		int re = memberService.updateRelease(mv);

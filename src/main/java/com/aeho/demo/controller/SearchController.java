@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +33,14 @@ public class SearchController {
 	private PicksService picksService;
 
 	@RequestMapping("/search")
-	public void getSearch(String keyword, Model model) {
-		insertPicks(keyword);
+	public void getSearch(HttpServletRequest request, String keyword, Model model) {
+		insertPicks(request,keyword);
 		model.addAttribute("keyword", keyword);
 	}
 	
 	@RequestMapping("/newsNaver")	
 	@ResponseBody
-	public String getNewsNaver(String keyword) {
+	public String getNewsNaver(HttpServletRequest request, String keyword) {
 		
 		String str = "";
 		System.out.println("keyword:"+keyword);
@@ -57,7 +59,7 @@ public class SearchController {
 	}
 	@RequestMapping("/newsDaum")	
 	@ResponseBody
-	public String getNewsDaum(String keyword) {
+	public String getNewsDaum(HttpServletRequest request,String keyword) {
 		
 		String str = "";
 		System.out.println("keyword:"+keyword);
@@ -77,7 +79,7 @@ public class SearchController {
 	
 	@RequestMapping("getVLive")
 	@ResponseBody
-	public String getVLive(String keyword) {
+	public String getVLive(HttpServletRequest request, String keyword) {
 		String str = "";
 		//String vList = "";
 		System.out.println("keyword:"+keyword);
@@ -119,19 +121,19 @@ public class SearchController {
 	
 	@RequestMapping("/getCategory")
 	@ResponseBody
-	public List<CategoryVo> getCategory(String keyword) {
-		if(getRightKeyword(keyword) != null) {
-			keyword = getRightKeyword(keyword);
+	public List<CategoryVo> getCategory(HttpServletRequest request,String keyword) {
+		if(getRightKeyword(request,keyword) != null) {
+			keyword = getRightKeyword(request,keyword);
 		}
 		return searchService.getCategory(keyword);
 	}
 	
 	@RequestMapping("/getBoard")
 	@ResponseBody
-	public List<BoardVo> getBoard(String keyword){
+	public List<BoardVo> getBoard(HttpServletRequest request, String keyword){
 		List<BoardVo> list = searchService.getBoard(keyword);
-		if(getRightKeyword(keyword) != null && list.size() < 1) {
-			for(BoardVo b : searchService.getBoard(getRightKeyword(keyword))) {
+		if(getRightKeyword(request,keyword) != null && list.size() < 1) {
+			for(BoardVo b : searchService.getBoard(getRightKeyword(request,keyword))) {
 				list.add(b);
 			}
 		}
@@ -140,17 +142,17 @@ public class SearchController {
 	
 	@RequestMapping("/getGoods")
 	@ResponseBody
-	public List<GoodsVo> getGoods(String keyword){
+	public List<GoodsVo> getGoods(HttpServletRequest request, String keyword){
 		List<GoodsVo> list = searchService.getGoods(keyword);
-		if(getRightKeyword(keyword) != null && list.size() < 1) {
-			for(GoodsVo g : searchService.getGoods(getRightKeyword(keyword))) {
+		if(getRightKeyword(request,keyword) != null && list.size() < 1) {
+			for(GoodsVo g : searchService.getGoods(getRightKeyword(request,keyword))) {
 				list.add(g);
 			}
 		}
 		return list;
 	}
 	
-	public String getRightKeyword(String keyword) {
+	public String getRightKeyword(HttpServletRequest request, String keyword) {
 		String str = "";
 		HashMap<String, String> map = new HashMap();
 		
@@ -171,12 +173,12 @@ public class SearchController {
 	//인기 검색어
 	@RequestMapping("/listPicks")
 	@ResponseBody
-	public List<PicksVo> listPicks(){
+	public List<PicksVo> listPicks(HttpServletRequest request){
 		List<PicksVo> list = picksService.listPicks();
 		return list;
 	}
 	
-	public void insertPicks(String keyword) {
+	public void insertPicks(HttpServletRequest request, String keyword) {
 		PicksVo pv = new PicksVo();
 		pv.setP_keyword(keyword);
 		picksService.insertPicks(pv);

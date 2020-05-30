@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,14 +22,14 @@ public class ChatMainController {
 	static int cr_num = 0;
 
 	@RequestMapping("/")
-	public ModelAndView chat() {
+	public ModelAndView chat(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("chat");
 		return mav;
 	}
 	
 	//방페이지
 	@RequestMapping("/room")
-	public ModelAndView room() {
+	public ModelAndView room(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room");
 		return mav;
@@ -35,7 +37,7 @@ public class ChatMainController {
 	
 	//방 생성
 	@RequestMapping("/createRoom")
-	public @ResponseBody List<ChatRoomVo> createRoom(@RequestParam HashMap<Object, Object> params){
+	public @ResponseBody List<ChatRoomVo> createRoom(HttpServletRequest request, @RequestParam HashMap<Object, Object> params){
 		String cr_name = (String)params.get("cr_name");
 		if(cr_name != null && !cr_name.trim().equals("")) {
 			ChatRoomVo chatRoom = new ChatRoomVo();
@@ -47,12 +49,12 @@ public class ChatMainController {
 	}
 	
 	@RequestMapping("/getRoom")
-	public @ResponseBody List<ChatRoomVo> getRoom(@RequestParam HashMap<Object, Object> params){
+	public @ResponseBody List<ChatRoomVo> getRoom(HttpServletRequest request, @RequestParam HashMap<Object, Object> params){
 		return chatList;
 	}
 	
 	@RequestMapping("/moveChat")
-	public ModelAndView chat(@RequestParam HashMap<Object, Object> params) {
+	public ModelAndView chat(HttpServletRequest request, @RequestParam HashMap<Object, Object> params) {
 		ModelAndView mav = new ModelAndView();
 		int cr_num = Integer.parseInt((String)params.get("cr_num"));
 		System.out.println("cr_num:"+cr_num);

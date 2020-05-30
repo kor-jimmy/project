@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +36,7 @@ public class ReplyController {
 	}
 	
 	@PostMapping("/insert")
-	public String insert(ReplyVo rv) {
+	public String insert(HttpServletRequest request, ReplyVo rv) {
 		System.out.println("리플라이 인서트 컨트롤러 동작중");
 		System.out.println(rv);
 		String msg = "댓글 등록에 실패하였습니다.";
@@ -46,7 +48,7 @@ public class ReplyController {
 	}
 	
 	@GetMapping(value="/list", produces = "application/json; charset=utf-8")
-	public String list(ReplyVo rv) {
+	public String list(HttpServletRequest request, ReplyVo rv) {
 		System.out.println("리플라이 리스트 컨트롤러 동작중");
 		List<ReplyVo> list = replyService.listReply(rv.getB_no());
 		System.out.println();
@@ -55,7 +57,7 @@ public class ReplyController {
 	}
 	
 	@PostMapping("/delete")
-	public String delete(ReplyVo rv) {
+	public String delete(HttpServletRequest request, ReplyVo rv) {
 		System.out.println("리플라이 딜리트 컨트롤러 동작중");
 		System.out.println(rv.getR_no());
 		String msg = "댓글 삭제에 실패하였습니다.";

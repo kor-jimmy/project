@@ -166,18 +166,6 @@
 				console.log(id);
 				location.href="/member/get?m_id="+id;
 			})
-			
-
-			//$("#userMenu").hide();
-			//$("#fixedMenu").on("click",function(e){
-				//if($("#userMenu").attr("class").indexOf("clickedUserMenu") == -1){
-
-				//	$("#userMenu").slideToggle(500);
-				//}else{
-					//$("#userMenu").hide();
-				//	$("#userMenu").removeClass(500);
-				//}
-			})
 
 		})
     </script>

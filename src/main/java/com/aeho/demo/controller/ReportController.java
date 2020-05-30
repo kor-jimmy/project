@@ -1,5 +1,7 @@
 package com.aeho.demo.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,7 @@ public class ReportController {
 	//게시물신고
 	@PostMapping("/boardreport")
 	@ResponseBody
-	public String boardReport(ReportVo reportVo) {
+	public String boardReport(HttpServletRequest request, ReportVo reportVo) {
 		String msg = "신고 접수에 실패하였습니다.";
 		System.out.println(reportVo);
 		int re = reportService.insertBoardReport(reportVo);
@@ -35,7 +37,7 @@ public class ReportController {
 	//게시물 신고 한번만 누룰수 있도록
 	@GetMapping("/checkBoard")
 	@ResponseBody
-	public String checkBoard(ReportVo reportVo) {
+	public String checkBoard(HttpServletRequest request, ReportVo reportVo) {
 		String result = "0";
 		int re = reportService.isCheckedBoard(reportVo);
 		if(re>0) {
@@ -47,7 +49,7 @@ public class ReportController {
 	//댓글신고
 	@PostMapping("/replyreport")
 	@ResponseBody
-	public String replyReport(ReportVo reportVo) {
+	public String replyReport(HttpServletRequest request, ReportVo reportVo) {
 		String msg = "신고 접수에 실패 하였습니다.";
 		int re = reportService.insertReplyReport(reportVo);
 		if(re>0) {
@@ -83,7 +85,7 @@ public class ReportController {
 	
 	@RequestMapping("/insertGoodsReport")
 	@ResponseBody
-	public String insertGoodsReport(ReportVo rev) {
+	public String insertGoodsReport(HttpServletRequest request, ReportVo rev) {
 		System.out.println(rev);
 		String msg = "신고 접수에 실패했습니다.";
 		int re = reportService.insertGoodsReport(rev);
