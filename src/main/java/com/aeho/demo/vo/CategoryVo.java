@@ -13,4 +13,6 @@ import lombok.ToString;
 public class CategoryVo {
 	private int c_no;
 	private String c_dist;
+	
+	private int cnt;
 }

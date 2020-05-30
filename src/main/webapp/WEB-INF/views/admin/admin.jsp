@@ -6,12 +6,12 @@
     <script>
 		$(function(){
 
+			//URI 차트
 			$.ajax({
 				url:"/admin/listLog",
 				type:"GET",
 				success:function(result){
 					var listLog = JSON.parse(result);
-					console.log(listLog);
 					//chart js 이용
 					var ctx = document.getElementById("logChart").getContext("2d");
 					var logChart = new Chart(ctx,{
@@ -52,6 +52,55 @@
 						}
 
 					})
+				}
+			})
+
+			//인기 카테골
+			$.ajax({
+				url:"/admin/popCategory",
+				type:"GET",
+				success:function(result){
+					var popCategoryList = JSON.parse(result);
+					var ctx = document.getElementById("categoryChart").getContext("2d");
+					var logChart = new Chart(ctx,{
+						type:"bar",
+						data : {
+							labels : [popCategoryList[0].c_dist,popCategoryList[1].c_dist,popCategoryList[2].c_dist,popCategoryList[3].c_dist,popCategoryList[4].c_dist],
+							datasets : [{
+								label: "인기 카테고리(누적 게시물)",
+								data : [popCategoryList[0].cnt,popCategoryList[1].cnt,popCategoryList[2].cnt,popCategoryList[3].cnt,popCategoryList[4].cnt],
+								backgroundColor : [
+									'rgba(255, 99, 132, 0.2)',
+					                'rgba(54, 162, 235, 0.2)',
+					                'rgba(255, 206, 86, 0.2)',
+					                'rgba(75, 192, 192, 0.2)',
+					                'rgba(153, 102, 255, 0.2)'
+								],
+								borderColor: [
+					                'rgba(255, 99, 132, 1)',
+					                'rgba(54, 162, 235, 1)',
+					                'rgba(255, 206, 86, 1)',
+					                'rgba(75, 192, 192, 1)',
+					                'rgba(153, 102, 255, 1)',
+					                'rgba(255, 159, 64, 1)'
+					            ],
+					            borderWidth: 1
+							}]
+						},
+						options:{
+							//차트 크기 고정하는거 
+							responsive : false,
+							scales:{
+								yAxes:[{
+									ticks:{
+										beginAtZero:true
+									}
+								}]
+							}
+						}
+
+					})
+					
 				}
 			})
 
@@ -142,8 +191,7 @@
           <!-- Content Row -->
 
           <div class="row">
-
-            <div class="col-lg-5">
+            <div class="col-lg-4">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -151,11 +199,35 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                	<canvas id="logChart" width="400" height="400"></canvas>
+                	<canvas id="logChart" width="350" height="350"></canvas>
                 </div>
               </div>
             </div>
-
+            
+            <div class="col-lg-3">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  	<h6 class="m-0 font-weight-bold text-primary">인기 검색어</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                	<!-- <canvas id="categoryChart" width="250" height="250"></canvas> -->
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  	<h6 class="m-0 font-weight-bold text-primary">상위 카테고리</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                	<canvas id="categoryChart" width="250" height="250"></canvas>
+                </div>
+              </div>
+            </div>
           </div>
       
       <%@include file="../admin/footer.jsp"%>

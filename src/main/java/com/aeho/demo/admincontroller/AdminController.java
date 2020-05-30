@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.aeho.demo.dao.CategoryDao;
 import com.aeho.demo.dao.LogDao;
 import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.domain.PageDto;
@@ -30,6 +31,7 @@ import com.aeho.demo.service.BoardService;
 import com.aeho.demo.service.CategoryService;
 import com.aeho.demo.vo.BoardFilesVo;
 import com.aeho.demo.vo.BoardVo;
+import com.aeho.demo.vo.CategoryVo;
 import com.aeho.demo.vo.LogVo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -40,6 +42,9 @@ public class AdminController {
 
 	@Autowired
 	LogDao logDao;
+	
+	@Autowired
+	CategoryDao categoryDao;
 	
 	@GetMapping("/admin")
 	public void admin() {
@@ -54,6 +59,15 @@ public class AdminController {
 		Gson gson = new Gson();
 		String str = gson.toJson(list);
 		System.out.println(str);
+		return str;
+	}
+	
+	@GetMapping("/popCategory")
+	@ResponseBody
+	public String popCategory() {
+		List<CategoryVo> list = categoryDao.popCategory();
+		Gson gson = new Gson();
+		String str = gson.toJson(list);
 		return str;
 	}
 }

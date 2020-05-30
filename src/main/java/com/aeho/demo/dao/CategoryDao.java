@@ -17,4 +17,6 @@ public interface CategoryDao {
 	int deleteCategory(CategoryVo cv);
 
 	List<CategoryVo> listGoodsCategory();
+	
+	List<CategoryVo> popCategory();
 }
