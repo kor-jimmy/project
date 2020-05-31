@@ -131,12 +131,12 @@ public class MemberController {
 	public String sendMail(HttpServletRequest request, String email) {
 		System.out.println(email);
 		
-		int first = (int)(Math.random()*10)*1000;
-		int second = (int)(Math.random()*10)*100;
-		int third = (int)(Math.random()*10)*10;
-		int fourth = (int)(Math.random()*10);
+		int first = (int)(Math.random()*9)+1;
+		int second = (int)(Math.random()*9)+1;
+		int third = (int)(Math.random()*9)+1;
+		int fourth = (int)(Math.random()*9)+1;
 		
-		final int authNum = first + second + third + fourth;
+		final String authNum = Integer.toString(first) + Integer.toString(second) + Integer.toString(third) + Integer.toString(fourth);
 		
 		mailSender.send(new MimeMessagePreparator() {
 			
@@ -154,10 +154,10 @@ public class MemberController {
 			    //message.addInline("aeho", new ClassPathResource("/project/src/main/webapp/img/AEHO_for_EMAIL.png"));
 			}
 			
-			
 		});
 		
-		return authNum+"";
+		return authNum;
 	}
+
 
 }

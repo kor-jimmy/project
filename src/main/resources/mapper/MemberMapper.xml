@@ -45,8 +45,8 @@
   </select>
   
   <insert id="insertMember">
-  	insert into member(m_id, m_pwd, m_nick, m_email, m_phone, m_rate, m_store, role)
-  	values(#{m_id},#{m_pwd},#{m_nick},#{m_email},#{m_phone},1,1,'ROLE_USER')
+  	insert into member(m_id, m_pwd, m_nick, m_email, m_rate, m_store, role, m_state)
+  	values(#{m_id},#{m_pwd},#{m_nick},#{m_email},1,1,'ROLE_USER', 'ACTIVATE')
   </insert>
   
   <update id="updateMember">

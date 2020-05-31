@@ -166,18 +166,42 @@
 				console.log(id);
 				location.href="/member/get?m_id="+id;
 			})
+			var isFooter = true;
 			
+			$(window).scroll(function() {
+				var scrollBottom = $(window).scrollTop() + $(window).height();
+				var footer_top = Math.ceil($('.footer').offset().top);
+				//var topIcon_height = $("#topIcon").height();
+				//var userManuHam_height = $("#userManuHam").height();
 
-			//$("#userMenu").hide();
-			//$("#fixedMenu").on("click",function(e){
-				//if($("#userMenu").attr("class").indexOf("clickedUserMenu") == -1){
+				var browser_height = window.innerHeight;
+				var footer = document.getElementById('footer');
+				var footer_rect = footer.getBoundingClientRect();
+				console.log(footer_rect.top +"/"+browser_height);
 
-				//	$("#userMenu").slideToggle(500);
-				//}else{
-					//$("#userMenu").hide();
-				//	$("#userMenu").removeClass(500);
-				//}
-			//})
+		        if ( scrollBottom >= footer_top ) {
+		        	//console.log("userManuHam_height: "+userManuHam_height);
+		        	
+					$("#topIconBox").css({"bottom": browser_height - footer_rect.top + 10});
+					$("#userManuHam").css({"bottom": browser_height - footer_rect.top + 10});
+		        }else{
+		        	$("#topIconBox").css({"bottom": 10});
+					$("#userManuHam").css({"bottom": 10});
+			    }
+		        
+		    });
+			
+			/*
+			$("#userMenu").hide();
+			$("#fixedMenu").on("click",function(e){
+				if($("#userMenu").attr("class").indexOf("clickedUserMenu") == -1){
+					$("#userMenu").slideToggle(500);
+				}else{
+					$("#userMenu").hide();
+					$("#userMenu").removeClass(500);
+				}
+			})
+			*/
 
 		})
     </script>
@@ -322,11 +346,11 @@
     </nav>
     <!--end menu -->
 	
-	<a style="display:scroll;position:fixed;bottom:10px;right:10px;z-index: 1000" href="#" title="맨위로">
+	<a id="topIconBox" style = "display:scroll; position:fixed; bottom:10px; right:10px; z-index: 1000" href="#" title="맨위로">
 		<img width=60 height=60 id='topIcon' src="/img/topIcon2.png">
 	</a>
 
-	<div style="position: fixed; bottom: 10px; left: 10px; z-index: 1000">
+	<div id="userManuHam" style="position: fixed; bottom: 10px; left: 10px; z-index: 1000">
 		<!-- side menu -->
 		<div style="margin-left: 30px; margin-bottom: 30px;">
 			<!-- 

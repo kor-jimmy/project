@@ -155,7 +155,7 @@ $(function(){
 	
 	var keyword = $("#keyword").val();
 	
-	$("#mainSearch").val(keyword);
+	//$("#mainSearch").val(keyword);
 	$("#categoryBox").hide();
 	$("#boardBox").hide();
 	$("#goodsBox").hide();
@@ -240,9 +240,10 @@ $(function(){
 			
 			//a 태그 주소 수정
 			var href = $(this).children("a").attr("href");
-			$(this).children("a").attr("href", "https://www.vlive.tv"+href);
-			var uploadName = $(this).children(".video_date").children("a").attr("href");
-			$(this).children(".video_date").children("a").attr("href", "https://www.vlive.tv"+uploadName);
+			$(this).children("a").attr("href", "https://www.vlive.tv"+href).attr("target", "_blank");
+			var uploadName = $(this).children("div").children("a").attr("href");
+			console.log(uploadName);
+			$(this).children("div").children("a").attr("href", "https://www.vlive.tv"+uploadName).attr("target", "_blank");
 			console.log(li);
 			
 		});
@@ -308,7 +309,7 @@ $(function(){
 				}
 				console.log("img: " + img);
 				div_img.append(img);
-				var li = $("<li></li>").addClass("mb-3");
+				var li = $("<li></li>").addClass("mr-3");
 				var category = $("<span class='badge badge-info'></span>").html(g.c_dist);
 				var a = $("<a class='goodsTitle'></a>").attr("href", "../goods/get?g_no="+g.g_no);
 				var title = $("<b></b>").html(g.g_title);
