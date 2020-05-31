@@ -35,7 +35,8 @@
 				<thead>
 					<tr align="center">
 						<th width="10%">번호</th>
-						<th width="50%">제목</th>
+						<th width="10%">분류</th>
+						<th width="40%">제목</th>
 						<th width="10%">작성자</th>
 						<th width="10%">날짜</th>
 						<th width="10%">조회수</th>
@@ -45,6 +46,12 @@
 					<c:forEach items="${list }" var="board">
 						<tr>
 							<td align="center"><c:out value="${board.b_no }" /></td>
+							<td align="center">
+								<c:if test="${board.c_no == 10001}">일반</c:if>
+								<c:if test="${board.c_no == 10002}">징계/정책</c:if>
+								<c:if test="${board.c_no == 10003}">업데이트</c:if>
+								<c:if test="${board.c_no == 10004}">이벤트</c:if>
+							</td>
 							<td>
 								<a class="" href="/board/get?b_no=${board.b_no }" target="_blank">
 									<c:out value="${board.b_title }" />
@@ -60,7 +67,6 @@
 					</c:forEach>
 				</tbody>
 			</table>
-
 			<hr>
 			<!-- 페이징 -->
 			<nav ria-label="Page navigation example">

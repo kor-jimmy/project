@@ -117,6 +117,14 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return boardDao.getReportCount();
 	}
+
+	@Override
+	public int getNoticCount() {
+		// TODO Auto-generated method stub
+		return boardDao.getNoticCount();
+	}
+	
+	
 	
 	
 

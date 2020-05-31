@@ -5,15 +5,16 @@
 <mapper namespace="com.aeho.demo.dao.MainDao">
 	<select id="todayBest" resultType="com.aeho.demo.vo.BoardVo">
 	<![CDATA[
-		select b_no, b_title, b_date, b_lovecnt, b_replycnt, c.c_dist, b.c_no from board b, category c where b.c_no=c.c_no and b_no in (select b_no from (select rownum, b_no from(select b_no from board 
+		select b_no, b_title, b_date, b_lovecnt, b_replycnt, c.c_dist, b.c_no from board b, category c where b.c_no=c.c_no and b.c_no<10000 and b_no in (select b_no from (select rownum, b_no from(select b_no from board 
             where to_char(b_date)=to_char(sysdate,'YY/MM/DD') order by b_lovecnt-b_hatecnt desc) 
                 where rownum<=5))
+
     ]]>
 	</select>
 	
 	<select id="weekBest" resultType="com.aeho.demo.vo.BoardVo">
 	<![CDATA[
-		select b_no, b_title, b_date, b_lovecnt, b_replycnt, c.c_dist, b.c_no from board b, category c where b.c_no=c.c_no and b_no in
+		select b_no, b_title, b_date, b_lovecnt, b_replycnt, c.c_dist, b.c_no from board b, category c where b.c_no=c.c_no and b.c_no<10000 and b_no in
 		    (select b_no from (select rownum, b_no 
 		        from(select *from board where to_char(b_date)>=to_char(sysdate-7,'YY/MM/DD') order by b_lovecnt-b_hatecnt desc) 
 		                where rownum<=5))
@@ -23,7 +24,7 @@
 	
 	<select id="monthBest" resultType="com.aeho.demo.vo.BoardVo">
 	<![CDATA[
-		select b_no, b_title, b_date, b_lovecnt, b_replycnt, c.c_dist, b.c_no from board b, category c where b.c_no=c.c_no and b_no in
+		select b_no, b_title, b_date, b_lovecnt, b_replycnt, c.c_dist, b.c_no from board b, category c where b.c_no=c.c_no and b.c_no<10000 and b_no in
 		    (select b_no from (select rownum, b_no 
 		        from(select *from board where to_char(b_date)>=to_char(sysdate-30,'YY/MM/DD') order by b_lovecnt-b_hatecnt desc) 
 		                where rownum<=5))

@@ -35,7 +35,9 @@
   
   <!-- 인기 카테고리 -->
   <select id="popCategory" resultType="com.aeho.demo.vo.CategoryVo">
-  	select c_dist, count(*) cnt from board b, category c where b.c_no=c.c_no group by c_dist order by cnt desc
+ 	 <![CDATA[
+  		select c_dist, count(*) cnt from board b, category c where b.c_no=c.c_no and c.c_no<10000 group by c_dist order by cnt desc
+  	]]>
   </select>
   
 </mapper>

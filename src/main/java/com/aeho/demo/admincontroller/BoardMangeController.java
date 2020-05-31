@@ -46,8 +46,9 @@ public class BoardMangeController {
 	
 	@GetMapping("/notice/notice")
 	public void notice(Criteria cri, Model model) {
+		System.out.println(cri.getCategoryNum());
 		cri.setAmount(10);
-		int total = boardService.getTotalCount(cri);
+		int total = boardService.getNoticCount();
 		model.addAttribute("list", boardService.getList(cri));
 		model.addAttribute("pageMake", new PageDto(cri, total));
 		model.addAttribute("c_no",cri.getCategoryNum());

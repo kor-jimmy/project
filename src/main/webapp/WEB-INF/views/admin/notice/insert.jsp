@@ -15,8 +15,18 @@
 		<!-- Card Body -->
 		<div class="card-body">
 				<form id="insertForm" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="c_no" value="${c_no}">
 					<table class="table table-bordered">
+						<tr>
+							<td>분류</td>
+							<td width="">
+								<select name="c_no">
+										<option value="10001">일반</option>
+										<option value="10002">징계/정책</option>
+										<option value="10003">업데이트</option>
+										<option value="10004">이벤트</option>
+								</select>							
+							</td>
+						</tr>
 						<tr>
 							<td>게시물 제목</td>
 							<td><input type="text" name="b_title" id="b_title" required="required" style="width:40%;"></td>
@@ -127,6 +137,7 @@
 			}
 			e.preventDefault();
 			var myInsert = $("#insertForm").serialize();
+			alert(myInsert);
 			var date = new Date();
 			var year = date.getYear()+1900;
 			var month = date.getMonth()+1;

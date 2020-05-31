@@ -41,6 +41,9 @@
   				where rownum <= #{pageNum} * #{amount} 
   				]]>
   				<choose>
+  				  	<when test="categoryNum == 10000">
+  						and c_no>10000
+  					</when>
   					<when test="categoryNum != 0">
   						and c_no=#{categoryNum}
   					</when>
@@ -57,6 +60,11 @@
   
   <select id="getTotalCount" resultType="int">
   	select count(*) from board where b_no>0 and c_no=#{categoryNum} <include refid="searchSql"></include>
+  </select>
+  
+  <!-- 공지사항 토탈 -->
+  <select id="getNoticCount" resultType="int">
+  	select count(*) from board where b_no>0 and c_no>10000
   </select>
   
   <!-- 신고수가 많은 게시물 -->

@@ -300,7 +300,7 @@
     	<div>
 	    	<div>
 	            <ul class="nav">
-	                <li class="nav-item"><a href="/board/list?categoryNum=10000" class="nav-link text-secondary">공지사항</a></li>
+	                <li class="nav-item"><a href="/main/notice?categoryNum=10000" class="nav-link text-secondary">공지사항</a></li>
 	                <li class="nav-item"><a href="/category/category" class="nav-link text-secondary">카테고리</a></li>
 	                <li id="brodMenu" class="nav-item dropdown">
 				        <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

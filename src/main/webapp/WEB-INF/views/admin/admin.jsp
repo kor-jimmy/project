@@ -5,7 +5,6 @@
     
     <script>
 		$(function(){
-
 			//URI 차트
 			$.ajax({
 				url:"/admin/listLog",
@@ -55,7 +54,7 @@
 				}
 			})
 
-			//인기 카테골
+			//인기 카테고리
 			$.ajax({
 				url:"/admin/popCategory",
 				type:"GET",
@@ -103,6 +102,105 @@
 					
 				}
 			})
+			
+			var listWeeklyPicks = function(){
+				$.ajax({
+					url:"/admin/listWeeklyPicks",
+					type:"GET",
+					success:function(result){
+						var listPick = JSON.parse(result);
+						console.log(listPick);
+						var canvas = $("<canvas id='searchChart' width='350' height='350'></canvas>");
+						$("#serachPickDiv").append(canvas);
+						var ctx = document.getElementById("searchChart");
+						var doughnutChart = new Chart(ctx,{
+							type: 'doughnut',
+							data:  {
+								labels : [listPick[0].p_keyword,listPick[1].p_keyword,listPick[2].p_keyword,listPick[3].p_keyword,listPick[4].p_keyword],
+								datasets : [{
+									label: "주간 인기검색어",
+									data : [listPick[0].cnt,listPick[1].cnt,listPick[2].cnt,listPick[3].cnt,listPick[4].cnt],
+									backgroundColor : [
+										'rgba(255, 99, 132, 0.2)',
+						                'rgba(54, 162, 235, 0.2)',
+						                'rgba(255, 206, 86, 0.2)',
+						                'rgba(75, 192, 192, 0.2)',
+						                'rgba(153, 102, 255, 0.2)'
+									],
+									borderColor: [
+						                'rgba(255, 99, 132, 1)',
+						                'rgba(54, 162, 235, 1)',
+						                'rgba(255, 206, 86, 1)',
+						                'rgba(75, 192, 192, 1)',
+						                'rgba(153, 102, 255, 1)',
+						                'rgba(255, 159, 64, 1)'
+						            ],
+						            borderWidth: 1
+								}]
+							},
+							options:{
+								responsive : false
+							}
+						})
+					}
+				})
+			}
+			listWeeklyPicks();
+			
+			var listMonthlyPicks = function(){
+				$.ajax({
+					url:"/admin/listMonthlyPicks",
+					type:"GET",
+					success:function(result){
+						var listPick = JSON.parse(result);
+						console.log(listPick);
+						var canvas = $("<canvas id='searchChart' width='350' height='350'></canvas>");
+						$("#serachPickDiv").append(canvas);
+						
+						var ctx = document.getElementById("searchChart");
+						
+						var doughnutChart = new Chart(ctx,{
+							type: 'doughnut',
+							data:  {
+								labels : [listPick[0].p_keyword,listPick[1].p_keyword,listPick[2].p_keyword,listPick[3].p_keyword,listPick[4].p_keyword],
+								datasets : [{
+									data : [listPick[0].cnt,listPick[1].cnt,listPick[2].cnt,listPick[3].cnt,listPick[4].cnt],
+									backgroundColor : [
+										'rgba(255, 99, 132, 0.2)',
+						                'rgba(54, 162, 235, 0.2)',
+						                'rgba(255, 206, 86, 0.2)',
+						                'rgba(75, 192, 192, 0.2)',
+						                'rgba(153, 102, 255, 0.2)'
+									],
+									borderColor: [
+						                'rgba(255, 99, 132, 1)',
+						                'rgba(54, 162, 235, 1)',
+						                'rgba(255, 206, 86, 1)',
+						                'rgba(75, 192, 192, 1)',
+						                'rgba(153, 102, 255, 1)',
+						                'rgba(255, 159, 64, 1)'
+						            ],
+						            borderWidth: 1
+								}]
+							},
+							options:{
+								responsive : false
+							}
+						})
+					}
+				})
+			}
+
+			$("#weekSearch").on("click",function(){
+				$("#searchChart").remove();
+				listWeeklyPicks();
+			})
+			$("#monthSearch").on("click",function(){
+				$("#searchChart").remove();
+				listMonthlyPicks();
+			})
+
+			
 
 		})
     </script>
@@ -112,7 +210,7 @@
             <!-- <h1 class="h3 mb-0 text-gray-800">Dashboard</h1> -->
           </div>
 
-          <!-- Content Row -->
+          <!-- 상단 정보 고정글 -->
           <div class="row">
 
             <!-- 신규 가입, 누적회원 출력.  당일 기준으로 가입한 회원 숫자 출력 -->
@@ -188,7 +286,7 @@
             </div>
           </div>
 
-          <!-- Content Row -->
+          <!-- Cahrt 모음 -->
 
           <div class="row">
             <div class="col-lg-4">
@@ -204,15 +302,24 @@
               </div>
             </div>
             
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   	<h6 class="m-0 font-weight-bold text-primary">인기 검색어</h6>
+                  	<div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <a class="dropdown-item" id="weekSearch" >주간</a>
+                      <a class="dropdown-item" id="monthSearch">월간</a>
+                    </div>
+                  </div>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
-                	<!-- <canvas id="categoryChart" width="250" height="250"></canvas> -->
+                <div class="card-body" id="serachPickDiv">
+                	<!-- <canvas id="searchChart" width="300" height="300"></canvas> -->
                 </div>
               </div>
             </div>
@@ -229,5 +336,20 @@
               </div>
             </div>
           </div>
+          
+         <div class="row">
+         	<div class="col-lg-8">
+				<div class="card shadow mb-4">
+					<!-- Card Header - Dropdown -->
+					<div
+						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 font-weight-bold text-primary">관리자 공지사항</h6>
+					</div>
+					<!-- Card Body -->
+					<div class="card-body">
+					
+					</div>
+				</div>
+         </div>
       
       <%@include file="../admin/footer.jsp"%>

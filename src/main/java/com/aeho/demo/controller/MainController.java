@@ -8,13 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aeho.demo.domain.CategoryDTO;
+import com.aeho.demo.domain.Criteria;
+import com.aeho.demo.domain.PageDto;
 import com.aeho.demo.security.MemberPrincipal;
+import com.aeho.demo.service.BoardService;
 import com.aeho.demo.service.MainServcie;
 import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.CategoryVo;
@@ -25,6 +29,9 @@ public class MainController {
 	
 	@Autowired
 	private MainServcie mainService;
+	
+	@Autowired
+	private BoardService boardService;
 	
 	@GetMapping("/aeho")
 	public String main(HttpServletRequest request) {
@@ -93,6 +100,23 @@ public class MainController {
 	@GetMapping("/")
 	public String loadAccessdeniedPage(HttpServletRequest request) throws Exception{
 		return "loginError";
+	}
+	
+	//공지사항
+	@GetMapping("/main/notice")
+	public void noticeList(HttpServletRequest request,Criteria cri, Model model) {
+		System.out.println(cri.getCategoryNum());
+		cri.setAmount(10);
+		int total = 0;
+		if(cri.getCategoryNum()==10000) {
+			total = boardService.getNoticCount();	
+		}else {
+			total = boardService.getTotalCount(cri);
+		}
+		
+		model.addAttribute("list", boardService.getList(cri));
+		model.addAttribute("pageMake", new PageDto(cri, total));
+		model.addAttribute("c_no",cri.getCategoryNum());
 	}
 
 }

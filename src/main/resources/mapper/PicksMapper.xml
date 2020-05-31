@@ -13,7 +13,7 @@
   	insert into picks values(seq_picks.nextval, #{p_keyword}, sysdate)
   </insert>
   
-  <select id="listPicksForAdmin">
+  <select id="listPicksForAdmin" resultType="com.aeho.demo.vo.PicksVo">
   	select rownum, p_keyword, cnt from (select p_keyword, count(p_no) cnt from picks where p_date
   	<if test="chartCondition != null and chartCondition.equals('weekly')">
   		<![CDATA[
