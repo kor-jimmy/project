@@ -1,5 +1,7 @@
 package com.aeho.demo.admincontroller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +24,7 @@ public class MemberManageController {
 	MemberServiceSecurity memberService;
 	
 	@GetMapping("/list")
-	public void listMember(Model model, Criteria cri) {
+	public void listMember(HttpServletRequest request, Model model, Criteria cri) {
 		cri.setAmount(10);
 		int memberTotal = memberService.totalMember();
 		//model.addAttribute("list", memberService.listMember());
@@ -32,7 +34,7 @@ public class MemberManageController {
 	
 	@PostMapping("/updateState")
 	@ResponseBody
-	public String updateMemberState(MemberVo memberVo) {
+	public String updateMemberState(HttpServletRequest request, MemberVo memberVo) {
 		System.out.println(memberVo);
 		int re = memberService.updateMemberState(memberVo);
 		return "";

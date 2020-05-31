@@ -177,7 +177,7 @@
 				var browser_height = window.innerHeight;
 				var footer = document.getElementById('footer');
 				var footer_rect = footer.getBoundingClientRect();
-				console.log(footer_rect.top +"/"+browser_height);
+				//console.log(footer_rect.top +"/"+browser_height);
 
 		        if ( scrollBottom >= footer_top ) {
 		        	//console.log("userManuHam_height: "+userManuHam_height);
