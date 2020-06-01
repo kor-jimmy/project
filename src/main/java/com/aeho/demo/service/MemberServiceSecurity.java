@@ -81,8 +81,8 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 	}
 
 	@Override
-	public int totalMember() {
-		return memberDao.totalMember();
+	public int totalMember(Criteria cri) {
+		return memberDao.totalMember(cri);
 	}
 
 	@Override

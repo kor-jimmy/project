@@ -59,12 +59,19 @@
 			var month = m_bandate.substring(5,7)-1;
 			var day = m_bandate.substring(8,10);
 			var date = new Date(year,month,day);
-			console.log(m_bandate);
+			
 			console.log(year)
 			console.log(month)
 			console.log(day)
-
+			
 			var state= {m_id:m_id,role:role,m_state:m_state,m_bandate:date}
+			
+			if(m_bandate==null||m_bandate==""){
+				state= {m_id:m_id,role:role,m_state:m_state}
+			}	
+
+			
+
 			console.log(state);
 	 		$.ajax({
 					url:"/admin/member/updateState",
@@ -79,6 +86,24 @@
 					}
 				})  
 		})
+		
+		var searchFieldRole = "";
+		var serachFiledState = "";
+		var selectOptionRole = "";
+		var selectOptionState = "";
+
+		//권한별, 상태별 정렬
+		$("#selectRole").change(function(e){
+			selectOptionRole = $(this).val();
+			location.href="/admin/member/list?pageNum=1&amount=10&searchField=role&keyword="+selectOptionRole;
+		})
+
+		$("#selectState").change(function(e){
+			selectOptionState = $(this).val();
+			location.href="/admin/member/list?pageNum=1&amount=10&searchField=m_state&keyword="+selectOptionState;
+		})
+		
+
 
 	})
 	
@@ -99,8 +124,24 @@
 						<th width="15%">회원ID</th>
 						<th width="15%">닉네임</th>
 						<th width="10%">누적신고</th>
-						<th width="20%">권한</th>
-						<th width="10%">회원 상태</th>
+						
+						<th width="15%">
+							<select id="selectRole" class="custom-select mr-sm-2">
+								<option class="selectOptionRole" value="">전체 보기</option>
+								<option class="selectOptionRole" value="ROLE_MANAGER">매니저</option>
+								<option class="selectOptionRole" value="ROLE_USER">일반유저</option>
+							</select>
+
+						</th>
+						
+						<th width="15%">
+							<select id="selectState" class="custom-select mr-sm-2">
+								<option class="selectOptionState" value="">전체 보기</option>
+								<option class="selectOptionState" value="ACTIVATE">활성</option>
+								<option class="selectOptionState" value="PAUSE">일시정지</option>
+								<option class="selectOptionState" value="BAN">영구정지</option>
+							</select>
+						</th>
 						<th width="10%">정지 날짜</th>
 						<th width="10%">날짜 지정</th>						
 						<th width="10%">관리</th>						
@@ -114,15 +155,15 @@
 							<td align="center"><c:out value="${member.m_reportcnt }" /></td>
 							<td align="center">
 								<select id="role" class="custom-select mr-sm-2">
-									<option value="ROLE_MASTER" <c:if test="${member.role == 'ROLE_MASTER'}">selected</c:if>>ROLE_MASTER</option>
-									<option value="ROLE_MANAGER" <c:if test="${member.role == 'ROLE_MANAGER'}">selected</c:if>>ROLE_MANAGER</option>
-									<option value="ROLE_USER" <c:if test="${member.role == 'ROLE_USER'}">selected</c:if>>ROLE_USER</option>
+									<option value="ROLE_MASTER" <c:if test="${member.role == 'ROLE_MASTER'}">selected</c:if>>마스터</option>
+									<option value="ROLE_MANAGER" <c:if test="${member.role == 'ROLE_MANAGER'}">selected</c:if>>매니저</option>
+									<option value="ROLE_USER" <c:if test="${member.role == 'ROLE_USER'}">selected</c:if>>일반유저</option>
 								</select>
 							</td>
 							<td align="center">
 								<select id="m_state" class="custom-select mr-sm-2">
 									<option value="ACTIVATE" <c:if test="${member.m_state == 'ACTIVATE'}">selected</c:if>>활성</option>
-									<option value="DEACTIVATE" <c:if test="${member.m_state == 'DEACTIVATE'}">selected</c:if>>일시정지</option>
+									<option value="PAUSE" <c:if test="${member.m_state == 'PAUSE'}">selected</c:if>>일시정지</option>
 									<option value="BAN" <c:if test="${member.m_state == 'BAN'}">selected</c:if>>영구정지</option>
 								</select>
 							</td>
@@ -149,15 +190,15 @@
 				    	<input type="hidden" name="amount" id="amount" value="${pageMake.cri.amount}">
 			    	    <div class="col-sm-2 my-1">
 			    	    	<select class="custom-select mr-sm-2" name="searchField">
-					    		<option value="all" <c:out value="${ pageMake.cri.searchField eq 'all'?'selected':'' }"/>>아이디&닉네임</option>
 					    		<option value="m_id" <c:out value="${ pageMake.cri.searchField eq 'm_id'?'selected':'' }"/>>아이디
 					    		<option value="m_nick" <c:out value="${ pageMake.cri.searchField eq 'm_nick'?'selected':'' }"/>>닉네임
-					    		<option value="role" <c:out value="${ pageMake.cri.searchField eq 'role'?'selected':'' }"/>>권한</option>
-					    		<option value="m_state" <c:out value="${ pageMake.cri.searchField eq 'm_state'?'selected':'' }"/>>상태</option>
+<%-- 					    		<option value="role" <c:out value="${ pageMake.cri.searchField eq 'role'?'selected':'' }"/>>권한</option>
+					    		<option value="m_state" <c:out value="${ pageMake.cri.searchField eq 'm_state'?'selected':'' }"/>>상태</option> --%>
 					    	</select>
 			    	    </div>
 						<div class="col-sm-6 my-1">
 							<input type="text" class="form-control" id="keyword" name="keyword" value="${ pageMake.cri.keyword }">
+							
 						</div>
 				    	
 						<div class="col-sm-2 my-1">

@@ -32,7 +32,7 @@
   				<include refid="searchSql"></include>
   	<![CDATA[
   			)
-  		where rn > (#{pageNum}-1) * #{amount}  
+  		where rn > (#{pageNum}-1) * #{amount} and role != 'ROLE_MASTER'
   	]]>
   </select>  
   
@@ -55,7 +55,8 @@
   </update>
   
   <update id="updateMemberState">
-  	update member set m_state = #{m_state}, role=#{role}, m_bandate=#{m_bandate} where m_id=#{m_id}
+  	update member set m_state = #{m_state}, role=#{role}, m_bandate = #{m_bandate, jdbcType=DATE}	
+  	where m_id=#{m_id}
   </update>
   
   <update id="updateRelease">
@@ -68,11 +69,11 @@
   </delete>
   
   <select id="getMemberByNick" resultType="com.aeho.demo.vo.MemberVo">
-  	select * from member where m_nick = #{m_nick}
+  	select * from member where m_nick = #{m_nick} 
   </select>
   
   <!-- 유저 총 숫자 페이징을 위한거 -->
   <select id="totalMember" resultType="int">
-  	select count(*) from member
+  	select count(*) from member where role != 'ROLE_MASTER' <include refid="searchSql"></include>
   </select>
 </mapper>

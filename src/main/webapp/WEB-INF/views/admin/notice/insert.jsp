@@ -18,12 +18,13 @@
 					<table class="table table-bordered">
 						<tr>
 							<td>분류</td>
-							<td width="">
-								<select name="c_no">
+							<td>
+								<select name="c_no" id="noticeSelect">
 										<option value="10001">일반</option>
 										<option value="10002">징계/정책</option>
 										<option value="10003">업데이트</option>
 										<option value="10004">이벤트</option>
+										<option value="10010">관리자 공지사항</option>
 								</select>							
 							</td>
 						</tr>
@@ -53,6 +54,7 @@
 	$(function(){
 		var fileList = [];
 		var uploadFileList = [];
+		
 
 		//이미지 파일 유효성 검사
 		var imgCheck = new RegExp("^(image)/(.*?)");
@@ -125,11 +127,12 @@
 		//시큐리티 csrf 
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
-		console.log(token)
-		console.log(header)
+
 		
 		//폼태그 기본속성 제거
 		$("#insertBtn").on("click",function(e){
+			var noticeSelect = $("#noticeSelect").val();
+			alert(noticeSelect);
 			if($("#b_title").val() == null || $("#b_title").val() == "" || 
 					$("#b_content").val() == null || $("#b_content").val() == ""){
 				alert("제목이나 글 내용을 비워둘 수는 없습니다.");
@@ -137,7 +140,7 @@
 			}
 			e.preventDefault();
 			var myInsert = $("#insertForm").serialize();
-			alert(myInsert);
+
 			var date = new Date();
 			var year = date.getYear()+1900;
 			var month = date.getMonth()+1;
@@ -182,7 +185,13 @@
 							}
 						})
 					}
-					location.href="/admin/notice/notice?categoryNum=10000";
+					
+					if(noticeSelect==10010){
+						location.href="/admin/notice/notice?categoryNum=10010";
+					}else{
+						location.href="/admin/notice/notice?categoryNum=10000";
+					}
+					
 				}
 			})
 		})

@@ -119,9 +119,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int getNoticCount() {
+	public int getNoticCount(Criteria cri) {
 		// TODO Auto-generated method stub
-		return boardDao.getNoticCount();
+		return boardDao.getNoticCount(cri);
 	}
 	
 	

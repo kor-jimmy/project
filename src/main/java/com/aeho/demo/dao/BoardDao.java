@@ -32,5 +32,5 @@ public interface BoardDao {
 	int getReportCount();
 	
 	//공지사항 토탈 개수
-	int getNoticCount();
+	int getNoticCount(Criteria cri);
 }

@@ -48,11 +48,15 @@ public class BoardMangeController {
 	public void notice(Criteria cri, Model model) {
 		System.out.println(cri.getCategoryNum());
 		cri.setAmount(10);
-		int total = boardService.getNoticCount();
+		int total = boardService.getNoticCount(cri);
+		if(cri.getCategoryNum() == 10010) {
+			total = boardService.getTotalCount(cri);
+		}
 		model.addAttribute("list", boardService.getList(cri));
 		model.addAttribute("pageMake", new PageDto(cri, total));
 		model.addAttribute("c_no",cri.getCategoryNum());
 		model.addAttribute("catkeyword",categoryService.getCategory(cri.getCategoryNum()).getC_dist());
+		model.addAttribute("categoryNum", cri.getCategoryNum());
 	}
 
 	@GetMapping("/notice/insert")

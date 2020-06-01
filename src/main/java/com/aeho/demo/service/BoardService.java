@@ -26,6 +26,6 @@ public interface BoardService {
 	
 	int getReportCount();
 	
-	int getNoticCount();
+	int getNoticCount(Criteria cri);
 	
 }

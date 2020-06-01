@@ -42,7 +42,9 @@
   				]]>
   				<choose>
   				  	<when test="categoryNum == 10000">
-  						and c_no>10000
+  				  		<![CDATA[
+  							and c_no>10000 and c_no<10010
+  						]]>
   					</when>
   					<when test="categoryNum != 0">
   						and c_no=#{categoryNum}
@@ -62,9 +64,12 @@
   	select count(*) from board where b_no>0 and c_no=#{categoryNum} <include refid="searchSql"></include>
   </select>
   
-  <!-- 공지사항 토탈 -->
+  <!-- 유저 공지사항 토탈 -->
   <select id="getNoticCount" resultType="int">
-  	select count(*) from board where b_no>0 and c_no>10000
+	<![CDATA[
+  		select count(*) from board where b_no>0 and c_no>10000 and c_no<10010
+  	]]>
+  		<include refid="searchSql"></include>
   </select>
   
   <!-- 신고수가 많은 게시물 -->

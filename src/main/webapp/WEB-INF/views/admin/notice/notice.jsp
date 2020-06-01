@@ -26,7 +26,10 @@
 		<!-- Card Header - Dropdown -->
 		<div
 			class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-			<h6 class="m-0 font-weight-bold text-primary">공지 사항</h6>
+			<h6 class="m-0 font-weight-bold text-primary">
+				<c:if test="${categoryNum==10010 }">관리자 공지사항</c:if>
+				<c:if test="${categoryNum==10000 }">유저 공지사항</c:if>
+			</h6>
 		</div>
 		<!-- Card Body -->
 		<div class="card-body">
@@ -51,6 +54,7 @@
 								<c:if test="${board.c_no == 10002}">징계/정책</c:if>
 								<c:if test="${board.c_no == 10003}">업데이트</c:if>
 								<c:if test="${board.c_no == 10004}">이벤트</c:if>
+								<c:if test="${board.c_no == 10010}">관리자</c:if>
 							</td>
 							<td>
 								<a class="" href="/board/get?b_no=${board.b_no }" target="_blank">

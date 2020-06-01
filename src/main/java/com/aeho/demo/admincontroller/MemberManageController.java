@@ -26,7 +26,7 @@ public class MemberManageController {
 	@GetMapping("/list")
 	public void listMember(HttpServletRequest request, Model model, Criteria cri) {
 		cri.setAmount(10);
-		int memberTotal = memberService.totalMember();
+		int memberTotal = memberService.totalMember(cri);
 		//model.addAttribute("list", memberService.listMember());
 		model.addAttribute("list", memberService.getListWithPaging(cri));
 		model.addAttribute("pageMake", new PageDto(cri, memberTotal));

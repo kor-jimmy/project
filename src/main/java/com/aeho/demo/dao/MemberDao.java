@@ -22,7 +22,7 @@ public interface MemberDao {
 	
 	MemberVo getMemberByNick(String m_nick);
 	
-	int totalMember();
+	int totalMember(Criteria cri);
 	
 	List<MemberVo> getListWithPaging(Criteria cri);
 	

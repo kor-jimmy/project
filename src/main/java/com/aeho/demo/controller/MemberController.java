@@ -116,7 +116,7 @@ public class MemberController {
 	
 	@PostMapping("/update")
 	@ResponseBody
-	public String updateMember(MemberVo mv, RedirectAttributes rttr){
+	public String updateMember(HttpServletRequest request, MemberVo mv, RedirectAttributes rttr){
 		String msg = "예기치 않은 오류로 회원 정보 수정에 실패했습니다. 잠시 후 다시 시도해주시기 바랍니다. 불편을 드려 죄송합니다.";
 		int re = memberServiceSecurity.updateMember(mv);
 		if(re > 0) {

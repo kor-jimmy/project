@@ -113,11 +113,14 @@ public class MainController {
 		cri.setAmount(10);
 		int total = 0;
 		if(cri.getCategoryNum()==10000) {
-			total = boardService.getNoticCount();	
+			total = boardService.getNoticCount(cri);
+			System.out.println("이거동작중");
 		}else {
 			total = boardService.getTotalCount(cri);
 		}
-		
+		System.out.println("토탈==>>>"+total);
+		System.out.println("키워드 ==>"+cri.getKeyword());
+		System.out.println("검색타입==>"+cri.getSearchField());
 		model.addAttribute("list", boardService.getList(cri));
 		model.addAttribute("pageMake", new PageDto(cri, total));
 		model.addAttribute("c_no",cri.getCategoryNum());
