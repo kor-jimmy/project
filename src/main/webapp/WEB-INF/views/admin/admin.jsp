@@ -234,7 +234,7 @@
 					var adminNoitce = JSON.parse(result);
 					$.each(adminNoitce, function(idx, notice){
 						var date = moment(notice.b_date).format("YYYY-MM-DD");
-						var tr = $("<tr></tr>");
+						var tr = $("<tr class='noticeList' b_no="+notice.b_no+"></tr>");
 						var td1 = $("<td></td>").html(notice.b_no);
 						var td2 = $("<td></td>").html(notice.b_title);
 						var td3 = $("<td></td>").html(notice.m_id);
@@ -266,7 +266,7 @@
 						if(notice.c_no == 10004){
 							type = "이벤트"
 						}
-						var tr = $("<tr></tr>");
+						var tr = $("<tr class='noticeList' b_no="+notice.b_no+"></tr>");
 						var td1 = $("<td></td>").html(type);
 						var td2 = $("<td></td>").html(notice.b_title);
 						var td3 = $("<td></td>").html(notice.m_id);
@@ -278,6 +278,12 @@
 				}
 			})
 
+			//공지사항 게시물 클릭이벤트 ==> 관리자 공지사항 상세페이지로 이동
+			$(document).on("click",".noticeList",function(e){
+				var b_no = $(this).attr("b_no");
+				self.location = "/admin/notice/get?b_no="+b_no;
+			})
+			
 		})
     </script>
     

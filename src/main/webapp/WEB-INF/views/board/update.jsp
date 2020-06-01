@@ -54,6 +54,7 @@
 			 ],
 			callbacks:{
 				onImageUpload : function(files){
+					console.log(files)
 					$.each(files,function(idx,file){
 						uploadSummernoteImageFile(file,$("#b_content"));
 					})

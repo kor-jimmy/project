@@ -2,46 +2,52 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="../header.jsp"%>
  <div class="col mt-4">
 	<div class="card shadow mb-4">
 		<!-- Card Header - Dropdown -->
 		<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-			<h6 class="m-0 font-weight-bold text-primary">공지 사항 등록</h6>
+			<h6 class="m-0 font-weight-bold text-primary">공지 사항 수정</h6>
 		</div>
 		
 		<!-- Card Body -->
 		<div class="card-body">
-				<form id="insertForm" method="post" enctype="multipart/form-data">
+				<form id="updateForm" method="post" enctype="multipart/form-data">
 					<table class="table table-bordered">
 						<tr>
 							<td>분류</td>
 							<td>
-								<select name="c_no" id="noticeSelect">
-										<option value="10001">일반</option>
-										<option value="10002">징계/정책</option>
-										<option value="10003">업데이트</option>
-										<option value="10004">이벤트</option>
-										<option value="10010">관리자 공지사항</option>
-								</select>							
+								<select id="c_no" name="c_no">
+									<option value="10001" <c:if test="${board.c_no == 10001}">selected</c:if>>일반</option>
+									<option value="10002" <c:if test="${board.c_no == 10002}">selected</c:if>>징계/정책</option>
+									<option value="10003" <c:if test="${board.c_no == 10003}">selected</c:if>>업데이트</option>
+									<option value="10004" <c:if test="${board.c_no == 10004}">selected</c:if>>이벤트</option>
+									<option value="10010" <c:if test="${board.c_no == 10010}">selected</c:if>>관리자</option>
+								</select>
 							</td>
 						</tr>
 						<tr>
 							<td>게시물 제목</td>
-							<td><input type="text" name="b_title" id="b_title" required="required" style="width:40%;"></td>
+							<td>
+								<input value="${board.b_title }" type="text" name="b_title" id="b_title" required="required" style="width:40%;">
+							</td>
 						</tr>
 						<tr>
 							<td>작성자</td>
-							<td><input type="text" name="m_id" id="m_id" style="width:40%;" readonly="readonly" value="<sec:authentication property="principal.username"/>"></td>
+							<td><input type="text" name="m_id" id="m_id" style="width:40%;" readonly="readonly" value="${board.m_id }"></td>
 						</tr>
 						<tr>
 							<td>내용</td>
-							<td><textarea class="text_content" id="b_content" name="b_content" required="required" rows="30%" cols="100%"></textarea></td>
+							<td>
+								<textarea class="text_content" id="b_content" name="b_content" required="required" rows="30%" cols="100%">
+									${board.b_content }
+								</textarea>
+							</td>
 						</tr>
 					</table>
-					<button type="submit" id="insertBtn" class="btn btn-outline-dark">게시물 등록</button>
+					<input type="hidden" name="b_no" value="${board.b_no }">
+					<button type="submit" id="updateBtn" class="btn btn-outline-dark">수정</button>
 					<button type="reset" id="resetBtn" class="btn btn-outline-dark">리셋</button>
 				</form>
 		</div>
@@ -132,25 +138,27 @@
 
 		
 		//폼태그 기본속성 제거
-		$("#insertBtn").on("click",function(e){
-			var noticeSelect = $("#noticeSelect").val();
-			alert(noticeSelect);
+		$("#updateBtn").on("click",function(e){
+			var noticeSelect = $("#c_no").val();
+			//alert(noticeSelect);
 			if($("#b_title").val() == null || $("#b_title").val() == "" || 
 					$("#b_content").val() == null || $("#b_content").val() == ""){
 				alert("제목이나 글 내용을 비워둘 수는 없습니다.");
 				return;
 			}
 			e.preventDefault();
-			var myInsert = $("#insertForm").serialize();
-
+			var myInsert = $("#updateForm").serialize();
+			console.log(myInsert);
+			
 			var date = new Date();
 			var year = date.getYear()+1900;
 			var month = date.getMonth()+1;
 			if( month < 10 ) {
 				month = "0"+month;
-			}	
+			}
+				
 			$.ajax({
-				url : "/admin/notice/insert",
+				url : "/admin/notice/update",
 				data : myInsert,
 				type : "POST",
 				beforeSend : function(xhr){
@@ -158,6 +166,7 @@
 				},
 				cache : false,
 				success : function(boardNum){
+					//alert("수정 에이작스 성공")
 					console.log(boardNum);
 					if(boardNum>0){
 						$.each(fileList,function(idx,f){
@@ -183,7 +192,7 @@
 							},
 							cache : false,
 							success : function(msg){
-								alert(msg);
+								//alert(msg);
 							}
 						})
 					}
@@ -201,4 +210,3 @@
 </script>
 
 <%@include file="../footer.jsp"%>
-    

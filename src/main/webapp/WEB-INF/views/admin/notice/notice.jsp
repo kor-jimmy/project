@@ -57,7 +57,7 @@
 								<c:if test="${board.c_no == 10010}">관리자</c:if>
 							</td>
 							<td>
-								<a class="" href="/board/get?b_no=${board.b_no }" target="_blank">
+								<a class="" href="/admin/notice/get?b_no=${board.b_no }">
 									<c:out value="${board.b_title }" />
 									<span class="badge badge-light">${board.b_replycnt }</span>
 								</a>

@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +60,13 @@ public class BoardMangeController {
 		model.addAttribute("catkeyword",categoryService.getCategory(cri.getCategoryNum()).getC_dist());
 		model.addAttribute("categoryNum", cri.getCategoryNum());
 	}
+	
+	@GetMapping("/notice/get")
+	public void getNotice(Model model,@Param("b_no") int b_no) {
+		BoardVo boardVo = new BoardVo();
+		boardVo.setB_no(b_no);
+		model.addAttribute("board", boardService.getBoard(boardVo));
+	}
 
 	@GetMapping("/notice/insert")
 	public void insertNotice(Model model, @Param("c_no") int c_no) {
@@ -78,6 +87,38 @@ public class BoardMangeController {
 			msg = "게시물 등록에 성공하였습니다!";
 		}
 		return bv.getB_no()+"";
+	}
+	
+	@GetMapping("/notice/update")
+	public void update(BoardVo bv, Model model) {
+		model.addAttribute("board", boardService.getBoard(bv));
+	}
+	
+	@PostMapping("/notice/update")
+	@ResponseBody
+	public String update(BoardVo bv, RedirectAttributes rttr) {
+		System.out.println("게시물 수정!");
+		System.out.println(bv);
+		String msg = "게시물 수정에 실패했습니다.";
+		int re = boardService.updateBoard(bv);
+		if( re > 0 ) {
+			msg = "게시물 수정에 성공했습니다.";
+		}
+		rttr.addFlashAttribute("result", msg);
+		return bv.getB_no()+"";
+	}
+	
+	@PostMapping("/notice/delete")
+	@ResponseBody
+	public String delete(BoardVo bv){
+		String msg = "0";
+		System.out.println(bv.getB_no());
+		int result = boardService.deleteBoard(bv);
+		if(result > 0 ) {
+			msg = "1";
+		}
+		System.out.println(msg);
+		return msg;
 	}
 	
 	//게시물 등록 이미지 콜백 컨트롤러.
