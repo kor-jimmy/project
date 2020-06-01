@@ -172,7 +172,7 @@
         <div id="pageEdit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">페이지 관리</h6>
-            <a class="collapse-item" href="#">메인 이미지</a>
+            <a class="collapse-item" href="/admin/main/slider">메인 이미지</a>
           </div>
         </div>
       </li>

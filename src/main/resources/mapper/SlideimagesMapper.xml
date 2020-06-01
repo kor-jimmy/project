@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aeho.demo.dao.SlideimagesDao">
+
+ 	<select id="listSlideImages" resultType="com.aeho.demo.vo.SlideImagesVo">
+ 		select * from slideimages
+ 	</select>
+ 	
+ 	<select id="getSlideImages" resultType="com.aeho.demo.vo.SlideImagesVo">
+ 		select * from slideimages where s_no = #{s_no}
+ 	</select>
+ 	
+ 	<insert id="insertSlideImages">
+ 		insert into slideimages values(seq_slideimages.nextval, #{s_img}, #{s_title}, #{s_text})
+ 	</insert>
+ 	
+ 	<update id="updateSlideImages">
+ 		update slideimages set s_img = #{s_img}, s_title = #{s_title}, s_text = #{s_text} where s_no = #{s_no}
+ 	</update>
+ 	
+ 	<delete id="deleteSlideImages">
+ 		delete slideimages where s_no = #{s_no}
+ 	</delete>
+  
+</mapper>
