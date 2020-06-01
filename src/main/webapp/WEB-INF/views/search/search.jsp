@@ -4,6 +4,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="../includes/header.jsp"%>
 <script src="https://cdn.jsdelivr.net/npm/inko@1.1.1/inko.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <style>
 	li{
 		list-style: none;
@@ -279,7 +280,8 @@ $(function(){
 				var a = $("<a class='boardTitle'></a>").attr("href", "../board/get?b_no="+b.b_no);
 				var title = $("<b></b>").html(b.b_title);
 				console.log(b.b_updatedate);
-				var boardDate = $("<p></p>").html(b.b_updatedate).css("color", "lightgray");
+				var updateDate = moment(b.b_updatedate).format('YYYY-MM-DD HH:mm:ss');
+				var boardDate = $("<p></p>").html(updateDate).css("color", "lightgray");
 				a.append(title);
 				li.append(category, "&nbsp;", a, boardDate);
 				$("#boardList").append(li);
@@ -313,7 +315,8 @@ $(function(){
 				var category = $("<span class='badge badge-info'></span>").html(g.c_dist);
 				var a = $("<a class='goodsTitle'></a>").attr("href", "../goods/get?g_no="+g.g_no);
 				var title = $("<b></b>").html(g.g_title);
-				var goodsDate = $("<p></p>").html(g.g_updatedate).css("color", "lightgray");
+				var updateDate = moment(g.g_updatedate).format('YYYY-MM-DD HH:mm:ss');
+				var goodsDate = $("<p></p>").html(updateDate).css("color", "lightgray");
 				a.append(title);
 				li.append(div_img, "<br>", category, "&nbsp;", a, goodsDate);
 				$("#goodsList").append(li);

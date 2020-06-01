@@ -12,11 +12,14 @@
 	#labelForRe{
 		float:left;
 	}
-	#content{
+	#title, #content{
 		padding: 20px;
 	}
 	#goodsReport{
 		cursor: pointer;
+	}
+	tbody{
+		background: rgba(255, 255, 255, 0.7);
 	}
 	.grayscale{
 		filter: grayscale(100%);
@@ -91,6 +94,7 @@
 					replyString =tagID+"&nbsp;&nbsp;";
 					replyContent.html(replyString+realContent);
 					//li.addClass("list-group-item-warning");
+					li.css("background", "#F4F4F4");
  	 			}
 				else{
 					console.log("답댓글아닐때"+r.gr_no);
@@ -125,8 +129,8 @@
 				replyDiv.append(idDiv,contentDiv,reportDiv,deleteDiv,dateDiv);
 				
 				if(r.gr_state == 1 && r.gr_reCnt != 0){
-					var deletedReply = $("<div style='text-align: center; color: gray;'></div>").html("삭제된 댓글입니다.");
-					li.append(deletedReply)
+					var deletedReply = $("<div style='text-align: center; color: gray; background: #F4F4F4;'></div>").html("삭제된 댓글입니다.");
+					li.append(deletedReply);
 				}
 				else if(r.gr_state == 1 && r.gr_reCnt == 0){
 					return false;
@@ -321,7 +325,7 @@
 	<input type="hidden" id="g_no" value="${ goods.g_no }">
 	<table class="table table-bordered">
 		<tr>
-			<td colspan="6"><h3><c:out value="${goods.g_title }"/></h3></td>
+			<td id="title" colspan="6"><h3><c:out value="${goods.g_title }"/></h3></td>
 		</tr>
 		<tr>
 			<td width="15%" align="center"><b>작성자</b></td>
@@ -346,7 +350,6 @@
 		</sec:authorize>
 	</div>
 	
-	<hr>
 	<h4>Comments</h4>
 	<br>
 	<ul id="goodsReplyList" class="list-group list-group-flush">

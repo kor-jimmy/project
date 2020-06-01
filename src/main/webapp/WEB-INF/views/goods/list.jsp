@@ -16,6 +16,8 @@
 	
 	#goodsDiv{
 		display: flex;
+		border-radius: 20px;
+		background: rgba(255, 255, 255, 0.7);
 	}
 	#goodsList{
 		width: 100%;

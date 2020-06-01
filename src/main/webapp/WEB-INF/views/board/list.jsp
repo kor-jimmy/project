@@ -3,12 +3,21 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="../includes/header.jsp"%>
+<style>
+	#boardArticles { background: rgba( 255, 255, 255, 0.5 ); }
+</style>
 <script type="text/javascript">
 	$(function(){
 		var c_no = $("#c_no").val();
 		$("#insertBtn").on("click",function(){
 			self.location = "/board/insert?c_no="+c_no;
 		})
+		
+		if(!$("tbody tr").length){
+			var div = $("<div style='color: gray; font-weight: bold;'></div>").html("작성된 글이 없습니다. 첫 글을 남겨보세요!");
+			var td = $("<td style='height: 300px; vertical-align: middle;' colspan='6' align='center'></td>").append(div);
+			$("tbody").append(td);
+		}
 
 		//페이징 관련 내용
 		var actionForm = $("#actionForm");
@@ -65,6 +74,7 @@
 	    <!-- end 게시물 인서트 -->
 	</div>
 
+	<div id="boardArticles">
     <table class="table table-hover">
         <thead>
             <tr align="center">
@@ -120,8 +130,9 @@
 		    	</div>
 	    </div>
     </form>
-
+	
     <hr>
+    </div>
     <!-- 페이징 -->
     <div class="float-right">
     	<ul class="pagination">

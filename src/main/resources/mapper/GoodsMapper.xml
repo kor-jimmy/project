@@ -26,10 +26,10 @@
   <sql id="searchSql">
   	<choose>
   		<when test="searchField != null and !searchField.equals('') and searchField.equals('all')">
-  			and (g_title like '%'||#{searchKeyword}||'%' or g_content like '%'||#{searchKeyword}||'%' or m_id like '%'||#{searchKeyword}||'%')
+  			and (g_title like '%'||#{searchKeyword}||'%' or g_content like '%'||#{searchKeyword}||'%' or g.m_id like '%'||#{searchKeyword}||'%')
   		</when>
   		<when test="searchField != null and !searchField.equals('') and (searchField.equals('g_title') or searchField.equals('g_content') or searchField.equals('m_id'))">
-  			and ${searchField} like '%'||#{searchKeyword}||'%'
+  			and g.${searchField} like '%'||#{searchKeyword}||'%'
   		</when>
   		<when test="searchField != null and !searchField.equals('') and searchField.equals('doc')">
   			and (g_title like '%'||#{searchKeyword}||'%' or g_content like '%'||#{searchKeyword}||'%')
@@ -45,7 +45,7 @@
   			(
   				select /*+ INDEX_DESC(goods pk_goods)*/
   					rownum rn, g_no, gc_code, g.m_id, g_title, g_content, g_price, g_date, g_updatedate, g_replycnt, c_no, m_nick
-  				from goods g, member m 
+  				from (select * from goods order by g_updatedate desc) g, member m 
   				where rownum <= #{pageNum} * #{amount} 
   				]]>
   				
@@ -57,10 +57,10 @@
   						and gc_code > 0
   					</otherwise>
   				</choose>
-  				<if test="keyword != null">
-  					 and g.c_no=(select g.c_no from category c where c.c_no=g.c_no and c_dist=#{keyword})
+  				<if test="keyword != null and keyword != ''">
+  					 and g.c_no=(select g.c_no from category c, goods g where c.c_no=g.c_no and c_dist=#{keyword})
   				</if>
-  				<if test="searchKeyword != null">
+  				<if test="searchKeyword != null and searchKeyword != ''">
   					<include refid="searchSql"></include>
   				</if>
   				 and m.m_id=g.m_id

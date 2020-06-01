@@ -4,8 +4,8 @@
 <%@include file="../includes/header.jsp"%>
 <style>
 	a, li{
-		text-decoration: none;
-		list-style: none;
+		text-decoration: none !important;
+		list-style: none !important;
 	}
 	.cat{
 		padding: 15px;
@@ -17,6 +17,7 @@
 		opacity: 0.9;
 		display: inline-block;
 		color: gray;
+		transition: all ease 0.2s 0s;
 	}
 	.cat:hover{
 		box-shadow: 0px 0px 10px #ECECEC;
@@ -42,10 +43,15 @@
 	.head:hover{
 		box-shadow: 0px 0px 10px #ECECEC;
 		cursor: pointer;
+		background: rgba(255, 255, 255 0.7);
 	}
 	.clicked_head{
-		color: #8882F8;
+		color: white;
+		text-shadow: 0px 0px 5px black;
 		border: 2px solid #8882F8;
+		background-image: url("/img/background_light.png");
+		background-size: 400%;
+		opacity: 0.8;
 	}
 	.around{
 		display: table-cell;
@@ -71,7 +77,6 @@ $(function(){
 });
 </script>
 <div id="container">
-	<h2>카테고리 목록</h2>
 	<br>
 	<ul>
 		<div id="box">

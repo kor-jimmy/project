@@ -61,7 +61,7 @@ public class ReportController {
 	//댓글 한번만 누를 수 있도록.
 	@GetMapping("/checkReply")
 	@ResponseBody
-	public String checkReply(ReportVo reportVo) {
+	public String checkReply(HttpServletRequest request, ReportVo reportVo) {
 		String result = "0";
 		int re = reportService.isCheckedReply(reportVo);
 		if(re>0) {
@@ -74,7 +74,7 @@ public class ReportController {
 	
 	@RequestMapping("/checkGoods")
 	@ResponseBody
-	public String checkGoods(ReportVo rev) {
+	public String checkGoods(HttpServletRequest request, ReportVo rev) {
 		String result = "0";
 		int re = reportService.isCheckedGoods(rev);
 		if(re > 0) {

@@ -47,8 +47,11 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<style>
+		.section{
+			min-height: 800px;
+		}
         #searchDiv{
-            margin-top: 50px;
+            margin-top: 40px;
         }
         #headerTop{
         	padding-top: 5px;
@@ -85,6 +88,15 @@
 			font-weight: bold;
 			color: gray;
 		}
+		
+		#serachIcon{
+			width: 150px;
+			color: white;
+			border-bottom: 2px solid white;
+			padding: 5px;
+		}
+		
+		#serachIcon span{ float: left; }
 
     </style>
     <script>
@@ -221,13 +233,13 @@
                     </a>
                 </div>
                 <div class="col-sm" align="right">
-                	<div class="pt-5">
-                		<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-                			<p id="serachIcon">
+                	<div id="searchDiv">
+                		<!-- <button type="button" class="btn btn-primary" > -->
+                			<p id="serachIcon" data-toggle="modal" data-target=".bd-example-modal-lg">
                 				<span>SEARCH</span>
-                				<img src="/img/search.png" width="20px" height="20px">
+                				<img src="/img/search_icon.png" width="20px" height="20px">
                 			</p>
-                		</button>
+                		<!-- </button> -->
                 	</div>
                 </div>
             </div>
@@ -423,5 +435,5 @@
 	<!-- end Modal -->
 	
     <!--content-->
-    <div class="container pt-3">
+    <div class="container pt-3 section">
     
