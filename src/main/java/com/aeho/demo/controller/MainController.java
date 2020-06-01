@@ -20,6 +20,7 @@ import com.aeho.demo.domain.PageDto;
 import com.aeho.demo.security.MemberPrincipal;
 import com.aeho.demo.service.BoardService;
 import com.aeho.demo.service.MainServcie;
+import com.aeho.demo.service.SlideImagesService;
 import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.CategoryVo;
 import com.google.gson.Gson;
@@ -33,14 +34,17 @@ public class MainController {
 	@Autowired
 	private BoardService boardService;
 	
+	@Autowired
+	private SlideImagesService slideImageService;
+	
 	@GetMapping("/aeho")
 	public String main(HttpServletRequest request) {
 		return "redirect:/main/main";
 	}
 	
 	@GetMapping("/main/main")
-	public void getMain(HttpServletRequest request) {
-		
+	public void getMain(HttpServletRequest request, Model model) {
+		model.addAttribute("slideImageList", slideImageService.listSlideImages());
 	}
 	
 	//인기글

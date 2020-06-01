@@ -17,6 +17,9 @@
 </style>
 <script type="text/javascript">
 	$(function(){
+
+		$(".carousel-item").first().addClass("active");
+		$(".indicators").first().addClass("active");
 		
 		$.ajax("http://192.168.0.35:5000/videos", 
 			{dataType: "jsonp",
@@ -126,40 +129,39 @@
 		<!-- 이미지 슬라이드 -->
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            	<% int idx = 0; %>
+            	<c:forEach var="l" items="${ slideImageList }">
+            		<li data-target="#carouselExampleIndicators" data-slide-to="<%= idx %>" class="indicators"></li>
+            		<% idx += 1; %>
+            	</c:forEach>
+	            <!-- 
+	            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+	            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+	            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+	            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+	            -->
             </ol>
+            <!-- 
+            <c:forEach var="s" items="${ slideImageList }">
+            	<div class="carousel-item active">
+	                <img class="d-block w-100" src="/img/${ s.s_img }">
+	                <div class="carousel-caption d-none d-md-block">
+	                    <h5>${ s.s_title }</h5>
+	                    <p>${ s.s_text }</p>
+	                </div>
+	            </div>
+            </c:forEach>
+            -->
             <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="/img/slideBts.png">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>전 세계를 강타한 K-POP 열풍!</h5>
-                    <p>방탄소년단</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="/img/s_twice.png">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>CearUp!</h5>
-                    <p>트와이스</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="/img/s_blackpink.png">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Kill This Love</h5>
-                    <p>BlackPink</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="/img/slideLol.png">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>라이엇</h5>
-                    <p>리그오브레전드</p>
-                </div>
-            </div>
+            <c:forEach var="s" items="${ slideImageList }">
+            	<div class="carousel-item">
+	                <img class="d-block w-100" src="/img/${ s.s_img }">
+	                <div class="carousel-caption d-none d-md-block">
+	                    <h5>${ s.s_title }</h5>
+	                    <p>${ s.s_text }</p>
+	                </div>
+	            </div>
+            </c:forEach>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>

@@ -156,12 +156,15 @@ public class MainPageManageController {
 		String msg = "예기치 않은 오류로 슬라이드 이미지 삭제가 정상적으로 완료되지 못 했습니다.";
 		String path = request.getRealPath("img");
 		System.out.println(path);
-		int re = slideImageService.deleteSlideImages(s_no);
+		
 		SlideImagesVo sv = slideImageService.getSlideImages(s_no);
+		
+		int re = slideImageService.deleteSlideImages(s_no);
+		
+		System.out.println(re);
 		if(re > 0) {
 			try {
 				File file = new File(path + "/" + sv.getS_img());
-				
 				file.delete();
 			}catch (Exception e) {
 				e.getMessage();
