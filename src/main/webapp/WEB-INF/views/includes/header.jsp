@@ -50,6 +50,9 @@
 		.section{
 			min-height: 800px;
 		}
+		.containerBox{
+			margin: 50px 0px 100px 0px;
+		}
         #searchDiv{
             margin-top: 40px;
         }
@@ -57,7 +60,7 @@
         	padding-top: 5px;
         	padding-bottom: 5px;
         }
-/*         #customNav{
+		/*#customNav{
 			padding-left:200px;
 			padding-right: 200px;
         }	 */
@@ -436,4 +439,5 @@
 	
     <!--content-->
     <div class="container pt-3 section">
+    	<div class="containerBox">
     

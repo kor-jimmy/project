@@ -17,7 +17,7 @@
 		opacity: 0.9;
 		display: inline-block;
 		color: gray;
-		transition: all ease 0.2s 0s;
+		transition: color 0.1s, background 0.5s;
 	}
 	.cat:hover{
 		box-shadow: 0px 0px 10px #ECECEC;
@@ -39,11 +39,12 @@
 		display: table;
 		font-size: 15px;
 		color: slategray;
+		background: rgba(255, 255, 255, 0.7);
 	}
 	.head:hover{
 		box-shadow: 0px 0px 10px #ECECEC;
 		cursor: pointer;
-		background: rgba(255, 255, 255 0.7);
+		background: none;
 	}
 	.clicked_head{
 		color: white;

@@ -18,6 +18,9 @@
 	#goodsReport{
 		cursor: pointer;
 	}
+	
+	.btn{ background: white; }
+	
 	tbody{
 		background: rgba(255, 255, 255, 0.7);
 	}
@@ -349,29 +352,29 @@
 			</c:if>
 		</sec:authorize>
 	</div>
-	
-	<h4>Comments</h4>
 	<br>
-	<ul id="goodsReplyList" class="list-group list-group-flush">
-	</ul>
-    <hr>
-   <sec:authorize access="isAuthenticated()">
-   <form id="reply">
-   <div id="replyDiv" class="form-row align-items-center">
-      <input type="hidden" name="g_no" value="<c:out value='${goods.g_no }'/>">
-      <input type="hidden" name="gr_ref" value="0">
-      <input type="hidden" name="gr_level" value="0">
-     <div class="col-sm-2 my-1">
-      <input class="form-control" type="text" name="m_id" value="<sec:authentication property="principal.username"/>" readonly="readonly">
-      </div>
-      <div class="col-sm-8 my-1">
-      <input class="form-control" type="text" name="gr_content" required="required" placeholder="댓글을 입력하세요.">
-      </div>      
-   </div>
-   <div class="col-sm-2 my-1">
-   		<a href="#" id="insertReply" class="badge badge-light">댓글등록</a>
-   </div>
-   </form>
+	<h4>Comments</h4>
+	<ul id="goodsReplyList" class="list-group list-group-flush"></ul>
+	<hr>
+	
+	<sec:authorize access="isAuthenticated()">
+	<form id="reply">
+		<div id="replyDiv" class="form-row align-items-center">
+			<input type="hidden" name="g_no" value="<c:out value='${goods.g_no }'/>">
+			<input type="hidden" name="gr_ref" value="0">
+			<input type="hidden" name="gr_level" value="0">
+		<div class="col-sm-2 my-1">
+			<input class="form-control" type="text" name="m_id" value="<sec:authentication property="principal.username"/>" readonly="readonly">
+		</div>
+		<div class="col-sm-8 my-1">
+			<input class="form-control" type="text" name="gr_content" required="required" placeholder="댓글을 입력하세요.">
+		</div>
+		<div class="col-sm-2 my-1">
+			<a href="#" id="insertReply" class="btn btn-outline-dark">댓글등록</a>
+		</div>   
+	</div>
+	
+	</form>
    
    </sec:authorize>
    

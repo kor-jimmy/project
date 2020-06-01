@@ -38,6 +38,7 @@
 		height: 200px;
 		border: 1px solid lightgray;
 	}
+	.btn{ background: white; }
 </style>
 <script type="text/javascript">
 function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
@@ -189,11 +190,17 @@ $(function(){
 	})
 	//검색처리
 	$("#searchBtn").on("click", function(e){
+		e.preventDefault();
 		searchKeyword = $("#searchKeyword").val();
 		searchField = $("#searchField").val();
 		console.log(searchKeyword, searchField);
 		
-		listGoods(gc_code,keyword,1,searchField,searchKeyword)			
+		listGoods(gc_code,keyword,1,searchField,searchKeyword);
+	});
+
+   $("#allBoardBtn").on("click", function(e){
+		e.preventDefault();
+		self.location = "/goods/list";
 	});
 
 	
@@ -241,9 +248,38 @@ $(function(){
 	</table>
 	-->
 	<hr>
-	<br>
 	<!-- 게시물 검색 -->
-		<select id="searchField">
+	<form id="searchForm" method="get">
+	    <div class="form-row align-items-center">
+	    	    <input type="hidden" id="categoryNum" name="categoryNum" value="${ c_no }">
+	    	    <input type="hidden" name="c_no" id="c_no" value="${c_no}">
+		    	<input type="hidden" name="pageNum" id="pageNum" value="${pageMake.cri.pageNum}">
+		    	<input type="hidden" name="amount" id="amount" value="${pageMake.cri.amount}">
+	    	    <div class="col-sm-2 my-1">
+	    	    	<select id="searchField" class="custom-select mr-sm-2" name="searchField">
+			    		<!-- <option value="all" class="sf">전체보기</option>-->
+						<option value="g_title" class="sf">제목</option>
+						<option value="g_content" class="sf">내용</option>
+						<option value="m_id" class="sf">작성자</option>
+						<option value="doc" class="sf">제목+내용</option>
+			    	</select>
+	    	    </div>
+				<div class="col-sm-6 my-1">
+					<input type="text" class="form-control" id="searchKeyword" name="searchKeyword">
+				</div>
+		    	
+				<div class="col-sm-2 my-1">
+					<button id="searchBtn" class="btn btn-outline-dark">검색</button>
+				</div>
+		    	
+		    	<div class="col-sm-2 my-1">
+		    		<button id="allBoardBtn" class="btn btn-outline-dark float-right">전체글</button>
+		    	</div>
+	    </div>
+    </form>
+    
+    <!-- 
+	<select id="searchField">
 		<option value="all" class="sf">전체보기</option>
 		<option value="g_title" class="sf">제목</option>
 		<option value="g_content" class="sf">내용</option>
@@ -252,6 +288,8 @@ $(function(){
 	</select>
 	<input type="text" id="searchKeyword" name="searchKeyword">
 	<button id="searchBtn" class="btn btn_outline-dark">검색</button>
+	-->
+	<hr>
 	 <!-- 페이징 -->
 	<div class="float-right">
 		<ul class="pagination">
@@ -259,5 +297,5 @@ $(function(){
 		</ul>
 	</div>
 	<!-- paging end -->
-	<hr>
+	
 <%@include file="../includes/footer.jsp"%>

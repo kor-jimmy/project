@@ -3,8 +3,13 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@include file="../includes/header.jsp"%>
 
+	<style>
+		#insertForm{ background: rgba(255, 255, 255, 0.7); }
+		#contentTd{ padding: 20px;}
+	</style>
+
 	<h2>상품등록</h2>
-	
+	<br>
 	<form id="insertForm" method="post" enctype="multipart/form-data">
 	<table class="table table-bordered">
 		<tr>
@@ -34,7 +39,7 @@
 		</tr>
 		<tr>
 			<td>내용</td>
-			<td><textarea class="text_content" id="g_content" name="g_content" row="30%" cols="100%"></textarea></td>
+			<td id="contentTd"><textarea class="text_content" id="g_content" name="g_content" rows="30%" cols="100%"></textarea></td>
 		</tr>
 	</table>
 	<button type="submit" id="insertBtn" class="btn btn-outline-dark">등록</button>
