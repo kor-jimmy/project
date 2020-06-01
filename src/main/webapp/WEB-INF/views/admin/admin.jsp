@@ -3,6 +3,32 @@
     
     <%@include file="../admin/header.jsp"%>
     
+    <style type="text/css">
+	
+		table { 
+			border-collapse: collapse; 
+			border-spacing: 0;		
+			width: 100%; 
+			table-layout: fixed;
+		}
+	
+		td { 
+			vertical-align: middle; 
+			overflow:hidden;
+			white-space : nowrap;
+			text-overflow: ellipsis;
+		 }
+
+		td.textOverDefault {
+			white-space : normal; /*기본값*/
+			text-overflow: clip; /*기본값*/
+		}
+	
+	
+	
+	</style>
+
+    
     <script>
 		$(function(){
 			//URI 차트
@@ -200,7 +226,57 @@
 				listMonthlyPicks();
 			})
 
-			
+			//관리자 공지사항
+			$.ajax({
+				url:"/admin/adminNotice",
+				type:"GET",
+				success:function(result){
+					var adminNoitce = JSON.parse(result);
+					$.each(adminNoitce, function(idx, notice){
+						var date = moment(notice.b_date).format("YYYY-MM-DD");
+						var tr = $("<tr></tr>");
+						var td1 = $("<td></td>").html(notice.b_no);
+						var td2 = $("<td></td>").html(notice.b_title);
+						var td3 = $("<td></td>").html(notice.m_id);
+						var td4 = $("<td></td>").html(date);
+
+						tr.append(td1,td2,td3,td4);
+						$("#adminNotice").append(tr);
+					})
+				}
+			})
+			//유저 공지사항
+			$.ajax({
+				url:"/admin/userNotice",
+				type:"GET",
+				success:function(result){
+					var adminNoitce = JSON.parse(result);
+					$.each(adminNoitce, function(idx, notice){
+						var date = moment(notice.b_date).format("YYYY-MM-DD");
+						var type = "";
+						if(notice.c_no == 10001){
+							type = "일반"
+						}
+						if(notice.c_no == 10002){
+							type = "징계/정책"
+						}
+						if(notice.c_no == 10003){
+							type = "업데이트"
+						}
+						if(notice.c_no == 10004){
+							type = "이벤트"
+						}
+						var tr = $("<tr></tr>");
+						var td1 = $("<td></td>").html(type);
+						var td2 = $("<td></td>").html(notice.b_title);
+						var td3 = $("<td></td>").html(notice.m_id);
+						var td4 = $("<td></td>").html(date);
+
+						tr.append(td1,td2,td3,td4);
+						$("#userNotice").append(tr);
+					})
+				}
+			})
 
 		})
     </script>
@@ -338,7 +414,8 @@
           </div>
           
          <div class="row">
-         	<div class="col-lg-8">
+         	<!-- 관리자 공지사항 -->
+         	<div class="col-lg-6">
 				<div class="card shadow mb-4">
 					<!-- Card Header - Dropdown -->
 					<div
@@ -346,10 +423,55 @@
 						<h6 class="m-0 font-weight-bold text-primary">관리자 공지사항</h6>
 					</div>
 					<!-- Card Body -->
-					<div class="card-body">
-					
+					<div class="card-body notice">
+						   <table class="table table-hover">
+					        <thead>
+					            <tr align="center">
+					                <th width="10%">번호</th>
+					                <th width="40%">제목</th>
+					                <th width="15%">작성자</th>
+					                <th width="20%">날짜</th>
+					            </tr>
+					        </thead>
+					        <tbody id="adminNotice" align="center">
+					        	
+					        </tbody>
+					    </table>
+					    <div>
+					    	<a class="float-right" href="/admin/notice/notice?categoryNum=10010">더보기</a>
+					    </div>
 					</div>
 				</div>
+        	 </div>
+        	 <!-- 유저 공지사항 -->
+        	 <div class="col-lg-6">
+				<div class="card shadow mb-4">
+					<!-- Card Header - Dropdown -->
+					<div
+						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 font-weight-bold text-primary">유저 공지사항</h6>
+					</div>
+					<!-- Card Body -->
+					<div class="card-body notice">
+						   <table class="table table-hover">
+					        <thead>
+					            <tr align="center">
+					                <th width="20%">분류</th>
+					                <th width="40%">제목</th>
+					                <th width="15%">작성자</th>
+					                <th width="20%">날짜</th>
+					            </tr>
+					        </thead>
+					        <tbody id="userNotice" align="center">
+					        	
+					        </tbody>
+					    </table>
+					    <div>
+					    	<a class="float-right" href="/admin/notice/notice?categoryNum=10000">더보기</a>
+					    </div>
+					</div>
+				</div>
+        	 </div>
          </div>
       
       <%@include file="../admin/footer.jsp"%>

@@ -43,15 +43,16 @@ import com.google.gson.JsonObject;
 public class AdminController {
 
 	@Autowired
-	LogDao logDao;
+	private LogDao logDao;
 	
 	@Autowired
-	CategoryDao categoryDao;
+	private CategoryDao categoryDao;
 	
 	@Autowired
 	private PicksDao picksDao;
 	
-	
+	@Autowired
+	private BoardService boardService;
 	
 	@GetMapping("/admin")
 	public void admin() {
@@ -95,6 +96,24 @@ public class AdminController {
 	public String listMonthlyPicks() {
 		String chartCondition = "monthly";
 		List<PicksVo> list = picksDao.listPicksForAdmin(chartCondition);
+		Gson gson = new Gson();
+		String str = gson.toJson(list);
+		return str;
+	}
+	
+	@GetMapping("/adminNotice")
+	@ResponseBody
+	public String adminNotice() {
+		List<BoardVo> list = boardService.getAdminNotice();
+		Gson gson = new Gson();
+		String str = gson.toJson(list);
+		return str;
+	}
+	
+	@GetMapping("/userNotice")
+	@ResponseBody
+	public String userNotice() {
+		List<BoardVo> list = boardService.getUserNotice();
 		Gson gson = new Gson();
 		String str = gson.toJson(list);
 		return str;

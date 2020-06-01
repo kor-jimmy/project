@@ -40,6 +40,8 @@
 	<script src="/resources/editor/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/resources/editor/summernote-lite.css">
 	<!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 </head>
 
 <body id="page-top">

@@ -123,6 +123,18 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return boardDao.getNoticCount(cri);
 	}
+
+	@Override
+	public List<BoardVo> getAdminNotice() {
+		// TODO Auto-generated method stub
+		return boardDao.getAdminNotice();
+	}
+
+	@Override
+	public List<BoardVo> getUserNotice() {
+		// TODO Auto-generated method stub
+		return boardDao.getUserNotice();
+	}
 	
 	
 	

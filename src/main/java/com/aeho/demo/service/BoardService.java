@@ -28,4 +28,8 @@ public interface BoardService {
 	
 	int getNoticCount(Criteria cri);
 	
+	List<BoardVo> getAdminNotice();
+	
+	List<BoardVo> getUserNotice();
+	
 }

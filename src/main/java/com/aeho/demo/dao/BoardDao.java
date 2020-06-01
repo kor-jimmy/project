@@ -33,4 +33,11 @@ public interface BoardDao {
 	
 	//공지사항 토탈 개수
 	int getNoticCount(Criteria cri);
+	
+	//관리자 메인 페이지 공지사항
+	List<BoardVo> getAdminNotice();
+	
+	//관리자 메인 페이지 유저 공지사항
+	List<BoardVo> getUserNotice();
+	
 }

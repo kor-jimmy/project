@@ -77,6 +77,19 @@
   	select count(*) from board where b_reportcnt>=5
   </select>
   
+  <!-- 관리자 공지사항 관리자 메인 페이지 용도 -->
+  <select id="getAdminNotice" resultType="com.aeho.demo.vo.BoardVo">
+  	<![CDATA[
+  		select rownum rn, b_no, b_title, m_id, b_date from (select *from board where c_no=10010 order by b_no desc) where rownum<=5
+  	]]>
+  </select>
+  <!-- 관리자 유저 공지사항 메인 페이지 용도 -->
+  <select id="getUserNotice" resultType="com.aeho.demo.vo.BoardVo">
+ 	 <![CDATA[
+  		select rownum rn, b_no, c_no, b_title, m_id, b_date from (select *from board where c_no>10000 and c_no<10010 order by b_no desc) where rownum<=5
+  	]]>
+  </select>
+  
   <insert id="insertBoard">
   	<selectKey keyProperty="b_no" order="BEFORE" resultType="int">
   		select seq_board.nextval from dual
