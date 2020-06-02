@@ -2,8 +2,6 @@ package com.aeho.demo.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,27 +26,34 @@ public class CategoryController {
 	}
 	
 	@GetMapping({"/manage", "/category"})
-	public void list(HttpServletRequest request, Model model) {
+	public void list(Model model) {
 		model.addAttribute("list", categoryService.listCategory());
 	}
 	
 	@GetMapping(value = "/goodsCateList", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String goodsList(HttpServletRequest request) {
+	public String goodsList() {
 		String list = new Gson().toJson(categoryService.listGoodsCategory());
+		return list;
+	}
+	
+	@GetMapping(value = "/qnaBoardList", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String qnaBoardList() {
+		String list = new Gson().toJson(categoryService.listQnaBoardCategory());
 		return list;
 	}
 	
 	@GetMapping(value = "/get", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String get(HttpServletRequest request, int c_no) {
+	public String get(int c_no) {
 		Gson gson = new Gson();
 		return gson.toJson(categoryService.getCategory(c_no));
 	}
 	
 	@PostMapping("/insert")
 	@ResponseBody
-	public String insert(HttpServletRequest request,CategoryVo cv) {
+	public String insert(CategoryVo cv) {
 		String msg = "카테고리 등록에 실패했습니다.";
 		int re = categoryService.insertCategory(cv);
 		if( re > 0 ) {
@@ -59,7 +64,7 @@ public class CategoryController {
 	
 	@PostMapping("/update")
 	@ResponseBody
-	public String update(HttpServletRequest request,CategoryVo cv) {
+	public String update(CategoryVo cv) {
 		String msg = "카테고리 수정에 실패했습니다.";
 		int re = categoryService.updateCategory(cv);
 		if( re > 0 ) {
@@ -70,7 +75,7 @@ public class CategoryController {
 	
 	@PostMapping("/delete")
 	@ResponseBody
-	public String delete(HttpServletRequest request,CategoryVo cv) {
+	public String delete(CategoryVo cv) {
 		String msg = "카테고리 삭제에 실패했습니다.";
 		int re = categoryService.deleteCategory(cv);
 		if( re > 0 ) {

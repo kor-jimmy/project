@@ -19,4 +19,6 @@ public interface CategoryDao {
 	List<CategoryVo> listGoodsCategory();
 	
 	List<CategoryVo> popCategory();
+	
+	List<CategoryVo> listQnaBoardCategory();
 }

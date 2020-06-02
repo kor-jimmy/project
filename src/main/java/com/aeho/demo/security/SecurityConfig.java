@@ -55,7 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers("/board/insert","/board/update","/board/delete",
 				"/reply/insert,","/reply/delete","/goods/insert","/goods/update","/goods/delete",
-				"/goodsReply/insert","/goodsReply/delete","/member/get","/member/update").hasAnyAuthority("ROLE_USER","ROLE_MASTER")
+				"/goodsReply/insert","/goodsReply/delete","/member/get","/member/update","/qnaboard/insert",
+				"/qnaboard/update","/qnaboard/delete").hasAnyAuthority("ROLE_USER","ROLE_MASTER")
 				//.antMatchers("/admin","/admin/*").hasAnyAuthority("ROLE_MASTER")
 				.antMatchers("/*","/*/*").permitAll()
 				/* .anyRequest().authenticated() */

@@ -45,5 +45,12 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<CategoryVo> listGoodsCategory() {
 		return categoryDao.listGoodsCategory();
 	}
+	
+	@Override
+	public List<CategoryVo> listQnaBoardCategory() {
+		// TODO Auto-generated method stub
+		return categoryDao.listQnaBoardCategory();
+	}
+
 
 }

@@ -103,25 +103,33 @@
 
     </style>
     <script>
-		$(function(){
-			//각 분류별 카테고리를 호출하는 함수.
-			var menuCategory = function(categoryInfo, key){
-				console.log("함수 동작중");
-				$("#"+key).empty();
-				$.ajax("/menuCategory",{
-					data: categoryInfo,
-					success:function(data){
-						console.log("ajax 통신");
-						var menus = JSON.parse(data)
-						$.each(menus,function(idx,menu){
-							console.log(menu)
-							var categoryName = $("<a class='dropdown-item'></a>").text(menu.c_dist).attr("href","/board/list?categoryNum="+menu.c_no);
-							var line = $("<div class='dropdown-divider'></div>");
-							$("#"+key).append(categoryName,line);
-						})
-					}
-				})
-			}
+    $(function(){
+		//각 분류별 카테고리를 호출하는 함수.
+		var menuCategory = function(categoryInfo, key){
+			console.log("함수 동작중");
+			$("#"+key).empty();
+			$.ajax("/menuCategory",{
+				data: categoryInfo,
+				success:function(data){
+					console.log("ajax 통신");
+					var menus = JSON.parse(data)
+					$.each(menus,function(idx,menu){
+						console.log(menu)
+						
+						var categoryName;
+						if(menu.c_no > 10000 ){
+							 categoryName = $("<a class='dropdown-item'></a>").text(menu.c_dist).attr("href","/qnaboard/list?categoryNum="+menu.c_no);
+						}else{
+							categoryName = $("<a class='dropdown-item'></a>").text(menu.c_dist).attr("href","/board/list?categoryNum="+menu.c_no);
+						}
+
+						var line = $("<div class='dropdown-divider'></div>");
+						$("#"+key).append(categoryName,line);
+					})
+					
+				}
+			})
+		}
 
 			$("#brodMenu").click(function(e){
 				var info = {startNum:1, endNum:100};
@@ -150,6 +158,12 @@
 			$("#sportMenu").click(function(e){
 				var info = {startNum:401, endNum:500};
 				var key = "sMenu";
+				menuCategory(info,key);
+			})
+			
+			$("#qnaBoard").click(function(e){
+				var info = {startNum:10001, endNum:10100};
+				var key = "qBoard";
 				menuCategory(info,key);
 			})
 			
@@ -355,6 +369,13 @@
 	                <li class="nav-item"><a href="/goods/list" class="nav-link text-secondary">굿즈</a></li>
 	                <li class="nav-item"><a href="#" class="nav-link text-secondary">일정</a></li>
 	                <li class="nav-item"><a href="/vote/vote" class="nav-link text-secondary">투표</a></li>
+	                <li id="qnaBoard" class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				          	고객의 소리
+				        </a>
+				        <div id="qBoard" class="dropdown-menu" aria-labelledby="navbarDropdown">			        				         	
+				        </div>
+     				</li>
 	            </ul>
 	        </div>
     	</div>

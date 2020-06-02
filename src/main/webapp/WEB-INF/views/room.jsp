@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="includes/header.jsp"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,7 +96,7 @@
 	}
 
 	function getRoom(){
-		commonAjax('/getRoom', "", 'post', function(result){
+		commonAjax('/chat/getRoom', "", 'post', function(result){
 			createChatingRoom(result);
 		});
 	}
@@ -101,7 +104,7 @@
 	function createRoom(){
 		$("#createRoom").click(function(){
 			var msg = {cr_name : $('#cr_name').val()};
-			commonAjax('/createRoom', msg, 'post', function(result){
+			commonAjax('/chat/createRoom', msg, 'post', function(result){
 				createChatingRoom(result);
 			});
 
@@ -110,7 +113,7 @@
 	}
 
 	function goRoom(number,name){
-		location.href="/moveChat?cr_num="+number+"&"+"cr_name="+name;
+		location.href="/chat/moveChat?cr_num="+number+"&"+"cr_name="+name;
 	}
 
 	function createChatingRoom(res){
@@ -163,3 +166,4 @@
 	</div>
 </body>
 </html>
+<%@include file="includes/footer.jsp"%>  

@@ -26,5 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:///C:/aehoUpload/board/"+year+"/"+month+"/");
         registry.addResourceHandler("/goodsImage/**")
         		.addResourceLocations("file:///C:/aehoUpload/goods/"+year+"/"+month+"/");
+        registry.addResourceHandler("/qnaBoardImage/**")
+        		.addResourceLocations("file:///C:/aehoUpload/qnaboard/"+year+"/"+month+"/");
     }
 }

@@ -9,6 +9,8 @@ public interface CategoryService {
 	
 	List<CategoryVo> listGoodsCategory();
 	
+	List<CategoryVo> listQnaBoardCategory();
+	
 	CategoryVo getCategory(int c_no);
 	
 	int insertCategory(CategoryVo cv);
