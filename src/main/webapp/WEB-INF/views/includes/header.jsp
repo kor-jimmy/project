@@ -46,6 +46,9 @@
 	<!-- alert창 디자인 -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
+	<!-- 날짜 포맷 변환 -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+	
 	<style>
 		.section{
 			min-height: 800px;

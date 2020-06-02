@@ -12,13 +12,6 @@
 
 	$(function(){
 
-/* 		$.ajax("/member/getBoard",function(result){
-			$.each(result,function(idx,item){
-				var li1 = $("<li></li>").html(item.b_no);
-				var li2 = $("<li></li>").html(item.b_title);
-				var li3 = $("<li></li>").html(item.b_title);		
-			})
-		}) */
 		var user_id = "<sec:authentication property='principal.username'/>";
 		var data = {m_id:user_id}
 		console.log(user_id);
@@ -55,6 +48,25 @@
 			}});
 			
 		});
+
+		$.ajax({
+			url:"/member/getMypageBoard",
+			data:data,
+			type:"GET",
+			success:function(result){
+				var boardList = JSON.parse(result);
+				$.each(boardList,function(idx,board){
+					var date = moment(board.b_date).format("YYYY-MM-DD");
+					var tr = $("<tr align='center'></tr>");
+					var category = $("<td></td>").html(board.c_dist);
+					var title = $("<td></td>").html(board.b_title);
+					var boardDate = $("<td></td>").html(date);
+					tr.append(category,title,boardDate);
+					$("#userContent").append(tr);
+				})		
+			}
+		})
+		
 	})
 </script>
  	<div class="row">
@@ -104,19 +116,31 @@
 	      </div>
 	    </div>
 	    
-	    <div class="col-lg-4">
+	    <div class="col-lg-8">
 	      <div class="card shadow mb-4">
 	        <!-- Card Body -->
 	        <div class="card-body" id="serachPickDiv">
-
-	        </div>
-	      </div>
-	    </div>
-	    <div class="col-lg-4">
-	      <div class="card shadow mb-4">
-	        <!-- Card Body -->
-	        <div class="card-body">
-
+	        	<div>
+	        		<button type="button" class="btn btn-light">내가 올린 애호글</button>
+	        		<button type="button" class="btn btn-light">내가 올린 애호품</button>
+	        	</div>
+	        	<div>
+	        		<table class="table table-hover">
+	        			<thead>
+	        				<tr align="center">
+	        					<th width="20%">카테고리</th>
+	        					<th width="40%">제목</th>
+	        					<th width="20%">날짜</th>	        					
+	        				</tr>
+	        			</thead>
+	        			<tbody id="userContent">
+	        			
+	        			</tbody>
+	        		</table>
+					<ul class="list-group list-group-flush" id="userContent">
+						
+					</ul>	        	
+	        	</div>
 	        </div>
 	      </div>
 	    </div>

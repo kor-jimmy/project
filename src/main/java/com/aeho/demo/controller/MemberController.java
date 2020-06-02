@@ -1,5 +1,7 @@
 package com.aeho.demo.controller;
 
+import java.util.List;
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.aeho.demo.service.BoardService;
 import com.aeho.demo.service.MemberServiceSecurity;
+import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.MemberVo;
 import com.google.gson.Gson;
 
@@ -38,6 +42,9 @@ public class MemberController {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Autowired
+	private BoardService boardService;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -107,6 +114,7 @@ public class MemberController {
 		}
 		return result;
 	}
+	
 	@GetMapping("/get")
 	public void get(HttpServletRequest request, @RequestParam("m_id") String m_id,Model model) {
 		System.out.println("member get");
@@ -122,12 +130,19 @@ public class MemberController {
 	@GetMapping("/getMemberInfo")
 	@ResponseBody
 	public String getMemberInfo(HttpServletRequest request, String m_id) {
-		System.out.println(m_id);
-		System.out.println("겟맴버인포 동작중*****");
 		MemberVo memberVo = memberServiceSecurity.getMember(m_id);
 		System.out.println(memberVo);
 		Gson gson = new Gson();
 		String str=  gson.toJson(memberVo);
+		return str;
+	}
+	
+	@GetMapping("/getMypageBoard")
+	@ResponseBody
+	public String getMypageBoard(HttpServletRequest request, @RequestParam("m_id") String m_id) {
+		List<BoardVo> list = boardService.getMypageBoard(m_id);
+		Gson gson = new Gson();
+		String str = gson.toJson(list);
 		return str;
 	}
 	

@@ -83,9 +83,17 @@
   	select count(*) from board where b_reportcnt>=5
   </select>
   
-  <!-- 전체글을 위한 전체 게시물 숫자-->
+  <!-- 회원 전체글을 위한 전체 게시물 숫자-->
   <select id="totalBoard" resultType="int">
-  	select count(*) from board
+  	select count(*) from board where m_id = #{m_id}
+  </select>
+  
+  <select id="getMypageBoard" resultType="com.aeho.demo.vo.BoardVo">
+  	<![CDATA[ 	
+	  	select rownum rn, b_no, m_id, c_dist, c_no, b_title, b_date from
+	    	(select b_no, c_dist, m_id, b.c_no, b_title, b_date from board b, category c where b.c_no=c.c_no and m_id=#{m_id} order by b_no desc)
+	        	where rownum<=5
+    ]]> 
   </select>
   
   
@@ -101,6 +109,7 @@
   		select rownum rn, b_no, c_no, b_title, m_id, b_date from (select *from board where c_no>10000 and c_no<10010 order by b_no desc) where rownum<=5
   	]]>
   </select>
+
   
   <insert id="insertBoard">
   	<selectKey keyProperty="b_no" order="BEFORE" resultType="int">

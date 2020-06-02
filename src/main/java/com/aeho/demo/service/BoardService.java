@@ -32,6 +32,8 @@ public interface BoardService {
 	
 	List<BoardVo> getUserNotice();
 	
-	int totalBoard();
+	int totalBoard(String m_id);
+	
+	List<BoardVo> getMypageBoard(String m_id);
 	
 }
