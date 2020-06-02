@@ -144,19 +144,15 @@ public class MemberController {
 	
 	@RequestMapping("/isCorrectPwd")
 	@ResponseBody
-	public void isCorrectPwd(HttpServletRequest request, String m_id, String m_pwd) {
+	public String isCorrectPwd(HttpServletRequest request, String m_id, String m_pwd) {
+		String re = "0";
 		System.out.println("m_id: "+m_id+" / m_pwd: "+m_pwd);
 		String pwd = memberServiceSecurity.getMember(m_id).getM_pwd();
-		String inputPwd = passwordEncoder.encode(m_pwd);
 		
-		System.out.println("진짜 비밀번호: "+pwd + " / 입력된 비밀번호: " + inputPwd);
-		
-		if(passwordEncoder.matches(inputPwd, pwd)) {
-			System.out.println("[ Correct!! ]");
-		}else {
-			System.out.println("[ inCorrect!! ]");
+		if(passwordEncoder.matches( m_pwd, pwd )) {
+			re = "1";
 		}
-
+		return re;
 	}
 	
 	//메일 발송

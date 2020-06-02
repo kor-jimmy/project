@@ -42,8 +42,16 @@
 
 		$("#confirmBtn").on("click", function(e){
 			e.preventDefault();
-			$.ajax("/member/isCorrectPwd", {data: {m_id:user_id, m_pwd: $("#m_pwd").val()}, success: function(){
-				location.href="/aeho";
+			$.ajax("/member/isCorrectPwd", {data: {m_id:user_id, m_pwd: $("#m_pwd").val()}, success: function(re){
+				if( re == 0 ){
+					swal({
+						  text: "비밀번호가 일치하지 않습니다!",
+						  icon: "warning",
+						  button: "확인"
+						});
+				}else{
+					location.href="/member/get";
+				}
 			}});
 			
 		});

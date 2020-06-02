@@ -297,7 +297,11 @@
 				},
 				cache: false,
 				success: function(result){
-					alert(result);
+					swal({
+						  text: result,
+						  icon: "success",
+						  button: "확인"
+						});
 					location.href="/loginCustom";
 			}});
 		});
