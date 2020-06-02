@@ -62,7 +62,7 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 	    	var con = g.g_content;
 	    	var img;
 			if(con.indexOf("<img src=") != -1){
-				img = $(con.substring(con.indexOf("<img src="), con.indexOf("style"))+"></img>").addClass("rounded goodsImg mb-2");
+				img = $(con.substring(con.indexOf("<img src="), con.indexOf("style"))+"></img>").addClass("rounded goodsImg mb-3");
 			}else{
 				img = $("<img src='/img/no_image.png' class='rounded goodsImg mb-3'></img>");
 			}
