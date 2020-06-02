@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
@@ -80,19 +81,22 @@ public class QnaBoardController {
 	}
 	
 	@GetMapping("/insert")
-	public void insert(HttpServletRequest request,Model model, @Param("c_no") int c_no) {
+	public void insert(HttpServletRequest request,Model model, @Param("c_no") int c_no, @Param("qb_no") int qb_no) {
 		CategoryVo cv = categoryService.getCategory(c_no);
 		model.addAttribute("cv",cv);
+		model.addAttribute("qb_no", qb_no);
 	}
 	
 	@PostMapping(value="/insert")
 	@ResponseBody
-	public String insert(HttpServletRequest request,QnaBoardVo qbv, RedirectAttributes rttr) throws Exception {
+	public String insert(HttpServletRequest request, QnaBoardVo qbv, RedirectAttributes rttr) throws Exception {
 		//String str = "게시물 등록에 실패했습니다.";
+				System.out.println(qbv.getQb_no());
 				int pno = qbv.getQb_no();
 		
-				int qb_no = qbv.getQb_no();
-				int qb_ref = qb_no;
+				int qb_no = 0;
+						//qbv.getQb_no();
+				int qb_ref = pno;
 				int qb_level = 0;
 				int qb_step = 0;
 				
@@ -194,7 +198,7 @@ public class QnaBoardController {
 	//게시물 등록 이미지 콜백 컨트롤러.
 		@PostMapping(value="/testUpload", produces = "application/json; charset=utf-8")
 		@ResponseBody
-		public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+		public JsonObject uploadSummernoteImageFile(HttpServletRequest request, @RequestParam("file") MultipartFile multipartFile) {
 			JsonObject jsonObject = new JsonObject();
 			
 			Date date = new Date();
@@ -230,7 +234,7 @@ public class QnaBoardController {
 		// file DB upload
 		@PostMapping(value="fileDBupload")
 		@ResponseBody
-		public String FileDBupload(@RequestBody List<QnaBoardFilesVo> files) {
+		public String FileDBupload(HttpServletRequest request, @RequestBody List<QnaBoardFilesVo> files) {
 			System.out.println(files);
 			for(QnaBoardFilesVo qbfv : files) {
 				qnaBoardFilesService.insert(qbfv);
