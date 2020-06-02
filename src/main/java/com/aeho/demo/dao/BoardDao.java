@@ -40,4 +40,7 @@ public interface BoardDao {
 	//관리자 메인 페이지 유저 공지사항
 	List<BoardVo> getUserNotice();
 	
+	//전체 모든 게시글 수 
+	int totalBoard();
+	
 }

@@ -83,12 +83,21 @@ public class BoardController {
 	
 	@GetMapping("/list")
 	public void list (HttpServletRequest request, Criteria cri, Model model) {
-		int total = boardService.getTotalCount(cri);
+		int total = 0;
+		if(cri.getCategoryNum() == 9999) {
+			model.addAttribute("catkeyword","전체 글");
+			total = boardService.totalBoard();
+		}else {
+			model.addAttribute("catkeyword",categoryService.getCategory(cri.getCategoryNum()).getC_dist());
+			total = boardService.getTotalCount(cri);
+		}
+		
 		System.out.println("list:"+cri);
 		model.addAttribute("list", boardService.getList(cri));
 		model.addAttribute("pageMake", new PageDto(cri, total));
 		model.addAttribute("c_no",cri.getCategoryNum());
-		model.addAttribute("catkeyword",categoryService.getCategory(cri.getCategoryNum()).getC_dist());
+
+		
 	}
 	
 	@GetMapping("/get")

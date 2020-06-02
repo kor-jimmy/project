@@ -135,9 +135,11 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return boardDao.getUserNotice();
 	}
-	
-	
-	
-	
 
+	@Override
+	public int totalBoard() {
+		// TODO Auto-generated method stub
+		return boardDao.totalBoard();
+	}
+	
 }

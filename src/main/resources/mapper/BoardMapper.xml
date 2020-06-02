@@ -32,31 +32,37 @@
   <select id="getListWithPaging" resultType="com.aeho.demo.vo.BoardVo">
   	<![CDATA[
   		select
-  			b_no, m_id, c_no, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
+  			b_no, m_id, c_no, c_dist, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
   		from
   			(
   				select /*+ INDEX_DESC(board pk_board)*/
-  					rownum rn, b_no, m_id, c_no, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
-  				from board
-  				where rownum <= #{pageNum} * #{amount} 
+  					rownum rn, b_no, m_id, c.c_dist c_dist, b.c_no, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
+  				from board b, category c
+  				where rownum <= #{pageNum} * #{amount} and b.c_no=c.c_no
   				]]>
   				<choose>
   				  	<when test="categoryNum == 10000">
   				  		<![CDATA[
-  							and c_no>10000 and c_no<10010
+  							and b.c_no>10000 and b.c_no<10010
+  						]]>
+  					</when>
+  					<when test="categoryNum == 9999">
+  						<![CDATA[
+  							and b.c_no<10000
   						]]>
   					</when>
   					<when test="categoryNum != 0">
-  						and c_no=#{categoryNum}
+  						and b.c_no=#{categoryNum}
   					</when>
   					<when test="categoryNum == 0">
   						and b_reportcnt >= 5
   					</when>
   				</choose>
+  				
   				<include refid="searchSql"></include>
   	<![CDATA[
   			)
-  		where rn > (#{pageNum}-1) * #{amount}  
+  		where rn > (#{pageNum}-1) * #{amount} 
   	]]>
   </select>  
   
@@ -76,6 +82,12 @@
   <select id="getReportCount" resultType="int">
   	select count(*) from board where b_reportcnt>=5
   </select>
+  
+  <!-- 전체글을 위한 전체 게시물 숫자-->
+  <select id="totalBoard" resultType="int">
+  	select count(*) from board
+  </select>
+  
   
   <!-- 관리자 공지사항 관리자 메인 페이지 용도 -->
   <select id="getAdminNotice" resultType="com.aeho.demo.vo.BoardVo">

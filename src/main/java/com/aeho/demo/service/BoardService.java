@@ -32,4 +32,6 @@ public interface BoardService {
 	
 	List<BoardVo> getUserNotice();
 	
+	int totalBoard();
+	
 }
