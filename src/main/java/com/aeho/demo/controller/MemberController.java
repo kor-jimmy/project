@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeho.demo.service.MemberServiceSecurity;
 import com.aeho.demo.vo.MemberVo;
+import com.google.gson.Gson;
 
 import lombok.AllArgsConstructor;
 
@@ -109,9 +110,20 @@ public class MemberController {
 	}
 	
 	@GetMapping("/mypage")
-	public void myPage(HttpServletRequest request, @RequestParam("m_id") String m_id, Model model) {
-		MemberVo mv = memberServiceSecurity.getMember(m_id);
-		model.addAttribute("member", mv);
+	public void myPage(HttpServletRequest request) {
+		
+	}
+	
+	@GetMapping("/getMemberInfo")
+	@ResponseBody
+	public String getMemberInfo(HttpServletRequest request, String m_id) {
+		System.out.println(m_id);
+		System.out.println("겟맴버인포 동작중*****");
+		MemberVo memberVo = memberServiceSecurity.getMember(m_id);
+		System.out.println(memberVo);
+		Gson gson = new Gson();
+		String str=  gson.toJson(memberVo);
+		return str;
 	}
 	
 	@PostMapping("/update")

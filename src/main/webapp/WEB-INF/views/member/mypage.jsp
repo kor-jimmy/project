@@ -13,16 +13,31 @@
 <script type="text/javascript">
 
 	$(function(){
-		$.ajax("/member/getBoard",function(result){
+/* 		$.ajax("/member/getBoard",function(result){
 			$.each(result,function(idx,item){
 				var li1 = $("<li></li>").html(item.b_no);
 				var li2 = $("<li></li>").html(item.b_title);
 				var li3 = $("<li></li>").html(item.b_title);		
 			})
+		}) */
+		var user_id = "<sec:authentication property='principal.username'/>";
+		var data = {m_id:user_id}
+		console.log(user_id);
+		$.ajax({
+			url:"/member/getMemberInfo",
+			type:"GET",
+			data:data,
+			success:function(result){
+				var member = JSON.parse(result);
+				$("#userID").html(member.m_id);
+				$("#userNICK").html(member.m_nick);
+				$("#userEMAIL").html(member.m_email);
+				$("#userLOVE").html(member.m_lovecnt);
+				$("#userHATE").html(member.m_hatecnt);
+			}
 		})	
 	})
-</script>	
-
+</script>
  	<div class="row">
 	    <div class="col-lg-4">
 	      <div class="card shadow mb-4">
@@ -43,23 +58,23 @@
 		        			<ul class="list-group list-group-flush">
 		        				<li class="list-group-item" >
 		        					<h6><span class="badge badge-secondary">회원ID</span></h6>
-		        					<div class="userInfo">${member.m_id }</div>
+		        					<div class="userInfo" id="userID"></div>
 		        				</li>
 		        				<li class="list-group-item">
 		        					<h6><span class="badge badge-secondary">닉네임</span></h6>
-		        					<div class="userInfo">${member.m_nick }</div>
+		        					<div class="userInfo" id="userNICK"></div>
 		        				</li>
 		        				<li class="list-group-item">
 		        					<h6><span class="badge badge-secondary">메일주소</span></h6>
-		        					<div class="userInfo">${member.m_email }</div>
+		        					<div class="userInfo" id="userEMAIL"></div>
 		        				</li>
 		        				<li class="list-group-item">
 		        					<h6><span class="badge badge-danger">누적 좋아요</span></h6>
-		        					<div class="userInfo">${member.m_lovecnt }</div>
+		        					<div class="userInfo" id="userLOVE"></div>
 		        				</li>
 		        				<li class="list-group-item">
 		        					<h6><span class="badge badge-danger">누적 싫어요</span></h6>
-		        					<div class="userInfo">${member.m_hatecnt }</div>
+		        					<div class="userInfo" id="userHATE"></div>
 		        				</li>
 		        			</ul>
 	        			</div>
