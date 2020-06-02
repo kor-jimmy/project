@@ -20,6 +20,7 @@ import com.aeho.demo.vo.LogVo;
 @Aspect
 public class LoginAspect {
 	
+
 	@Autowired
 	LogDao logDao;
 
