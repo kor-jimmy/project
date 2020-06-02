@@ -6,8 +6,7 @@
 	<h2>QNA 등록</h2>
 	
 	<form id="insertForm" method="post" enctype="multipart/form-data">
-	<input type="hidden" id="qb_no" value="${qb_no }" name="qb_no">
-	<input type="hidden" id="c_no" value="${c_no }" name="c_no">
+	<input type="hidden" id="qb_no" value="${ qb_no }" name="qb_no">
 	<table class="table table-bordered">
 			
 		<tr>

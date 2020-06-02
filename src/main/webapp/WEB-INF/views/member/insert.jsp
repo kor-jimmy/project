@@ -13,6 +13,7 @@
 	#insertMemberBox{
 		width: 40%;
 		display: inline-block;
+		height: auto;
 	}
 	.btn-outline-secondary{
 		background: white;
@@ -33,12 +34,17 @@
 		width: 50%;
 		float: right;
 		padding: 30px;
+		background: rgba(255, 255, 255, 0.7);
 	}
 	#terms_content{
-		height: 330px;
+		height: 410px;
 		overflow: auto;
 		border-left: 1px solid #F4F4F4;
 		color: gray;
+	}
+	
+	#tabContent{
+		background: white;
 	}
 	
 	.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{

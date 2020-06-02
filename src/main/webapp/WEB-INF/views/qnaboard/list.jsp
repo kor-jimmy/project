@@ -8,7 +8,7 @@ $(function(){
 	var c_no = $("#c_no").val();
 	var qb_no = $("#qb_no").val();
 	$("#insertBtn").on("click",function(){
-		self.location = "/qnaboard/insert?c_no="+c_no+"&qb_no="+qb_no;
+		self.location = "/qnaboard/insert?c_no="+c_no+"&qb_no=0";
 	})
 
 	//페이징 관련 내용
