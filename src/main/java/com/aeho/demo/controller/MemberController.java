@@ -9,6 +9,8 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +38,9 @@ public class MemberController {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	public void setMailSender(JavaMailSender mailSender) {
 		this.mailSender = mailSender;
@@ -135,6 +140,23 @@ public class MemberController {
 			msg = "회원 정보가 수정되었습니다.";
 		}
 		return msg;
+	}
+	
+	@RequestMapping("/isCorrectPwd")
+	@ResponseBody
+	public void isCorrectPwd(HttpServletRequest request, String m_id, String m_pwd) {
+		System.out.println("m_id: "+m_id+" / m_pwd: "+m_pwd);
+		String pwd = memberServiceSecurity.getMember(m_id).getM_pwd();
+		String inputPwd = passwordEncoder.encode(m_pwd);
+		
+		System.out.println("진짜 비밀번호: "+pwd + " / 입력된 비밀번호: " + inputPwd);
+		
+		if(passwordEncoder.matches(inputPwd, pwd)) {
+			System.out.println("[ Correct!! ]");
+		}else {
+			System.out.println("[ inCorrect!! ]");
+		}
+
 	}
 	
 	//메일 발송

@@ -401,18 +401,18 @@
 						<div id="userMenu">
 							<sec:authorize access="hasRole('ROLE_MASTER')">
 	         					<!-- <span class="badge badge-pill badge-warning">관리자가 로그인하였습니다.</span> -->
-		         				<a href="/admin/admin"><div id="admin_page" class="userMenuBtn">관리자 페이지</div></a>
+		         				<div id="admin_page" class="userMenuBtn" onclick="location.href='/admin/admin'">관리자 페이지</div>
 		         			</sec:authorize>
 							<sec:authorize access="isAnonymous()">
-								<a href="/loginCustom"><div id="login" class="userMenuBtn">로그인</div></a>
-								<a href="/member/insert"><div id="sign_up" class="userMenuBtn">회원가입</div></a>
+								<div id="login" class="userMenuBtn" onclick="location.href='/loginCustom'">로그인</div>
+								<div id="sign_up" class="userMenuBtn" onclick="location.href='/member/insert'">회원가입</div>
 							</sec:authorize>
 							<sec:authorize access="isAuthenticated()">
-								<div id="my_page" class="userMenuBtn mb-1">
+								<div id="my_page" class="userMenuBtn mb-1" onclick="location.href='/member/mypage?m_id=<sec:authentication property="principal.username"/>'">
 									<img src="/img/userICON.png" width="30" height="30" id="mypageImg">
 									<span id="userId"> <sec:authentication property="principal.username"/></span>
 								</div>
-								<a href="/logout"><div id="logout" class="userMenuBtn mb-1">로그아웃</div></a>   
+								<div id="logout" class="userMenuBtn mb-1" onclick="location.href='/logout'">로그아웃</div>
 							</sec:authorize>
 							
 							<!-- <div id="login_out" class="userMenuBtn mb-1">로그인</div>

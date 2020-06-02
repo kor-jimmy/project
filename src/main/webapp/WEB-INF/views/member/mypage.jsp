@@ -8,11 +8,10 @@
 		text-align: center;
 	}
 </style>
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
 
 	$(function(){
+
 /* 		$.ajax("/member/getBoard",function(result){
 			$.each(result,function(idx,item){
 				var li1 = $("<li></li>").html(item.b_no);
@@ -36,6 +35,18 @@
 				$("#userHATE").html(member.m_hatecnt);
 			}
 		})	
+
+		$("#updateMember").on("click", function(){
+			$("#confirmModal").modal('show');
+		});
+
+		$("#confirmBtn").on("click", function(e){
+			e.preventDefault();
+			$.ajax("/member/isCorrectPwd", {data: {m_id:user_id, m_pwd: $("#m_pwd").val()}, success: function(){
+				location.href="/aeho";
+			}});
+			
+		});
 	})
 </script>
  	<div class="row">
@@ -79,7 +90,7 @@
 		        			</ul>
 	        			</div>
 	        		</div>
-	        		<button type="button" class="btn btn-light float-right">회원 정보 수정</button>
+	        		<button id="updateMember" type="button" class="btn btn-light float-right">회원 정보 수정</button>
 	        	</div>
 	        </div>
 	      </div>
@@ -104,5 +115,29 @@
 	 </div>
 	
 
+	<!-- Modal -->
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modalheader" style="padding: 20px;">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h5 class="modal-title" id="myModalLabel" align="center">비밀번호 확인</h5>
+				</div>
+				<form id="form" name="form">
+					<div class="modal-body mb-3" style="padding: 20px 50px 0px 50px;">
+						<div id="password" class="form-group">
+						    <label for="m_pwd">비밀번호를 확인해주십시오.</label>
+						    <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+						    <input type="password" class="form-control" id="m_pwd" name="m_pwd" required>
+						</div>
+					</div>
+					<div class="modal-footer" style="background: #F4F4F4; border: 2px solid #F4F4F4;">
+						<button id="confirmBtn" type="button" class="btn btn-dark" style="width: 300px; float:none; margin:0 auto;">확인</button>				
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- end Modal -->
 	
 <%@include file="../includes/footer.jsp"%>

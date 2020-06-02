@@ -73,8 +73,8 @@ $(function(){
 				</c:otherwise> 
 			</c:choose>
 		</td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd" value="${qnaboard.qb_date }"/></td>
 				<td><c:out value="${qnaboard.m_id }"/></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd" value="${qnaboard.qb_date }"/></td>
 		</tr>
 				</c:forEach>
       </tbody>

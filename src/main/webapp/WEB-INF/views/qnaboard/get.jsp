@@ -5,6 +5,11 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<style>
+	.btn{ background: white; }
+	.table-bordered{ background: rgba(255, 255, 255, 0.7); }
+	td{ padding: 20px; }
+</style>
 <script type="text/javascript">
 	$(function(){
 		var qb_no = $("#qb_no").val();
@@ -42,19 +47,19 @@
 			<td colspan="4"><h3><c:out value="${qnaboard.qb_title }"/></h3></td>
 		</tr>
 		<tr>
-			<td width="25%">작성자</td>
+			<td width="20%" align="center">작성자</td>
 			<td width="25%"><c:out value="${qnaboard.m_id }"/></td>
-			<td width="25%">작성시간</td>
-			<td width="25%"><c:out value="${qnaboard.qb_date }"/></td>
+			<td width="20%" align="center">작성시간</td>
+			<td width="35%"><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${qnaboard.qb_date }"/></td>
 		</tr>
 		<tr>
-			<td colspan="4">
+			<td height="500px" colspan="4">
 			<div>${qnaboard.qb_content }</div></td>
 		</tr>
 	</table>
-	<button id="deleteBtn">삭제</button>
-	<button id="updateBtn">수정</button>
-	<button id="replyInsertBtn">답글</button>
-	<button id="listBtn">목록</button>
+	<button id="deleteBtn" class="btn btn-outline-dark">삭제</button>
+	<button id="updateBtn" class="btn btn-outline-dark">수정</button>
+	<button id="replyInsertBtn" class="btn btn-outline-dark">답글</button>
+	<button id="listBtn" class="btn btn-outline-dark">목록</button>
 	
 <%@include file="../includes/footer.jsp"%>

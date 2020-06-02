@@ -109,6 +109,5 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 		return memberDao.updateRelease(mv);
 	}
 	
-	
 
 }
