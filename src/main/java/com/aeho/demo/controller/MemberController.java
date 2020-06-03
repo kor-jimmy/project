@@ -1,6 +1,8 @@
 package com.aeho.demo.controller;
 
+import java.lang.reflect.Member;
 import java.util.List;
+import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -178,6 +180,61 @@ public class MemberController {
 			re = "1";
 		}
 		return re;
+	}
+	
+	@RequestMapping("/findInfo")
+	public void findInfo(HttpServletRequest request) {
+	}
+	
+	
+	
+	@RequestMapping("/sendMailForPwd")
+	@ResponseBody
+	public String sendMailForPwd(HttpServletRequest request, String m_id, String email) {
+		System.out.println(email);
+		
+		Random rand =new Random();
+
+		StringBuffer buffer =new StringBuffer();
+
+		for(int i = 0; i < 10; i++){
+		    if(rand.nextBoolean()){
+		        buffer.append((char)((int)(rand.nextInt(26))+97));
+		    }else{
+		        buffer.append((rand.nextInt(10)));
+		    }
+		}
+		
+		System.out.println(buffer);
+		final String tempPwd = buffer.toString();
+		
+		String newPwd = passwordEncoder.encode("0000");
+		MemberVo mv = memberServiceSecurity.getMember(m_id);
+		System.out.println(mv);
+		mv.setM_pwd(newPwd);
+		memberServiceSecurity.updateMember(mv);
+		
+		mailSender.send(new MimeMessagePreparator() {
+			
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+
+				System.out.println(tempPwd);
+				
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom("team.demo2020@gmail.com");
+				message.setTo(email);
+			    message.setSubject("[Aeho] 새 비밀번호 안내입니다..");
+				String str = "<h2><i>Welcome!</i></h2><p>새로운 비밀번호는 ["+tempPwd+"]입니다.</p><br>";
+				str += "<i>로그인 후 반드시 새 비밀번호를 지정해주십시오.</i>";
+				str += "<a href='http://localhost:8088/loginCustom'>로그인 하러가기</a>";
+			    message.setText(str, true);
+			    //message.addInline("aeho", new ClassPathResource("/project/src/main/webapp/img/AEHO_for_EMAIL.png"));
+			}
+			
+		});
+		
+		return tempPwd;
 	}
 	
 	//메일 발송

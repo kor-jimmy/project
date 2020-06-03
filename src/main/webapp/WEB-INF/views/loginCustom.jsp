@@ -110,9 +110,10 @@
 			    <input type="password" class="form-control form-control-lg" placeholder="비밀번호" id="m_pwd" name="password" required="required">
 			</div>
 			<hr>
-			<div class="form-group form-check">
+			<div class="form-group form-check" align="center">
 			    <input type="checkbox" class="form-check-input" name="remember-me" id="autoLogin">
 			    <label class="form-check-label" for="loginINFO">자동 로그인</label>
+			    <div class="text-secondary" onclick="location.href='/member/findInfo'"><small>비밀번호 찾기</small></div>
 			</div>
 			  <!-- 시큐리티 토큰 -->
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
