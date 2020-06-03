@@ -83,13 +83,16 @@ public class QnaBoardController {
 	@GetMapping("/insert")
 	public void insert(HttpServletRequest request,Model model, @Param("c_no") int c_no, @Param("qb_no") int qb_no) {
 		CategoryVo cv = categoryService.getCategory(c_no);
+		
 		model.addAttribute("cv",cv);
 		model.addAttribute("qb_no", qb_no);
+		model.addAttribute("c_no", c_no);
 	}
 	
 	@PostMapping(value="/insert")
 	@ResponseBody
 	public String insert(HttpServletRequest request, QnaBoardVo qbv, RedirectAttributes rttr) throws Exception {
+			System.out.println("등록되는 큐엔에이 정보===>>"+qbv);
 		//String str = "게시물 등록에 실패했습니다.";
 				System.out.println(qbv.getQb_no());
 				int pno = qbv.getQb_no();

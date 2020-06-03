@@ -1,34 +1,74 @@
+insert
+
+
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@include file="../includes/header.jsp"%>
 
 	<h2>QNA 등록</h2>
-	
+	<h2>${c_no }</h2>
 	<form id="insertForm" method="post" enctype="multipart/form-data">
-	<input type="hidden" id="qb_no" value="${ qb_no }" name="qb_no">
-	<table class="table table-bordered">
+	<input type="hidden" name="c_no" <c:if test="${qb_no != 0}"> value="${c_no }"</c:if>/>
+		<input type="hidden" id="qb_no" value="${ qb_no }" name="qb_no">
+		<table class="table table-bordered">
+			
 			
 		<tr>
-			<td>카테고리</td>
-			<td><input type="hidden" id="c_no" name="c_ no" readonly="readonly" value="${cv.c_no }">${cv.c_dist}</td>
+		<td>카테고리</td>
+		<td>
+			<select name="c_no" id="c_no">
+					<option value="11001" <c:choose><c:when test="${qb_no == 0}">selected="selected"</c:when><c:otherwise>disabled="true"</c:otherwise></c:choose>>가입 관련</option>
+					<option value="11002" <c:choose><c:when test="${qb_no == 0}">selected="selected"</c:when><c:otherwise>disabled="true"</c:otherwise></c:choose>>로그인 관련</option>
+					<option value="11003" <c:choose><c:when test="${qb_no == 0}">selected="selected"</c:when><c:otherwise>disabled="true"</c:otherwise></c:choose>>회원/신고 관련</option>
+					<option value="11004" <c:choose><c:when test="${qb_no == 0}">selected="selected"</c:when><c:otherwise>disabled="true"</c:otherwise></c:choose>>기타문의</option>
+			</select>
+		</td>
 		</tr>
-		<tr>
-			<td>제목</td>
-			<td><input type="text" id="qb_title" name="qb_title" required="required" style="width:40%;"></td>
-		</tr>
-				
-		<tr>
-			<td>작성자</td> 
-			<td><input type="text" id="m_id" name="m_id" value="<sec:authentication property="principal.username"/>" required="required" readonly="readonly"></td>
-		</tr>
-		<tr>
-			<td>내용</td>
-			<td><textarea class="text_content" id="qb_content" name="qb_content" row="30%" cols="100%"></textarea></td>
-		</tr>
-	</table>
-	<button type="submit" id="insertBtn" class="btn btn-outline-dark">등록</button>
-	<button type="reset" id="resetBtn" class="btn btn-outline-dark">취소</button>
+		
+			<tr>
+				<td>제목</td>
+				<td><input type="text" id="qb_title" name="qb_title" required="required" style="width:40%;"></td>
+			</tr>
+					
+			<tr>
+				<td>작성자</td> 
+				<td><input type="text" id="m_id" name="m_id" value="<sec:authentication property="principal.username"/>" required="required" readonly="readonly"></td>
+			</tr>
+			<tr>
+				<td>내용</td>
+				<td><textarea class="text_content" id="qb_content" name="qb_content" row="30%" cols="100%"></textarea></td>
+			</tr>
+			
+			<tbody>
+				<c:forEach items="${list }" var="qnaboard">
+					<tr>
+						<td align="center"><c:out value="${qnaboard.qb_no }" /></td>
+						<td align="center">
+							<c:if test="${qnaboard.c_no == 11001}">가입 관련</c:if>
+							<c:if test="${qnaboard.c_no == 11002}">로그인 관련</c:if>
+							<c:if test="${qnaboard.c_no == 11003}">회원/신고 관련</c:if>
+							<c:if test="${qnaboard.c_no == 11004}">기타문의</c:if>
+						</td>
+						<td>
+							<a class="" href="/qnaboard/get?qb_no=${qnaboard.qb_no }">
+								<c:out value="${qnaboard.qb_title }" />
+							</a>
+						</td>	
+						<td align="center"><c:out value="${qnaboard.m_id }" /></td>
+						<td align="center">
+							<fmt:formatDate pattern="yyyy-MM-dd" value="${qnaboard.qb_date }" />
+						</td>
+					</tr>
+						</c:forEach>
+					</tbody>
+			
+			
+		</table>
+		<button type="submit" id="insertBtn" class="btn btn-outline-dark">등록</button>
+		<button type="reset" id="resetBtn" class="btn btn-outline-dark">취소</button>
 	</form>
 	<script type="text/javascript">
 		$(function(){
@@ -102,6 +142,7 @@
 			console.log("토큰 : "+token+" / 헤더:"+header);
 
 			$("#insertBtn").on("click",function(e){
+				
 				if($("#qb_title").val() == null || $("#qb_title").val() == "" || 
 						$("#qb_content").val() == null || $("#qb_content").val() == ""){
 					alert("제목이나 글 내용을 비워둘 수는 없습니다.");

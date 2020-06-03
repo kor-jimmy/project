@@ -120,7 +120,7 @@
 						console.log(menu)
 						
 						var categoryName;
-						if(menu.c_no > 10000 ){
+						if(menu.c_no > 11000 ){
 							 categoryName = $("<a class='dropdown-item'></a>").text(menu.c_dist).attr("href","/qnaboard/list?categoryNum="+menu.c_no);
 						}else{
 							categoryName = $("<a class='dropdown-item'></a>").text(menu.c_dist).attr("href","/board/list?categoryNum="+menu.c_no);
@@ -165,7 +165,7 @@
 			})
 			
 			$("#qnaBoard").click(function(e){
-				var info = {startNum:10001, endNum:10100};
+				var info = {startNum:11001, endNum:12000};
 				var key = "qBoard";
 				menuCategory(info,key);
 			})

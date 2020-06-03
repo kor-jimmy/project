@@ -15,6 +15,12 @@
   	]]>
   </select>
   
+  <select id="listQnaBoardCategory" resultType="com.aeho.demo.vo.CategoryVo">
+  <![CDATA[
+  	select * from category where c_no > 11000 and c_no < 12000 
+  	]]>
+  </select>
+  
   <select id="getCategory" resultType="com.aeho.demo.vo.CategoryVo">
   	select * from category where c_no=#{c_no}
   </select>
