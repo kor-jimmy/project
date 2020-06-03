@@ -126,14 +126,34 @@ public class MainController {
 		model.addAttribute("c_no",cri.getCategoryNum());
 	}
 	
-	//메인 페이지용 공지사항
-	@GetMapping("/adminNotice")
+	// 진탁) 0603 메인 페이지용 공지사항
+	@GetMapping("/userNotice")
 	@ResponseBody
-	public String adminNotice() {
-		List<BoardVo> list = boardService.getAdminNotice();
+	public String adminNotice(HttpServletRequest request) {
+		List<BoardVo> list = boardService.getUserNotice();
 		Gson gson = new Gson();
 		String str = gson.toJson(list);
 		return str;
 	}
+	
+	// 진탁) 0603 메인 페이지용 최신글
+	@GetMapping("/mainNewBoard")
+	@ResponseBody
+	public String mainNewBoard(HttpServletRequest request) {
+		List<BoardVo> list = boardService.mainNewBoard();
+		System.out.println(list);
+		Gson gson = new Gson();
+		String str = gson.toJson(list);
+		return str;
+	}
+	
+	//최신 굿즈... 아름아부탁해!!
+	/*
+	 * @GetMapping("/mainNewBoard")
+	 * 
+	 * @ResponseBody public String mainNewBoard() { List<BoardVo> list =
+	 * boardService.mainNewBoard(); Gson gson = new Gson(); String str =
+	 * gson.toJson(list); return str; }
+	 */
 
 }

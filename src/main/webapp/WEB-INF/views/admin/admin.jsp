@@ -243,6 +243,7 @@
 					})
 				}
 			})
+			
 			//유저 공지사항
 			$.ajax({
 				url:"/admin/userNotice",

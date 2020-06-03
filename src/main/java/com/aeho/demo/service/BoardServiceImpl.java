@@ -147,6 +147,13 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return boardDao.getMypageBoard(m_id);
 	}
+
+	@Override
+	public List<BoardVo> mainNewBoard() {
+		// TODO Auto-generated method stub
+		return boardDao.mainNewBoard();
+	}
+	
 	
 	
 }

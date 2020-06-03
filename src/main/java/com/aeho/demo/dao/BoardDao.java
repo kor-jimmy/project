@@ -46,4 +46,7 @@ public interface BoardDao {
 	//회원 게시글 5개뽑는용도 마이페이지!
 	List<BoardVo> getMypageBoard(String m_id);
 	
+	//메인 페이지용 최신 게시글
+	List<BoardVo> mainNewBoard();
+	
 }

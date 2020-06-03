@@ -50,7 +50,7 @@
 				d = data[rand]
 				str = d.substr(d.lastIndexOf("=")+1);
 				console.log(str);
-				frame = $("<iframe width='450' height='350' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>").attr("src", "https://www.youtube.com/embed/"+str);
+				frame = $("<iframe width='100%' height='300px'  frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>").attr("src", "https://www.youtube.com/embed/"+str);
 				$("#iframe").append(frame);
         }});
         
@@ -60,7 +60,7 @@
             wrap: true
         })
         
-		// 일,주,월 최고의 게시물 호출 함수
+		//진탁) 일,주,월 최고의 게시물 호출 함수
         var todayBest = function(){
             $.ajax("/todayBest",{success:function(data){
             	$("#bestContent").empty();
@@ -144,43 +144,63 @@
 			monthBest();
         })
 
-        			//유저 공지사항
-			$.ajax({
-				url:"/admin/userNotice",
-				type:"GET",
-				success:function(result){
-					var adminNoitce = JSON.parse(result);
-					$.each(adminNoitce, function(idx, notice){
-						var date = moment(notice.b_date).format("YYYY-MM-DD");
-						var type = "";
-						if(notice.c_no == 10001){
-							type = "일반"
-						}
-						if(notice.c_no == 10002){
-							type = "징계/정책"
-						}
-						if(notice.c_no == 10003){
-							type = "업데이트"
-						}
-						if(notice.c_no == 10004){
-							type = "이벤트"
-						}
-						var tr = $("<tr class='noticeList' b_no="+notice.b_no+"></tr>");
-						var td1 = $("<td></td>").html(type);
-						var td2 = $("<td></td>").html(notice.b_title);
-						var td3 = $("<td></td>").html(date);
+       	//진탁) 0603 유저 공지사항, 최신 게시물
+		$.ajax({
+			url:"/userNotice",
+			type:"GET",
+			success:function(result){
+				var adminNoitce = JSON.parse(result);
+				$.each(adminNoitce, function(idx, notice){
+					var date = moment(notice.b_date).format("YYYY-MM-DD");
+					var type = "";
+					if(notice.c_no == 10001){
+						type = "일반"
+					}
+					if(notice.c_no == 10002){
+						type = "징계/정책"
+					}
+					if(notice.c_no == 10003){
+						type = "업데이트"
+					}
+					if(notice.c_no == 10004){
+						type = "이벤트"
+					}
+					var tr = $("<tr class='noticeList' b_no="+notice.b_no+"></tr>");
+					var td1 = $("<td></td>").html(type);
+					var td2 = $("<td></td>").html(notice.b_title);
+					var td3 = $("<td></td>").html(date);
 
-						tr.append(td1,td2,td3);
-						$("#userNotice").append(tr);
-					})
-				}
-			})
+					tr.append(td1,td2,td3);
+					$("#userNotice").append(tr);
+				})
+			}
+		})
 
-			//공지사항 게시물 클릭이벤트 
-			$(document).on("click",".noticeList",function(e){
-				var b_no = $(this).attr("b_no");
-				self.location = "/board/get?b_no="+b_no;
-			})
+		//공지사항 게시물 클릭이벤트 
+		$(document).on("click",".noticeList",function(e){
+			var b_no = $(this).attr("b_no");
+			self.location = "/board/get?b_no="+b_no;
+		})
+
+		//
+		$.ajax({
+			url:"/mainNewBoard",
+			type:"GET",
+			success:function(result){
+				var boardList = JSON.parse(result);
+				$.each(boardList, function(idx, board){
+					var date = moment(board.b_date).format("YYYY-MM-DD");
+					var tr = $("<tr class='newBoardList' b_no="+board.b_no+"></tr>");
+					var td1 = $("<td></td>").html(board.c_dist);
+					var td2 = $("<td></td>").html(board.b_title);
+					var td3 = $("<td></td>").html(board.m_id);
+					var td4 = $("<td></td>").html(date);
+
+					tr.append(td1,td2,td3,td4);
+					$("#newBoard").append(tr);
+				})
+			}
+		})
         
 	});
 </script>
@@ -192,24 +212,7 @@
             		<li data-target="#carouselExampleIndicators" data-slide-to="<%= idx %>" class="indicators"></li>
             		<% idx += 1; %>
             	</c:forEach>
-	            <!-- 
-	            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-	            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-	            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-	            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-	            -->
             </ol>
-            <!-- 
-            <c:forEach var="s" items="${ slideImageList }">
-            	<div class="carousel-item active">
-	                <img class="d-block w-100" src="/img/${ s.s_img }">
-	                <div class="carousel-caption d-none d-md-block">
-	                    <h5>${ s.s_title }</h5>
-	                    <p>${ s.s_text }</p>
-	                </div>
-	            </div>
-            </c:forEach>
-            -->
             <div class="carousel-inner">
             <c:forEach var="s" items="${ slideImageList }">
             	<div class="carousel-item">
@@ -244,53 +247,77 @@
 	                    <button id="monthBestBtn" type="button" class="btn btn-light">month</button>
 	                </p>
 	                <div id="bestContent">
-	
+
 	                </div>
             	</div>
             	<br>
                 <hr>
                 <br>
                 <div>    
-	                <h3>추천 영상</h3>
+	                <h3> Ae?-Ho! 추천 영상</h3>
 	                <div id="iframe">
 	                    
 	                </div>
 	                <br>
 	                <hr>
 	                <br>
-	                <h4>AE-HO 공지사항</h4>
+	                <h4> Ae?-Ho! 실시간 인기 카테고리!</h4>
 	                <div>
-	                	<table class="table table-hover">
-					        <thead>
-					            <tr align="center">
-					                <th width="20%">분류</th>
-					                <th width="40%">제목</th>
-					                <th width="20%">날짜</th>
-					            </tr>
-					        </thead>
-					        <tbody id="userNotice" align="center">
-					        
-					        </tbody>
-					    </table>
-					    <a class="float-right" href="/main/notice?categoryNum=10000">더보기</a>
+
 	                </div>
 	                <br>
                 </div>
             </div>
             <!--right content-->
             <div class="col-sm-7">
-                <h2>ChearUp! Twice</h2>
-                <p>열도를 강타한 9인조 인민 여자 동무 집단!</p>
-                <img src="/img/twice.png" class="img-fluid">
-                <hr>
-                <!--오늘의 주요 소식-->
-                <h2>오늘의 주요 소식!</h2>
-                <p>[단독] 송가인 소속사, SBS 손잡고 트로트 오디션 론칭</p>
-                <p>새로운 트로트 오디션이 탄생한다. 전국 트로트 인재들이 한자리에 모인다.</p>
-                <div class="text-center">
-                    <img src="/img/song.jpg" class="img-fluid rounde mb-3">
+            	<!-- 새로 올라온글 -->
+            	<div>
+            		<h3>새로운 Ae-Ho Content!</h3>
+           			<table class="table table-hover">
+				        <thead>
+				            <tr align="center">
+				                <th width="20%">카테고리</th>
+				                <th width="40%">제목</th>
+				                <th width="15%">작성자</th>
+				                <th width="20%">게시날짜</th>
+				            </tr>
+				        </thead>
+				        <tbody id="newBoard" align="center">
+				        
+				        </tbody>
+				    </table>
+            	</div>
+            	<br>
+            	<hr>
+            	<br>
+            	<!-- 새로 올라온 굿즈글 -->
+            	<div>
+            		<h3>새로운 Ae-Ho품!</h3>
+            	</div>
+            	<br>
+            	<hr>
+            	<br>
+            	<!-- 유저 공지사항 -->
+                <div>
+                	<h4>Ae-Ho 공지사항!</h4>
+                	<br>
+	                <table class="table table-hover">
+				        <thead>
+				            <tr align="center">
+				                <th width="20%">분류</th>
+				                <th width="40%">제목</th>
+				                <th width="20%">날짜</th>
+				            </tr>
+				        </thead>
+				        <tbody id="userNotice" align="center">
+				        
+				        </tbody>
+				    </table>
+					<a class="float-right" href="/main/notice?categoryNum=10000">더보기</a>
                 </div>
-                <p>27일 방송관계자에 따르면 SBS가 차세대 트로트 대형가수를 선발하는 오디션을 준비하고 있다. 50억대 엄청난 제작비를 들인 고퀄리티 트로트 오디션으로 알려져 있다.</p>
+                <br>
+            	<hr>
+            	<br>
             </div>
         </div>
         

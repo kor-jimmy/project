@@ -36,4 +36,6 @@ public interface BoardService {
 	
 	List<BoardVo> getMypageBoard(String m_id);
 	
+	List<BoardVo> mainNewBoard();
+	
 }
