@@ -104,7 +104,7 @@
 						tr.append(category,title,boardDate);
 						$("#userContent").append(tr);
 					})
-					var totalLink = $("<a class='badge badge-info float-right'></a>").html("전체 굿즈글 보기").attr("href","/member/goods?m_id=?"+user_id);
+					var totalLink = $("<a class='badge badge-info float-right'></a>").html("전체 굿즈글 보기").attr("href","/goods/list?member="+user_id);
 					$("#linkDiv").append(totalLink);		
 				}
 			})

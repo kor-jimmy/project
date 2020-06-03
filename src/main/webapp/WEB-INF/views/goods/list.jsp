@@ -49,43 +49,46 @@ var searchKeyword;
 var searchField;
 
 function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
-//	c_no를 강제로 넣어주기 위해 카테고리 설정시에만 글쓰기 버튼 보이게 / 검색을 위해 searchKeyword 추가
-   if(keyword == null){
-      $("#insertBtn").css("visibility","hidden");
-   }
-   else{
-      $("#insertBtn").css("visibility","visible");
-   }
-   var dto;
-   $("#goodsList").empty();
-   $.ajax("/goods/listGoods",{data:{gc_code:gc_code,keyword:keyword,pageNum:pageNum,searchField:searchField,searchKeyword:searchKeyword}, success:function(result){
-		//리스트 가져오기
+	//	c_no를 강제로 넣어주기 위해 카테고리 설정시에만 글쓰기 버튼 보이게 / 검색을 위해 searchKeyword 추가
+	if(keyword == null){
+		$("#insertBtn").css("visibility","hidden");
+	}
+	else{
+		$("#insertBtn").css("visibility","visible");
+	}
+	
+	var dto;
+	$("#goodsList").empty();
+	
+	$.ajax("/goods/listGoods",{data:{gc_code:gc_code,keyword:keyword,pageNum:pageNum,searchField:searchField,searchKeyword:searchKeyword}, success:function(result){
+	//리스트 가져오기
 		var list = JSON.parse(result.list)
-	    $.each(list, function(idx,item){
+		$.each(list, function(idx,item){
 			var g = item;
-
+			
 			var div = $("<div class='goodsBox mb-5'></div>");
 			
-	    	var con = g.g_content;
-	    	var img;
+			var con = g.g_content;
+			var img;
+			
 			if(con.indexOf("<img src=") != -1){
 				img = $(con.substring(con.indexOf("<img src="), con.indexOf("style"))+"></img>").addClass("rounded goodsImg mb-3");
 			}else{
 				img = $("<img src='/img/no_image.png' class='rounded goodsImg mb-3'></img>");
 			}
-
-		    var gc_dist = $("<small class='text-muted'></small>");
+		
+			var gc_dist = $("<small class='text-muted'></small>");
 			if(g.gc_code == 1)
 				gc_dist.html("[팝니다] ");
 			else
 				gc_dist.html("[삽니다] ");
-
+			
 			var title = $("<b></b>").html(g.g_title);
 			var writer = $("<p></p>").html(g.m_nick);
 			var g_date = moment(item.g_date).format('YYYY-MM-DD');
 			var date = $("<span></span>").html(g_date);
 			//var replyCnt = $("<span class='badge badge-light'></span>").html(g.g_replycnt);
-
+			
 			var a = $("<a></a>").attr("href","/goods/get?g_no="+g.g_no).append(title);
 			var li = $("<li></li>").append(img, "<br>", gc_dist, a, "&nbsp;", writer, date);
 			div.append(li);
@@ -112,43 +115,46 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 			$("#tb").append(tr);
 			*/
 		});
-
-    //페이징
-      dto=result.dto;
-	  $(".pagination").empty();
-	  if(dto.prev){
-		  var a=$("<a>이전</a>").attr("href","#");
-		  var li = $("<li></li>").append(a);
-		  $(a).on("click",function(){
-			  listGoods(gc_code,keyword,(dto.startPage)-1, searchField, searchKeyword);
-		  })
-		  var nbsp=$("<li>&nbsp;/&nbsp;</li>");
-		  $(".pagination").append(li,nbsp);
-	  }
-	  for(i=dto.startPage; i<=dto.endPage; i++){
-		  var a=$("<a class='pageNum'>"+i+"</a>").attr("href","#");
-		  var li=$("<li></li>").append(a);
-		  $(a).on("click",function(){
+	
+		//페이징
+		dto=result.dto;
+		$(".pagination").empty();
+		if(dto.prev){
+			var a=$("<a>이전</a>").attr("href","#");
+			var li = $("<li></li>").append(a);
+			$(a).on("click",function(){
+				listGoods(gc_code,keyword,(dto.startPage)-1, searchField, searchKeyword);
+			})
+			var nbsp=$("<li>&nbsp;/&nbsp;</li>");
+			$(".pagination").append(li,nbsp);
+		}
+		for(i=dto.startPage; i<=dto.endPage; i++){
+			var a=$("<a class='pageNum'>"+i+"</a>").attr("href","#");
+			var li=$("<li></li>").append(a);
+			$(a).on("click",function(){
 				listGoods(gc_code,keyword,$(this).html(), searchField, searchKeyword);
 			})
-		  var nbsp=$("<li>&nbsp;/&nbsp;</li>");
-		  $(".pagination").append(li,nbsp);
-	  }
-	  if(dto.next){
-		  var a=$("<a>다음</a>").attr("href","#");
-		  var li = $("<li></li>").append(a);
-		  $(a).on("click",function(){
-			  listGoods(gc_code,keyword,(dto.endPage)+1, searchField, searchKeyword);
-		  })
-		  $(".pagination").append(li);
-	  }
-   }})
+			var nbsp=$("<li>&nbsp;/&nbsp;</li>");
+			$(".pagination").append(li,nbsp);
+		}
+		if(dto.next){
+			var a=$("<a>다음</a>").attr("href","#");
+			var li = $("<li></li>").append(a);
+			$(a).on("click",function(){
+				listGoods(gc_code,keyword,(dto.endPage)+1, searchField, searchKeyword);
+			})
+			$(".pagination").append(li);
+		}
+	}})
 }
 
 $(function(){
   
-   listGoods(0)
    
+   
+   var member = $("#member").val();
+
+  
    
    $.ajax("/category/goodsCateList",{success:function(result){
 //      console.log(result)
@@ -206,9 +212,22 @@ $(function(){
 		self.location = "/goods/list";
 	});
 
+   if(typeof member == "undefined" || member == 'null' || member == ""){
+	   listGoods(0);
+	}else{
+		
+		$("#goodsList").empty();
+		$("#searchKeyword").val(member);
+		$("#searchField").val("m_id");
+		//listGoods(0,"",1,"m_id",member);
+		$("#searchBtn").click();
+		
+	}
+
 	
 })
 </script>
+	<input type="hidden" id="member" value=<%= request.getParameter("member") %>>
 	
 	<h2>상품목록</h2><div id=state></div>
 	<p>상품 등록을 원하시면 카테고리를 선택해주세요.</p>
