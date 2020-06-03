@@ -81,10 +81,11 @@ public class GoodsController {
 		int total = goodsService.getTotalCount(cri);		
 		List<GoodsVo> l = goodsService.listGoods(cri);
 		for (GoodsVo g : l) {
-			System.out.println(g.getM_nick());
-			System.out.println("글번호:"+g.getG_no());
+			//System.out.println(g.getM_nick());
+			//System.out.println("글번호:"+g.getG_no());
 		}
 		PageDto2 dto = new PageDto2(cri, total);
+		System.out.println(cri);
 		System.out.println(total);
 		String list = new Gson().toJson(goodsService.listGoods(cri));
 		System.out.println(list);

@@ -41,6 +41,13 @@
 	.btn{ background: white; }
 </style>
 <script type="text/javascript">
+
+var c_no;
+var keyword;
+var gc_code=0;
+var searchKeyword;
+var searchField;
+
 function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 //	c_no를 강제로 넣어주기 위해 카테고리 설정시에만 글쓰기 버튼 보이게 / 검색을 위해 searchKeyword 추가
    if(keyword == null){
@@ -113,7 +120,7 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 		  var a=$("<a>이전</a>").attr("href","#");
 		  var li = $("<li></li>").append(a);
 		  $(a).on("click",function(){
-			  listGoods(gc_code,keyword,(dto.startPage)-1);
+			  listGoods(gc_code,keyword,(dto.startPage)-1, searchField, searchKeyword);
 		  })
 		  var nbsp=$("<li>&nbsp;/&nbsp;</li>");
 		  $(".pagination").append(li,nbsp);
@@ -122,7 +129,7 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 		  var a=$("<a class='pageNum'>"+i+"</a>").attr("href","#");
 		  var li=$("<li></li>").append(a);
 		  $(a).on("click",function(){
-				listGoods(gc_code,keyword,$(this).html());
+				listGoods(gc_code,keyword,$(this).html(), searchField, searchKeyword);
 			})
 		  var nbsp=$("<li>&nbsp;/&nbsp;</li>");
 		  $(".pagination").append(li,nbsp);
@@ -131,7 +138,7 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 		  var a=$("<a>다음</a>").attr("href","#");
 		  var li = $("<li></li>").append(a);
 		  $(a).on("click",function(){
-			  listGoods(gc_code,keyword,(dto.endPage)+1);
+			  listGoods(gc_code,keyword,(dto.endPage)+1, searchField, searchKeyword);
 		  })
 		  $(".pagination").append(li);
 	  }
@@ -139,11 +146,7 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 }
 
 $(function(){
-   var c_no;
-   var keyword;
-   var gc_code=0;
-   var searchKeyword;
-   var searchField;
+  
    listGoods(0)
    
    
@@ -265,7 +268,7 @@ $(function(){
 			    	</select>
 	    	    </div>
 				<div class="col-sm-6 my-1">
-					<input type="text" class="form-control" id="searchKeyword" name="searchKeyword">
+					<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" value="${ pageMake.cri.keyword }">
 				</div>
 		    	
 				<div class="col-sm-2 my-1">
