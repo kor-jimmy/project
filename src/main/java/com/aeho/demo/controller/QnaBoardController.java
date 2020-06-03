@@ -81,9 +81,8 @@ public class QnaBoardController {
 	}
 	
 	@GetMapping("/insert")
-	public void insert(HttpServletRequest request,Model model, @Param("c_no") int c_no, @Param("qb_no") int qb_no) {
+	public void insert(HttpServletRequest request,Model model, @RequestParam("c_no") int c_no, @RequestParam("qb_no") int qb_no) {
 		CategoryVo cv = categoryService.getCategory(c_no);
-		
 		model.addAttribute("cv",cv);
 		model.addAttribute("qb_no", qb_no);
 		model.addAttribute("c_no", c_no);
@@ -93,50 +92,50 @@ public class QnaBoardController {
 	@ResponseBody
 	public String insert(HttpServletRequest request, QnaBoardVo qbv, RedirectAttributes rttr) throws Exception {
 			System.out.println("등록되는 큐엔에이 정보===>>"+qbv);
-		//String str = "게시물 등록에 실패했습니다.";
-				System.out.println(qbv.getQb_no());
-				int pno = qbv.getQb_no();
-		
-				int qb_no = 0;
-						//qbv.getQb_no();
-				int qb_ref = pno;
-				int qb_level = 0;
-				int qb_step = 0;
+			//String str = "게시물 등록에 실패했습니다.";
+			System.out.println(qbv.getQb_no());
+			int pno = qbv.getQb_no();
+	
+			int qb_no = 0;
+					//qbv.getQb_no();
+			int qb_ref = pno;
+			int qb_level = 0;
+			int qb_step = 0;
+			
+			if(pno!=0) {
+				QnaBoardVo qnaBoardVo = qnaBoardService.getQnaBoard(pno);
+				qb_no = qnaBoardVo.getQb_no();
+				qb_ref = qnaBoardVo.getQb_ref();
+				qb_level = qnaBoardVo.getQb_level();
+				qb_step = qnaBoardVo.getQb_step();
 				
-				if(pno!=0) {
-					QnaBoardVo qnaBoardVo = qnaBoardService.getQnaBoard(pno);
-					qb_no = qnaBoardVo.getQb_no();
-					qb_ref = qnaBoardVo.getQb_ref();
-					qb_level = qnaBoardVo.getQb_level();
-					qb_step = qnaBoardVo.getQb_step();
-					
-					HashMap map = new HashMap();
-					map.put("qb_ref", qb_ref);
-					map.put("qb_step", qb_step);
-					qnaBoardService.updateStep(map);
-					System.out.println(map);
-					
-					qb_level++;
-					qb_step++;
-				}
+				HashMap map = new HashMap();
+				map.put("qb_ref", qb_ref);
+				map.put("qb_step", qb_step);
+				qnaBoardService.updateStep(map);
+				System.out.println(map);
 				
-				//qbv.setQb_no(qb_no);
-				qbv.setQb_ref(qb_ref);
-				qbv.setQb_level(qb_level);
-				qbv.setQb_step(qb_step);
-				//System.out.println(qbv);
-				int re = qnaBoardService.insertQnaBoard(qbv);
-				//String str = "게시물 등록에 실패했습니다.";
-				//if(re>0) {
-				//	str = "게시물 등록에 성공했습니다.";
-				//}
-				//rttr.addFlashAttribute("result",str);
-				//rttr.addFlashAttribute("qb_no",qbv.getQb_no());
-				//String msg = categoryService.getCategory(qbv.getC_no()).getC_dist();
-				//String encoding = URLEncoder.encode(msg,"UTF-8");
-				//System.out.println(msg);
-				//System.out.println(qbv.getQb_no());
-				return qbv.getQb_no()+"";
+				qb_level++;
+				qb_step++;
+			}
+			
+			//qbv.setQb_no(qb_no);
+			qbv.setQb_ref(qb_ref);
+			qbv.setQb_level(qb_level);
+			qbv.setQb_step(qb_step);
+			//System.out.println(qbv);
+			int re = qnaBoardService.insertQnaBoard(qbv);
+			//String str = "게시물 등록에 실패했습니다.";
+			//if(re>0) {
+			//	str = "게시물 등록에 성공했습니다.";
+			//}
+			//rttr.addFlashAttribute("result",str);
+			//rttr.addFlashAttribute("qb_no",qbv.getQb_no());
+			//String msg = categoryService.getCategory(qbv.getC_no()).getC_dist();
+			//String encoding = URLEncoder.encode(msg,"UTF-8");
+			//System.out.println(msg);
+			//System.out.println(qbv.getQb_no());
+			return qbv.getQb_no()+"";
 	}
 	
 	@GetMapping("/replyInsert")

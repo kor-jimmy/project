@@ -1,8 +1,3 @@
-insert
-
-
-
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
@@ -11,19 +6,17 @@ insert
 	<h2>QNA 등록</h2>
 	<h2>${c_no }</h2>
 	<form id="insertForm" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="c_no" <c:if test="${qb_no != 0}"> value="${c_no }"</c:if>/>
-		<input type="hidden" id="qb_no" value="${ qb_no }" name="qb_no">
+		<input type="hidden" id="qb_no" value="${qb_no }" name="qb_no">
 		<table class="table table-bordered">
-			
-			
+
 		<tr>
 		<td>카테고리</td>
 		<td>
 			<select name="c_no" id="c_no">
-					<option value="11001" <c:choose><c:when test="${qb_no == 0}">selected="selected"</c:when><c:otherwise>disabled="true"</c:otherwise></c:choose>>가입 관련</option>
-					<option value="11002" <c:choose><c:when test="${qb_no == 0}">selected="selected"</c:when><c:otherwise>disabled="true"</c:otherwise></c:choose>>로그인 관련</option>
-					<option value="11003" <c:choose><c:when test="${qb_no == 0}">selected="selected"</c:when><c:otherwise>disabled="true"</c:otherwise></c:choose>>회원/신고 관련</option>
-					<option value="11004" <c:choose><c:when test="${qb_no == 0}">selected="selected"</c:when><c:otherwise>disabled="true"</c:otherwise></c:choose>>기타문의</option>
+					<option value="11001" <c:if test="${c_no == 11001}">selected</c:if><c:if test="${qb_no != 0}">disabled="true"</c:if>>가입</option>
+					<option value="11002" <c:if test="${c_no == 11002}">selected</c:if><c:if test="${qb_no != 0}">disabled="true"</c:if>>로그인</option>
+					<option value="11003" <c:if test="${c_no == 11003}">selected</c:if><c:if test="${qb_no != 0}">disabled="true"</c:if>>신고/회원</option>
+					<option value="11004" <c:if test="${c_no == 11004}">selected</c:if><c:if test="${qb_no != 0}">disabled="true"</c:if>>기타</option>
 			</select>
 		</td>
 		</tr>
