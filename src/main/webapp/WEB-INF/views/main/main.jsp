@@ -37,6 +37,52 @@
 	#voteBox{ width: 90%; cursor: pointer;}
 	.hoverVote{ filter: brightness(0.60); }
    
+   li{
+		list-style: none !important;
+	}
+	a{
+		text-decoration: none !important;
+		color: dimgray;
+	}
+	
+	#goodsDiv{
+		display: flex;
+		border-radius: 20px;
+		background: rgba(255, 255, 255, 0.7);
+	}
+	#goodsList{
+		width: 100%;
+		height: auto;
+	}
+	.goodsBox{
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		word-wrap:normal;
+		overflow: hidden;
+		float: left;
+		margin: 5px 20px 10px 20px;
+		width: 100%;
+		
+		color: dimgray;
+	}
+	.goodsBox li{
+		height: 160px; 
+	}
+	.goodsImg{
+		width: 150px;
+		border: 1px solid lightgray;
+		margin-bottom: 60%;
+	}
+	.imgDiv{
+		display:inline-block;
+		width: 150px;
+	}
+	.conDiv{
+		display:inline-block;
+		text-align: left;
+		width: 60%;
+		margin-left: 30px;
+	}
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -204,6 +250,50 @@
 				})
 			}
 		})
+		
+		/*최신 굿즈 게시물*/
+		$.ajax("/mainNewGoods", {success: function(goodsList){
+			var goodsList = JSON.parse(goodsList);
+			$.each(goodsList, function(idx, item){
+				console.log(g);
+				var g = item;
+				
+				var div = $("<div class='goodsBox mb-2'></div>");
+				
+				var con = g.g_content;
+				var img;
+
+				var imgDiv = $("<div class='imgDiv'></div>").attr("display", "inline-block");
+				
+				if(con.indexOf("<img src=") != -1){
+					img = $(con.substring(con.indexOf("<img src="), con.indexOf("style"))+"></img>").addClass("rounded goodsImg");
+				}else{
+					img = $("<img src='/img/no_image.png' class='rounded goodsImg'></img>");
+				}
+
+				var contentDiv = $("<div class='conDiv'></div>").attr("display", "inline-block");
+				var gc_dist = $("<small class='text-muted'></small>");
+				if(g.gc_code == 1)
+					gc_dist.html("[팝니다] ");
+				else
+					gc_dist.html("[삽니다] ");
+				
+				var title = $("<b></b>").html(g.g_title);
+				var writer = $("<p></p>").html(g.m_nick);
+				var content = $("<p></p>").html(g.g_content.replace(/(<([^>]+)>)/ig,""));
+				var g_date = moment(g.g_updatedate).format('YYYY-MM-DD HH:mm:ss');
+				var date = $("<span></span>").html(g_date);
+				//var replyCnt = $("<span class='badge badge-light'></span>").html(g.g_replycnt);
+				
+				var a = $("<a></a>").attr("href","/goods/get?g_no="+g.g_no).append(title);
+				contentDiv.append(gc_dist, a, "&nbsp;", writer, content, date);
+				imgDiv.append(img);
+				var li = $("<li></li>").append(imgDiv, contentDiv);
+				div.append(li);
+				$("#goodsList").append(div);
+			});
+			
+		}});
 
 		/*투표*/
 		// 아름) 06/03 추가
@@ -302,6 +392,7 @@
 	});
         
 	});
+
 </script>
 		<!-- 이미지 슬라이드 -->
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -339,7 +430,7 @@
             <!--인기글 일간,주간,월간-->
             <div class="col-sm-5">
             	<div>
-            		<h3>Ae?-Ho! 인기글</h3>
+            		<h3>Ae?-HO! 인기글</h3>
 	                <p>
 	                    <button id="todayBestBtn" type="button" class="btn btn-light">today</button>
 	                    <button id="weekBestBtn" type="button" class="btn btn-light">week</button>
@@ -393,6 +484,11 @@
             	<!-- 새로 올라온 굿즈글 -->
             	<div>
             		<h3>새로운 Ae-Ho품!</h3>
+            		<div id="goodsDiv" align="center">
+						<ul id="goodsList" class="mt-5">
+				
+						</ul>
+					</div>
             	</div>
             	<br>
             	<hr>

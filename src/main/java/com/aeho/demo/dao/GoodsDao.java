@@ -27,4 +27,6 @@ public interface GoodsDao {
 	
 	List<GoodsVo> getMypageGoods(String m_id);
 	
+	List<GoodsVo> mainNewGoods();
+	
 }

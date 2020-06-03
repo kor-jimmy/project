@@ -105,6 +105,11 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsDao.getMypageGoods(m_id);
 	}
 
+	@Override
+	public List<GoodsVo> mainNewGoods() {
+		return goodsDao.mainNewGoods();
+	}
+
 	
 
 }

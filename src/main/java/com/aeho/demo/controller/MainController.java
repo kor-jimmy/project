@@ -19,10 +19,12 @@ import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.domain.PageDto;
 import com.aeho.demo.security.MemberPrincipal;
 import com.aeho.demo.service.BoardService;
+import com.aeho.demo.service.GoodsService;
 import com.aeho.demo.service.MainServcie;
 import com.aeho.demo.service.SlideImagesService;
 import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.CategoryVo;
+import com.aeho.demo.vo.GoodsVo;
 import com.google.gson.Gson;
 
 @Controller
@@ -33,6 +35,9 @@ public class MainController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private GoodsService goodsService;
 	
 	@Autowired
 	private SlideImagesService slideImageService;
@@ -147,13 +152,13 @@ public class MainController {
 		return str;
 	}
 	
-	//최신 굿즈... 아름아부탁해!!
-	/*
-	 * @GetMapping("/mainNewBoard")
-	 * 
-	 * @ResponseBody public String mainNewBoard() { List<BoardVo> list =
-	 * boardService.mainNewBoard(); Gson gson = new Gson(); String str =
-	 * gson.toJson(list); return str; }
-	 */
+	// 아름) 0603 메인페이지 최신굿즈
+	@GetMapping("/mainNewGoods")
+	@ResponseBody 
+	public String mainNewGoods(HttpServletRequest request) { 
+		List<GoodsVo> list = goodsService.mainNewGoods();
+		Gson gson = new Gson(); String str = gson.toJson(list); 
+		return str; 
+	}
 
 }
