@@ -3,6 +3,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="includes/header.jsp"%>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<style>
+	#findPwd{ cursor: pointer; }
+</style>
 <script>
 	$(function(){
 		var token = $("meta[name='_csrf']").attr("content");
@@ -113,7 +116,7 @@
 			<div class="form-group form-check" align="center">
 			    <input type="checkbox" class="form-check-input" name="remember-me" id="autoLogin">
 			    <label class="form-check-label" for="loginINFO">자동 로그인</label>
-			    <div class="text-secondary" onclick="location.href='/member/findInfo'"><small>비밀번호 찾기</small></div>
+			    <div id="findPwd" class="text-secondary" onclick="location.href='/member/findInfo'"><small>비밀번호 찾기</small></div>
 			</div>
 			  <!-- 시큐리티 토큰 -->
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
