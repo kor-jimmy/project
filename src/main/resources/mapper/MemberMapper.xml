@@ -50,7 +50,7 @@
   </insert>
   
   <update id="updateMember">
-  	update member set m_nick = #{m_nick}, m_email=#{m_email}, m_phone = #{m_phone}
+  	update member set m_nick = #{m_nick}, m_pwd=#{m_pwd}
   	where m_id = #{m_id}
   </update>
   

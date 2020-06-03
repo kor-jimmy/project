@@ -55,6 +55,7 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 	@Override
 	public int updateMember(MemberVo mv) {
 		int re = 0;
+		/*
 		String m_id = mv.getM_id();
 		MemberVo member = memberDao.getMember(m_id);
 		//입력받은 암호와 저장된 암호 비교
@@ -67,6 +68,16 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 			}
 			re = memberDao.updateMember(mv);
 		}
+		*/
+		MemberVo member = memberDao.getMember(mv.getM_id());
+		if(mv.getM_pwd() == null || mv.getM_pwd() == "") {
+			mv.setM_pwd(member.getM_pwd());
+		}
+		if(mv.getM_nick() == null || mv.getM_nick() == "") {
+			mv.setM_nick(member.getM_nick());
+		}
+		mv.setM_pwd(passwordEncoder.encode(mv.getM_pwd()));
+		re = memberDao.updateMember(mv);
 		return re;
 	}
 
