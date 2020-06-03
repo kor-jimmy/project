@@ -60,6 +60,7 @@
 						return false;
 					}
 
+					
 					if(member.m_state=="BAN"){
 						swal({
 							  title: "영구 정지된 계정입니다.",
