@@ -1,5 +1,9 @@
 package com.aeho.demo.security;
 
+
+
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +15,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.aeho.demo.service.MemberServiceSecurity;
@@ -26,6 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private MemberServiceSecurity memberServiceSecurity;
+	
+	@Autowired
+	private DataSource dataSource;
 	
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider(MemberServiceSecurity memberServiceSecurity) throws Exception {
@@ -72,10 +81,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.deleteCookies("JSESSIONID")
+				.deleteCookies("JSESSIONID","remember-me")
 				.logoutSuccessUrl("/main/main")
 			.and()
 				.exceptionHandling()
-				.accessDeniedPage("/access-denied");
+				.accessDeniedPage("/access-denied")
+			.and()
+				.rememberMe()
+					.userDetailsService(memberServiceSecurity)
+					.rememberMeParameter("remember-me")
+					.tokenValiditySeconds(86400)
+					.tokenRepository(tokenRepository());
+	}
+	
+	//tokenRepository 구현체
+	@Bean
+	public PersistentTokenRepository tokenRepository() {
+		JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+		jdbcTokenRepository.setDataSource(dataSource);
+		return jdbcTokenRepository;
 	}
 }

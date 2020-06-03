@@ -73,6 +73,16 @@
 			})
 
 		})
+
+		//자동 로그인 메세지
+		$(document).on("click","#autoLogin",function(e){
+			swal({
+				  title: "자동 로그인",
+				  text: "공용 PC에서 자동 로그인은 해킹 위험에 노출 될 수 있습니다.",
+				  icon: "info",
+				  button: "네, 알겠습니다!"
+				})
+		})
 	})
 </script>
 
@@ -100,8 +110,8 @@
 			</div>
 			<hr>
 			<div class="form-group form-check">
-			    <input type="checkbox" class="form-check-input" id="loginINFO">
-			    <label class="form-check-label" for="loginINFO">로그인 정보 저장//아직구현안됨</label>
+			    <input type="checkbox" class="form-check-input" name="remember-me" id="autoLogin">
+			    <label class="form-check-label" for="loginINFO">자동 로그인</label>
 			</div>
 			  <!-- 시큐리티 토큰 -->
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
