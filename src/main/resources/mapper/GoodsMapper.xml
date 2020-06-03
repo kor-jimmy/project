@@ -58,7 +58,7 @@
   					</otherwise>
   				</choose>
   				<if test="keyword != null and keyword != ''">
-  					 and g.c_no=(select g.c_no from category c, goods g where c.c_no=g.c_no and c_dist=#{keyword})
+  					 and g.c_no in (select g.c_no from category c, goods g where c.c_no=g.c_no and c_dist=#{keyword})
   				</if>
   				<if test="searchKeyword != null and searchKeyword != ''">
   					<include refid="searchSql"></include>

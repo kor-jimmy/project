@@ -52,6 +52,13 @@
 			
 		});
 
+		$('#m_pwd').keypress(function(event){
+		     if ( event.which == 13 ) {
+		         $('#confirmBtn').click();
+		         return false;
+		     }
+		});
+
 
 		//진탁 06/02
 		//해당 유저의 최신 게시물 8개를 가져오는 함수.

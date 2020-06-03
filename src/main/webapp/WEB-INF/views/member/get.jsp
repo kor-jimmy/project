@@ -14,8 +14,10 @@
 	.wannaModify{ background: white; }
 	
 	#updateBtn{ background: #A3A1FC; border-color: #A3A1FC; }
-	#updateBtn:hover{ background: #CBCAFF; }
+	#updateBtn:hover{ background: #CBCAFF; border-color: #CBCAFF; }
 	
+	#resetBtn{ background: #BDBDBD; border-color: #BDBDBD; }
+	#resetBtn:hover{ background: lightgray; border-color: lightgray; }
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
@@ -162,7 +164,11 @@
 				}});
 			}
 		});
-		
+
+		$("#resetBtn").click(function(e){
+			e.preventDefault();
+			location.href="/member/mypage";
+		});
 		
 	})
 </script>
@@ -214,7 +220,9 @@
 				    	닉네임을 입력해주세요.
 					</font>
 				</div>
+				<br>
 				<button type="submit" class="btn btn-primary" id="updateBtn">수정하기</button>
+				<button type="button" class="btn btn-primary" id="resetBtn">취소</button>
 			</form>
 		</div>
 	</div>
