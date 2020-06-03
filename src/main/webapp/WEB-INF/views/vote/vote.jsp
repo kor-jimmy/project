@@ -49,7 +49,7 @@
 				$.each(list, function(idx, v){
 					trList.push(v);
 					
-					var radiusContainer = $('<div style="width: 100%; height: 150px; display: inline-block; position: relative; border-radius: 30px; overflow: hidden; margin: 5px 0px 5px 0px;"></div>').attr("idx", idx);
+					var radiusContainer = $('<div style="width: 100%; height: 150px; display: inline-block; position: relative; border-radius: 30px; overflow: hidden; margin: 5px 0px 5px 0px; background: white; cursor: pointer;"></div>').attr("idx", idx);
 					var textBox = $('<div style="width: inherit; height: 150px; position: absolute; display: table; z-index: 10; color: white; text-shadow: 2px 2px 5px black;"></div>');
 					var text = $('<div style="display:table-cell; text-align:center; vertical-align:middle;"><h2 id="timeText'+idx+'" style="display: inline-block; text-align: center;"></h2></div>');
 					var imglocBox = $('<div style="width: 110%; height: 150px; margin-left: -5%; display: inline-block; text-align: center;"></div>');
@@ -147,7 +147,7 @@
 				var list = JSON.parse(list);
 				$.each(list, function(idx, v){
 					
-					var radiusContainer = $('<div style="width: 100%; height: 150px; display: inline-block; position: relative; border-radius: 30px; overflow: hidden; margin: 5px 0px 5px 0px;"></div>').attr("idx", idx);
+					var radiusContainer = $('<div style="width: 100%; height: 150px; display: inline-block; position: relative; border-radius: 30px; overflow: hidden; margin: 5px 0px 5px 0px; background: white;"></div>').attr("idx", idx);
 					var textBox = $('<div style="width: inherit; height: 150px; position: absolute; display: table; z-index: 10; color: white; text-shadow: 2px 2px 5px black;"></div>');
 					var text = $('<div style="display:table-cell; text-align:center; vertical-align:middle;"><h2 id="endedtimeText'+idx+'" style="display: inline-block; text-align: center;"></h2></div>');
 					var imglocBox = $('<div style="width: 110%; height: 150px; margin-left: -5%; display: inline-block; text-align: center;"></div>');

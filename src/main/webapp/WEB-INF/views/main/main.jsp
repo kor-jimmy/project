@@ -201,6 +201,102 @@
 				})
 			}
 		})
+
+		/*투표*/
+		// 아름) 06/03 추가
+		//진행중인 투표 목록
+		var topicList = function(){
+			$.ajax("/vote/list", {success: function(list){
+				//console.log(list);
+				if(list.length < 1){
+					var text = $("<div></div>").html("현재 진행중인 투표가 없습니다.");
+					$("#voteBox").append(text);
+				}
+				var list = JSON.parse(list);
+				$.each(list, function(idx, v){
+					if(idx > 0){
+						return false;
+					}
+					
+					var radiusContainer = $('<div class="radiusContainer" style="width: 100%; height: 150px; display: inline-block; background: white; position: relative; border-radius: 30px; overflow: hidden; margin: 5px 0px 5px 0px;"></div>').attr("idx", idx);
+					var textBox = $('<div style="width: inherit; height: 150px; position: absolute; display: table; z-index: 10; color: white; text-shadow: 2px 2px 5px black;"></div>');
+					var text = $('<div style="display:table-cell; text-align:center; vertical-align:middle;"><h2 id="timeText'+idx+'" style="display: inline-block; text-align: center;"></h2></div>');
+					var imglocBox = $('<div id="picDiv" style="width: 110%; height: 150px; margin-left: -5%; display: inline-block; text-align: center;"></div>');
+					var divA = $('<div class="divA" style="position:relative; width: 50%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;"></div>');
+					var divB = $('<div class="divB" style="position:relative; width: 50%; height: 150px; transform: skew(15deg); display: inline-block; overflow: hidden;"></div>');
+					var imgA = $('<img src="/img/vote/'+v.vt_img_a+'" style="width: 100%; margin-right: 30%; margin-top: -30%; opacity: 0.6;">');
+					var imgB = $('<img src="/img/vote/'+v.vt_img_b+'" style="width: 100%; margin-right: 30%; margin-top: -30%; opacity: 0.6;">');
+
+					divA.append(imgA);
+					divB.append(imgB);
+					imglocBox.append(divA, divB);
+					textBox.append(text);
+					radiusContainer.append(textBox, imglocBox);
+
+					
+					var mainDiv = $('<div></div>').attr("index", idx);
+					var sudDiv = $("<div></div>").append(radiusContainer);
+
+					mainDiv.append(sudDiv);
+					$("#voteBox").append(mainDiv);
+
+					start_timer(v.vt_end, idx);
+
+				});
+			}});
+		}
+
+    var remainInterval;
+
+	var start_timer = function(endTime, idx){
+		remainInterval = setInterval( function(){ remainTime(endTime, idx); }, 1000 );
+	}
+
+	var remainTime = function(endTime, idx){
+		var start = new Date().getTime();
+		var end = new Date(endTime).getTime();
+		var remain = end - start;
+		
+		var hours = Math.floor(remain / (1000*60*60));
+		var min = Math.floor((remain / (1000 * 60 )) % 60 );
+		var sec = Math.floor((remain / 1000) % 60);
+
+		if(hours < 10){ hours = "0" + hours }
+		if(min < 10){ min = "0" + min }
+		if(sec < 10){ sec = "0" + sec }
+
+		var text_time = hours + " : " + min + " : " + sec;
+
+		$("#timeText"+idx).html(text_time);
+		
+		if(remain < 0){
+			clearInterval(remainInterval);
+			$.ajax({
+				type: "POST",
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token)	
+				},
+				cache: false, 
+	            url: "/vote/updateState",
+				data: {vt_no: trList[idx].vt_no},
+				success: function(re){
+					if(re > 0){
+						self.location = "/vote/vote";							
+					}
+				}
+			});
+		}else{
+			remain = remain - 1000;
+		}
+	}
+	
+	topicList();
+
+	$("#voteBox").hover(function(){
+		$(this).children("div").addClass("hoverVote");
+	}, function(){
+		$(this).children("div").removeClass("hoverVote");
+	});
         
 	});
 </script>
@@ -323,8 +419,11 @@
         </div>
         
         <div class="row">
-        	<div class="col-lg-12" style="background: pink"> 
-        		투표여기에
+        	<div class="col-lg-12"> 
+        		<h4>Ae-Ho's PICK!</h4>
+        		<div align="center">
+        			<div id="voteBox" onclick="location.href='/vote/vote'" title="지금 투표하러 가기"></div>
+        		</div>
         	</div>
         </div>
 
