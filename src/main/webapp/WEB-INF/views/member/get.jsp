@@ -13,7 +13,7 @@
 	#modifyPwd{ background: white; }
 	.wannaModify{ background: white; }
 	
-	#updateBtn{ background: #A3A1FC; }
+	#updateBtn{ background: #A3A1FC; border-color: #A3A1FC; }
 	#updateBtn:hover{ background: #CBCAFF; }
 	
 </style>
@@ -166,6 +166,7 @@
 		
 	})
 </script>
+	
 	<h2 id="mpTitle" style="text-align: center;">개인정보 수정</h2>
 
  	<div id="myPageContent">

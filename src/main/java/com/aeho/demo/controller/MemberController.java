@@ -121,10 +121,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/get")
-	public void get(HttpServletRequest request, @RequestParam("m_id") String m_id,Model model) {
-		System.out.println("member get");
-		MemberVo mv = memberServiceSecurity.getMember(m_id);
-		model.addAttribute("member", mv);
+	public void get(HttpServletRequest request) {
 	}
 	
 	@GetMapping("/mypage")
