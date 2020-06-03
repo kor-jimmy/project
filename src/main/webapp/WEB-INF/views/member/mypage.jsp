@@ -72,7 +72,7 @@
 						tr.append(category,title,boardDate);
 						$("#userContent").append(tr);
 					})
-					var totalLink = $("<a class='badge badge-info float-right'></a>").html("전체 게시글 보기").attr("href","/member/board?m_id=?"+user_id);
+					var totalLink = $("<a target='_blank' class='badge badge-info float-right'></a>").html("전체 게시글 보기").attr("href","/board/listAll?categoryNum=9999&c_no=9999&pageNum=1&amount=30&searchField=m_id&keyword="+user_id);
 					$("#linkDiv").append(totalLink);	
 				}
 			})
@@ -126,7 +126,7 @@
 	        		<div>
 	        			<div align="center">
 	        				<img src="/img/userICON.png" width="80" height="80" class="rounded-circle">
-<%-- 	        				<c:if test="${member.m_img == null }">
+<%-- 	        			<c:if test="${member.m_img == null }">
 	        					
 	        				</c:if>
 	        				<c:if test="${member.m_img !=null }">

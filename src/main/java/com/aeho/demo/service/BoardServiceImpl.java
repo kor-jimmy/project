@@ -137,9 +137,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int totalBoard(String m_id) {
+	public int totalBoard(Criteria cri) {
 		// TODO Auto-generated method stub
-		return boardDao.totalBoard(m_id);
+		return boardDao.totalBoard(cri);
 	}
 
 	@Override

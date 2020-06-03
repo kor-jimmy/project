@@ -15,7 +15,7 @@
   	select *from board b, category c where b.c_no=c.c_no and c.c_dist = #{catkeyword}
   </select>
   
-  <sql id="searchSql">
+   <sql id="searchSql">
   	<choose>
   		<when test="searchField != null and !searchField.equals('') and searchField.equals('all')">
 			and (b_title like '%'||#{keyword}||'%' or b_content like '%'||#{keyword}||'%' or m_id like '%'||#{keyword}||'%')
@@ -37,7 +37,7 @@
   			(
   				select /*+ INDEX_DESC(board pk_board)*/
   					rownum rn, b_no, m_id, c.c_dist c_dist, b.c_no, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
-  				from board b, category c
+  				from (select *from board order by b_no desc) b, category c
   				where rownum <= #{pageNum} * #{amount} and b.c_no=c.c_no
   				]]>
   				<choose>
@@ -85,7 +85,10 @@
   
   <!-- 회원 전체글을 위한 전체 게시물 숫자-->
   <select id="totalBoard" resultType="int">
-  	select count(*) from board where m_id = #{m_id}
+  	<![CDATA[
+  		select count(*) from board where c_no<10000
+  	]]>	
+  		<include refid="searchSql"></include>
   </select>
   
   <select id="getMypageBoard" resultType="com.aeho.demo.vo.BoardVo">

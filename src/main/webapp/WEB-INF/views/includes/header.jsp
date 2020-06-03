@@ -333,6 +333,7 @@
 	    	<div>
 	            <ul class="nav">
 	                <li class="nav-item"><a href="/main/notice?categoryNum=10000" class="nav-link text-secondary">공지사항</a></li>
+	                <li class="nav-item"><a href="/board/listAll?categoryNum=9999" class="nav-link text-secondary">전체보기</a></li>
 	                <li class="nav-item"><a href="/category/category" class="nav-link text-secondary">카테고리</a></li>
 	                <li id="brodMenu" class="nav-item dropdown">
 				        <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -370,7 +371,6 @@
 				        </div>
      				</li>
 	                <li class="nav-item"><a href="/goods/list" class="nav-link text-secondary">굿즈</a></li>
-	                <li class="nav-item"><a href="#" class="nav-link text-secondary">일정</a></li>
 	                <li class="nav-item"><a href="/vote/vote" class="nav-link text-secondary">투표</a></li>
 	                <li id="qnaBoard" class="nav-item dropdown">
 				        <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -411,7 +411,7 @@
 								<div id="sign_up" class="userMenuBtn" onclick="location.href='/member/insert'">회원가입</div>
 							</sec:authorize>
 							<sec:authorize access="isAuthenticated()">
-								<div id="my_page" class="userMenuBtn mb-1" onclick="location.href='/member/mypage?m_id=<sec:authentication property="principal.username"/>'">
+								<div id="my_page" class="userMenuBtn mb-1" onclick="location.href='/member/mypage'">
 									<img src="/img/userICON.png" width="30" height="30" id="mypageImg">
 									<span id="userId"> <sec:authentication property="principal.username"/></span>
 								</div>

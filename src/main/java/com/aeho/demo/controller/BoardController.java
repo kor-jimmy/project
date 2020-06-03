@@ -91,6 +91,16 @@ public class BoardController {
 		model.addAttribute("catkeyword",categoryService.getCategory(cri.getCategoryNum()).getC_dist());
 	}
 	
+	@GetMapping("/listAll")
+	public void listAll (HttpServletRequest request, Criteria cri, Model model) {
+		int total = boardService.totalBoard(cri);
+		cri.setCategoryNum(9999);
+		System.out.println("list:"+cri);
+		model.addAttribute("list", boardService.getList(cri));
+		model.addAttribute("pageMake", new PageDto(cri, total));
+		model.addAttribute("c_no",cri.getCategoryNum());
+	}
+	
 	@GetMapping("/get")
 	public void getBoard(HttpServletRequest request, BoardVo bv, Model model) {
 		model.addAttribute("board", boardService.getBoard(bv));

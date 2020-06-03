@@ -23,9 +23,7 @@
 			white-space : normal; /*기본값*/
 			text-overflow: clip; /*기본값*/
 		}
-	
-	
-	
+
 	</style>
 
     

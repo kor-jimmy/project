@@ -11,7 +11,7 @@
 			
 		<tr>
 			<td>카테고리</td>
-			<td><input type="hidden" id="c_no" name="c_no" readonly="readonly" value="${cv.c_no }">${cv.c_dist}</td>
+			<td><input type="hidden" id="c_no" name="c_ no" readonly="readonly" value="${cv.c_no }">${cv.c_dist}</td>
 		</tr>
 		<tr>
 			<td>제목</td>

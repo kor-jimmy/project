@@ -32,7 +32,7 @@ public interface BoardService {
 	
 	List<BoardVo> getUserNotice();
 	
-	int totalBoard(String m_id);
+	int totalBoard(Criteria cri);
 	
 	List<BoardVo> getMypageBoard(String m_id);
 	

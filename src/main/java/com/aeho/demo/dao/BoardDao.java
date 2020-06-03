@@ -41,7 +41,7 @@ public interface BoardDao {
 	List<BoardVo> getUserNotice();
 	
 	//전체 모든 게시글 수 
-	int totalBoard(String m_id);
+	int totalBoard(Criteria cri);
 	
 	//회원 게시글 5개뽑는용도 마이페이지!
 	List<BoardVo> getMypageBoard(String m_id);
