@@ -208,11 +208,11 @@ public class MemberController {
 		System.out.println(buffer);
 		final String tempPwd = buffer.toString();
 		
-		String newPwd = passwordEncoder.encode("0000");
 		MemberVo mv = memberServiceSecurity.getMember(m_id);
-		System.out.println(mv);
-		mv.setM_pwd(newPwd);
+		System.out.println("원래 memberVo: "+ mv);
+		mv.setM_pwd(tempPwd);
 		memberServiceSecurity.updateMember(mv);
+		System.out.println("수정된 memberVo: "+mv);
 		
 		mailSender.send(new MimeMessagePreparator() {
 			
