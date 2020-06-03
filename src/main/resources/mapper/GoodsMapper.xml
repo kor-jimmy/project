@@ -143,8 +143,8 @@
   
   <select id="mainNewGoods" resultType="com.aeho.demo.vo.GoodsVo">
   	<![CDATA[
-	  	select rownum rn, gc_code, m_id, m_nick, c_no, g_title, g_date, g_updatedate, g_content
-	   	 from (select gc_code, g.m_id, m.m_nick, c_no, g_title, g_date, g_updatedate, g_content from goods g, member m where m.m_id = g.m_id and c_no > 1001 and c_no < 1100 order by g_no desc) 
+	  	select rownum rn, g_no, gc_code, m_id, m_nick, c_no, g_title, g_date, g_updatedate, g_content
+	   	 from (select g_no, gc_code, g.m_id, m.m_nick, c_no, g_title, g_date, g_updatedate, g_content from goods g, member m where m.m_id = g.m_id and c_no > 1001 and c_no < 1100 order by g_no desc) 
 	        where rownum <= 3
 	]]>
   </select>
