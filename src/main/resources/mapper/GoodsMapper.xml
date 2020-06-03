@@ -69,6 +69,7 @@
   		where rn > (#{pageNum}-1) * #{amount} 
   	]]>  
   </select>
+  
   <select id="getTotalCount" resultType="int">
   	select count(*) from goods g
   	<choose>
@@ -129,5 +130,14 @@
   			)
   		where rn > (#{pageNum}-1) * #{amount}
   ]]>
+  </select>
+  
+  <!-- 마이페이지 메인용 굿즈 목록 뽑는거 -->
+    <select id="getMypageGoods" resultType="com.aeho.demo.vo.GoodsVo">
+  	<![CDATA[ 	
+	  	select rownum rn, g_no, gc_code, m_id, c_dist, c_no, g_title, g_date from
+	    	(select g_no, g.gc_code, m_id, c_dist, g.c_no, g_title, g_date from goods g, category c, goodscode gc where g.c_no=c.c_no and g.gc_code = gc.gc_code and m_id='tiger' order by g_no desc)
+	        	where rownum<=8 and c_no>1000 and c_no<10000
+    ]]> 
   </select>
 </mapper>

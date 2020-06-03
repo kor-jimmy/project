@@ -99,6 +99,12 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsDao.getReportGoods(cri);
 	}
 
+	@Override
+	public List<GoodsVo> getMypageGoods(String m_id) {
+		// TODO Auto-generated method stub
+		return goodsDao.getMypageGoods(m_id);
+	}
+
 	
 
 }

@@ -12,9 +12,12 @@
 
 	$(function(){
 
+		//진탁 06/02
+		//시큐리티 태그립. 현재 로그인한 유저의 아이디를 user_id 전역 변수에 담음 여러 함수에 쓰일 예정
 		var user_id = "<sec:authentication property='principal.username'/>";
 		var data = {m_id:user_id}
 		console.log(user_id);
+		//유저의 정보를 요청하는 ajax
 		$.ajax({
 			url:"/member/getMemberInfo",
 			type:"GET",
@@ -49,22 +52,67 @@
 			
 		});
 
-		$.ajax({
-			url:"/member/getMypageBoard",
-			data:data,
-			type:"GET",
-			success:function(result){
-				var boardList = JSON.parse(result);
-				$.each(boardList,function(idx,board){
-					var date = moment(board.b_date).format("YYYY-MM-DD");
-					var tr = $("<tr align='center'></tr>");
-					var category = $("<td></td>").html(board.c_dist);
-					var title = $("<td></td>").html(board.b_title);
-					var boardDate = $("<td></td>").html(date);
-					tr.append(category,title,boardDate);
-					$("#userContent").append(tr);
-				})		
-			}
+
+		//진탁 06/02
+		//해당 유저의 최신 게시물 8개를 가져오는 함수.
+		var getMyBoard = function(){			
+			$.ajax({
+				url:"/member/getMypageBoard",
+				data:data,
+				type:"GET",
+				success:function(result){
+					var boardList = JSON.parse(result);
+					$.each(boardList,function(idx,board){
+						var date = moment(board.b_date).format("YYYY-MM-DD");
+						var tr = $("<tr align='center'></tr>");
+						var category = $("<td></td>").html(board.c_dist);
+						var link = $("<a target='_blank'></a>").attr("href","/board/get?b_no="+board.b_no).html(board.b_title);
+						var title = $("<td></td>").append(link);
+						var boardDate = $("<td></td>").html(date);
+						tr.append(category,title,boardDate);
+						$("#userContent").append(tr);
+					})
+					var totalLink = $("<a class='badge badge-info float-right'></a>").html("전체 게시글 보기").attr("href","/member/board?m_id=?"+user_id);
+					$("#linkDiv").append(totalLink);	
+				}
+			})
+		}
+
+		//진탁 06/02
+		//해당 유저의 최신 굿즈 8개를 가져오는 함수.
+		var getMyGoods = function(){			
+			$.ajax({
+				url:"/member/getMypageGoods",
+				data:data,
+				type:"GET",
+				success:function(result){
+					var goodsList = JSON.parse(result);
+					$.each(goodsList,function(idx,goods){
+						var date = moment(goods.g_date).format("YYYY-MM-DD");
+						var tr = $("<tr align='center'></tr>");
+						var category = $("<td></td>").html(goods.c_dist);
+						var link = $("<a target='_blank'></a>").attr("href","/goods/get?g_no="+goods.g_no).html(goods.g_title);
+						var title = $("<td></td>").append(link);
+						var boardDate = $("<td></td>").html(date);
+						tr.append(category,title,boardDate);
+						$("#userContent").append(tr);
+					})
+					var totalLink = $("<a class='badge badge-info float-right'></a>").html("전체 굿즈글 보기").attr("href","/member/goods?m_id=?"+user_id);
+					$("#linkDiv").append(totalLink);		
+				}
+			})
+		}
+		getMyBoard();
+
+		$(document).on("click","#myBoard",function(){
+			$("#userContent").empty();
+			$("#linkDiv").empty();
+			getMyBoard();
+		})
+		$(document).on("click","#myGoods",function(){
+			$("#userContent").empty();
+			$("#linkDiv").empty();
+			getMyGoods();
 		})
 		
 	})
@@ -121,8 +169,8 @@
 	        <!-- Card Body -->
 	        <div class="card-body" id="serachPickDiv">
 	        	<div>
-	        		<button type="button" class="btn btn-light">내가 올린 애호글</button>
-	        		<button type="button" class="btn btn-light">내가 올린 애호품</button>
+	        		<button type="button" class="btn btn-light float-right" id="myGoods">내가 올린 애호품</button>
+	        		<button type="button" class="btn btn-light float-right" id="myBoard">내가 올린 애호글</button>
 	        	</div>
 	        	<div>
 	        		<table class="table table-hover">
@@ -136,10 +184,10 @@
 	        			<tbody id="userContent">
 	        			
 	        			</tbody>
-	        		</table>
-					<ul class="list-group list-group-flush" id="userContent">
-						
-					</ul>	        	
+	        		</table>   	
+	        	</div>
+	        	<div id="linkDiv">
+	        	
 	        	</div>
 	        </div>
 	      </div>

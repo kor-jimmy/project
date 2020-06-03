@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeho.demo.service.BoardService;
+import com.aeho.demo.service.GoodsService;
 import com.aeho.demo.service.MemberServiceSecurity;
 import com.aeho.demo.vo.BoardVo;
+import com.aeho.demo.vo.GoodsVo;
 import com.aeho.demo.vo.MemberVo;
 import com.google.gson.Gson;
 
@@ -45,6 +47,9 @@ public class MemberController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private GoodsService goodsService;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -141,6 +146,14 @@ public class MemberController {
 	@ResponseBody
 	public String getMypageBoard(HttpServletRequest request, @RequestParam("m_id") String m_id) {
 		List<BoardVo> list = boardService.getMypageBoard(m_id);
+		Gson gson = new Gson();
+		String str = gson.toJson(list);
+		return str;
+	}
+	@GetMapping("/getMypageGoods")
+	@ResponseBody
+	public String getMypageGoods(HttpServletRequest request, @RequestParam("m_id") String m_id) {
+		List<GoodsVo> list = goodsService.getMypageGoods(m_id);
 		Gson gson = new Gson();
 		String str = gson.toJson(list);
 		return str;

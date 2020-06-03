@@ -25,4 +25,6 @@ public interface GoodsDao {
 	
 	List<GoodsVo> getReportGoods(Criteria2 cri);
 	
+	List<GoodsVo> getMypageGoods(String m_id);
+	
 }

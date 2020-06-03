@@ -92,7 +92,7 @@
   	<![CDATA[ 	
 	  	select rownum rn, b_no, m_id, c_dist, c_no, b_title, b_date from
 	    	(select b_no, c_dist, m_id, b.c_no, b_title, b_date from board b, category c where b.c_no=c.c_no and m_id=#{m_id} order by b_no desc)
-	        	where rownum<=5
+	        	where rownum<=8 and c_no<1000
     ]]> 
   </select>
   
