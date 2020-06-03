@@ -125,5 +125,15 @@ public class MainController {
 		model.addAttribute("pageMake", new PageDto(cri, total));
 		model.addAttribute("c_no",cri.getCategoryNum());
 	}
+	
+	//메인 페이지용 공지사항
+	@GetMapping("/adminNotice")
+	@ResponseBody
+	public String adminNotice() {
+		List<BoardVo> list = boardService.getAdminNotice();
+		Gson gson = new Gson();
+		String str = gson.toJson(list);
+		return str;
+	}
 
 }

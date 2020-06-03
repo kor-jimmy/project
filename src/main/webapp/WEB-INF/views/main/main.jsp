@@ -14,6 +14,26 @@
     	overflow: hidden;
     	display: block;
     }
+    
+    table { 
+			border-collapse: collapse; 
+			border-spacing: 0;		
+			width: 100%; 
+			table-layout: fixed;
+		}
+	
+	td { 
+		vertical-align: middle; 
+		overflow:hidden;
+		white-space : nowrap;
+		text-overflow: ellipsis;
+	 }
+
+	td.textOverDefault {
+		white-space : normal; /*기본값*/
+		text-overflow: clip; /*기본값*/
+	}
+   
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -21,7 +41,7 @@
 		$(".carousel-item").first().addClass("active");
 		$(".indicators").first().addClass("active");
 		
-		$.ajax("http://192.168.0.35:5000/videos", 
+		$.ajax("http://192.168.0.16:5000/videos", 
 			{dataType: "jsonp",
 			jsonpCallback: "getVideos",
 			success: function(data){
@@ -30,7 +50,7 @@
 				d = data[rand]
 				str = d.substr(d.lastIndexOf("=")+1);
 				console.log(str);
-				frame = $("<iframe width='350' height='250' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>").attr("src", "https://www.youtube.com/embed/"+str);
+				frame = $("<iframe width='450' height='350' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>").attr("src", "https://www.youtube.com/embed/"+str);
 				$("#iframe").append(frame);
         }});
         
@@ -123,6 +143,44 @@
         $("#monthBestBtn").click(function(){
 			monthBest();
         })
+
+        			//유저 공지사항
+			$.ajax({
+				url:"/admin/userNotice",
+				type:"GET",
+				success:function(result){
+					var adminNoitce = JSON.parse(result);
+					$.each(adminNoitce, function(idx, notice){
+						var date = moment(notice.b_date).format("YYYY-MM-DD");
+						var type = "";
+						if(notice.c_no == 10001){
+							type = "일반"
+						}
+						if(notice.c_no == 10002){
+							type = "징계/정책"
+						}
+						if(notice.c_no == 10003){
+							type = "업데이트"
+						}
+						if(notice.c_no == 10004){
+							type = "이벤트"
+						}
+						var tr = $("<tr class='noticeList' b_no="+notice.b_no+"></tr>");
+						var td1 = $("<td></td>").html(type);
+						var td2 = $("<td></td>").html(notice.b_title);
+						var td3 = $("<td></td>").html(date);
+
+						tr.append(td1,td2,td3);
+						$("#userNotice").append(tr);
+					})
+				}
+			})
+
+			//공지사항 게시물 클릭이벤트 
+			$(document).on("click",".noticeList",function(e){
+				var b_no = $(this).attr("b_no");
+				self.location = "/board/get?b_no="+b_no;
+			})
         
 	});
 </script>
@@ -189,20 +247,34 @@
 	
 	                </div>
             	</div>
+            	<br>
                 <hr>
-                <div>
-                	<h3>AE-HO가들의 pic!</h3>
-	                <p>현재 진행중인 투표에 참여해 보세요!</p>
-	                <ul class="list-group">
-	                    <li class="list-group-item list-group-item-action"><a href="#">짜장면vs짬뽕</a></li>
-	                    <li class="list-group-item list-group-item-action"><a href="#">팹시vs코카콜라</a></li>
-	                    <li class="list-group-item list-group-item-action"><a href="#">소녀시대vs원더걸스</a></li>
-	                </ul>
-	                <hr>
+                <br>
+                <div>    
 	                <h3>추천 영상</h3>
 	                <div id="iframe">
 	                    
 	                </div>
+	                <br>
+	                <hr>
+	                <br>
+	                <h4>AE-HO 공지사항</h4>
+	                <div>
+	                	<table class="table table-hover">
+					        <thead>
+					            <tr align="center">
+					                <th width="20%">분류</th>
+					                <th width="40%">제목</th>
+					                <th width="20%">날짜</th>
+					            </tr>
+					        </thead>
+					        <tbody id="userNotice" align="center">
+					        
+					        </tbody>
+					    </table>
+					    <a class="float-right" href="/main/notice?categoryNum=10000">더보기</a>
+	                </div>
+	                <br>
                 </div>
             </div>
             <!--right content-->
@@ -220,6 +292,12 @@
                 </div>
                 <p>27일 방송관계자에 따르면 SBS가 차세대 트로트 대형가수를 선발하는 오디션을 준비하고 있다. 50억대 엄청난 제작비를 들인 고퀄리티 트로트 오디션으로 알려져 있다.</p>
             </div>
+        </div>
+        
+        <div class="row">
+        	<div class="col-lg-12" style="background: pink"> 
+        		투표여기에
+        	</div>
         </div>
 
 <%@include file="../includes/footer.jsp"%>
