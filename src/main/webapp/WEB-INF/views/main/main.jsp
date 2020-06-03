@@ -339,7 +339,7 @@
             <!--인기글 일간,주간,월간-->
             <div class="col-sm-5">
             	<div>
-            		<h3>Ae?-HO! 인기글</h3>
+            		<h3>Ae?-Ho! 인기글</h3>
 	                <p>
 	                    <button id="todayBestBtn" type="button" class="btn btn-light">today</button>
 	                    <button id="weekBestBtn" type="button" class="btn btn-light">week</button>

@@ -159,7 +159,7 @@
   	<![CDATA[
 	  	select rownum rn, c_dist, b_no, c_no, b_title, m_id, b_date 
 	   	 from (select c.c_dist, b_no, b.c_no, b_title, m_id, b_date from board b, category c where b.c_no = c.c_no and b.c_no<10000 order by b_no desc) 
-	        where rownum<=10
+	        where rownum<=5
 	]]>
   </select>
   

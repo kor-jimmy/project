@@ -241,16 +241,23 @@
 
 <body>
     <!--header-->
-    <div class="mb-0" id="headerTop" style="background-color: rgb(163, 161, 252);">
+    <div class="mb-0 p-3" id="headerTop" style="background-color: rgb(163, 161, 252);">
     	<div class="container">
             <div class="row">
             	<div class="col-sm">
 
             	</div>
                 <div class="col-sm" align="center">
-                    <a href="/aeho">
+<!--                     <a href="/aeho">
                         <img src="/img/ma.png" width="200px" height="120px">
-                    </a>
+                    </a> -->
+                    <a href="/aeho">
+	                    <div class="sign">
+	                    	<span class="fast-flicker">-</span>AE?HO!<span class="flicker">-</span>
+				    		<!-- <span class="fast-flicker">Ae</span>?<span class="flicker">Ho</span>! -->
+					    </div>
+
+				    </a>
                 </div>
                 <div class="col-sm" align="right">
                 	<div id="searchDiv">
