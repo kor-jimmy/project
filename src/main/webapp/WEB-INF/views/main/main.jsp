@@ -33,6 +33,9 @@
 		white-space : normal; /*기본값*/
 		text-overflow: clip; /*기본값*/
 	}
+	
+	#voteBox{ width: 90%; cursor: pointer;}
+	.hoverVote{ filter: brightness(0.60); }
    
 </style>
 <script type="text/javascript">
