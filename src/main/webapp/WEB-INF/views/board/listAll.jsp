@@ -6,6 +6,18 @@
 <style>
 	#boardArticles { background: rgba( 255, 255, 255, 0.5 ); }
 	
+	a{ text-decoration: none !important; color: dimgray; }
+	
+	#searchBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+	#searchBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+	#allBoardBtn{ background: #A3F0E4; border: 1px solid #A3F0E4; color: white; border-radius: 10px; }
+	#allBoardBtn:hover{ background: #5FEAC9; border: 1px solid #5FEAC9; }
+	
+	.paginate_button{ background: white; border: 2px solid #e9ecef; border-radius: 30px; padding: 2px 10px 2px 10px;}
+	.paginate_button:hover{ background: white; border: 2px solid #A3A1FC;}
+	.paginate_button.active{ background: #5FEAC9; color: white; border: 2px solid #5FEAC9;}
+	.paginate_button.active a{ color: white; }
+	
 	table { 
 		border-collapse: collapse; 
 		border-spacing: 0;		
@@ -149,14 +161,14 @@
 				<li class="paginate_button previous">
 					<a href="${pageMake.startPage -1 }">이전</a>
 				</li>
-				<li>&nbsp;/&nbsp;</li>
+				<li>&nbsp;</li>
 			</c:if>
 			
 			<c:forEach var="num" begin="${pageMake.startPage }" end="${pageMake.endPage }">
 				<li class="paginate_button ${pageMake.cri.pageNum==num ? "active": ""}">
 					<a href="${num }">${num }</a>
 				</li>
-				<li>&nbsp;/&nbsp;</li>
+				<li>&nbsp;</li>
 			</c:forEach>    		
 			
 			<c:if test="${pageMake.next }">

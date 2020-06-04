@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
-
+<style>
+	.table{ background: rgba(255, 255, 255, 0.7); }
+	#updateBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+	#updateBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+</style>
 <h2>게시물 수정</h2>
 <hr>
 <form id="updateForm" method="post" enctype="multipart/form-data">
@@ -21,7 +25,7 @@
 		<td><textarea class="text_content" id="b_content" name="b_content" rows="30%" cols="100%">${board.b_content}</textarea></td>
 	</tr>
 </table>
-<button type="submit" id="updateBtn" class="btn btn-outline-dark">수정</button>
+<button type="submit" id="updateBtn" class="btn btn-outline-light">수정</button>
 </form>
 <script>
 	$(function(){

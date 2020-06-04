@@ -7,15 +7,18 @@
 	#boardArticles { background: rgba( 255, 255, 255, 0.5 ); }
 	a{ text-decoration: none !important; color: dimgray; }
 	
+	#insertBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+	#insertBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+	
 	#searchBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
 	#searchBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
 	#allBoardBtn{ background: #A3F0E4; border: 1px solid #A3F0E4; color: white; border-radius: 10px; }
 	#allBoardBtn:hover{ background: #5FEAC9; border: 1px solid #5FEAC9; }
 	
-	.paging-btn{ background: white; border: 2px solid #e9ecef; border-radius: 50%; padding: 2px 10px 2px 10px;}
+	.paging-btn{ background: white; border: 2px solid #e9ecef; border-radius: 30px; padding: 2px 10px 2px 10px;}
 	.paging-btn:hover{ background: white; border: 2px solid #A3A1FC;}
-	.btn-outline-secondary:not(:disabled):not(.disabled).active{ background: #5FEAC9; color: white;border: 2px solid #5FEAC9;}
-	.btn-outline-secondary:not(:disabled):not(.disabled).active a{ color: white; }
+	.btn-outline-light:not(:disabled):not(.disabled).active{ background: #5FEAC9; color: white;border: 2px solid #5FEAC9;}
+	.btn-outline-light:not(:disabled):not(.disabled).active a{ color: white; }
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -77,7 +80,7 @@
 	    		</c:when>
 	    		<c:when test="${catkeyword != '공지사항'}">
 	    		<sec:authorize access="isAuthenticated()">
-						<button id="insertBtn" type="button" class="btn btn-outline-dark float-right">게시물 등록</button>
+						<button id="insertBtn" type="button" class="btn btn-outline-light float-right">게시물 등록</button>
 					</sec:authorize>
 	    		</c:when>
 	    	</c:choose>
@@ -133,11 +136,11 @@
 				</div>
 		    	
 				<div class="col-sm-2 my-1">
-					<button id="searchBtn" class="btn btn-outline-dark">검색</button>
+					<button id="searchBtn" class="btn btn-outline-light">검색</button>
 				</div>
 		    	
 		    	<div class="col-sm-2 my-1">
-		    		<button id="allBoardBtn" class="btn btn-outline-dark float-right">전체글</button>
+		    		<button id="allBoardBtn" class="btn btn-outline-light float-right">전체글</button>
 		    	</div>
 	    </div>
     </form>
@@ -148,21 +151,21 @@
     <div class="float-right">
     	<ul class="pagination">
     		<c:if test="${pageMake.prev }">
-				<li class="paging-btn btn btn-outline-secondary previous">
+				<li class="paging-btn btn btn-outline-light previous">
 					<a href="${pageMake.startPage -1 }">이전</a>
 				</li>
 				<li>&nbsp;/&nbsp;</li>
 			</c:if>
 			
 			<c:forEach var="num" begin="${pageMake.startPage }" end="${pageMake.endPage }">
-				<li class="paging-btn btn btn-outline-secondary ${pageMake.cri.pageNum==num ? "active": ""}">
+				<li class="paging-btn btn btn-outline-light ${pageMake.cri.pageNum==num ? "active": ""}">
 					<a href="${num }">${num }</a>
 				</li>
 				<li>&nbsp;</li>
 			</c:forEach>    		
 			
 			<c:if test="${pageMake.next }">
-				<li class="paging-btn btn btn-outline-secondary next">
+				<li class="paging-btn btn btn-outline-light next">
 					<a href="${pageMake.endPage+1 }">다음</a>
 				</li>
 			</c:if>

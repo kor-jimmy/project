@@ -4,6 +4,16 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@include file="../includes/header.jsp"%>
+<style>
+
+	.table{ background: rgba(255, 255, 255, 0.7); }
+	
+	#insertBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+	#insertBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+	
+	#resetBtn{ background: #c8ccd0; border: 1px solid #c8ccd0; color: white; border-radius: 10px; }
+	#resetBtn:hover{ background: #e9ecef; border: 1px solid #e9ecef; }
+</style>
 
 	<h2>QNA 등록</h2>
 	<form id="insertForm" method="post" enctype="multipart/form-data">
@@ -61,8 +71,8 @@
 			
 			
 		</table>
-		<button type="submit" id="insertBtn" class="btn btn-outline-dark">등록</button>
-		<button type="reset" id="resetBtn" class="btn btn-outline-dark">취소</button>
+		<button type="submit" id="insertBtn" class="btn btn-outline-light">등록</button>
+		<button type="reset" id="resetBtn" class="btn btn-outline-light">취소</button>
 	</form>
 	<script type="text/javascript">
 		$(function(){

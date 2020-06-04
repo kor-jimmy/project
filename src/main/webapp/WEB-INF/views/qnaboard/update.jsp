@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../includes/header.jsp"%>
+<style>
+	.table{ background: rgba(255, 255, 255, 0.7); }
+	#updateBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+	#updateBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+</style>
 
 	<h2>QNA 수정</h2>
 	<form id="updateForm" method="post" enctype="multipart/form-data">
@@ -20,7 +25,7 @@
 			<td><textarea id="qb_content" class="text_content" name="qb_content" rows="30%" cols="100%">${qnaboard.qb_content }</textarea></td>
 		</tr>
 	</table>
-	<button type="submit" id="updateBtn" class="btn btn-outline-dark">수정</button>
+	<button type="submit" id="updateBtn" class="btn btn-outline-light">수정</button>
 	</form>
 	<script>
 	//summernote 적용

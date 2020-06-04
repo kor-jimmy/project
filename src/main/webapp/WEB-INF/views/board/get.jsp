@@ -15,6 +15,19 @@
 	.list-group-item-secondary{
 		background: #F4F4F4;
 	}
+
+	.table{ background: rgba(255, 255, 255, 0.7); }
+	.expressionIcons{ cursor: pointer; }
+	#contents{ padding: 20px; }
+	
+	#updateBtn{ background: #CBCAFF; border: 1px solid #CBCAFF; color: white; border-radius: 10px; }
+	#updateBtn:hover{ border: 1px solid #A3A1FC; background: #A3A1FC; color: white; border-radius: 10px; }
+	
+	#insertReply{ background: #A3F0E4; border: 1px solid #A3F0E4; color: white; border-radius: 10px; }
+	#insertReply:hover{ background: #5FEAC9; border: 1px solid #5FEAC9; }
+	
+	#deleteBtn{ background: #c8ccd0; border: 1px solid #c8ccd0; color: white; border-radius: 10px; }
+	#deleteBtn:hover{ background: #e9ecef; border: 1px solid #e9ecef; }
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -570,14 +583,14 @@
 		<tr>
 			<td colspan="3"><h3><c:out value="${board.b_title }"/></h3></td>
 			<td>
-				<img id="heart" src="/img/heart.png" width="30" height="30">
-				<img id="clickheart" src="/img/clickheart.png" width="30" height="30">
-				<img id="hate" src="/img/hate.png" width="30" height="30">
-				<img id="clickedhate" src="/img/clickedhate.png" width="30" height="30">
+				<img class="expressionIcons" id="heart" src="/img/heart.png" width="30" height="30">
+				<img class="expressionIcons" id="clickheart" src="/img/clickheart.png" width="30" height="30">
+				<img class="expressionIcons" id="hate" src="/img/hate.png" width="30" height="30">
+				<img class="expressionIcons" id="clickedhate" src="/img/clickedhate.png" width="30" height="30">
 				<sec:authentication property="principal" var="pinfo"/>
 				<sec:authorize access="isAuthenticated()">
 					<c:if test="${pinfo.username != board.m_id}">
-						<img id='boardReport' width=20px height=20px src='/img/reportICON.svg'>	
+						<img class="expressionIcons" id='boardReport' width=20px height=20px src='/img/reportICON.svg'>	
 					</c:if>
 				</sec:authorize>		
 			</td>
@@ -590,7 +603,7 @@
 		</tr>
 		<tr>
 			<td colspan="4" height="500px">
-				<div>${board.b_content }</div>
+				<div id="contents">${board.b_content }</div>
 			</td>
 		</tr>
 	</table>
@@ -599,8 +612,8 @@
 		<sec:authentication property="principal" var="pinfo"/>
 		<sec:authorize access="isAuthenticated()">
 			<c:if test="${pinfo.username eq board.m_id}">
-					<button id="updateBtn" class="btn btn-outline-dark">수정</button>
-					<button id="deleteBtn" class="btn btn-outline-dark">삭제</button>			
+					<button id="updateBtn" class="btn btn-outline-light">수정</button>
+					<button id="deleteBtn" class="btn btn-outline-light">삭제</button>			
 			</c:if>
 		</sec:authorize>		
     </div>
@@ -626,7 +639,7 @@
 						<input class="form-control" type="text" name="r_content" required="required" placeholder="댓글을 입력하세요!">
 					</div>
 					<div class="col-sm-2 my-1">
-						<a href="#" id="insertReply" class="badge badge-light">댓글등록</a>
+						<a href="#" id="insertReply" class="btn btn-outline-light">댓글등록</a>
 					</div>
 				</div>
 			</form>
