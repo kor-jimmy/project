@@ -66,13 +66,26 @@
 		margin-left: 30px;
 	}
 	
-	.sticker {
-	
-		width: 180px;
 		
-		height: 180px;
-	
+	table { 
+		border-collapse: collapse; 
+		border-spacing: 0;		
+		width: 100%; 
+		table-layout: fixed;
 	}
+	
+	td { 
+		vertical-align: middle; 
+		overflow:hidden;
+		white-space : nowrap;
+		text-overflow: ellipsis;
+	 }
+	
+	td.textOverDefault {
+		white-space : normal; /*기본값*/
+		text-overflow: clip; /*기본값*/
+	}
+
 
 </style>
 <script type="text/javascript">

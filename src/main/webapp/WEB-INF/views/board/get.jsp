@@ -233,14 +233,14 @@
 		
 		//대댓글작업
 		$(document).on("click",".reContent",function(){
-//			console.log(logingID);
+			
 			$(".reInputDiv").remove();
 			select_ref = $(this).attr("r_ref");
 			select_rno = $(this).attr("r_no");
 			select_mid = $(this).attr("m_id");
 			console.log(select_ref);
 
-			var reID ="@" +select_mid+"/";
+			var reID =select_mid;
 
 			var reInputDiv = $("<div class='reInputDiv row'></div>");
 
@@ -282,7 +282,6 @@
 			//var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
 			var r_ref = select_ref;
 			var r_no = select_rno;
-			console.log(r_ref)
 			var reReplyContent = $("label[for='reReContent']").text()+$("#reReContent").val();
 			var reReplyData = {b_no:b_no, m_id:logingID, r_content:reReplyContent, r_ref:r_ref, r_no:r_no}
 

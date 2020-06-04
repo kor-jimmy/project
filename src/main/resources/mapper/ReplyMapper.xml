@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aeho.demo.dao.ReplyDao">
 	<select id="listReply" resultType="com.aeho.demo.vo.ReplyVo">
-		select r.*, m_nick from reply r, member m where b_no=4983 and m.m_id=r.m_id order by r_ref, r_no
+		select r.*, m_nick from reply r, member m where b_no=#{b_no} and m.m_id=r.m_id order by r_ref, r_no
 	</select>
 	
 	<select id="getReply" resultType="com.aeho.demo.vo.ReplyVo">

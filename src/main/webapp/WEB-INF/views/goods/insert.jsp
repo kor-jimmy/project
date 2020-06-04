@@ -12,6 +12,7 @@
 	<br>
 	<form id="insertForm" method="post" enctype="multipart/form-data">
 	<input type="hidden" id="gccodeValue" value="${ gc_code }">
+	<input type="hidden" id="m_id" name="m_id" value="<sec:authentication property="principal.username"/>">
 	<table class="table table-bordered">
 		<tr>
 			<td>장터 카테고리</td>
@@ -29,10 +30,6 @@
 				<option value="2">삽니다</option>
 			</select>
 			</td>
-		</tr>
-		<tr>
-			<td>작성자</td>
-			<td><input type="text" id="m_id" name="m_id" value="<sec:authentication property="principal.username"/>" required="required" readonly="readonly"></td>
 		</tr>
 		<tr>
 			<td>가격</td>

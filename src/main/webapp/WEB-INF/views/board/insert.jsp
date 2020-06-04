@@ -9,14 +9,11 @@
 <hr>
 <form id="insertForm" method="post" enctype="multipart/form-data">
 <input type="hidden" name="c_no" value="${c_no}">
+<input type="hidden" name="m_id" id="m_id" value="<sec:authentication property="principal.username"/>">
 <table class="table table-bordered">
 	<tr>
 		<td>게시물 제목</td>
 		<td><input type="text" name="b_title" id="b_title" required="required" style="width:40%;"></td>
-	</tr>
-	<tr>
-		<td>작성자</td>
-		<td><input type="text" name="m_id" id="m_id" style="width:40%;" readonly="readonly" value="<sec:authentication property="principal.username"/>"></td>
 	</tr>
 	<tr>
 		<td>내용</td>
@@ -45,7 +42,7 @@
 			maxHeight:700,
 			focus:true,
 			lang:"ko-KR",
-			placeholder:"본문 내용을 입력해주세요.",
+			placeholder:"Ae-Ho는 깨끗한 웹 서비스를 지향 합니다. 욕설 및 비방, 차별발언은 이용에 제한이 될 수 있습니다.",
 			toolbar: [
 			    ['style', ['style']],
 			    ['font', ['fontsize','bold', 'italic', 'underline', 'clear']],
