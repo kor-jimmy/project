@@ -43,4 +43,9 @@ public class GoodsFilesServiceImpl implements GoodsFilesSevice {
 		return list;
 	}
 
+	@Override
+	public List<GoodsFilesVo> listFileByGno(int g_no) {
+		return goodsFilesDao.listFileByGno(g_no);
+	}
+
 }

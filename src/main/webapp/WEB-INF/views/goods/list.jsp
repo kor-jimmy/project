@@ -92,12 +92,25 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 			
 			var con = g.g_content;
 			var img;
+			$.ajax("/goods/listFileByGno", {data: {g_no: g.g_no}, success: function(result){
+				var list = JSON.parse(result);
+				console.log(list);
+				if(list[0]){
+					var gf = list[0];
+					var src = "/goodsImage/"+gf.uuid+"_"+gf.filename;
+					img = $("<img class='rounded goodsImg mb-3'></img>").attr("src", src);
+				}else{
+					img = $("<img src='/img/no_image.png' class='rounded goodsImg mb-3'></img>");
+				}
+			}});
 			
+			/*
 			if(con.indexOf("<img src=") != -1){
 				img = $(con.substring(con.indexOf("<img src="), con.indexOf("style"))+"></img>").addClass("rounded goodsImg mb-3");
 			}else{
 				img = $("<img src='/img/no_image.png' class='rounded goodsImg mb-3'></img>");
 			}
+			*/
 		
 			var gc_dist = $("<small class='text-muted'></small>");
 			if(g.gc_code == 1)

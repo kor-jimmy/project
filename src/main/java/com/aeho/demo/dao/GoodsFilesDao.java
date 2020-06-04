@@ -16,4 +16,6 @@ public interface GoodsFilesDao {
 	public List<GoodsFilesVo> findByGno(int gno);
 	
 	public List<GoodsFilesVo> checkFiles();
+	
+	public List<GoodsFilesVo> listFileByGno(int g_no);
 }

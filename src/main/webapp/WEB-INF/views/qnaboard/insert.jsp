@@ -172,8 +172,8 @@
 								var url = f.url;
 								var src = url.substring(12);
 								var myUpload = {
-										uuid : src.split("_")[0],
-										filename: src.split("_")[1],
+										uuid : src.substring(0, 36),
+										filename : src.substring(37),
 										qb_no: qnaBoardNum,
 										uploadpath: "C\\\aehoUpload\\qnaboard\\"
 								}

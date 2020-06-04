@@ -15,4 +15,6 @@ public interface GoodsFilesSevice {
 	public int deleteByGno(int g_no);
 	
 	public List<GoodsFilesVo> checkFiles();
+	
+	public List<GoodsFilesVo> listFileByGno(int g_no);
 }

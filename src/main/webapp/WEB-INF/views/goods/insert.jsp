@@ -127,7 +127,7 @@
 				var gc_code = $("#gc_code option:selected").val();
 				if($("#g_title").val() == null || $("#g_title").val() == "" || 
 						$("#g_content").val() == null || $("#g_content").val() == "" || gc_code == "0"){
-					alert("제목, 글 내용, 삽니다/팝니다 분류는 비워둘 수 없습니다.");
+					alert("제목, 본문, 삽니다/팝니다 분류는 비워둘 수 없습니다.");
 					return false;
 				}
 //				console.log("클릭동작")
@@ -153,11 +153,12 @@
 								var url = f.url;
 								var src = url.substring(12);
 								var myUpload = {
-										uuid : src.split("_")[0],
-										filename: src.split("_")[1],
+										uuid : src.substring(0, 36),
+										filename : src.substring(37),
 										g_no: goodsNum,
 										uploadpath: "C\\\aehoUpload\\goods\\"
 								}
+								console.log(myUpload);
 								uploadFileList.push(myUpload)
 							})
 							console.log(uploadFileList);

@@ -1,33 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../includes/header.jsp"%>
 <style>
 	.table{ background: rgba(255, 255, 255, 0.7); }
 	#updateBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
 	#updateBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+	#cancelBtn{ background: #c8ccd0; border: 1px solid #c8ccd0; color: white; border-radius: 10px; }
+	#cancelBtn:hover{ background: #e9ecef; border: 1px solid #e9ecef; }
 </style>
-<h2>게시물 수정</h2>
-<hr>
-<form id="updateForm" method="post" enctype="multipart/form-data">
-<input type="hidden" id="b_no" name="b_no" value="${board.b_no}">
 
-<table class="table table-bordered">
-	<tr>
-		<td>게시물 제목</td>
-		<td><input type="text" name="b_title" required="required" style="width:40%;" value="${board.b_title}"></td>
-	</tr>
-	<tr>
-		<td>작성자</td>
-		<td><input type="text" name="m_id" style="width:40%;" readonly="readonly" value="${board.m_id}"></td>
-	</tr>
-	<tr>
-		<td>내용</td>
-		<td><textarea class="text_content" id="b_content" name="b_content" rows="30%" cols="100%">${board.b_content}</textarea></td>
-	</tr>
-</table>
-<button type="submit" id="updateBtn" class="btn btn-outline-light">수정</button>
-</form>
-<script>
+	<h2>상품수정</h2>
+	<form id="updateForm" method="post" enctype="multipart/form-data">
+	<input type="hidden" id="g_no" name="g_no" value="${goods.g_no}">
+	<table class="table table-bordered">
+		<tr>
+			<td>상품 제목</td>
+			<td><input type="text" name="g_title" required="required" value="${goods.g_title }"></td>
+		</tr>
+		<tr><!--  
+			<td>삽니다/팝니다</td>
+			<td><input type="number" name="gc_code" required="required" value="${goods.gc_code }"></td>
+			-->
+			<td>삽니다/팝니다</td>
+			<td><select name="gc_code">
+				<option value="0" disabled="disabled">=선택=</option>
+				<option value="1" <c:if test="${goods.gc_code eq '1' }">selected</c:if>>팝니다</option>
+				<option value="2" <c:if test="${goods.gc_code eq '2' }">selected</c:if>>삽니다</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td>작성자</td>
+			<td><input type="text" name="m_id" readonly="readonly" value="${goods.m_id }"></td>
+		</tr>
+		<tr>
+			<td>가격</td>
+			<td><input type="number" name="g_price" required="required" value="${goods.g_price }"></td>
+		</tr>
+		<tr>
+			<td>내용</td>
+			<td><textarea id="g_content" class="text_content" name="g_content" rows="30%" cols="100%">${goods.g_content }</textarea></td>
+		</tr>
+	</table>
+	<button type="submit" id="updateBtn" class="btn btn-outline-light">등록</button>
+	<button id="cancelBtn" class="btn btn-outline-light">취소</button>
+	</form>
+	<script>
+	//summernote 적용
 	$(function(){
 		var fileList = [];
 		var uploadFileList = [];
@@ -35,12 +55,13 @@
 		//시큐리티 csrf
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
+		
 
 		//이미지 파일 유효성 검사
 		var imgCheck = new RegExp("^(image)/(.*?)");
 		var maxSize = 10485760;
 		
-		$("#b_content").summernote({
+		$("#g_content").summernote({
 			height: 700,
 			minHeight:null,
 			maxHeight:null,
@@ -58,15 +79,14 @@
 			 ],
 			callbacks:{
 				onImageUpload : function(files){
-					console.log(files)
 					$.each(files,function(idx,file){
-						uploadSummernoteImageFile(file,$("#b_content"));
+						uploadSummernoteImageFile(file,$("#g_content"));
 					})
 				}	
 			}
 		})
-
-				//파일처리
+		
+		//파일
 		function uploadSummernoteImageFile(file, editor) {
 			data = new FormData();
 			data.append("file", file);
@@ -85,13 +105,12 @@
 			$.ajax({
 				data : data,
 				type : "POST",
-				url : "/board/testUpload",
+				url : "/goods/testUpload",
 				contentType : false,
 				processData : false,
 				beforeSend: function(xhr){
 					xhr.setRequestHeader(header,token)	
 				},
-				cache:false,
 				success : function(data) {
 	            	//항상 업로드된 파일의 url이 있어야 한다.
 					$(editor).summernote('insertImage', data.url);
@@ -101,8 +120,8 @@
 				}
 			});
 		}
-
-		//폼태그 기본속성 제거
+		
+		//클릭이벤트()
 		$("#updateBtn").on("click",function(e){
 			e.preventDefault();
 			var myInsert = $("#updateForm").serialize();
@@ -115,46 +134,49 @@
 			$.ajax({
 				data : myInsert,
 				type : "POST",
-				url : "/board/update",
+				url : "/goods/update",
 				beforeSend: function(xhr){
 					xhr.setRequestHeader(header,token)	
 				},
 				cache:false,
-				success : function(boardNum){
-					console.log(boardNum);
-					if(boardNum>0){
+				success : function(goodsNum){
+					console.log(goodsNum);
+					if(goodsNum>0){
 						$.each(fileList,function(idx,f){
 							var url = f.url;
 							var src = url.substring(12);
 							var myUpload = {
 								uuid : src.split("_")[0],
 								filename : src.split("_")[1],
-								b_no : boardNum,
-								uploadpath : "C:\\\aehoUpload\\board\\"
+								g_no : goodsNum,
+								uploadpath : "C:\\\aehoUpload\\goods\\"
 							}
 							uploadFileList.push(myUpload)
 						})
 						console.log(uploadFileList);
 						$.ajax({
-							url : "/board/fileDBupload",
 							data : JSON.stringify(uploadFileList),
 							dataType : "json",
 							contentType:"application/json; charset=utf-8",
-							type : "POST",
 							beforeSend: function(xhr){
 								xhr.setRequestHeader(header,token)	
 							},
 							cache:false,
+							type: "POST",
+							url:"/goods/fileDBupload",
 							success : function(msg){
-								location.href="/board/get?b_no="+boardNum;
+								location.href="/goods/get?g_no="+goodsNum;
 							}
 						})
 					}
 				}
 			})
 		})
+
+		$("#cancelBtn").click(function(e){
+			e.preventDefault();
+			location.href= "/goods/get?g_no="+$("#g_no").val();
+		});
 	})
-
-</script>
-
+	</script>
 <%@include file="../includes/footer.jsp"%>

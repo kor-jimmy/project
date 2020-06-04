@@ -152,6 +152,7 @@ public class GoodsController {
 	@PostMapping(value = "fileDBupload")
 	@ResponseBody
 	public String FileDBupload(HttpServletRequest request, @RequestBody List<GoodsFilesVo> files) {
+		System.out.println(files);
 		for(GoodsFilesVo gfv : files) {
 			goodsFilesService.insert(gfv);
 		}
@@ -189,6 +190,12 @@ public class GoodsController {
 	@GetMapping("/get")
 	public void get(HttpServletRequest request, GoodsVo gv,Model model) {
 		model.addAttribute("goods", goodsService.getGoods(gv));
+	}
+	
+	@RequestMapping("/listFileByGno")
+	@ResponseBody
+	public String listFileByGno(HttpServletRequest request, int g_no) {
+		return new Gson().toJson(goodsFilesService.listFileByGno(g_no));
 	}
 
 	

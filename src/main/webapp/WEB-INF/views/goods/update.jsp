@@ -52,6 +52,9 @@
 		var fileList = [];
 		var uploadFileList = [];
 
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
 		//이미지 파일 유효성 검사
 		var imgCheck = new RegExp("^(image)/(.*?)");
 		var maxSize = 10485760;
@@ -101,6 +104,9 @@
 				data : data,
 				type : "POST",
 				url : "/goods/testUpload",
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token)
+				},
 				contentType : false,
 				processData : false,
 				success : function(data) {
@@ -126,6 +132,9 @@
 			$.ajax({
 				data : myInsert,
 				type : "POST",
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token)
+				},
 				url : "/goods/update",
 				success : function(goodsNum){
 					console.log(goodsNum);
@@ -145,6 +154,9 @@
 						$.ajax({
 							data : JSON.stringify(uploadFileList),
 							dataType : "json",
+							beforeSend: function(xhr){
+								xhr.setRequestHeader(header,token)
+							},
 							contentType:"application/json; charset=utf-8",
 							type: "POST",
 							url:"/goods/fileDBupload",
