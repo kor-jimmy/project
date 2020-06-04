@@ -88,17 +88,15 @@
 				idDiv.append(replyID);
 				var contentDiv=$("<div class='col-6 reContent'></div>").attr("gr_no",r.gr_no).attr("gr_ref",r.gr_ref).attr("m_nick",r.m_nick);
 				var replyContent = $("<span class='replyContent'></span>")
-				var replyString="";
 				if(r.gr_level != 0){
 					contentDiv.append($("<img src='/img/re.png' width='45px' height='45px'>"));
 					var tagID = (r.gr_content).split("/")[0];
 					var indexID = (r.gr_content).indexOf("/");
 					var realContent = (r.gr_content).substring(indexID+1);
-					console.log(tagID);
-					replyString =tagID+"&nbsp;&nbsp;";
-					replyContent.html(replyString+realContent);
+					replyContent.html(realContent);
 					//li.addClass("list-group-item-warning");
 					li.css("background", "#F4F4F4");
+					contentDiv.removeClass("reContent");
  	 			}
 				else{
 					console.log("답댓글아닐때"+r.gr_no);
@@ -162,9 +160,8 @@
 			idDiv.append(loginId);
 
 			var contentDiv = $("<div class='col-7'></div>");
-			var reReLabel = $("<label for='reReContent' id='labelForRe'></label>").text("@"+select_mnick+"/ ");
 			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
-			contentDiv.append(reReLabel,reReContent);
+			contentDiv.append(reReContent);
 			var buttenDiv = $("<div class='col-2'></div>");
 			var reButton = $("<button type='submit' id='insertReReply' class='btn btn-outline-dark'>등록</button>");
 			buttenDiv.append(reButton);
@@ -187,7 +184,7 @@
 			//var re =  confirm("Ae-Ho는 클린한 웹 서비스를 위하여 댓글 수정 기능을 지원하지 않습니다. 착한 댓글을 등록하시겠습니까?");
 			var gr_ref=select_grno;
 			//var gr_no=select_grno;
-			var reReplyContent=$("label[for='reReContent']").text()+$("#reReContent").val();
+			var reReplyContent=$("#reReContent").val();
 			console.log(reReplyContent);
 			var reReplyData = {g_no:g_no , m_id:logingID, gr_content:reReplyContent,gr_ref:gr_ref};
 			swal({

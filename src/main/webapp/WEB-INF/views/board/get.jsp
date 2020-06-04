@@ -123,18 +123,15 @@
 				var replyString="";
 				if(r.r_level != 0){
 					var reReIcon = $("<img src='/img/re.png' width=45px height=45px></img>")
-					//var tagID = (r.r_content).split("/")[0];
-					//var indexID = (r.r_content).indexOf("/");
-					//var realContent = (r.r_content).substring(indexID+1);
-					//replyString = tagID+"&nbsp;&nbsp;";
 					replyContent.html(r.r_content);
 					contentDiv.append(reReIcon);
-//					contentDiv.removeClass("reContent");
+					contentDiv.removeClass("reContent");
 					li.addClass("list-group-item-secondary");
 				}
 				else{
 					replyContent.html(r.r_content);
 				}
+				
 				contentDiv.append(replyContent);
 				
 				var replyID = $("<span></span>").html(r.m_nick);
@@ -145,11 +142,10 @@
 				var r_date = moment(r.r_date).format('YYYY-MM-DD HH:mm:ss');
 				var replyDate = $("<p></p>").html(r_date);
 				
-				dateDiv.append(replyDate)
+				dateDiv.append(replyDate);
 				
 				//신고
 				var reportDiv=$("<div class=col-1></div>");
-				//var reportICON = $("<img width=20px height=20px></img>").attr("src","/img/reportICON.svg");
 
 				var repStr = "<sec:authorize access='isAuthenticated()'>";
 				if("<sec:authentication property='principal.username'/>"!=r.m_id){
@@ -162,7 +158,6 @@
 
 				//삭제
 				var deleteDiv=$("<div class=col-1></div>");
-				//var deleteICON=$("<img width=20px height=20px></img>").attr("src","/img/deleteICON.svg");
 				
 				var delStr = "";
 				
@@ -246,15 +241,14 @@
 
 			//빈공간
 			var div = $("<div class='col-1'></div>");
-			
 			var idDiv = $("<div class='col-2'></div>");
 			var loginId = $("<p></p>").html(logingID);
 			idDiv.append(loginId);
 			
 			var contentDiv = $("<div class='col-7'></div>");
-			var reContentLabel = $("<label for='reReContent' id='labelForRe'></label>").text(reID);
+			
 			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
-			contentDiv.append(reContentLabel,reReContent);
+			contentDiv.append(reReContent);
 
 			var buttenDiv = $("<div class='col-2'></div>");
 			var reButton = $("<button type='submit' id='insertReReply' class='btn btn-outline-dark'>등록</button>");
@@ -335,11 +329,6 @@
 						},
 						cache:false,
 						success:function(result){
-							/*	swal({
-							    title: "댓글 등록에 성공하였습니다!",
-							    icon: "success",
-							    buttons: "YES"
-							}) */
 							location.href="/board/get?b_no="+b_no;
 					}})      
 			    }else{
