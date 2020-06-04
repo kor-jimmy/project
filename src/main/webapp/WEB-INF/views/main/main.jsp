@@ -45,7 +45,7 @@
 		color: dimgray;
 	}
 	
-	#goodsDiv{
+	.mainContent{
 		display: flex;
 		border-radius: 20px;
 		background: rgba(255, 255, 255, 0.7);
@@ -83,6 +83,15 @@
 		width: 60%;
 		margin-left: 30px;
 	}
+	
+	.sticker {
+	
+		width: 180px;
+		
+		height: 180px;
+	
+	}
+
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -90,7 +99,7 @@
 		$(".carousel-item").first().addClass("active");
 		$(".indicators").first().addClass("active");
 		
-		$.ajax("http://192.168.0.16:5000/videos", 
+		$.ajax("http://192.168.0.17:5000/videos", 
 			{dataType: "jsonp",
 			jsonpCallback: "getVideos",
 			success: function(data){
@@ -175,7 +184,7 @@
             }})
 		}
         
-        todayBest();
+		monthBest();
 
 		//베스트 게시물 클릭 이벤트.
         $(document).on("click","#listContent",function(e){
@@ -393,6 +402,16 @@
         
 	});
 
+	//진탁) 06.04 인기 카테고리 작업 
+	$.ajax({
+		url:"/popCategory",
+		type:"GET",
+		success:function(result){
+			console.log(result);
+		}
+	})
+
+
 </script>
 		<!-- 이미지 슬라이드 -->
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -436,9 +455,12 @@
 	                    <button id="weekBestBtn" type="button" class="btn btn-light">week</button>
 	                    <button id="monthBestBtn" type="button" class="btn btn-light">month</button>
 	                </p>
-	                <div id="bestContent">
-
-	                </div>
+		            <div class="mainContent">
+		                <div id="bestContent">
+	
+		                </div>
+            		</div>
+            		
             	</div>
             	<br>
                 <hr>
@@ -452,10 +474,12 @@
 	                <hr>
 	                <br>
 	                <h4> Ae?-Ho! 실시간 인기 카테고리!</h4>
-	                <div>
-
-
+	                <div class="mainContent">
+				        <div id="popCategory">
+	
+		                </div>                	
 	                </div>
+
 	                <br>
                 </div>
             </div>
@@ -464,19 +488,22 @@
             	<!-- 새로 올라온글 -->
             	<div>
             		<h3>새로운 Ae-Ho Content!</h3>
-           			<table class="table table-hover">
-				        <thead>
-				            <tr align="center">
-				                <th width="20%">카테고리</th>
-				                <th width="40%">제목</th>
-				                <th width="15%">작성자</th>
-				                <th width="20%">게시날짜</th>
-				            </tr>
-				        </thead>
-				        <tbody id="newBoard" align="center">
-				        
-				        </tbody>
-				    </table>
+            		<div class="mainContent">			        	
+	           			<table class="table table-hover">
+					        <thead>
+					            <tr align="center">
+					                <th width="20%">카테고리</th>
+					                <th width="40%">제목</th>
+					                <th width="15%">작성자</th>
+					                <th width="20%">게시날짜</th>
+					            </tr>
+					        </thead>
+					        <tbody id="newBoard" align="center">
+					        
+					        </tbody>
+					    </table>
+            		</div>
+
             	</div>
             	<br>
             	<hr>
@@ -484,9 +511,9 @@
             	<!-- 새로 올라온 굿즈글 -->
             	<div>
             		<h3>새로운 Ae-Ho품!</h3>
-            		<div id="goodsDiv" align="center">
+            		<div class="mainContent" id="goodsDiv" align="center">
 						<ul id="goodsList" class="mt-5">
-				
+							
 						</ul>
 					</div>
             	</div>
@@ -497,19 +524,21 @@
                 <div>
                 	<h4>Ae-Ho 공지사항!</h4>
                 	<br>
-	                <table class="table table-hover">
-				        <thead>
-				            <tr align="center">
-				                <th width="20%">분류</th>
-				                <th width="40%">제목</th>
-				                <th width="20%">날짜</th>
-				            </tr>
-				        </thead>
-				        <tbody id="userNotice" align="center">
-				        
-				        </tbody>
-				    </table>
-					<a class="float-right" href="/main/notice?categoryNum=10000">더보기</a>
+                	<div class="mainContent">
+		                <table class="table table-hover">
+					        <thead>
+					            <tr align="center">
+					                <th width="20%">분류</th>
+					                <th width="40%">제목</th>
+					                <th width="20%">날짜</th>
+					            </tr>
+					        </thead>
+					        <tbody id="userNotice" align="center">
+					        
+					        </tbody>
+					    </table>
+						<a class="float-right" href="/main/notice?categoryNum=10000">더보기</a>
+					</div>
                 </div>
                 <br>
             	<hr>

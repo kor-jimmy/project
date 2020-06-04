@@ -19,4 +19,6 @@ public interface CategoryService {
 
 	int deleteCategory(CategoryVo cv);
 	
+	List<CategoryVo> popCategory();
+	
 }

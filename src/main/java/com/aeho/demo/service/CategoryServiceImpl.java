@@ -52,5 +52,13 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryDao.listQnaBoardCategory();
 	}
 
+	@Override
+	public List<CategoryVo> popCategory() {
+		// TODO Auto-generated method stub
+		return categoryDao.popCategory();
+	}
+	
+	
+
 
 }

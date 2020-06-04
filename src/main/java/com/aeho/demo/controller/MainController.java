@@ -19,6 +19,7 @@ import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.domain.PageDto;
 import com.aeho.demo.security.MemberPrincipal;
 import com.aeho.demo.service.BoardService;
+import com.aeho.demo.service.CategoryService;
 import com.aeho.demo.service.GoodsService;
 import com.aeho.demo.service.MainServcie;
 import com.aeho.demo.service.SlideImagesService;
@@ -38,6 +39,9 @@ public class MainController {
 	
 	@Autowired
 	private GoodsService goodsService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@Autowired
 	private SlideImagesService slideImageService;
@@ -157,8 +161,19 @@ public class MainController {
 	@ResponseBody 
 	public String mainNewGoods(HttpServletRequest request) { 
 		List<GoodsVo> list = goodsService.mainNewGoods();
-		Gson gson = new Gson(); String str = gson.toJson(list); 
+		Gson gson = new Gson();
+		String str = gson.toJson(list); 
 		return str; 
+	}
+	
+	// 진탁) 0603 메인페이지 인기 카테고리
+	@GetMapping("/popCategory")
+	@ResponseBody
+	public String popCategory(HttpServletRequest request) {
+		List<CategoryVo> list = categoryService.popCategory();
+		Gson gson = new Gson();
+		String str = gson.toJson(list);
+		return str;
 	}
 
 }
