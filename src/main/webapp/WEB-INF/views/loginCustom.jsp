@@ -7,7 +7,7 @@
 	#findPwd{ cursor: pointer; }
 	#loginButton{ background: #A3A1FC; border: 1px solid #A3A1FC; border-radius: 30px;}
 	#loginButton:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
-	#signupButton{ background: linear-gradient(15deg, #A3A1FC, #5FEAC9); border: 1px solid transparent; transition: all ease 0.3s;}
+	#signupButton{ background: linear-gradient(15deg, #A3A1FC, #5FEAC9); border: 1px solid white; border-radius: 30px; transition: all ease 5s 0s;}
 	#signupButton:hover{ background: linear-gradient(15deg, #5FEAC9, #A3A1FC); }
 </style>
 <script>

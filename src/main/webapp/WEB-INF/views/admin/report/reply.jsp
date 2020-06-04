@@ -10,10 +10,9 @@
 		text-decoration: none !important;
 		color: dimgray;
 	}
-	.page-link{
-		background-color: #000000;
-		border-color: #000000;
-	}
+	.page-link{ border-color: gray; color: gray; }
+	.page-link:hover{ border-color: gray; background: lightgray; color: white; }
+	.page-item.active .page-link{ border-color: gray; background: gray; color: white; }
 </style>
 
 <script type="text/javascript">
@@ -26,7 +25,7 @@
 		//페이징 관련 내용
 		var actionForm = $("#actionForm");
 		
-		$(".btn").on("click", function(e){
+		$(".page-link").on("click", function(e){
 			//a태그 기본 속성 제거
 			e.preventDefault();
 			console.log("click");
@@ -140,21 +139,22 @@
 			<nav aria-label="Page navigation example">
 			
 				<ul class="pagination justify-content-end">
-					<c:if test="${pageMake.prev }">
-						<li class="page-item disabled">
-							<a class="page-link" href="${pageMake.startPage -1 }">이전</a>
+					<c:if test="${ pageMake.prev }">
+						<li class="page-item">
+							<a class="page-link btn btn-outline-secondary" href="${ pageMake.startPage -1 }">이전</a>
 						</li>
 						<!-- <li>&nbsp;/&nbsp;</li> -->
 					</c:if>
 					<c:forEach var="num" begin="${pageMake.startPage }" end="${pageMake.endPage }">
+						&nbsp;
 						<li class="page-item ${pageMake.cri.pageNum==num ? "active": ""}">
-							<a class="btn btn-outline-secondary" href="${num }">${num }</a>
+							<a class="page-link btn btn-outline-secondary" href="${num }">${num }</a>
 						</li>
 						<!-- <li>&nbsp;/&nbsp;</li> -->
 					</c:forEach>
 					<c:if test="${pageMake.next }">
 						<li class="page-item">
-							<a class="page-link" href="${pageMake.endPage+1 }">다음</a>
+							<a class="page-link btn btn-outline-secondary" href="${pageMake.endPage+1 }">다음</a>
 						</li>
 					</c:if>
 				</ul>

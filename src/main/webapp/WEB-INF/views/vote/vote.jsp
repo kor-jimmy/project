@@ -369,8 +369,8 @@
 				<div id="option_A" class="option" align="center" style="display:inline-block; float:left; margin:0 auto;"></div>
 				<div id="option_B" class="option" align="center" style="display:inline-block; float:right; margin:0 auto;"></div>
 			</div>
-			<div class="modal-footer" style="background: #642EFE; border: 2px solid #642EFE;">
-				<button type="button" class="btn btn-primary" style="width: 300px; background: #01DFA5; border: 1px solid #01DFA5; float:none; margin:0 auto;">투표</button>				
+			<div class="modal-footer" style="background: #A3A1FC; border: 2px solid #A3A1FC;">
+				<button type="button" class="btn btn-primary" style="width: 300px; background: #5FEAC9; border: 1px solid #5FEAC9; float:none; margin:0 auto;">투표</button>				
 			</div>
 		</div>
 	</div>

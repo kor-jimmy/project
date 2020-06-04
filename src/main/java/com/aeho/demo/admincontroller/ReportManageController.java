@@ -80,9 +80,8 @@ public class ReportManageController {
 	}
 	
 	@RequestMapping("reply")
-	public void getReportReply(Model model){
+	public void getReportReply(CriteriaForReply cri, Model model){
 		
-		CriteriaForReply cri = new CriteriaForReply();
 		cri.setAmount(30);
 		System.out.println(cri);
 		

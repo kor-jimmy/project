@@ -6,13 +6,13 @@
   <select id="listReport" resultType="com.aeho.demo.vo.ReportVo">
   	select * from report
   	<if test="wherekey != null and wherekey.equals('board')">
-  		where b_no = #{no}
+  		where b_no = #{no} order by b_no
   	</if>
   	<if test="wherekey != null and wherekey.equals('goods')">
-  		where g_no = #{no}
+  		where g_no = #{no} order by g_no
   	</if>
   	<if test="wherekey != null and wherekey.equals('reply')">
-  		where r_no = #{no}
+  		where r_no = #{no} order by r_no
   	</if>
   </select>
   

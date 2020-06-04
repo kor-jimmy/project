@@ -5,6 +5,17 @@
 <%@include file="../includes/header.jsp"%>
 <style>
 	#boardArticles { background: rgba( 255, 255, 255, 0.5 ); }
+	a{ text-decoration: none !important; color: dimgray; }
+	
+	#searchBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+	#searchBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+	#allBoardBtn{ background: #A3F0E4; border: 1px solid #A3F0E4; color: white; border-radius: 10px; }
+	#allBoardBtn:hover{ background: #5FEAC9; border: 1px solid #5FEAC9; }
+	
+	.paging-btn{ background: white; border: 2px solid #e9ecef; border-radius: 50%; padding: 2px 10px 2px 10px;}
+	.paging-btn:hover{ background: white; border: 2px solid #A3A1FC;}
+	.btn-outline-secondary:not(:disabled):not(.disabled).active{ background: #5FEAC9; color: white;border: 2px solid #5FEAC9;}
+	.btn-outline-secondary:not(:disabled):not(.disabled).active a{ color: white; }
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -22,7 +33,7 @@
 		//페이징 관련 내용
 		var actionForm = $("#actionForm");
 
-		$(".paginate_button a").on("click", function(e){
+		$(".paging-btn a").on("click", function(e){
 			//a태그 기본 속성 제거
 			e.preventDefault();
 			console.log("click");
@@ -80,7 +91,7 @@
             <tr align="center">
                 <th width="10%">번호</th>
                 <th width="45%">제목</th>
-                <th width="15%">닉네임</th>
+                <th width="15%">작성자</th>
                 <th width="10%">날짜</th>
                 <th width="10%">조회수</th>
                 <th width="10%">Love</th>
@@ -137,21 +148,21 @@
     <div class="float-right">
     	<ul class="pagination">
     		<c:if test="${pageMake.prev }">
-				<li class="paginate_button previous">
+				<li class="paging-btn btn btn-outline-secondary previous">
 					<a href="${pageMake.startPage -1 }">이전</a>
 				</li>
 				<li>&nbsp;/&nbsp;</li>
 			</c:if>
 			
 			<c:forEach var="num" begin="${pageMake.startPage }" end="${pageMake.endPage }">
-				<li class="paginate_button ${pageMake.cri.pageNum==num ? "active": ""}">
+				<li class="paging-btn btn btn-outline-secondary ${pageMake.cri.pageNum==num ? "active": ""}">
 					<a href="${num }">${num }</a>
 				</li>
-				<li>&nbsp;/&nbsp;</li>
+				<li>&nbsp;</li>
 			</c:forEach>    		
 			
 			<c:if test="${pageMake.next }">
-				<li class="paginate_button next">
+				<li class="paging-btn btn btn-outline-secondary next">
 					<a href="${pageMake.endPage+1 }">다음</a>
 				</li>
 			</c:if>

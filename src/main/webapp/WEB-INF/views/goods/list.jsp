@@ -38,7 +38,27 @@
 		height: 200px;
 		border: 1px solid lightgray;
 	}
-	.btn{ background: white; }
+	
+	.typeBtn{ background: white; border: 1px solid gray; color: gray; border-radius: 10px; }
+	.typeBtn:hover{ border: 1px solid #A3A1FC; background: white; color: gray; border-radius: 10px; }
+	.typeBtnActive{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; }
+	
+	.dist{ background: white; border: 1px solid gray; color: gray; border-radius: 10px; }
+	.dist:hover{ border: 1px solid #A3F0E4; background: white; color: gray; border-radius: 10px; }
+	.distActive{ background: #A3F0E4; border: 1px solid #A3F0E4; color: white; }
+		
+	#insertBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+	#insertBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+	
+	#searchBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+	#searchBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+	#allBoardBtn{ background: #A3F0E4; border: 1px solid #A3F0E4; color: white; border-radius: 10px; }
+	#allBoardBtn:hover{ background: #5FEAC9; border: 1px solid #5FEAC9; }
+	
+	.paging-btn{ background: white; border: 2px solid #e9ecef; border-radius: 50%; padding: 2px 10px 2px 10px;}
+	.paging-btn:hover{ background: white; border: 2px solid #A3A1FC;}
+	.btn-outline-secondary:not(:disabled):not(.disabled).active{ background: #5FEAC9; color: white;border: 2px solid #5FEAC9;}
+	.btn-outline-secondary:not(:disabled):not(.disabled).active a{ color: white; }
 </style>
 <script type="text/javascript">
 
@@ -47,6 +67,8 @@ var keyword;
 var gc_code=0;
 var searchKeyword;
 var searchField;
+
+var dto;
 
 function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 	//	c_no를 강제로 넣어주기 위해 카테고리 설정시에만 글쓰기 버튼 보이게 / 검색을 위해 searchKeyword 추가
@@ -57,7 +79,7 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 		$("#insertBtn").css("visibility","visible");
 	}
 	
-	var dto;
+	
 	$("#goodsList").empty();
 	
 	$.ajax("/goods/listGoods",{data:{gc_code:gc_code,keyword:keyword,pageNum:pageNum,searchField:searchField,searchKeyword:searchKeyword}, success:function(result){
@@ -121,7 +143,7 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 		$(".pagination").empty();
 		if(dto.prev){
 			var a=$("<a>이전</a>").attr("href","#");
-			var li = $("<li></li>").append(a);
+			var li = $("<li class='paging-btn btn btn-outline-light previous'></li>").append(a);
 			$(a).on("click",function(){
 				listGoods(gc_code,keyword,(dto.startPage)-1, searchField, searchKeyword);
 			})
@@ -130,16 +152,16 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 		}
 		for(i=dto.startPage; i<=dto.endPage; i++){
 			var a=$("<a class='pageNum'>"+i+"</a>").attr("href","#");
-			var li=$("<li></li>").append(a);
+			var li=$("<li class='paging-btn btn btn-outline-light'></li>").append(a);
 			$(a).on("click",function(){
 				listGoods(gc_code,keyword,$(this).html(), searchField, searchKeyword);
 			})
-			var nbsp=$("<li>&nbsp;/&nbsp;</li>");
+			var nbsp=$("<li>&nbsp;</li>");
 			$(".pagination").append(li,nbsp);
 		}
 		if(dto.next){
 			var a=$("<a>다음</a>").attr("href","#");
-			var li = $("<li></li>").append(a);
+			var li = $("<li class='paging-btn btn btn-outline-light next'></li>").append(a);
 			$(a).on("click",function(){
 				listGoods(gc_code,keyword,(dto.endPage)+1, searchField, searchKeyword);
 			})
@@ -149,19 +171,15 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 }
 
 $(function(){
-  
-   
-   
+
    var member = $("#member").val();
 
-  
-   
    $.ajax("/category/goodsCateList",{success:function(result){
 //      console.log(result)
-      var b=$("<button id='tot' class='btn btn-outline-dark mr-2 dist' style='background: #d4f0f3;'></button>").html('전체보기');
+      var b=$("<button id='tot' class='btn btn-outline-light mr-2 dist distActive'></button>").html('전체보기');
       $(b).on("click",function(){
-    	  $(".dist").css("background","white");
-    	  $(this).css("background","#d4f0f3");
+    	  $(".dist").removeClass("distActive");
+    	  $(this).addClass("distActive");
     	  var nokey;	//keyword에 null을 넣어주기 위한 변수 (null로 대입하면 적용안됨)
     	  keyword=nokey;
     	  listGoods(gc_code,keyword,1,searchField,searchKeyword);
@@ -169,14 +187,14 @@ $(function(){
       $("#goodsType").append(b);
       result=JSON.parse(result);
       $.each(result,function(idx,item){
-         var c_dist= $("<button id='listCate' type='button' class='btn btn-outline-dark dist'></button>").html(result[idx].c_dist);
+         var c_dist= $("<button type='button' class='btn btn-outline-light dist'></button>").html(result[idx].c_dist);
          var nbsp="  ";
          $("#goodsType").append(c_dist,nbsp);
          $(c_dist).on("click",function(){
-            $(".dist").css("background","white");
+            $(".dist").removeClass("distActive");
             keyword=$(this).text();
             c_no=result[idx].c_no;
-            $(this).css("background","#d4f0f3");
+            $(this).addClass("distActive");
             listGoods(gc_code,keyword,1,searchField,searchKeyword);
          })
       })
@@ -187,9 +205,9 @@ $(function(){
       self.location = "/goods/insert?c_no="+c_no+"&gc_code="+gc_code;
    })
    $(".typeBtn").on("click",function(){
-	   $(".typeBtn").css("background","white");
+	   $(".typeBtn").removeClass("typeBtnActive");
 		var noCode;
-	   $(this).css("background","#a3a1fc");
+	   $(this).addClass("typeBtnActive");
 		if($(this).val()==0)
 			gc_code= noCode;
 		else
@@ -233,9 +251,9 @@ $(function(){
 	<p>상품 등록을 원하시면 카테고리를 선택해주세요.</p>
 	<hr>
 	
-	<button id="allBtn" type="button" class="btn btn-outline-dark typeBtn" value="0" style="background: #a3a1fc;">전체보기</button>
-	<button id="buyBtn" type="button" class="btn btn-outline-dark typeBtn" value="2">삽니다</button>
-	<button id="sellBtn" type="button" class="btn btn-outline-dark typeBtn" value="1">팝니다</button>
+	<button id="allBtn" type="button" class="btn btn-outline-light typeBtn typeBtnActive" value="0">전체보기</button>
+	<button id="buyBtn" type="button" class="btn btn-outline-light typeBtn" value="2">삽니다</button>
+	<button id="sellBtn" type="button" class="btn btn-outline-light typeBtn" value="1">팝니다</button>
 	<br><br>
 	
 	<div>
@@ -243,7 +261,7 @@ $(function(){
 			<h4>상품 종류별 보기</h4>
 		</div>
 		<div style="display: inline-block; float: right;">
-			<button id="insertBtn" type="button" class="btn btn-outline-dark">상품등록</button>
+			<button id="insertBtn" type="button" class="btn btn-outline-light">상품등록</button>
 		</div>
 	</div>
 	<hr>
@@ -291,11 +309,11 @@ $(function(){
 				</div>
 		    	
 				<div class="col-sm-2 my-1">
-					<button id="searchBtn" class="btn btn-outline-dark">검색</button>
+					<button id="searchBtn" class="btn btn-outline-light">검색</button>
 				</div>
 		    	
 		    	<div class="col-sm-2 my-1">
-		    		<button id="allBoardBtn" class="btn btn-outline-dark float-right">전체글</button>
+		    		<button id="allBoardBtn" class="btn btn-outline-light float-right">전체글</button>
 		    	</div>
 	    </div>
     </form>
