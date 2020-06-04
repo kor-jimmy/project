@@ -13,7 +13,7 @@
 <script type="text/javascript">
 	$(function(){
 		var qb_no = $("#qb_no").val();
-		var c_no = $("#c_no").val();
+		var c_no = $("#c_no").val();  
 
 		$("#updateBtn").on("click",function(){
 			self.location = "/qnaboard/update?categoryNum="+c_no+"&qb_no="+qb_no;
@@ -36,8 +36,8 @@
 
 		$("#listBtn").on("click",function(){
 			self.location = "/qnaboard/list?categoryNum="+c_no;
-			})
-	})
+			})	
+})
 </script>
 	<h2>QNA 상세</h2>
 	<input type="hidden" id="qb_no" value="${ qnaboard.qb_no }">
@@ -59,7 +59,17 @@
 	</table>
 	<button id="deleteBtn" class="btn btn-outline-dark">삭제</button>
 	<button id="updateBtn" class="btn btn-outline-dark">수정</button>
-	<button id="replyInsertBtn" class="btn btn-outline-dark">답글</button>
+
+	<sec:authentication property="principal" var="pinfo"/>
+	<sec:authorize access="isAuthenticated()">
+		<c:if test="${pinfo.username eq qnaboard.m_id}">
+			<button id="replyInsertBtn" class="btn btn-outline-dark">답글</button>
+		</c:if>
+	</sec:authorize>
+	<sec:authorize access="hasRole('ROLE_MASTER')">
+		<button id="replyInsertBtn" class="btn btn-outline-dark">답글</button>
+	</sec:authorize>
+	
 	<button id="listBtn" class="btn btn-outline-dark">목록</button>
 	
 <%@include file="../includes/footer.jsp"%>

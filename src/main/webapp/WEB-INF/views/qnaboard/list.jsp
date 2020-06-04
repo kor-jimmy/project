@@ -65,7 +65,7 @@ $(function(){
 					<c:forEach begin="0" end="${qnaboard.qb_level}">
 					<c:out value="&nbsp;&nbsp;&nbsp;&nbsp;" escapeXml="false"/> 
 					</c:forEach>	
-						<img src="/img/reply.png" width="20" height="20">
+						<img src="/img/re.png" width="20" height="20">
 						<c:out value="${qnaboard.qb_title }"/>
 				</c:when> 
 				<c:otherwise>

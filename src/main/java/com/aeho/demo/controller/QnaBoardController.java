@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
@@ -90,7 +91,7 @@ public class QnaBoardController {
 	
 	@PostMapping(value="/insert")
 	@ResponseBody
-	public String insert(HttpServletRequest request, QnaBoardVo qbv, RedirectAttributes rttr) throws Exception {
+	public String insert(HttpServletRequest request, QnaBoardVo qbv, RedirectAttributes rttr, HttpSession session) throws Exception {
 			System.out.println("등록되는 큐엔에이 정보===>>"+qbv);
 			//String str = "게시물 등록에 실패했습니다.";
 			System.out.println(qbv.getQb_no());
@@ -188,8 +189,6 @@ public class QnaBoardController {
 		}
 		return msg;
 	}
-	
-	
 	
 	
 	

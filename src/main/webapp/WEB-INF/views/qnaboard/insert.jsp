@@ -1,10 +1,11 @@
+<%@page import="com.aeho.demo.vo.QnaBoardVo"%>
+<%@page import="java.security.Timestamp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@include file="../includes/header.jsp"%>
 
 	<h2>QNA 등록</h2>
-	<h2>${c_no }</h2>
 	<form id="insertForm" method="post" enctype="multipart/form-data">
 		<input type="hidden" id="qb_no" value="${qb_no }" name="qb_no">
 		<table class="table table-bordered">
@@ -102,7 +103,6 @@
 				data=new FormData();
 				data.append("file",file);
 				console.log(file);
-
 				if(!imgCheck.test(file.type)){
 					alert("이미지 파일만 업로드해주세요");
 					return false;
@@ -111,7 +111,6 @@
 					alert("파일 용량이 너무 큽니다.");
 					return false;
 				}
-
 				$.ajax({
 					data: data,
 					type: "POST",
@@ -133,7 +132,6 @@
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
 			console.log("토큰 : "+token+" / 헤더:"+header);
-
 			$("#insertBtn").on("click",function(e){
 				
 				if($("#qb_title").val() == null || $("#qb_title").val() == "" || 
