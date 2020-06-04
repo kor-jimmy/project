@@ -13,6 +13,7 @@ import com.aeho.demo.dao.BoardFilesDao;
 import com.aeho.demo.dao.HateDao;
 import com.aeho.demo.dao.LoveDao;
 import com.aeho.demo.dao.ReplyDao;
+import com.aeho.demo.dao.ReportDao;
 import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.vo.BoardFilesVo;
 import com.aeho.demo.vo.BoardVo;
@@ -34,6 +35,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardFilesDao boardFilesDao;
+	
+	@Autowired
+	private ReportDao reportDao;
 
 	@Override
 	public List<BoardVo> listBoard() {
@@ -91,6 +95,10 @@ public class BoardServiceImpl implements BoardService {
 		if(replyDao.listReply(bv.getB_no()) != null) {
 			int result_reply = replyDao.deleteBoardReply(bv.getB_no());
 			System.out.println("댓글 삭제 성공 번호 "+result_reply);	
+		}
+		
+		if(reportDao.listReport(bv.getB_no(), "board") != null) {
+			int result_report = reportDao.deleteReport(bv.getB_no(), "board");
 		}
 		
 		int result_board = boardDao.deleteBoard(bv);

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aeho.demo.dao.BoardDao;
 import com.aeho.demo.dao.ReplyDao;
+import com.aeho.demo.dao.ReportDao;
 import com.aeho.demo.domain.CriteriaForReply;
 import com.aeho.demo.vo.ReplyVo;
 
@@ -18,6 +19,8 @@ public class ReplyServiceImple implements ReplyService {
 	private ReplyDao replyDao;
 	@Autowired
 	private BoardDao boardDao;
+	@Autowired
+	private ReportDao reportDao;
 	
 	@Override
 	@Transactional(rollbackFor=Exception.class)
@@ -66,6 +69,9 @@ public class ReplyServiceImple implements ReplyService {
 	public int deleteReply(ReplyVo rv) {
 		int re = 0;
 		rv = replyDao.getReply(rv.getR_no());
+		if(reportDao.listReport(rv.getR_no(), "reply") != null) {
+			reportDao.deleteReport(rv.getR_no(), "reply");
+		}
 //		System.out.println("넘어온 reply의 r_ref:"+rv.getR_ref());
 		if(rv.getR_no() == rv.getR_ref()) {
 			System.out.println("답댓글 아닌 경우의 삭제");
@@ -82,6 +88,7 @@ public class ReplyServiceImple implements ReplyService {
 				String cntkeyword = "reply";
 				int result_update = boardDao.updateCnt(rv.getB_no(), cntkeyword);
 
+				
 				if( result_delete > 0 && result_update > 0 ) {
 					re = 1;
 					replyDao.updateCnt(r_ref);

@@ -46,6 +46,7 @@
 		var select_mid="";
 		//console.log("토큰 : "+token+" / 헤더:"+header);
 		
+		
 		//게시물 수정
 		$("#updateBtn").on("click",function(){
 			self.location = "/goods/update?g_no="+g_no;
@@ -111,11 +112,13 @@
 				dateDiv.append(replyDate);
 
 				//신고
+				/*
 				var reportDiv=$("<div class=col-1></div>");
 				var repStr = "<sec:authorize access='isAuthenticated()'>";
 				repStr += "<img class='reportICON' width=20px height=20px src='/img/reportICON.svg'></img>"
 				repStr +="</sec:authorize>";				
 				reportDiv.append(repStr);
+				*/
 
 				//삭제
 				var deleteDiv=$("<div class=col-1></div>");				
@@ -129,7 +132,7 @@
 				
 				deleteDiv.append(delStr)
 
-				replyDiv.append(idDiv,contentDiv,reportDiv,deleteDiv,dateDiv);
+				replyDiv.append(idDiv,contentDiv/*,reportDiv*/,deleteDiv,dateDiv);
 				
 				if(r.gr_state == 1 && r.gr_reCnt != 0){
 					var deletedReply = $("<div style='text-align: center; color: gray; background: #F4F4F4;'></div>").html("삭제된 댓글입니다.");
@@ -292,6 +295,15 @@
 				return false;
 			}
 
+			if(logingID == $("#writer").val()){
+				swal({
+					  text: "본인 게시물은 신고하실 수 없습니다.",
+					  icon: "info",
+					  button: "확인"
+				});
+				return false;
+			}
+
 			var data = {rc_code: 2, m_id: logingID, g_no: g_no};
 			var isClicked = $(this).attr("class");
 
@@ -326,13 +338,14 @@
 
 </script>
 	<input type="hidden" id="g_no" value="${ goods.g_no }">
+	<input type="hidden" id="writer" value="${ goods.m_id }">
 	<table class="table table-bordered">
 		<tr>
 			<td id="title" colspan="6"><h3><c:out value="${goods.g_title }"/></h3></td>
 		</tr>
 		<tr>
 			<td width="15%" align="center"><b>작성자</b></td>
-			<td width="20%"><c:out value="${goods.m_nick }"/></td>
+			<td width="20%"><c:out value="${ goods.m_nick }"/></td>
 			<td width="15%" align="center"><b>작성시간</b></td>
 			<td width="30%"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${goods.g_date }"/></td>
 			<td width="10%" align="center">신고</td>
@@ -360,7 +373,7 @@
 	<sec:authorize access="isAuthenticated()">
 	<form id="reply">
 		<div id="replyDiv" class="form-row align-items-center">
-			<input type="hidden" name="g_no" value="<c:out value='${goods.g_no }'/>">
+			<input type="hidden" name="g_no" value="<c:out value='${ goods.g_no }'/>">
 			<input type="hidden" name="gr_ref" value="0">
 			<input type="hidden" name="gr_level" value="0">
 		<div class="col-sm-2 my-1">

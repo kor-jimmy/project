@@ -9,9 +9,7 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class ReportVo {
 	
 	//신고 번호
@@ -21,4 +19,5 @@ public class ReportVo {
 	private String m_id;
 	private int b_no;
 	private int g_no;
+	private int r_no;
 }

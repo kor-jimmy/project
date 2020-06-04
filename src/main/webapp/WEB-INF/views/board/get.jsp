@@ -142,10 +142,8 @@
 				
 				//댓글 날짜
 				var dateDiv=$("<div class=col-2></div>");
-				var replyDate = $("<p></p>").html(r.r_date);
-				var date = new Date("yy/mm/dd");
-
-				console.log(date);
+				var r_date = moment(r.r_date).format('YYYY-MM-DD HH:mm:ss');
+				var replyDate = $("<p></p>").html(r_date);
 				
 				dateDiv.append(replyDate)
 				

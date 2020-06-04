@@ -95,9 +95,10 @@ public class GoodsController {
 		return hm;
 	}
 	@GetMapping("/insert")
-	public void insert(HttpServletRequest request, Model model, @Param("c_no")int c_no) {
+	public void insert(HttpServletRequest request, Model model, @Param("c_no")int c_no, @Param("gc_code")int gc_code) {
 		CategoryVo cv = categoryService.getCategory(c_no);
 		model.addAttribute("cv", cv);
+		model.addAttribute("gc_code", gc_code);
 	}
 
 	@PostMapping(value = "/insert")

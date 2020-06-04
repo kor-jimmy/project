@@ -11,6 +11,7 @@
 	<h2>상품등록</h2>
 	<br>
 	<form id="insertForm" method="post" enctype="multipart/form-data">
+	<input type="hidden" id="gccodeValue" value="${ gc_code }">
 	<table class="table table-bordered">
 		<tr>
 			<td>장터 카테고리</td>
@@ -51,6 +52,8 @@
 			var uploadFileList=[];
 			var imgCheck = new RegExp("^(image)/(.*?)");
 			var maxSize= 10485760;
+
+			$("#gc_code").val($("#gccodeValue").val());
 			
 			$("#g_content").summernote({
 				disableDragAndDrop : true,
@@ -120,7 +123,7 @@
 				var gc_code = $("#gc_code option:selected").val();
 				if($("#g_title").val() == null || $("#g_title").val() == "" || 
 						$("#g_content").val() == null || $("#g_content").val() == "" || gc_code == "0"){
-					alert("제목,글 내용, 삽니다/팝니다 코드가 비어있는지 확인해주세요.");
+					alert("제목, 글 내용, 삽니다/팝니다 분류는 비워둘 수 없습니다.");
 					return false;
 				}
 //				console.log("클릭동작")

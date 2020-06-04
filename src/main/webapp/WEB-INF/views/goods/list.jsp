@@ -184,7 +184,7 @@ $(function(){
    }})
    $("#insertBtn").on("click",function(){
 //      console.log(c_no);
-      self.location = "/goods/insert?c_no="+c_no;
+      self.location = "/goods/insert?c_no="+c_no+"&gc_code="+gc_code;
    })
    $(".typeBtn").on("click",function(){
 	   $(".typeBtn").css("background","white");
