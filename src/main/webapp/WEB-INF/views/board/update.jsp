@@ -126,7 +126,7 @@
 								uuid : src.split("_")[0],
 								filename : src.split("_")[1],
 								b_no : boardNum,
-								uploadpath : "C:\\\aehoUpload\\board\\"+year+"\\"+month+"\\"
+								uploadpath : "C:\\\aehoUpload\\board\\"
 							}
 							uploadFileList.push(myUpload)
 						})

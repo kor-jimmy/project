@@ -128,7 +128,7 @@ public class GoodsController {
 		String year = today.split("/")[0];
 		String month= today.split("/")[1];
 		
-		String fileRoot = "C:\\aehoUpload\\goods\\"+year+"\\"+month+"\\";
+		String fileRoot = "C:\\aehoUpload\\goods\\";
 		String originalFileName=multipartFile.getOriginalFilename();
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
 		

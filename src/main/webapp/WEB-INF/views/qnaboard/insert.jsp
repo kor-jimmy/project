@@ -165,7 +165,7 @@
 										uuid : src.split("_")[0],
 										filename: src.split("_")[1],
 										qb_no: qnaBoardNum,
-										uploadpath: "C\\\aehoUpload\\qnaboard\\"+year+"\\"+month+"\\"
+										uploadpath: "C\\\aehoUpload\\qnaboard\\"
 								}
 								uploadFileList.push(myUpload)
 							})

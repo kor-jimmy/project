@@ -113,6 +113,7 @@
             wrap: true
         })
         
+        
 		//진탁) 일,주,월 최고의 게시물 호출 함수
         var todayBest = function(){
             $.ajax("/todayBest",{success:function(data){
@@ -133,6 +134,41 @@
                 })
                 $("#bestContent").append(ul);
             }})
+
+/*     		$.ajax("/todayBest", {success: function(data){
+    			$("#bestContent").empty();
+    			var list = JSON.parse(data);
+    			$.each(list, function(idx, board){
+    				var div = $("<div></div>");			
+    				var content = board.b_content;
+    				var img;
+
+    				var imgDiv = $("<div class='imgDiv'></div>").attr("display", "inline-block");
+    				
+    				if(content.indexOf("<img src=") != -1){
+    					img = $(content.substring(content.indexOf("<img src="), content.indexOf("style"))+"></img>").addClass("rounded goodsImg");
+    				}else{
+    					img = $("<img src='/img/no_image.png' class='rounded goodsImg'></img>");
+    				}
+
+    				var contentDiv = $("<div></div>").attr("display", "inline-block");
+    				var gc_dist = $("<small class='text-muted'></small>");
+    				
+    				var title = $("<b></b>").html(board.b_title);
+                    var loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
+                    var replyCnt = $("<span class='badge badge-info'></span>").text("댓글 " + content.b_replycnt);
+    				
+    				var a = $("<a></a>").attr("href","/board/get?b_no="+board.b_no).append(title);
+    				
+    				contentDiv.append(a,loveCnt,replyCnt);
+    				imgDiv.append(img);
+    				div.append(imgDiv,contentDiv);
+    				$("#bestContent").append(div);
+    			});
+    			
+    		}}); */
+
+            
         }
         
 		var weekBest = function(){

@@ -13,7 +13,7 @@
 <table class="table table-bordered">
 	<tr>
 		<td>게시물 제목</td>
-		<td><input type="text" name="b_title" id="b_title" required="required" style="width:40%;"></td>
+		<td><input type="text" name="b_title" id="b_title" required="required" style="width:40%;" maxlength="30"></td>
 	</tr>
 	<tr>
 		<td>내용</td>
@@ -33,6 +33,7 @@
 		//이미지 파일 유효성 검사
 		var imgCheck = new RegExp("^(image)/(.*?)");
 		var maxSize = 10485760;
+
 		
 		//섬머노트
 		$("#b_content").summernote({
@@ -137,7 +138,7 @@
 								uuid : src.split("_")[0],
 								filename : src.split("_")[1],
 								b_no : boardNum,
-								uploadpath : "C:\\\aehoUpload\\board\\"+year+"\\"+month+"\\"
+								uploadpath : "C:\\\aehoUpload\\board\\"
 							}
 							uploadFileList.push(myUpload)
 						})

@@ -49,7 +49,7 @@ public class FilesSchedule2 {
 		String month = splitYester[1];
 		
 		//지울 파일의 위치
-		File path = new File("C:\\aehoUpload\\goods\\"+year+"\\"+month);
+		File path = new File("C:\\aehoUpload\\goods\\");
 		//위 path의 파일을 모두 가져와 filesList에 담는다.
 		File [] filesList = path.listFiles();
 		HashMap<Integer, String> map = new HashMap<Integer, String>();

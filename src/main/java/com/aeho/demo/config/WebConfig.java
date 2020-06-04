@@ -21,12 +21,13 @@ public class WebConfig implements WebMvcConfigurer {
 
     	String year = today.split("/")[0];
     	String month = today.split("/")[1];
+    	//20년 6월이잖아
 
         registry.addResourceHandler("/boardImage/**")
-                .addResourceLocations("file:///C:/aehoUpload/board/"+year+"/"+month+"/");
+                .addResourceLocations("file:///C:/aehoUpload/board/");
         registry.addResourceHandler("/goodsImage/**")
-        		.addResourceLocations("file:///C:/aehoUpload/goods/"+year+"/"+month+"/");
+        		.addResourceLocations("file:///C:/aehoUpload/goods/");
         registry.addResourceHandler("/qnaBoardImage/**")
-        		.addResourceLocations("file:///C:/aehoUpload/qnaboard/"+year+"/"+month+"/");
+        		.addResourceLocations("file:///C:/aehoUpload/qnaboard/");
     }
 }

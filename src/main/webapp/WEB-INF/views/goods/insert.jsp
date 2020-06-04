@@ -20,15 +20,16 @@
 		</tr>
 		<tr>
 			<td>상품 제목</td>
-			<td><input type="text" id="g_title" name="g_title" required="required" style="width:40%;"></td>
+			<td><input type="text" id="g_title" name="g_title" required="required" style="width:40%;" maxlength="30"></td>
 		</tr>
 		<tr>
 			<td>삽니다/팝니다</td>
-			<td><select id="gc_code" name="gc_code">
-				<option value="0" disabled="disabled" selected="selected">=선택=</option>
-				<option value="1">팝니다</option>
-				<option value="2">삽니다</option>
-			</select>
+			<td>
+				<select id="gc_code" name="gc_code">
+					<option value="0" disabled="disabled" selected="selected">=선택=</option>
+					<option value="1">팝니다</option>
+					<option value="2">삽니다</option>
+				</select>
 			</td>
 		</tr>
 		<tr>
@@ -149,7 +150,7 @@
 										uuid : src.split("_")[0],
 										filename: src.split("_")[1],
 										g_no: goodsNum,
-										uploadpath: "C\\\aehoUpload\\goods\\"+year+"\\"+month+"\\"
+										uploadpath: "C\\\aehoUpload\\goods\\"
 								}
 								uploadFileList.push(myUpload)
 							})

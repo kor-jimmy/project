@@ -129,7 +129,7 @@
 								uuid : src.split("_")[0],
 								filename : src.split("_")[1],
 								g_no : goodsNum,
-								uploadpath : "C:\\\aehoUpload\\goods\\"+year+"\\"+month+"\\"
+								uploadpath : "C:\\\aehoUpload\\goods\\"
 							}
 							uploadFileList.push(myUpload)
 						})
