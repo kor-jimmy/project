@@ -238,7 +238,7 @@ public class BoardController {
 	@ResponseBody
 	public JsonObject uploadSummernoteImageFile(HttpServletRequest request, @RequestParam("file") MultipartFile multipartFile) {
 		JsonObject jsonObject = new JsonObject();
-		
+		System.out.println(multipartFile);
 		Date date = new Date();
     	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH", Locale.KOREA);
     	String today = dateFormat.format(date);

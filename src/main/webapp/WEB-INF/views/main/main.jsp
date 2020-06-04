@@ -120,16 +120,24 @@
             	$("#bestContent").empty();
                 var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
                 var list = JSON.parse(data);
+                console.log(list);
                 $.each(list, function(idx,content){
                 	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
                     var li = $("<li id='listContent' class='list-group-item'></li>").attr("b_no",content.b_no);
+					var src = "/boardImage/"+content.uuid+"_"+content.filename;
+                    var img;
+                    if(content.filename != null){
+                    	img = $("<img width=100 height=100></img>").attr("src",src);
+                    }else{
+                    	img = $("<img width=100 height=100></img>").attr("src","/img/no_image.png");
+                    }
 					var b_title = $("<p></p>");
 					b_title.append(category,content.b_title)
 					var cnt = $("<p></p>");
                     var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
                     var b_replyCnt = $("<span class='badge badge-info'></span>").text("댓글 " + content.b_replycnt);
                     cnt.append(b_loveCnt,"   ",b_replyCnt);
-                    li.append(b_title,cnt);
+                    li.append(img,b_title,cnt);
                     ul.append(li);
                 })
                 $("#bestContent").append(ul);

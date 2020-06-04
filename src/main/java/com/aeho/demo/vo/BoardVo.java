@@ -33,4 +33,7 @@ public class BoardVo {
 	private String c_dist;
 	//닉네임추가
 	private String m_nick;
+	//파일위한거
+	private String uuid;
+	private String filename;
 }
