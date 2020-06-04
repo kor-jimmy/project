@@ -1,17 +1,16 @@
 package com.aeho.demo.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
+@Data
 public class ChatRoomVo {
-	private int cr_num;
-	private String cr_name;
+	private int roomNumber;
+	private String roomName;
 }

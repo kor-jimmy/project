@@ -6,18 +6,19 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-import com.aeho.demo.handler.SocketTextHandler;
+import com.aeho.demo.handler.SocketHandler;
 
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
 	@Autowired
-	SocketTextHandler socketTextHandler;
+	SocketHandler socketHandler;
 	
+	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		// TODO Auto-generated method stub
-		registry.addHandler(socketTextHandler, "/chat/{cr_num}");
+		registry.addHandler(socketHandler, "/chating");
 	}
 
 }

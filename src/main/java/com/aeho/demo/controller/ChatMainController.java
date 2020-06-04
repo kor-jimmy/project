@@ -15,57 +15,74 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.aeho.demo.vo.ChatRoomVo;
 
+
 @Controller
 public class ChatMainController {
+	List<ChatRoomVo> roomList = new ArrayList<ChatRoomVo>();
+	static int roomNumber = 0;
 	
-	List<ChatRoomVo> chatList = new ArrayList<ChatRoomVo>();
-	static int cr_num = 0;
-
-	@RequestMapping("/")
+	@RequestMapping("/chat")
 	public ModelAndView chat(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("chat");
-		return mav;
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("chat");
+		return mv;
 	}
 	
-	//방페이지
+	/**
+	 * 방 페이지
+	 * @return
+	 */
 	@RequestMapping("/room")
 	public ModelAndView room(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("room");
-		return mav;
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("room");
+		return mv;
 	}
 	
-	//방 생성
+	/**
+	 * 방 생성하기
+	 * @param params
+	 * @return
+	 */
 	@RequestMapping("/createRoom")
 	public @ResponseBody List<ChatRoomVo> createRoom(HttpServletRequest request, @RequestParam HashMap<Object, Object> params){
-		String cr_name = (String)params.get("cr_name");
-		if(cr_name != null && !cr_name.trim().equals("")) {
-			ChatRoomVo chatRoom = new ChatRoomVo();
-			chatRoom.setCr_num(++cr_num);
-			chatRoom.setCr_name(cr_name);
-			chatList.add(chatRoom);
+		String roomName = (String) params.get("roomName");
+		if(roomName != null && !roomName.trim().equals("")) {
+			ChatRoomVo room = new ChatRoomVo();
+			room.setRoomNumber(++roomNumber);
+			room.setRoomName(roomName);
+			roomList.add(room);
 		}
-		return chatList;
+		return roomList;
 	}
 	
+	/**
+	 * 방 정보가져오기
+	 * @param params
+	 * @return
+	 */
 	@RequestMapping("/getRoom")
 	public @ResponseBody List<ChatRoomVo> getRoom(HttpServletRequest request, @RequestParam HashMap<Object, Object> params){
-		return chatList;
+		return roomList;
 	}
 	
-	@RequestMapping("/moveChat")
-	public ModelAndView chat(HttpServletRequest request, @RequestParam HashMap<Object, Object> params) {
-		ModelAndView mav = new ModelAndView();
-		int cr_num = Integer.parseInt((String)params.get("cr_num"));
-		System.out.println("cr_num:"+cr_num);
-		List<ChatRoomVo> new_list = chatList.stream().filter(o->o.getCr_num()==cr_num).collect(Collectors.toList());
+	/**
+	 * 채팅방
+	 * @return
+	 */
+	@RequestMapping("/moveChating")
+	public ModelAndView chating(HttpServletRequest request, @RequestParam HashMap<Object, Object> params) {
+		ModelAndView mv = new ModelAndView();
+		int roomNumber = Integer.parseInt((String) params.get("roomNumber"));
+		
+		List<ChatRoomVo> new_list = roomList.stream().filter(o->o.getRoomNumber()==roomNumber).collect(Collectors.toList());
 		if(new_list != null && new_list.size() > 0) {
-			mav.addObject("cr_name", params.get("cr_name"));
-			mav.addObject("cr_num", params.get("cr_num"));
-			mav.setViewName("chat");
+			mv.addObject("roomName", params.get("roomName"));
+			mv.addObject("roomNumber", params.get("roomNumber"));
+			mv.setViewName("chat");
 		}else {
-			mav.setViewName("room");
+			mv.setViewName("room");
 		}
-		return mav;
+		return mv;
 	}
 }

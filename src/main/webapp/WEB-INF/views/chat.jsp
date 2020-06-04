@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -6,7 +5,9 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta charset="UTF-8">
-	<title>Chating</title>
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+	<title>chating</title>
 	<style>
 		*{
 			margin:0;
@@ -25,19 +26,13 @@
 			margin-bottom: 20px;
 		}
 		.chating{
-			background-color: pink;
+			background-color: #000;
 			width: 500px;
 			height: 500px;
 			overflow: auto;
 		}
-		
-		.chating .me{
-			color: black;
-			text-align: right;
-		}
-		
-		.chating .others{
-			color: blue;
+		.chating p{
+			color: #fff;
 			text-align: left;
 		}
 		input{
@@ -52,8 +47,9 @@
 
 <script type="text/javascript">
 	var ws;
+
 	function wsOpen(){
-		ws = new WebSocket("ws://"+location.host+"/chat/"+$("#cr_num").val());
+		ws = new WebSocket("ws://" + location.host + "/chating");
 		wsEvt();
 	}
 		
@@ -61,35 +57,35 @@
 		ws.onopen = function(data){
 			//소켓이 열리면 동작
 		}
-		
-		ws.onmessage = function(data) {
-			//메세지를 받으면 동작
-			var msg = data.data;
-			if(msg != null && msg.trim() != ''){
-				var d = JSON.parse(msg);
-				if(d.type=="getId"){
-					var si = d.sessionId != null ? d.sessionId : "";
-					if(si != ''){
-						$("#sessionId").val(si);
-					}
-				}else if(d.type == "message"){
-					if(d.sessionId == $("#sessionId").val()){
-						$("#chating").append("<p class='me'>나 :"+d.msg+"</p>");
-					}else{
-						$("#chating").append("<p class='others'> :"+d.userName+":"+d.msg+"</p>");
-					}
+			
+	ws.onmessage = function(data) {//메세지 받으면 동작
+		var msg = data.data;
+		if(msg != null && msg.trim() != ''){
+			var d = JSON.parse(msg);
+			if(d.type == "getId"){
+				var si = d.sessionId != null ? d.sessionId : "";
+				if(si != ''){
+					$("#sessionId").val(si); 
+				}
+			}else if(d.type == "message"){
+				if(d.sessionId == $("#sessionId").val()){
+					$("#chating").append("<p class='me'>나 :" + d.msg + "</p>");	
 				}else{
-						console.warn("허용하지 않는 타입입니다.");
-					}
+					$("#chating").append("<p class='others'>" + d.userName + " :" + d.msg + "</p>");
+				}
+					
+			}else{
+				console.warn("unknown type!")
 			}
 		}
-
-		document.addEventListener("keypress", function(e){
-			if(e.keyCode == 13){ //enter press
-				send();
-			}
-		});
 	}
+
+	document.addEventListener("keypress", function(e){
+		if(e.keyCode == 13){ //enter press
+			send();
+		}
+	});
+}
 
 	function chatName(){
 		var userName = $("#userName").val();
@@ -104,24 +100,20 @@
 	}
 
 	function send() {
-//		console.log($("#cr_num").val());
-	var option ={
-		type:"message",
-		cr_num : $("#cr_num").val(),
-		sessionId : $("#sessionId").val(),
-		userName : $("#userName").val(),
-		msg : $("#chatting").val()
-	}
-		ws.send(JSON.stringify(option));
+		var option ={
+			type: "message",
+			sessionId : $("#sessionId").val(),
+			userName : $("#userName").val(),
+			msg : $("#chatting").val()
+		}
+		ws.send(JSON.stringify(option))
 		$('#chatting').val("");
 	}
 </script>
 <body>
 	<div id="container" class="container">
-		<h1>${cr_name}의 채팅방</h1>
-		<input type="hidden" id="sessionId" value=""></input><!-- 
-		<input type="hidden" id="cr_num" value="${cr_num }"></input> -->		
-		
+		<h1>채팅</h1>
+		<input type="hidden" id="sessionId" value="">
 		<div id="chating" class="chating">
 		</div>
 		
@@ -138,7 +130,6 @@
 			<table class="inputTable">
 				<tr>
 					<th>메시지</th>
-					<input type="hidden" id="cr_num" value="${cr_num }"></input>
 					<th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
 					<th><button onclick="send()" id="sendBtn">보내기</button></th>
 				</tr>
