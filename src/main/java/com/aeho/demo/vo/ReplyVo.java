@@ -25,4 +25,7 @@ public class ReplyVo {
 	private int r_reCnt;
 	private int r_state;
 	private int r_reportcnt;
+	
+	//닉네임추가
+	private String m_nick;
 }

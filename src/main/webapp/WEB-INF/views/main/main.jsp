@@ -233,7 +233,7 @@
 					var tr = $("<tr class='newBoardList' b_no="+board.b_no+"></tr>");
 					var td1 = $("<td></td>").html(board.c_dist);
 					var td2 = $("<td></td>").html(board.b_title);
-					var td3 = $("<td></td>").html(board.m_id);
+					var td3 = $("<td></td>").html(board.m_nick);
 					var td4 = $("<td></td>").html(date);
 
 					tr.append(td1,td2,td3,td4);

@@ -137,7 +137,7 @@
 				}
 				contentDiv.append(replyContent);
 				
-				var replyID = $("<span></span>").html(r.m_id);
+				var replyID = $("<span></span>").html(r.m_nick);
 				idDiv.append(replyID);
 				
 				//댓글 날짜

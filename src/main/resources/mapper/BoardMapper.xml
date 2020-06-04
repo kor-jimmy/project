@@ -114,6 +114,7 @@
   		select rownum rn, b_no, b_title, m_id, b_date from (select *from board where c_no=10010 order by b_no desc) where rownum<=5
   	]]>
   </select>
+  
   <!-- 관리자 유저 공지사항 메인 페이지 용도 -->
   <select id="getUserNotice" resultType="com.aeho.demo.vo.BoardVo">
  	 <![CDATA[
@@ -165,9 +166,10 @@
   <!-- 메인페이지 용 최근 게시물 -->
   <select id="mainNewBoard" resultType="com.aeho.demo.vo.BoardVo">
   	<![CDATA[
-	  	select rownum rn, c_dist, b_no, c_no, b_title, m_id, b_date 
-	   	 from (select c.c_dist, b_no, b.c_no, b_title, m_id, b_date from board b, category c where b.c_no = c.c_no and b.c_no<10000 order by b_no desc) 
-	        where rownum<=5
+	  	select rownum rn, c_dist, b_no, c_no, b_title, m_id, b_date, m_nick 
+	   	 from (select c.c_dist, b_no, b.c_no, b_title, b.m_id, b_date, m.m_nick from board b, category c, member m
+            where b.c_no = c.c_no and b.m_id=m.m_id and b.c_no<10000 order by b_no desc) 
+                where rownum<=5
 	]]>
   </select>
   
