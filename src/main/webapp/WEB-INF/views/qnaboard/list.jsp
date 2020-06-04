@@ -3,6 +3,24 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<style>
+	a{ text-decoration: none !important; color: dimgray; }
+	
+	#qnaboardArticles{ background: rgba( 255, 255, 255, 0.5 ); }
+	
+	#insertBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+	#insertBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+	
+	#searchBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+	#searchBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+	#allBoardBtn{ background: #A3F0E4; border: 1px solid #A3F0E4; color: white; border-radius: 10px; }
+	#allBoardBtn:hover{ background: #5FEAC9; border: 1px solid #5FEAC9; }
+	
+	.paginate_button{ background: white; border: 2px solid #e9ecef; border-radius: 50%; padding: 2px 10px 2px 10px;}
+	.paginate_button:hover{ background: white; border: 2px solid #A3A1FC;}
+	.btn-outline-secondary:not(:disabled):not(.disabled).active{ background: #5FEAC9; color: white;border: 2px solid #5FEAC9;}
+	.btn-outline-secondary:not(:disabled):not(.disabled).active a{ color: white; }
+</style>
 <script type="text/javascript">
 $(function(){
 	var c_no = $("#c_no").val();
@@ -46,6 +64,7 @@ $(function(){
     <input type="hidden" name="c_no" id="c_no" value="${c_no}">
     <input type="hidden" name="qb_no" id="qb_no" value="${qb_no}">
     <hr>
+    <div id="qnaboardArticles">
     <table class="table table-hover">
         <thead>
             <tr align="center">
@@ -82,23 +101,34 @@ $(function(){
     <hr>
     <!-- 게시물 검색 -->
     <form id="searchForm" action="/qnaboard/list" method="get">
-    <input type="hidden" id="categoryNum" name="categoryNum" value="${ c_no }">
-    	<select name="searchField">
-    		<option value="all" <c:out value="${ pageMake.cri.searchField eq 'all'?'selected':'' }"/>>전체</option>
-    		<option value="qb_title" <c:out value="${ pageMake.cri.searchField eq 'qb_title'?'selected':'' }"/>>제목
-    		<option value="qb_content" <c:out value="${ pageMake.cri.searchField eq 'qb_content'?'selected':'' }"/>>내용</option>
-    		<option value="doc" <c:out value="${ pageMake.cri.searchField eq 'doc'?'selected':'' }"/>>제목+내용</option>
-    		<option value="m_id" <c:out value="${ pageMake.cri.searchField eq 'm_id'?'selected':'' }"/>>작성자</option>
-    	</select>
-    	<input type="text" id="searchKeyword" name="searchKeyword" value="${ pageMake.cri.searchKeyword }">
-    	<input type="hidden" name="c_no" id="c_no" value="${c_no}">
-    	<input type="hidden" name="pageNum" id="pageNum" value="${pageMake.cri.pageNum}">
-    	<input type="hidden" name="amount" id="amount" value="${pageMake.cri.amount}">
-    	<button id="searchBtn" class="btn btn-outline-dark">검색</button>
-    	<button id="allBoardBtn" class="btn btn-outline-dark float-right">전체글</button>
+    <div class="form-row align-items-center">
+    	<input type="hidden" id="categoryNum" name="categoryNum" value="${ c_no }">
+    	<div class="col-sm-2 my-1">
+	    	<select class="custom-select mr-sm-2" name="searchField">
+	    		<option value="all" <c:out value="${ pageMake.cri.searchField eq 'all'?'selected':'' }"/>>전체</option>
+	    		<option value="qb_title" <c:out value="${ pageMake.cri.searchField eq 'qb_title'?'selected':'' }"/>>제목
+	    		<option value="qb_content" <c:out value="${ pageMake.cri.searchField eq 'qb_content'?'selected':'' }"/>>내용</option>
+	    		<option value="doc" <c:out value="${ pageMake.cri.searchField eq 'doc'?'selected':'' }"/>>제목+내용</option>
+	    		<option value="m_id" <c:out value="${ pageMake.cri.searchField eq 'm_id'?'selected':'' }"/>>작성자</option>
+	    	</select>
+	    </div>
+	    <div class="col-sm-6 my-1">
+	    	<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" value="${ pageMake.cri.searchKeyword }">
+	    	<input type="hidden" name="c_no" id="c_no" value="${c_no}">
+	    	<input type="hidden" name="pageNum" id="pageNum" value="${pageMake.cri.pageNum}">
+	    	<input type="hidden" name="amount" id="amount" value="${pageMake.cri.amount}">
+	    </div>
+	    <div class="col-sm-2 my-1">
+			<button id="searchBtn" class="btn btn-outline-light">검색</button>
+		</div>
+	    <div class="col-sm-2 my-1">
+			<button id="allBoardBtn" class="btn btn-outline-light float-right">전체글</button>
+		</div>
+	</div>
     </form>
     
     <hr>
+    </div>
     <!-- 페이징 -->
     <div class="float-right">
     	<ul class="pagination">
@@ -113,7 +143,7 @@ $(function(){
 				<li class="paginate_button ${pageMake.cri.pageNum==num ? "active": ""}">
 					<a href="${num }">${num }</a>
 				</li>
-				<li>&nbsp;/&nbsp;</li>
+				<li>&nbsp;</li>
 			</c:forEach>    		
 			
 			<c:if test="${pageMake.next }">
@@ -134,7 +164,7 @@ $(function(){
     <!-- end 페이징 -->
     <!-- 게시물 인서트 -->
     <div>
-    	<button id="insertBtn" type="button" class="btn btn-outline-dark">게시물 등록</button>
+    	<button id="insertBtn" type="button" class="btn btn-outline-light">게시물 등록</button>
     </div>
     <!-- end 게시물 인서트 -->
 
