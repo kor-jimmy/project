@@ -4,8 +4,14 @@
 <%@include file="../includes/header.jsp"%>
 
 	<style>
-		#insertForm{ background: rgba(255, 255, 255, 0.7); }
+		.table{ background: rgba(255, 255, 255, 0.7); }
 		#contentTd{ padding: 20px;}
+	
+		#insertBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+		#insertBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+		
+		#resetBtn{ background: #c8ccd0; border: 1px solid #c8ccd0; color: white; border-radius: 10px; }
+		#resetBtn:hover{ background: #e9ecef; border: 1px solid #e9ecef; }
 	</style>
 
 	<h2>상품등록</h2>

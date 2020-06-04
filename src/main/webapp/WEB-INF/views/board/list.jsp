@@ -17,8 +17,8 @@
 	
 	.paging-btn{ background: white; border: 2px solid #e9ecef; border-radius: 30px; padding: 2px 10px 2px 10px;}
 	.paging-btn:hover{ background: white; border: 2px solid #A3A1FC;}
-	.btn-outline-secondary:not(:disabled):not(.disabled).active{ background: #5FEAC9; color: white;border: 2px solid #5FEAC9;}
-	.btn-outline-secondary:not(:disabled):not(.disabled).active a{ color: white; }
+	.btn-outline-light:not(:disabled):not(.disabled).active{ background: #5FEAC9; color: white;border: 2px solid #5FEAC9;}
+	.btn-outline-light:not(:disabled):not(.disabled).active a{ color: white; }
 </style>
 <script type="text/javascript">
 	$(function(){

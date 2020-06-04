@@ -2,6 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../includes/header.jsp"%>
+<style>
+	.table{ background: rgba(255, 255, 255, 0.7); }
+	#updateBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+	#updateBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+	#cancelBtn{ background: #c8ccd0; border: 1px solid #c8ccd0; color: white; border-radius: 10px; }
+	#cancelBtn:hover{ background: #e9ecef; border: 1px solid #e9ecef; }
+</style>
 
 	<h2>상품수정</h2>
 	<form id="updateForm" method="post" enctype="multipart/form-data">
@@ -36,7 +43,8 @@
 			<td><textarea id="g_content" class="text_content" name="g_content" rows="30%" cols="100%">${goods.g_content }</textarea></td>
 		</tr>
 	</table>
-	<button type="submit" id="updateBtn" class="btn btn-outline-dark">등록</button>
+	<button type="submit" id="updateBtn" class="btn btn-outline-light">등록</button>
+	<button id="cancelBtn" class="btn btn-outline-light">취소</button>
 	</form>
 	<script>
 	//summernote 적용
@@ -148,6 +156,11 @@
 				}
 			})
 		})
+
+		$("#cancelBtn").click(function(e){
+			e.preventDefault();
+			location.href= "/goods/get?g_no="+$("#g_no").val();
+		});
 	})
 	</script>
 <%@include file="../includes/footer.jsp"%>
