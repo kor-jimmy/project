@@ -195,7 +195,15 @@ public class GoodsController {
 	@RequestMapping("/listFileByGno")
 	@ResponseBody
 	public String listFileByGno(HttpServletRequest request, int g_no) {
-		return new Gson().toJson(goodsFilesService.listFileByGno(g_no));
+		List<GoodsFilesVo> list = goodsFilesService.listFileByGno(g_no);
+		System.out.println("굿즈 파일 정보 ==>>" + list);
+		Gson gson = new Gson();
+		String str = "null";
+		if(list.size()!=0) {
+			str = gson.toJson(list);
+		}
+		
+		return str;
 	}
 
 	

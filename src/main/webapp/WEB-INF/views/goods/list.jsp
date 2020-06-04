@@ -89,18 +89,19 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 			var g = item;
 			
 			var div = $("<div class='goodsBox mb-5'></div>");
-			
 			var con = g.g_content;
-			var img;
+			var image = $("<img></img>");
 			$.ajax("/goods/listFileByGno", {data: {g_no: g.g_no}, success: function(result){
 				var list = JSON.parse(result);
 				console.log(list);
-				if(list[0]){
+				if(result!="null"){
 					var gf = list[0];
+					console.log("파일 있음")
 					var src = "/goodsImage/"+gf.uuid+"_"+gf.filename;
-					img = $("<img class='rounded goodsImg mb-3'></img>").attr("src", src);
+					image.attr("src", src).addClass("rounded goodsImg mb-3");
 				}else{
-					img = $("<img src='/img/no_image.png' class='rounded goodsImg mb-3'></img>");
+					console.log("파일 없음")
+					image.attr("src","/img/no_image.png").addClass("rounded goodsImg mb-3");
 				}
 			}});
 			
@@ -125,7 +126,7 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 			//var replyCnt = $("<span class='badge badge-light'></span>").html(g.g_replycnt);
 			
 			var a = $("<a></a>").attr("href","/goods/get?g_no="+g.g_no).append(title);
-			var li = $("<li></li>").append(img, "<br>", gc_dist, a, "&nbsp;", writer, date);
+			var li = $("<li></li>").append(image, "<br>", gc_dist, a, "&nbsp;", writer, date);
 			div.append(li);
 			$("#goodsList").append(div);
 			
