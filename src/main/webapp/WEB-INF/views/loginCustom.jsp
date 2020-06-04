@@ -5,6 +5,10 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <style>
 	#findPwd{ cursor: pointer; }
+	#loginButton{ background: #A3A1FC; border: 1px solid #A3A1FC; border-radius: 30px;}
+	#loginButton:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+	#signupButton{ background: linear-gradient(15deg, #A3A1FC, #5FEAC9); border: 1px solid transparent; transition: all ease 0.3s;}
+	#signupButton:hover{ background: linear-gradient(15deg, #5FEAC9, #A3A1FC); }
 </style>
 <script>
 	$(function(){
@@ -96,7 +100,7 @@
 		<br><br>
 	  	<small class="text-muted">
 	  		아직 AE-HO에 아이디가 없다면? 
-	  		<a href="/member/insert" class="btn btn-primary active" role="button" aria-pressed="true">
+	  		<a href="/member/insert" id="signupButton" class="btn btn-primary" role="button">
 	  			회원가입
 	  		</a>
 	  	</small>
