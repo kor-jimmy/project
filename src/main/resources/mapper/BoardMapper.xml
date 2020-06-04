@@ -8,7 +8,7 @@
   </select>
   
   <select id="getBoard" resultType="com.aeho.demo.vo.BoardVo">
-  	select *from board where b_no=#{b_no}
+  	select b.*,m_nick from board b,member m where b.b_no = #{b_no} and b.m_id=m.m_id
   </select>
   
   <select id="listCatBoard" resultType="com.aeho.demo.vo.BoardVo">
@@ -32,13 +32,11 @@
   <select id="getListWithPaging" resultType="com.aeho.demo.vo.BoardVo">
   	<![CDATA[
   		select
-  			b_no, m_id, c_no, c_dist, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
-  		from
-  			(
-  				select /*+ INDEX_DESC(board pk_board)*/
-  					rownum rn, b_no, m_id, c.c_dist c_dist, b.c_no, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
-  				from (select *from board order by b_no desc) b, category c
-  				where rownum <= #{pageNum} * #{amount} and b.c_no=c.c_no
+  			 b_no, m_id, m_nick, c_no, c_dist, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
+		  		from ( select /*+ INDEX_DESC(board pk_board)*/
+		            rownum rn, b_no, b.m_id, m.m_nick, c.c_dist c_dist, b.c_no, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
+		  				from (select *from board order by b_no desc) b, category c, member m
+		                    where rownum <= #{pageNum} * #{amount} and b.c_no=c.c_no and m.m_id = b.m_id
   				]]>
   				<choose>
   				  	<when test="categoryNum == 10000">
@@ -57,9 +55,19 @@
   					<when test="categoryNum == 0">
   						and b_reportcnt >= 5
   					</when>
-  				</choose>
-  				
-  				<include refid="searchSql"></include>
+			  		<when test="searchField != null and !searchField.equals('') and searchField.equals('all')">
+						and (b_title like '%'||#{keyword}||'%' or b_content like '%'||#{keyword}||'%' or b.m_id like '%'||#{keyword}||'%')
+					</when>
+					<when test="searchField != null and !searchField.equals('') and (searchField.equals('b_title') or searchField.equals('b_content') or searchField.equals('m_id'))">
+						and b.${searchField} like '%'||#{keyword}||'%'
+					</when>
+					<when test="searchField != null and !searchField.equals('') and searchField.equals('doc')">
+						and (b_title like '%'||#{keyword}||'%' or b_content like '%'||#{keyword}||'%')
+					</when>
+					<when test="searchField != null and !searchField.equals('') and searchField.equals('m_nick')">
+						and m.${searchField} like '%'||#{keyword}||'%'
+					</when>
+			  	</choose>
   	<![CDATA[
   			)
   		where rn > (#{pageNum}-1) * #{amount} 

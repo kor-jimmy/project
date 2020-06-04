@@ -9,10 +9,6 @@
 			text-decoration: none !important;
 			color: dimgray;
 		}
-		.page-link{
-			background-color: #000000;
-			border-color: #000000;
-		}
 	</style>
 
 <script type="text/javascript">
@@ -24,7 +20,7 @@
 		//페이징 관련 내용
 		var actionForm = $("#actionForm");
 		
-		$(".page-link").on("click", function(e){
+		$(".page-item a").on("click", function(e){
 			//a태그 기본 속성 제거
 			e.preventDefault();
 			console.log("click");
@@ -128,9 +124,7 @@
 			<hr>
 			<button class="btn btn-outline-secondary" id="chooseDelete">선택 삭제</button>
 			<!-- 페이징 -->
-			<nav aria-label="Page navigation example">
-			
-				<ul class="pagination justify-content-end">
+<%-- 				<ul class="pagination justify-content-end">
 					<c:if test="${pageMake.prev }">
 						<li class="page-item disabled">
 							<a class="page-link" href="${pageMake.startPage -1 }">이전</a>
@@ -144,20 +138,39 @@
 						<!-- <li>&nbsp;/&nbsp;</li> -->
 					</c:forEach>
 					<c:if test="${pageMake.next }">
-						<li class="page-item">
+						<li class="paginate_button next">
 							<a class="page-link" href="${pageMake.endPage+1 }">다음</a>
 						</li>
 					</c:if>
-				</ul>
+				</ul> --%>
+				<nav aria-label="Page navigation example">
+				    <ul class="pagination justify-content-end">
+			    		<c:if test="${pageMake.prev }">
+							<li class="page-item">
+								<a class="page-link" href="${pageMake.startPage -1 }">이전</a>
+							</li>
+						</c:if>
+						
+						<c:forEach var="num" begin="${pageMake.startPage }" end="${pageMake.endPage }">
+							<li class="page-item ${pageMake.cri.pageNum==num ? "active": ""}">
+								<a class="page-link" href="${num }">${num }</a>
+							</li>
+						</c:forEach>    		
+						
+						<c:if test="${pageMake.next }">
+							<li class="page-item next">
+								<a class="page-link" href="${pageMake.endPage+1 }">다음</a>
+							</li>
+						</c:if>
+			    	</ul>
+		    	</nav>
 				<!-- 페이징 관련 a태그 속성 관리 -->
 				<form id="actionForm" action="/admin/report/board" method="get">
 					<input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
 					<input type="hidden" name="amount" value="${pageMake.cri.amount }"> 
 					<%-- <input type="hidden" name="categoryNum" value="${pageMake.cri.categoryNum }"> --%>
 				</form>
-			</nav>
 			<!-- end 페이징 -->
-			
 		</div>
 	</div>
 </div>

@@ -15,24 +15,6 @@
     	display: block;
     }
     
-    table { 
-			border-collapse: collapse; 
-			border-spacing: 0;		
-			width: 100%; 
-			table-layout: fixed;
-		}
-	
-	td { 
-		vertical-align: middle; 
-		overflow:hidden;
-		white-space : nowrap;
-		text-overflow: ellipsis;
-	 }
-
-	td.textOverDefault {
-		white-space : normal; /*기본값*/
-		text-overflow: clip; /*기본값*/
-	}
 	
 	#voteBox{ width: 90%; cursor: pointer;}
 	.hoverVote{ filter: brightness(0.60); }
@@ -240,7 +222,7 @@
 			self.location = "/board/get?b_no="+b_no;
 		})
 
-		//
+		//진탁 0603) 새로올라온 글 메인페이지용
 		$.ajax({
 			url:"/mainNewBoard",
 			type:"GET",
@@ -258,6 +240,12 @@
 					$("#newBoard").append(tr);
 				})
 			}
+		})
+		
+		//새글 게시물 클릭이벤트 
+		$(document).on("click",".newBoardList",function(e){
+			var b_no = $(this).attr("b_no");
+			self.location = "/board/get?b_no="+b_no;
 		})
 		
 		/*최신 굿즈 게시물*/
@@ -400,18 +388,25 @@
 		$(this).children("div").removeClass("hoverVote");
 	});
         
-	});
+	
 
 	//진탁) 06.04 인기 카테고리 작업 
 	$.ajax({
 		url:"/popCategory",
 		type:"GET",
 		success:function(result){
-			console.log(result);
+			var categoryList = JSON.parse(result);
+			$.each(categoryList,function(idx,category){
+				if(idx>4){
+					return false;	
+				}
+				var div = $("<div class='line'></div>").html(idx+1+"위  "+category.c_dist);
+				$(".animated-text").append(div);
+			})
 		}
 	})
 
-
+	});
 </script>
 		<!-- 이미지 슬라이드 -->
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -475,11 +470,12 @@
 	                <br>
 	                <h4> Ae?-Ho! 실시간 인기 카테고리!</h4>
 	                <div class="mainContent">
-				        <div id="popCategory">
-	
-		                </div>                	
+	                	<div style="width: 100%;height: auto">
+						    <div class="animated-text">
+						    
+						    </div>  
+					    </div>        	
 	                </div>
-
 	                <br>
                 </div>
             </div>
@@ -537,8 +533,9 @@
 					        
 					        </tbody>
 					    </table>
-						<a class="float-right" href="/main/notice?categoryNum=10000">더보기</a>
+						
 					</div>
+					<a class="float-right" href="/main/notice?categoryNum=10000">더보기</a>
                 </div>
                 <br>
             	<hr>

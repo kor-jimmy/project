@@ -595,7 +595,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="45%"><c:out value="${board.m_id }"/></td>
+			<td width="45%"><c:out value="${board.m_nick }"/></td>
 			<td width="15%">작성일 <fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
 			<td width="15%">수정일 <fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_updatedate }"/></td>
 			<td width="25%">조회 <c:out value="${board.b_hit }"/>  / Love <c:out value="<span id='loveCnt'>${ board.b_lovecnt }</span>" escapeXml="false"/> / hate <c:out value="<span id='hateCnt'>${ board.b_hatecnt }</span>" escapeXml="false"/></td>

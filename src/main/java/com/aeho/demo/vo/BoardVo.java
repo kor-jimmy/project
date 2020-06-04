@@ -31,4 +31,6 @@ public class BoardVo {
 	private List<BoardFilesVo> fileList;
 	//메인에 뿌려주기 위해 카테고리 아이디 추가
 	private String c_dist;
+	//닉네임추가
+	private String m_nick;
 }

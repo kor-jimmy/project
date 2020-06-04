@@ -79,8 +79,8 @@
         <thead>
             <tr align="center">
                 <th width="10%">번호</th>
-                <th width="50%">제목</th>
-                <th width="10%">작성자</th>
+                <th width="45%">제목</th>
+                <th width="15%">닉네임</th>
                 <th width="10%">날짜</th>
                 <th width="10%">조회수</th>
                 <th width="10%">Love</th>
@@ -91,7 +91,7 @@
                		<tr>
 	                    <td align="center"><c:out value="${board.b_no }"/></td>
 	                    <td><a class="" href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/><span class="badge badge-light">${board.b_replycnt }</span></a></td>
-	                    <td align="center"><c:out value="${board.m_id }"/></td>
+	                    <td align="center"><c:out value="${board.m_nick }"/></td>
 	                    <td align="center"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
 	                    <td align="center"><c:out value="${board.b_hit }"/></td>
 	                    <td align="center"><c:out value="${board.b_lovecnt }"/></td>
