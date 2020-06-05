@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="includes/header.jsp"%>
 
 	<title>chating</title>
@@ -43,7 +44,13 @@
 
 <script type="text/javascript">
 	var ws;
-
+	var user_id = "<sec:authentication property='principal.username'/>";
+	//1. 유저 아이디를 가지고 닉네임을 호출하는 ajax
+	//2. 메세지를 보낼때마다 해당 정보(메세지번호(시퀀스), 아이디, 채팅방번호, 메세지내용, 날짜)를 가지고 
+	//		ajax 통신을 해서 디비에 넣어주는 기능 추가.
+	//3. 채팅방정보 디비에 들어가게 만듬.
+	
+	
 	function wsOpen(){
 		ws = new WebSocket("ws://" + location.host + "/chating/" + $("#roomNumber").val());
 		wsEvt();
@@ -119,8 +126,8 @@
 			<table class="inputTable">
 				<tr>
 					<th>사용자명</th>
-					<th><input type="text" name="userName" id="userName"></th>
-					<th><button onclick="chatName()" id="startBtn">이름 등록</button></th>
+					<th><input type="text" name="userName" id="userName" value="<sec:authentication property='principal.username'/>" required="required"></th>
+					<th><button onclick="chatName()" id="startBtn">채팅방 입장</button></th>
 				</tr>
 			</table>
 		</div>
