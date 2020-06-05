@@ -3,16 +3,13 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="../includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
-<style>
-	.table{ background: rgba(255, 255, 255, 0.7); }
-
-</style>
+<link href="/resources/css/boardTable.css" rel="stylesheet">
 <h2>게시물 등록</h2>
 <hr>
 <form id="insertForm" method="post" enctype="multipart/form-data">
 <input type="hidden" name="c_no" value="${c_no}">
 <input type="hidden" name="m_id" id="m_id" value="<sec:authentication property="principal.username"/>">
-<table class="table table-bordered">
+<table class="table table-bordered opacity-table">
 	<tr>
 		<td>게시물 제목</td>
 		<td><input type="text" name="b_title" id="b_title" required="required" style="width:40%;" maxlength="30"></td>
@@ -22,8 +19,8 @@
 		<td><textarea class="text_content" id="b_content" name="b_content" required="required" rows="30%" cols="100%"></textarea></td>
 	</tr>
 </table>
-<button type="submit" id="insertBtn" class="btn btn-outline-dark">게시물 등록</button>
-<button type="reset" id="resetBtn" class="btn btn-outline-dark">취소</button>
+<button type="submit" id="insertBtn" class="btn btn-outline-light mainBtn">게시물 등록</button>
+<button type="reset" id="resetBtn" class="btn btn-outline-light grayBtn">취소</button>
 </form>
 
 <script type="text/javascript">

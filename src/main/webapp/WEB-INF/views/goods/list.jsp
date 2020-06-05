@@ -4,41 +4,9 @@
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <link href="/resources/css/button.css" rel="stylesheet">
+<link href="/resources/css/boardTable.css" rel="stylesheet">
+<link href="/resources/css/elements.css" rel="stylesheet">
 
-<style>
-	li{
-		list-style: none !important;
-	}
-	a{
-		text-decoration: none !important;
-		color: dimgray;
-	}
-	
-	#goodsDiv{
-		display: flex;
-		border-radius: 20px;
-		background: rgba(255, 255, 255, 0.7);
-	}
-	#goodsList{
-		width: 100%;
-		padding-left: 5%;
-	}
-	.goodsBox{
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		word-wrap:normal;
-		overflow: hidden;
-		float: left;
-		margin: 5px 20px 30px 20px;
-		width: 200px;
-		color: dimgray;
-	}
-	.goodsImg{
-		width: 200px;
-		height: 200px;
-		border: 1px solid lightgray;
-	}
-</style>
 <script type="text/javascript">
 
 var c_no;
@@ -51,7 +19,7 @@ var dto;
 
 function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 	//	c_no를 강제로 넣어주기 위해 카테고리 설정시에만 글쓰기 버튼 보이게 / 검색을 위해 searchKeyword 추가
-	if(keyword == null){
+	if(keyword == null || gc_code == null){
 		$("#insertBtn").css("visibility","hidden");
 	}
 	else{
@@ -133,11 +101,12 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 	
 		//페이징
 		dto=result.dto;
+		console.log(dto.cri.pageNum); //현재 페이지
 		$(".pagination").empty();
 		if(dto.prev){
 			var a=$("<a>이전</a>").attr("href","#");
-			var li = $("<li class='paging-btn btn btn-outline-light previous'></li>").append(a);
-			$(a).on("click",function(){
+			var li = $("<li class='paginate_button btn btn-outline-light previous'></li>").append(a);
+			$(li).on("click",function(){
 				listGoods(gc_code,keyword,(dto.startPage)-1, searchField, searchKeyword);
 			})
 			var nbsp=$("<li>&nbsp;/&nbsp;</li>");
@@ -145,8 +114,8 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 		}
 		for(i=dto.startPage; i<=dto.endPage; i++){
 			var a=$("<a class='pageNum'>"+i+"</a>").attr("href","#");
-			var li=$("<li class='paging-btn btn btn-outline-light'></li>").append(a);
-			$(a).on("click",function(){
+			var li=$("<li class='paginate_button btn btn-outline-light'></li>").append(a);
+			$(li).on("click",function(){
 				listGoods(gc_code,keyword,$(this).html(), searchField, searchKeyword);
 			})
 			var nbsp=$("<li>&nbsp;</li>");
@@ -154,8 +123,8 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 		}
 		if(dto.next){
 			var a=$("<a>다음</a>").attr("href","#");
-			var li = $("<li class='paging-btn btn btn-outline-light next'></li>").append(a);
-			$(a).on("click",function(){
+			var li = $("<li class='paginate_button btn btn-outline-light next'></li>").append(a);
+			$(li).on("click",function(){
 				listGoods(gc_code,keyword,(dto.endPage)+1, searchField, searchKeyword);
 			})
 			$(".pagination").append(li);
@@ -169,10 +138,10 @@ $(function(){
 
    $.ajax("/category/goodsCateList",{success:function(result){
 //      console.log(result)
-      var b=$("<button id='tot' class='btn btn-outline-light mr-2 dist distActive'></button>").html('전체보기');
+      var b=$("<button id='tot' class='btn btn-outline-light mr-2 list-mintBtn list-mintBtnActive'></button>").html('전체보기');
       $(b).on("click",function(){
-    	  $(".dist").removeClass("distActive");
-    	  $(this).addClass("distActive");
+    	  $(".list-mintBtn").removeClass("list-mintBtnActive");
+    	  $(this).addClass("list-mintBtnActive");
     	  var nokey;	//keyword에 null을 넣어주기 위한 변수 (null로 대입하면 적용안됨)
     	  keyword=nokey;
     	  listGoods(gc_code,keyword,1,searchField,searchKeyword);
@@ -180,14 +149,14 @@ $(function(){
       $("#goodsType").append(b);
       result=JSON.parse(result);
       $.each(result,function(idx,item){
-         var c_dist= $("<button type='button' class='btn btn-outline-light dist'></button>").html(result[idx].c_dist);
+         var c_dist= $("<button type='button' class='btn btn-outline-light list-mintBtn'></button>").html(result[idx].c_dist);
          var nbsp="  ";
          $("#goodsType").append(c_dist,nbsp);
          $(c_dist).on("click",function(){
-            $(".dist").removeClass("distActive");
+            $(".list-mintBtn").removeClass("list-mintBtnActive");
             keyword=$(this).text();
             c_no=result[idx].c_no;
-            $(this).addClass("distActive");
+            $(this).addClass("list-mintBtnActive");
             listGoods(gc_code,keyword,1,searchField,searchKeyword);
          })
       })
@@ -254,12 +223,12 @@ $(function(){
 			<h4>상품 종류별 보기</h4>
 		</div>
 		<div style="display: inline-block; float: right;">
-			<button id="insertBtn" type="button" class="btn btn-outline-light">상품등록</button>
+			<button id="insertBtn" type="button" class="btn btn-outline-light mainBtn">상품등록</button>
 		</div>
 	</div>
 	<hr>
-	<div id="goodsDiv" align="center">
-		<ul id="goodsList" class="mt-5">
+	<div id="goodsDiv" class="goodsDiv" align="center">
+		<ul id="goodsList" class="mt-5 goodsList">
 
 		</ul>
 	</div>
@@ -302,11 +271,11 @@ $(function(){
 				</div>
 		    	
 				<div class="col-sm-2 my-1">
-					<button id="searchBtn" class="btn btn-outline-light">검색</button>
+					<button id="searchBtn" class="btn btn-outline-light mainBtn">검색</button>
 				</div>
 		    	
 		    	<div class="col-sm-2 my-1">
-		    		<button id="allBoardBtn" class="btn btn-outline-light float-right">전체글</button>
+		    		<button id="allBoardBtn" class="btn btn-outline-light float-right subBtn">전체글</button>
 		    	</div>
 	    </div>
     </form>

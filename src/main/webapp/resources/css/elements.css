@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+li{ list-style: none !important; }
+
+a{ text-decoration: none !important; color: dimgray; }
+a:hover{ color: gray; }
+
+.grayscale{ filter: grayscale(100%); }

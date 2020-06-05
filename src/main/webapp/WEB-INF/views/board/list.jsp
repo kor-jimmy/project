@@ -4,11 +4,9 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="../includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
-<style>
-	#boardArticles { background: rgba( 255, 255, 255, 0.5 ); }
-	a{ text-decoration: none !important; color: dimgray; }
-	
-</style>
+<link href="/resources/css/boardTable.css" rel="stylesheet">
+<link href="/resources/css/elements.css" rel="stylesheet">
+
 <script type="text/javascript">
 	$(function(){
 		var c_no = $("#c_no").val();
@@ -25,11 +23,11 @@
 		//페이징 관련 내용
 		var actionForm = $("#actionForm");
 
-		$(".paging-btn a").on("click", function(e){
+		$(".paginate_button").on("click", function(e){
 			//a태그 기본 속성 제거
 			e.preventDefault();
 			console.log("click");
-			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+			actionForm.find("input[name='pageNum']").val($(this).children("a").attr("href"));
 			actionForm.submit();
 		})
 
@@ -69,7 +67,7 @@
 	    		</c:when>
 	    		<c:when test="${catkeyword != '공지사항'}">
 	    		<sec:authorize access="isAuthenticated()">
-						<button id="insertBtn" type="button" class="btn btn-outline-light float-right">게시물 등록</button>
+						<button id="insertBtn" type="button" class="btn btn-outline-light float-right mainBtn">게시물 등록</button>
 					</sec:authorize>
 	    		</c:when>
 	    	</c:choose>
@@ -77,7 +75,7 @@
 	    <!-- end 게시물 인서트 -->
 	</div>
 
-	<div id="boardArticles">
+	<div class="opacity-table">
     <table class="table table-hover">
         <thead>
             <tr align="center">
@@ -92,12 +90,12 @@
         <tbody>
             <c:forEach items="${list }" var="board" >
                		<tr>
-	                    <td align="center"><c:out value="${board.b_no }"/></td>
-	                    <td><a class="" href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/><span class="badge badge-light">${board.b_replycnt }</span></a></td>
-	                    <td align="center"><c:out value="${board.m_nick }"/></td>
-	                    <td align="center"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
-	                    <td align="center"><c:out value="${board.b_hit }"/></td>
-	                    <td align="center"><c:out value="${board.b_lovecnt }"/></td>
+	                    <td class="list-td" align="center"><c:out value="${board.b_no }"/></td>
+	                    <td class="list-td" ><a class="" href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/><span class="badge badge-light">${board.b_replycnt }</span></a></td>
+	                    <td class="list-td" align="center"><c:out value="${board.m_nick }"/></td>
+	                    <td class="list-td" align="center"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
+	                    <td class="list-td" align="center"><c:out value="${board.b_hit }"/></td>
+	                    <td class="list-td" align="center"><c:out value="${board.b_lovecnt }"/></td>
                 	</tr>
             </c:forEach>
         </tbody>
@@ -125,11 +123,11 @@
 				</div>
 		    	
 				<div class="col-sm-2 my-1">
-					<button id="searchBtn" class="btn btn-outline-light">검색</button>
+					<button id="searchBtn" class="btn btn-outline-light mainBtn">검색</button>
 				</div>
 		    	
 		    	<div class="col-sm-2 my-1">
-		    		<button id="allBoardBtn" class="btn btn-outline-light float-right">전체글</button>
+		    		<button id="allBoardBtn" class="btn btn-outline-light float-right subBtn">전체글</button>
 		    	</div>
 	    </div>
     </form>
@@ -140,21 +138,21 @@
     <div class="float-right">
     	<ul class="pagination">
     		<c:if test="${pageMake.prev }">
-				<li class="paging-btn btn btn-outline-light previous">
+				<li class="paginate_button btn btn-outline-light previous">
 					<a href="${pageMake.startPage -1 }">이전</a>
 				</li>
 				<li>&nbsp;/&nbsp;</li>
 			</c:if>
 			
 			<c:forEach var="num" begin="${pageMake.startPage }" end="${pageMake.endPage }">
-				<li class="paging-btn btn btn-outline-light ${pageMake.cri.pageNum==num ? "active": ""}">
+				<li class="paginate_button btn btn-outline-light ${pageMake.cri.pageNum==num ? "active": ""}">
 					<a href="${num }">${num }</a>
 				</li>
 				<li>&nbsp;</li>
 			</c:forEach>    		
 			
 			<c:if test="${pageMake.next }">
-				<li class="paging-btn btn btn-outline-light next">
+				<li class="paginate_button btn btn-outline-light next">
 					<a href="${pageMake.endPage+1 }">다음</a>
 				</li>
 			</c:if>

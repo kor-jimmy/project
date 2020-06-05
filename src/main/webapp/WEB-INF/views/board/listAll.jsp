@@ -4,11 +4,8 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="../includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
+<link href="/resources/css/boardTable.css" rel="stylesheet">
 <style>
-	#boardArticles { background: rgba( 255, 255, 255, 0.5 ); }
-	
-	a{ text-decoration: none !important; color: dimgray; }
-	
 	table { 
 		border-collapse: collapse; 
 		border-spacing: 0;		
@@ -16,12 +13,7 @@
 		table-layout: fixed;
 	}
 
-	td { 
-		vertical-align: middle; 
-		overflow:hidden;
-		white-space : nowrap;
-		text-overflow: ellipsis;
-	 }
+	
 
 	td.textOverDefault {
 		white-space : normal; /*기본값*/
@@ -44,11 +36,11 @@
 		//페이징 관련 내용
 		var actionForm = $("#actionForm");
 
-		$(".paginate_button a").on("click", function(e){
+		$(".paginate_button").on("click", function(e){
 			//a태그 기본 속성 제거
 			e.preventDefault();
 			console.log("click");
-			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+			actionForm.find("input[name='pageNum']").val($(this).children("a").attr("href"));
 			actionForm.submit();
 		})
 
@@ -84,8 +76,8 @@
 	    <!-- 게시물 인서트 -->
 	</div>
 
-	<div id="boardArticles">
-	    <table class="table table-hover">
+	<div class="opacity-table">
+	    <table class="table table-hover ">
 	        <thead>
 	            <tr align="center">
 	                <th width="10%">번호</th>
@@ -98,7 +90,7 @@
 	            </tr>
 	        </thead>
 	        <tbody>
-	            <c:forEach items="${list }" var="board" >
+	            <c:forEach items="${ list }" var="board" >
 	               		<tr>
 		                    <td align="center"><c:out value="${board.b_no }"/></td>
 		                    <td align="center"><c:out value="${board.c_dist }"/></td>
@@ -134,11 +126,11 @@
 					</div>
 			    	
 					<div class="col-sm-2 my-1">
-						<button id="searchBtn" class="btn btn-outline-dark">검색</button>
+						<button id="searchBtn" class="btn btn-outline-light mainBtn">검색</button>
 					</div>
 			    	
 			    	<div class="col-sm-2 my-1">
-			    		<button id="allBoardBtn" class="btn btn-outline-dark float-right">전체글</button>
+			    		<button id="allBoardBtn" class="btn btn-outline-light float-right subBtn">전체글</button>
 			    	</div>
 		    </div>
 	    </form>

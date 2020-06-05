@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+/*불투명한 하얀색 배경*/
+.opacity-table { background: rgba(255, 255, 255, 0.7); }
+
+/*클릭 아이콘들(좋아요/싫어요/신고 등)*/
+.expressionIcons { cursor: pointer; }
+
+/*내용 패딩*/
+.contents-padding { padding: 20px; }
+
+/*대댓글 배경색*/
+.list-group-item-secondary{ background: #F4F4F4; }
+
+/*대댓글 위치 크기 조정*/
+.reReContent{ float:left; width:80%; }
+
+/*목록 td 말줄임표*/
+.list-td { vertical-align: middle; overflow:hidden; white-space : nowrap;	text-overflow: ellipsis; }
+
+/*굿즈*/
+.goodsDiv{
+	display: flex;
+	border-radius: 20px;
+	background: rgba(255, 255, 255, 0.7);
+}
+.goodsList{
+	width: 100%;
+	padding-left: 5%;
+}
+.goodsBox{
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-wrap:normal;
+	overflow: hidden;
+	float: left;
+	margin: 5px 20px 30px 20px;
+	width: 200px;
+	color: dimgray;
+}
+.goodsImg{
+	width: 200px;
+	height: 200px;
+	border: 1px solid lightgray;
+}

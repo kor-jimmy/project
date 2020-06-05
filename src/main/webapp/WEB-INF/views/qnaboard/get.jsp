@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -6,11 +5,8 @@
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <link href="/resources/css/button.css" rel="stylesheet">
-<style>
-	.table-bordered{ background: rgba(255, 255, 255, 0.7); }
-	#contents{ padding: 20px; }
-</style>
-<link href="/resources/css/header.css" rel="stylesheet">
+<link href="/resources/css/boardTable.css" rel="stylesheet">
+<link href="/resources/css/elements.css" rel="stylesheet">
 <script type="text/javascript">
 	$(function(){
 		var qb_no = $("#qb_no").val();
@@ -43,7 +39,7 @@
 	<h2>QNA 상세</h2>
 	<input type="hidden" id="qb_no" value="${ qnaboard.qb_no }">
 	<input type="hidden" id="c_no" value="${ qnaboard.c_no }">
-	<table class="table table-bordered">
+	<table class="table table-bordered opacity-table">
 		<tr>
 			<td colspan="4"><h3><c:out value="${qnaboard.qb_title }"/></h3></td>
 		</tr>
@@ -55,11 +51,11 @@
 		</tr>
 		<tr>
 			<td height="500px" colspan="4">
-			<div id="contents">${qnaboard.qb_content }</div></td>
+			<div class="contents-padding" id="contents">${qnaboard.qb_content }</div></td>
 		</tr>
 	</table>
 	<button id="deleteBtn" class="btn btn-outline-light grayBtn">삭제</button>
-	<button id="updateBtn" class="btn btn-outline-light">수정</button>
+	<button id="updateBtn" class="btn btn-outline-light subBtn">수정</button>
 
 	<sec:authentication property="principal" var="pinfo"/>
 	<sec:authorize access="isAuthenticated()">
@@ -71,6 +67,6 @@
 		<button id="replyInsertBtn" class="btn btn-outline-light mainBtn">답글</button>
 	</sec:authorize>
 	
-	<button id="listBtn" class="btn btn-outline-light listBtn">목록</button>
+	<button id="listBtn" class="btn btn-outline-light typeBtn">목록</button>
 	
 <%@include file="../includes/footer.jsp"%>

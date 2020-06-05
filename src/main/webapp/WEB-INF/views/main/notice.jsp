@@ -4,17 +4,29 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="../includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
+<link href="/resources/css/boardTable.css" rel="stylesheet">
+<link href="/resources/css/elements.css" rel="stylesheet">
 <script type="text/javascript">
 	$(function(){
 		var c_no = $("#c_no").val();
+
+		var buttonActive = function(category){
+			var category = $("#url-categoryNum").val();
+			console.log(category);
+			$(".noticeBtn").removeClass("list-mintBtnActive");
+			$("#"+category).addClass("list-mintBtnActive");
+		}
+
+		buttonActive();
+		
 		//페이징 관련 내용
 		var actionForm = $("#actionForm");
 
-		$(".paginate_button a").on("click", function(e){
+		$(".paginate_button").on("click", function(e){
 			//a태그 기본 속성 제거
 			e.preventDefault();
 			console.log("click");
-			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+			actionForm.find("input[name='pageNum']").val($(this).children("a").attr("href"));
 			actionForm.submit();
 		})
 
@@ -44,6 +56,7 @@
 	})
 	
 </script>
+	<input type="hidden" id="url-categoryNum" value=<%= request.getParameter("categoryNum") %>>
 	<div class="row">
 		<div class="col">
 			 <h2>공지사항</h2>
@@ -51,14 +64,14 @@
 	</div>
 	<hr>
 	<div >
-		<button class="noticeBtn btn btn-outline-dark" c_no='10000'>전체</button>
-		<button class="noticeBtn btn btn-outline-dark" c_no='10001'>일반</button>
-		<button class="noticeBtn btn btn-outline-dark" c_no='10002'>징계/정책</button>
-		<button class="noticeBtn btn btn-outline-dark" c_no='10003'>업데이트</button>
-		<button class="noticeBtn btn btn-outline-dark" c_no='10004'>이벤트</button>
+		<button class="noticeBtn btn btn-outline-light list-mintBtn list-mintBtnActive" id='10000' c_no='10000'>전체</button>
+		<button class="noticeBtn btn btn-outline-light list-mintBtn" id='10001' c_no='10001'>일반</button>
+		<button class="noticeBtn btn btn-outline-light list-mintBtn" id='10002' c_no='10002'>징계/정책</button>
+		<button class="noticeBtn btn btn-outline-light list-mintBtn" id='10003' c_no='10003'>업데이트</button>
+		<button class="noticeBtn btn btn-outline-light list-mintBtn" id='10004' c_no='10004'>이벤트</button>
 	</div>
-	<hr>
-
+	<br>
+	<div class="opacity-table">
     <table class="table table-hover">
         <thead>
             <tr align="center">
@@ -110,14 +123,14 @@
 				</div>
 		    	
 				<div class="col-sm-2 my-1">
-					<button id="searchBtn" class="btn btn-outline-dark">검색</button>
+					<button id="searchBtn" class="btn btn-outline-light mainBtn">검색</button>
 				</div>
 		    	
 
 	    </div>
     </form>
-
     <hr>
+	</div>
     <!-- 페이징 -->
     <div class="float-right">
     	<ul class="pagination">

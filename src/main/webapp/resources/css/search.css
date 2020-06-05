@@ -1,0 +1,138 @@
+@charset "UTF-8";
+
+#containerBox{
+	padding: 20px 10px 20px 10px;
+}
+#modifiedKeyword{
+	color: #8882F8;
+}
+
+#newsBox{
+	border: 1px solid lightgray;
+	border-radius: 20px;
+	padding: 30px;
+	width: 50%;
+	height: 500px;
+	box-shadow: 0px 0px 10px #F3F3F3;
+	background: rgba(255, 255, 255, 0.7);
+}
+#tab-contentBox{
+	height: 350px;
+	overflow: auto;
+}
+
+#tab-contentBox::-webkit-scrollbar{
+	height: 320px;
+}
+#tab-contentBox::-webkit-scrollbar-thumb{
+	background: #86F3D9;
+	border-radius: 20px;
+}
+#tab-contentBox::-webkit-scrollbar-track{
+	background: #F3F3F3;
+}
+#myTabContent{
+	overflow: hidden;
+	margin: 10px;
+	color: gray;
+}
+.thumb_img{
+	display: inline-block;
+}
+#nullnews{
+	text-align: center;
+	padding-top: 25%;
+	color: lightgray;
+}
+
+.category{
+	padding: 10px 20px 10px 20px;
+	margin: 10px;
+	border: 2px solid #5FEAC9;
+	border-radius: 50px;
+	background: white;
+	text-align: center;
+	background: white;
+	color: gray;
+	display: inline-block;
+}
+.category:hover{
+	box-shadow: 0px 0px 10px #ECECEC;
+	cursor: pointer;
+	background: linear-gradient(15deg, #a3a1fc, #5FEAC9);
+	color: white;
+	font-weight: bold;
+}
+.badge-info{
+	background: #86F3D9;
+}
+.boardTitle{
+	color: #8882F8;
+}
+.boardTitle:hover{
+	color: #8882F8;
+	opacity: 0.8;
+}
+.goodsTitle{
+	color: #8882F8;
+}
+.goodsTitle:hover{
+	color: #8882F8;
+	opacity: 0.8;
+}
+#goodsList{
+	width: 100%;
+}
+#goodsList li{
+	display: inline-block;
+	width: 25%;
+	margin-right: 20px;
+}
+.goodsImg{
+	width: 200px;
+	height: 200px;
+	border: 1px solid lightgray;
+}
+
+#vLiveBox a{
+	color: #8882F8;
+}
+
+#vLiveBox{
+	border: 1px solid lightgray;
+	border-radius: 20px;
+	background: rgba(255, 255, 255, 0.7);
+	width: 40%;
+	height: 500px;
+	box-shadow: 0px 0px 10px #F3F3F3;
+	float: right;
+	padding: 30px;
+	margin-right: 40px;
+}
+#vLiveList{
+	height: 400px;
+	overflow: auto;
+}
+.video_list{
+	padding: 20px;
+}
+
+#vLiveList::-webkit-scrollbar{
+	height: 400px;
+}
+#vLiveList::-webkit-scrollbar-thumb{
+	background: #86F3D9;
+	border-radius: 20px;
+}
+#vLiveList::-webkit-scrollbar-track{
+	background: #F3F3F3;
+}
+.video_list_cont{
+	width: 300px;
+}
+.video_list_cont img{
+	width: 300px;
+}
+#vLives{
+	overflow: hidden;
+}

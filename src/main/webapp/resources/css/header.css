@@ -5,6 +5,10 @@ body{
 	background-image: url('/img/background3.png');
 }
 
+li{ list-style: none !important; }
+a{ text-decoration: none !important; color: gray; }
+
+
 #header{
 	background: cornflowerblue;
 }

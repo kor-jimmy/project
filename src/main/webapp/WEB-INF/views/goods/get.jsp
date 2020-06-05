@@ -5,33 +5,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@include file="../includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
-<style>
-	#reReContent{
-		float:left;
-		width:80%;
-	}
-	#labelForRe{
-		float:left;
-	}
-	#title, #content{
-		padding: 20px;
-	}
-	#goodsReport{
-		cursor: pointer;
-	}
-	
-	.btn{ background: white; }
-	
-	tbody{
-		background: rgba(255, 255, 255, 0.7);
-	}
-	.grayscale{
-		filter: grayscale(100%);
-	}
-	
-	#goodsReport{ cursor: pointer; }
-	
-</style>
+<link href="/resources/css/boardTable.css" rel="stylesheet">
+<link href="/resources/css/elements.css" rel="stylesheet">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -164,7 +139,7 @@
 			idDiv.append(loginId);
 
 			var contentDiv = $("<div class='col-7'></div>");
-			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
+			var reReContent = $("<input type='text' class='form-control reReContent' id='reReContent'>");
 			contentDiv.append(reReContent);
 			var buttenDiv = $("<div class='col-2'></div>");
 			var reButton = $("<button type='submit' id='insertReReply' class='btn btn-outline-dark'>등록</button>");
@@ -340,9 +315,9 @@
 </script>
 	<input type="hidden" id="g_no" value="${ goods.g_no }">
 	<input type="hidden" id="writer" value="${ goods.m_id }">
-	<table class="table table-bordered">
+	<table class="table table-bordered opacity-table">
 		<tr>
-			<td id="title" colspan="6"><h3><c:out value="${goods.g_title }"/></h3></td>
+			<td id="title" class="contents-padding" colspan="6"><h3><c:out value="${goods.g_title }"/></h3></td>
 		</tr>
 		<tr>
 			<td width="15%" align="center"><b>작성자</b></td>
@@ -350,19 +325,19 @@
 			<td width="15%" align="center"><b>작성시간</b></td>
 			<td width="30%"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${goods.g_date }"/></td>
 			<td width="10%" align="center">신고</td>
-			<td width="10%" align="center"><img id='goodsReport' class="goodsReport" width=20px height=20px src='/img/reportICON.svg'>	</td>
+			<td width="10%" align="center"><img id='goodsReport' class="expressionIcons" width=20px height=20px src='/img/reportICON.svg'>	</td>
 		</tr>
 		<tr>
 			<td colspan="6" height="500px">
-			<div id="content">${goods.g_content }</div></td>
+			<div class="contents-padding" id="content">${goods.g_content }</div></td>
 		</tr>
 	</table>
 	<div>
 		<sec:authentication property="principal" var="pinfo"/>
 		<sec:authorize access="isAuthenticated()">
 			<c:if test="${pinfo.username eq goods.m_id }">
-				<button id="updateBtn" class="btn btn-outline-light">수정</button>
-				<button id="deleteBtn" class="btn btn-outline-light">삭제</button>
+				<button id="updateBtn" class="btn btn-outline-light mainBtn">수정</button>
+				<button id="deleteBtn" class="btn btn-outline-light grayBtn">삭제</button>
 			</c:if>
 		</sec:authorize>
 	</div>
@@ -384,7 +359,7 @@
 			<input class="form-control" type="text" name="gr_content" required="required" placeholder="댓글을 입력하세요.">
 		</div>
 		<div class="col-sm-2 my-1">
-			<a href="#" id="insertReply" class="btn btn-outline-light">댓글등록</a>
+			<a href="#" id="insertReply" class="btn btn-outline-light subBtn">댓글등록</a>
 		</div>   
 	</div>
 	

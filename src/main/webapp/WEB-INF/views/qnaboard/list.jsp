@@ -4,12 +4,8 @@
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <link href="/resources/css/button.css" rel="stylesheet">
-<style>
-	a{ text-decoration: none !important; color: dimgray; }
-	
-	#qnaboardArticles{ background: rgba( 255, 255, 255, 0.5 ); }
-
-</style>
+<link href="/resources/css/boardTable.css" rel="stylesheet">
+<link href="/resources/css/elements.css" rel="stylesheet">
 <script type="text/javascript">
 $(function(){
 	var c_no = $("#c_no").val();
@@ -53,7 +49,7 @@ $(function(){
     <input type="hidden" name="c_no" id="c_no" value="${c_no}">
     <input type="hidden" name="qb_no" id="qb_no" value="${qb_no}">
     <hr>
-    <div id="qnaboardArticles">
+    <div class="opacity-table" id="qnaboardArticles">
     <table class="table table-hover">
         <thead>
             <tr align="center">
@@ -108,10 +104,10 @@ $(function(){
 	    	<input type="hidden" name="amount" id="amount" value="${pageMake.cri.amount}">
 	    </div>
 	    <div class="col-sm-2 my-1">
-			<button id="searchBtn" class="btn btn-outline-light">검색</button>
+			<button id="searchBtn" class="btn btn-outline-light mainBtn">검색</button>
 		</div>
 	    <div class="col-sm-2 my-1">
-			<button id="allBoardBtn" class="btn btn-outline-light float-right">전체글</button>
+			<button id="allBoardBtn" class="btn btn-outline-light float-right subBtn">전체글</button>
 		</div>
 	</div>
     </form>
@@ -153,7 +149,7 @@ $(function(){
     <!-- end 페이징 -->
     <!-- 게시물 인서트 -->
     <div>
-    	<button id="insertBtn" type="button" class="btn btn-outline-light">게시물 등록</button>
+    	<button id="insertBtn" type="button" class="btn btn-outline-light mainBtn">게시물 등록</button>
     </div>
     <!-- end 게시물 인서트 -->
 

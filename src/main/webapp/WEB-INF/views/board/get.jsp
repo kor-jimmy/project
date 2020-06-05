@@ -5,23 +5,8 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="../includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
-<style>
-	#reReContent{
-		float:left;
-		width:80%;
-	}
-	#labelForRe{
-		float:left;
-	}
-	.list-group-item-secondary{
-		background: #F4F4F4;
-	}
+<link href="/resources/css/boardTable.css" rel="stylesheet">
 
-	.table{ background: rgba(255, 255, 255, 0.7); }
-	.expressionIcons{ cursor: pointer; }
-	#contents{ padding: 20px; }
-	
-</style>
 <script type="text/javascript">
 	$(function(){
 		//시큐리티 csrf
@@ -253,7 +238,7 @@
 			
 			var contentDiv = $("<div class='col-7'></div>");
 			
-			var reReContent = $("<input type='text' class='form-control' id='reReContent'>");
+			var reReContent = $("<input type='text' class='form-control reReContent' id='reReContent'>");
 			contentDiv.append(reReContent);
 
 			var buttenDiv = $("<div class='col-2'></div>");
@@ -572,8 +557,8 @@
 	<sec:authorize access="isAnonymous()">
 		<input type="hidden" id="m_id" value="">
 	</sec:authorize>
-	<table class="table">
-		<tr>
+	<table class="table opacity-table">
+		<tr class="contents-padding">
 			<td colspan="3"><h3><c:out value="${board.b_title }"/></h3></td>
 			<td>
 				<img class="expressionIcons" id="heart" src="/img/heart.png" width="30" height="30">
@@ -596,7 +581,7 @@
 		</tr>
 		<tr>
 			<td colspan="4" height="500px">
-				<div id="contents">${board.b_content }</div>
+				<div class="contents-padding">${board.b_content }</div>
 			</td>
 		</tr>
 	</table>
@@ -605,8 +590,8 @@
 		<sec:authentication property="principal" var="pinfo"/>
 		<sec:authorize access="isAuthenticated()">
 			<c:if test="${pinfo.username eq board.m_id}">
-					<button id="updateBtn" class="btn btn-outline-light">수정</button>
-					<button id="deleteBtn" class="btn btn-outline-light">삭제</button>			
+					<button id="updateBtn" class="btn btn-outline-light mainBtn">수정</button>
+					<button id="deleteBtn" class="btn btn-outline-light grayBtn">삭제</button>			
 			</c:if>
 		</sec:authorize>		
     </div>
@@ -632,7 +617,7 @@
 						<input class="form-control" type="text" name="r_content" required="required" placeholder="댓글을 입력하세요!">
 					</div>
 					<div class="col-sm-2 my-1">
-						<a href="#" id="insertReply" class="btn btn-outline-light">댓글등록</a>
+						<a href="#" id="insertReply" class="btn btn-outline-light subBtn">댓글등록</a>
 					</div>
 				</div>
 			</form>

@@ -3,17 +3,14 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@include file="../includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
-	<style>
-		.table{ background: rgba(255, 255, 255, 0.7); }
-		#contentTd{ padding: 20px;}
-	</style>
-
+<link href="/resources/css/boardTable.css" rel="stylesheet">
+<link href="/resources/css/elements.css" rel="stylesheet">
 	<h2>상품등록</h2>
 	<br>
 	<form id="insertForm" method="post" enctype="multipart/form-data">
 	<input type="hidden" id="gccodeValue" value="${ gc_code }">
 	<input type="hidden" id="m_id" name="m_id" value="<sec:authentication property="principal.username"/>">
-	<table class="table table-bordered">
+	<table class="table table-bordered opacity-table">
 		<tr>
 			<td>장터 카테고리</td>
 			<td><input type="hidden" id="c_no" name="c_no" readonly="readonly" value="${cv.c_no }">${cv.c_dist}</td>
@@ -38,11 +35,11 @@
 		</tr>
 		<tr>
 			<td>내용</td>
-			<td id="contentTd"><textarea class="text_content" id="g_content" name="g_content" rows="30%" cols="100%"></textarea></td>
+			<td class="contents-padding" id="contentTd"><textarea class="text_content" id="g_content" name="g_content" rows="30%" cols="100%"></textarea></td>
 		</tr>
 	</table>
-	<button type="submit" id="insertBtn" class="btn btn-outline-dark">등록</button>
-	<button type="reset" id="resetBtn" class="btn btn-outline-dark">취소</button>
+	<button type="submit" id="insertBtn" class="btn btn-outline-light mainBtn">등록</button>
+	<button type="reset" id="resetBtn" class="btn btn-outline-light grayBtn">취소</button>
 	</form>
 	<script type="text/javascript">
 		$(function(){

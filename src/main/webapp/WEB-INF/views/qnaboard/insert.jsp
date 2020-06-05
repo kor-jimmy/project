@@ -5,13 +5,8 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@include file="../includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
-<style>
-
-	.table{ background: rgba(255, 255, 255, 0.7); }
-	
-	
-</style>
-
+<link href="/resources/css/boardTable.css" rel="stylesheet">
+<link href="/resources/css/elements.css" rel="stylesheet">
 	<h2>QNA 등록</h2>
 	<form id="insertForm" method="post" enctype="multipart/form-data">
 		<input type="hidden" id="qb_no" value="${qb_no }" name="qb_no">
@@ -68,8 +63,8 @@
 			
 			
 		</table>
-		<button type="submit" id="insertBtn" class="btn btn-outline-light">등록</button>
-		<button type="reset" id="resetBtn" class="btn btn-outline-light">취소</button>
+		<button type="submit" id="insertBtn" class="btn btn-outline-light mainBtn">등록</button>
+		<button type="reset" id="resetBtn" class="btn btn-outline-light grayBtn">취소</button>
 	</form>
 	<script type="text/javascript">
 		$(function(){

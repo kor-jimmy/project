@@ -3,15 +3,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
-<style>
-	.table{ background: rgba(255, 255, 255, 0.7); }
-</style>
+<link href="/resources/css/boardTable.css" rel="stylesheet">
+<link href="/resources/css/elements.css" rel="stylesheet">
 
 	<h2>QNA 수정</h2>
 	<form id="updateForm" method="post" enctype="multipart/form-data">
 	<input type="hidden" id="qb_no" name="qb_no" value="${qnaboard.qb_no}">
 	<input type="hidden" id="c_no" name="c_no" value="${qnaboard.c_no}">
-	<table class="table table-bordered">
+	<table class="table table-bordered opacity-table">
 		<tr>
 			<td>QNA 제목</td>
 			<td><input type="text" name="qb_title" required="required" value="${qnaboard.qb_title }"></td>
@@ -24,7 +23,7 @@
 			<td><textarea id="qb_content" class="text_content" name="qb_content" rows="30%" cols="100%">${qnaboard.qb_content }</textarea></td>
 		</tr>
 	</table>
-	<button type="submit" id="updateBtn" class="btn btn-outline-light">수정</button>
+	<button type="submit" id="updateBtn" class="btn btn-outline-light mainBtn">수정</button>
 	</form>
 	<script>
 	//summernote 적용
