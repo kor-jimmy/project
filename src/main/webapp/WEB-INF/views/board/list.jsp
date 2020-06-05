@@ -113,8 +113,8 @@
         <thead>
             <tr align="center">
                 <th width="10%">번호</th>
-                <th width="45%">제목</th>
-                <th width="15%">작성자</th>
+                <th width="40%">제목</th>
+                <th width="20%">작성자</th>
                 <th width="10%">날짜</th>
                 <th width="10%">조회수</th>
                 <th width="10%">Love</th>
@@ -126,6 +126,9 @@
 	                    <td class="list-td" align="center"><c:out value="${board.b_no }"/></td>
 	                    <td class="list-td" ><a class="" href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/><span class="badge badge-light">${board.b_replycnt }</span></a></td>
 	                    <td class="list-td"  align="center" style="overflow: visible;">
+	                    	<c:if test="${board.m_img !=null}">
+	                    		<img width="50" height="50" src='/img/profileImg/${board.m_img }'>
+	                    	</c:if>
 	                    	<div class="dropleft">
 	                    		<a m_id ="${board.m_id }" class="dropdown-toggle userNICK" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                    			<c:out value="${board.m_nick }"/>

@@ -32,9 +32,9 @@
   <select id="getListWithPaging" resultType="com.aeho.demo.vo.BoardVo">
   	<![CDATA[
   		select
-  			 b_no, m_id, m_nick, c_no, c_dist, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
+  			 b_no, m_id, m_nick, m_img, c_no, c_dist, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
 		  		from ( select /*+ INDEX_DESC(board pk_board)*/
-		            rownum rn, b_no, b.m_id, m.m_nick, c.c_dist c_dist, b.c_no, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
+		            rownum rn, b_no, b.m_id, m.m_img, m.m_nick, c.c_dist c_dist, b.c_no, b_title, b_content, b_date, b_updatedate, b_hit, b_replycnt, b_lovecnt, b_hatecnt, b_reportcnt
 		  				from (select *from board order by b_no desc) b, category c, member m
 		                    where rownum <= #{pageNum} * #{amount} and b.c_no=c.c_no and m.m_id = b.m_id
   				]]>

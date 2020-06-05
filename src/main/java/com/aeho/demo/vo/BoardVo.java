@@ -36,4 +36,6 @@ public class BoardVo {
 	//파일위한거
 	private String uuid;
 	private String filename;
+	
+	private String m_img;
 }
