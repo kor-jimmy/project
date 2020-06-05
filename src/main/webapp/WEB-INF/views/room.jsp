@@ -4,9 +4,8 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="includes/header.jsp"%>
 
-	<title>Room</title>
 	<style>
-		*{
+/* 		*{
 			margin:0;
 			padding:0;
 		}
@@ -21,8 +20,8 @@
 			color: #FFBB00;
 			border-left: 3px solid #FFBB00;
 			margin-bottom: 20px;
-		}
-		.roomContainer{
+		} */
+/* 		.roomContainer{
 			background-color: #F6F6F6;
 			width: 500px;
 			height: 500px;
@@ -68,6 +67,13 @@
 		.inputTable input{
 			width: 330px;
 			height: 25px;
+		} */
+		.roomList{
+			text-align: center;
+		}
+		.mainContent{
+			background: rgba(255, 255, 255, 0.7);
+			border-radius: 20px;
 		}
 	</style>
 	
@@ -108,7 +114,7 @@
 
 	function createChatingRoom(res){
 		if(res != null){
-			var tag = "<tr><th class='num'>순서</th><th class='room'>방 이름</th><th class='go'></th></tr>";
+			var tag = "<tr><th class='num' width=20%>순서</th><th class='room' width=60%>방 제목</th><th class='go' width=20%></th></tr>";
 			res.forEach(function(d, idx){
 				var rn = d.roomName.trim();
 				var roomNumber = d.roomNumber;
@@ -118,6 +124,7 @@
 							"<td class='go'><button type='button' onclick='goRoom(\""+roomNumber+"\", \""+rn+"\")'>참여</button></td>" +
 						"</tr>";	
 			});
+			
 			$("#roomList").empty().append(tag);
 		}
 	}
@@ -142,23 +149,19 @@
 	}
 	
 </script>
-<body>
-	<div class="container">
-		<h1>채팅방</h1>
-		<div id="roomContainer" class="roomContainer">
-			<table id="roomList" class="roomList"></table>
+
+	<div class="row">
+		<div class="col pl-5 pr-5 mainContent">
+			<h1>AeHo방</h1>
+			<div id="roomContainer" class="roomContainer">
+				<table id="roomList" class="roomList table"></table>
+			</div>
+			<div>
+				<input type="text" name="roomName" id="roomName">
+				<button id="createRoom">방 만들기</button>
+			</div>
 		</div>
-		<div>
-			<table class="inputTable">
-				<tr>
-					<th>방 제목</th>
-					<th><input type="text" name="roomName" id="roomName"></th>
-					<th><button id="createRoom">방 만들기</button></th>
-				</tr>
-			</table>
-		</div>
+
 	</div>
-</body>
-</html>
 
 <%@include file="includes/footer.jsp"%>  

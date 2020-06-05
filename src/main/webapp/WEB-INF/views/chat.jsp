@@ -5,9 +5,8 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="includes/header.jsp"%>
 
-	<title>chating</title>
 	<style>
-		*{
+/* 		*{
 			margin:0;
 			padding:0;
 		}
@@ -22,7 +21,7 @@
 			color: #FFBB00;
 			border-left: 3px solid #FFBB00;
 			margin-bottom: 20px;
-		}
+		} */
 		.chating{
 			background-color: #000;
 			width: 500px;
@@ -113,8 +112,8 @@
 		$('#chatting').val("");
 	}
 </script>
-<body>
-	<div id="container" class="container">
+
+	<div>
 		<h1>${roomName }의 채팅방</h1>
 		<input type="hidden" id="sessionId" value="">
 		<input type="hidden" id="roomNumber" value="${roomNumber }">
@@ -141,7 +140,5 @@
 			</table>
 		</div>
 	</div>
-</body>
-</html>
 
 <%@include file="includes/footer.jsp"%> 
