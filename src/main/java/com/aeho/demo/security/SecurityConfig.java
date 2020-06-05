@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// TODO Auto-generated method stub
-		web.ignoring().antMatchers("/resource/**");
+		web.ignoring().antMatchers("/resource/*","/resource/**");
 	}
 
 	//http 관련 보안 설정.
@@ -65,8 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/board/insert","/board/update","/board/delete",
 				"/reply/insert,","/reply/delete","/goods/insert","/goods/update","/goods/delete",
 				"/goodsReply/insert","/goodsReply/delete","/member/get","/member/update","/qnaboard/insert",
-				"/qnaboard/update","/qnaboard/delete").hasAnyAuthority("ROLE_USER","ROLE_MASTER")
-				//.antMatchers("/admin","/admin/*").hasAnyAuthority("ROLE_MASTER")
+				"/qnaboard/update","/qnaboard/delete").hasAnyAuthority("ROLE_USER","ROLE_MASTER","ROLE_MANAGER")
+				.antMatchers("/admin","/admin/*").hasAnyAuthority("ROLE_MASTER","ROLE_MANAGER")
 				.antMatchers("/*","/*/*").permitAll()
 				/* .anyRequest().authenticated() */
 			.and()
@@ -88,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.rememberMe()
 					.userDetailsService(memberServiceSecurity)
 					.rememberMeParameter("remember-me")
-					.tokenValiditySeconds(86400)
+					.tokenValiditySeconds(604800)
 					.tokenRepository(tokenRepository());
 	}
 	
