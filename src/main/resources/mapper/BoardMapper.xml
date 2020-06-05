@@ -55,6 +55,8 @@
   					<when test="categoryNum == 0">
   						and b_reportcnt >= 5
   					</when>
+  				</choose>
+  				<choose>
 			  		<when test="searchField != null and !searchField.equals('') and searchField.equals('all')">
 						and (b_title like '%'||#{keyword}||'%' or b_content like '%'||#{keyword}||'%' or b.m_id like '%'||#{keyword}||'%')
 					</when>

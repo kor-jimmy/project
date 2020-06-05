@@ -292,82 +292,6 @@
             <!-- <h1 class="h3 mb-0 text-gray-800">Dashboard</h1> -->
           </div>
 
-          <!-- 상단 정보 고정글 -->
-          <div class="row">
-
-            <!-- 신규 가입, 누적회원 출력.  당일 기준으로 가입한 회원 숫자 출력 -->
-            <div class="col-xl-2 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">신규 가입 (누적회원)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">100(1,000)</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 신규 게시물. 당일 기준으로 등록된 게시글의 수를 출력.  -->
-            <div class="col-xl-2 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">신규 게시물</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">100</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- QNA 금일 기준으로 등록된 QNA 숫자 출력 클릭시 QNA 목록으로. -->
-            <div class="col-xl-2 col-md-6 mb-4">
-              <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1"> QNA</div>
-                      <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">10</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 추후 무엇을 출력할지 정할것. -->
-            <div class="col-xl-2 col-md-6 mb-4">
-              <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">여기엔 뭘넣을까?</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-comments fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- Cahrt 모음 -->
 
           <div class="row">
@@ -405,7 +329,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -413,7 +337,7 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                	<canvas id="categoryChart" width="250" height="250"></canvas>
+                	<canvas id="categoryChart" width="350" height="350"></canvas>
                 </div>
               </div>
             </div>

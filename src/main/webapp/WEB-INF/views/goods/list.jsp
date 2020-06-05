@@ -203,7 +203,6 @@ $(function(){
 		$("#searchBtn").click();
 		
 	}
-
 	
 })
 </script>

@@ -94,11 +94,23 @@ public class BoardController {
 	@GetMapping("/listAll")
 	public void listAll (HttpServletRequest request, Criteria cri, Model model) {
 		int total = boardService.totalBoard(cri);
+		System.out.println("전체보기 토탈==>"+total);
 		cri.setCategoryNum(9999);
 		System.out.println("list:"+cri);
 		model.addAttribute("list", boardService.getList(cri));
 		model.addAttribute("pageMake", new PageDto(cri, total));
 		model.addAttribute("c_no",cri.getCategoryNum());
+	}
+	
+	@GetMapping("/userTotalBoard")
+	@ResponseBody
+	public String userTotalBoard(HttpServletRequest request, @RequestParam("m_id") String m_id) {
+		Criteria cri = new Criteria();
+		cri.setKeyword(m_id);
+		cri.setSearchField("m_id");
+		int total = boardService.totalBoard(cri);
+		System.out.println("해당 유저 토탈 값==>"+total);
+		return Integer.toString(total);
 	}
 	
 	@GetMapping("/get")

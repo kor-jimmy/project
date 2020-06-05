@@ -6,7 +6,11 @@
 <link href="/resources/css/button.css" rel="stylesheet">
 <link href="/resources/css/boardTable.css" rel="stylesheet">
 <link href="/resources/css/elements.css" rel="stylesheet">
-
+<style>
+	.dropleft .dropdown-toggle::before {
+		content: none;
+	}
+</style>
 <script type="text/javascript">
 	$(function(){
 		var c_no = $("#c_no").val();
@@ -53,6 +57,35 @@
 			e.preventDefault();
 			self.location = "/board/list?categoryNum="+c_no;
 		});
+
+		//유저아이디 클릭할때 나오는 메뉴창
+		//진탁) 0605
+		$(".userNICK").click(function(e){
+			var boardCnt;
+			$(".dropdownMenu").empty();
+		    var userID = $(this).attr("m_id");
+		    var userData = {m_id:userID};
+			//유저 아이디로 총 게시물 수를 구하는 ajax 통신
+			$.ajax({
+				url:"/board/userTotalBoard",
+				type:"GET",
+				data:userData,
+				success:function(result){
+					boardCnt = result;
+					var user = $("<button class='dropdown-item disabled' type='button'></button>").text("아이디 "+ userID);
+					var totalBoard = $("<button class='dropdown-item disabled' type='button'></button>").text("글"+ boardCnt);
+					var line = $("<div class='dropdown-divider'></div>");
+					var searchNICK = $("<button class='dropdown-item dropdownSearch' m_id="+userID+" type='button'></button>").text("작성글 검색");
+					$(".dropdownMenu").append(user,totalBoard,line,searchNICK);
+				}
+			})
+		})
+
+		$(document).on("click",".dropdownSearch",function(e){
+			var userID = $(this).attr("m_id");
+			self.location = "/board/list?categoryNum="+c_no+"&c_no="+c_no+"&pageNum=1&amount=30&searchField=m_id&keyword="+userID;
+			
+		})
 	})
 	
 </script>
@@ -92,7 +125,16 @@
                		<tr>
 	                    <td class="list-td" align="center"><c:out value="${board.b_no }"/></td>
 	                    <td class="list-td" ><a class="" href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/><span class="badge badge-light">${board.b_replycnt }</span></a></td>
-	                    <td class="list-td" align="center"><c:out value="${board.m_nick }"/></td>
+	                    <td class="list-td"  align="center" style="overflow: visible;">
+	                    	<div class="dropleft">
+	                    		<a m_id ="${board.m_id }" class="dropdown-toggle userNICK" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                    			<c:out value="${board.m_nick }"/>
+	                    		</a>
+	                    		<div class="dropdown-menu dropdownMenu">
+
+								</div>
+	                    	</div>
+	                    </td>
 	                    <td class="list-td" align="center"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.b_date }"/></td>
 	                    <td class="list-td" align="center"><c:out value="${board.b_hit }"/></td>
 	                    <td class="list-td" align="center"><c:out value="${board.b_lovecnt }"/></td>
@@ -100,7 +142,7 @@
             </c:forEach>
         </tbody>
     </table>
-    
+
     <hr>
     <!-- 게시물 검색 -->
     <form id="searchForm" action="/board/list" method="get">
