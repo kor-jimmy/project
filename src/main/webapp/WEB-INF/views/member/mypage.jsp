@@ -32,11 +32,17 @@
 
 	$(function(){
 
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
 		//진탁 06/02
 		//시큐리티 태그립. 현재 로그인한 유저의 아이디를 user_id 전역 변수에 담음 여러 함수에 쓰일 예정
 		var user_id = "<sec:authentication property='principal.username'/>";
 		var data = {m_id:user_id}
 		console.log(user_id);
+		var profileImage;
+		var m_img = "";
+		
 		//유저의 정보를 요청하는 ajax
 		$.ajax({
 			url:"/member/getMemberInfo",
@@ -49,6 +55,15 @@
 				$("#userEMAIL").html(member.m_email);
 				$("#userLOVE").html(member.m_lovecnt);
 				$("#userHATE").html(member.m_hatecnt);
+
+				if(member.m_img){
+					m_img = member.m_img;
+					//$("#imagefile").val(m_img);
+					profileImage = $("<img width='120px'></img>").attr("src", "/img/profileImg/"+member.m_img);
+				}else{
+					profileImage = $("<img width='100px' height='100px'></img>").attr("src", "/img/userICON.png").attr("image", "none");
+				}
+				$("#profileImage").append(profileImage);
 			}
 		})	
 
@@ -141,7 +156,143 @@
 			$("#linkDiv").empty();
 			getMyGoods();
 		})
+
+
+		//프로필 이미지
 		
+		$("#profileImageModal").on('hidden.bs.modal', function(e){
+			self.location = "/member/mypage";
+			e.stopImmediatePropagation(); 
+		});
+
+		$("#profileImage").click(function(){
+			$("#profileImageModal").modal('show');
+		});
+
+		$("#updateImage").click(function(){
+			$("#profileImageModal").modal('show');
+		});
+
+		$("#addPhoto").click(function(){
+			$("#imagefile").click();
+			return false;
+		});
+
+		var isDeleted = false;
+		
+		$("#deletePhote").click(function(){
+			isDeleted = true;
+			$("#m_img").attr("src", "");
+			$("#uploadProfileImageBtn").html("삭제");
+		});
+
+		var preview = function(e){
+			if(window.FileReader){
+				var file = e.target.files[0];
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function(e){
+					$("#m_img").attr("src", reader.result);
+				}
+			}
+		}
+
+		var isUpdate = false;
+
+		document.getElementById("imagefile").addEventListener("change", preview, false);
+		
+		$('#profileImageModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget)
+			//var idx = button.data('index');
+			var modal = $(this);
+
+			var isExistImage = profileImage.attr("image");
+
+			if(isExistImage == "none"){
+				$("#uploadProfileImageBtn").html("등록");
+				$("#addPhoto").html("프로필 사진 추가");
+				isUpdate = false;
+			}else{
+				$("#m_img").attr("src", "/img/profileImg/"+m_img);
+				isUpdate = true;
+			}
+		});
+		
+
+		$("#uploadProfileImageBtn").click(function(){
+			var form = new FormData();
+			console.log("deleted?: " + isDeleted);
+			form.append("m_id", user_id);
+
+			if(isDeleted){
+
+				$.ajax({
+					type: "POST",
+					contentType: false,
+					processData: false,
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(header,token)	
+					},
+					cache: false, 
+		            enctype: 'multipart/form-data',
+		            url: "/member/updateProfileImage",
+					data: form, 
+					success: function(re){
+						if(re > 0){
+							swal("이미지가 삭제되었습니다.", {
+							      icon: "success",
+							      button: "확인"
+							}).then((확인)=>{
+								if(확인){
+									$("#profileImageModal").modal("hide");
+								}
+							});
+						}
+						
+				}});
+				return false;
+			}
+
+			if($("input[name='imagefile']")[0].files[0]){
+				form.append("img_file", $("input[name='imagefile']")[0].files[0]);
+				
+				$.ajax({
+					type: "POST",
+					contentType: false,
+					processData: false,
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(header,token)	
+					},
+					cache: false, 
+		            enctype: 'multipart/form-data',
+		            url: "/member/updateProfileImage",
+					data: form, 
+					success: function(re){
+						if(re > 0){
+							swal("이미지가 등록되었습니다.", {
+							      icon: "success",
+							      button: "확인"
+							}).then((확인)=>{
+								if(확인){
+									$("#profileImageModal").modal("hide");
+								}
+							});
+						}
+						
+				}});
+			}else{
+				swal({
+					  text: "이미지를 등록해주세요.",
+				      icon: "warning",
+				      button: "확인"
+				});
+			}
+			
+		});
+
+		$("#cancelBtn").click(function(){
+			$("#profileImageModal").modal("hide");
+		});
 	})
 </script>
  	<div class="row">
@@ -152,7 +303,9 @@
 	        	<div id="userBox">
 	        		<div>
 	        			<div align="center">
-	        				<img src="/img/userICON.png" width="80" height="80" class="rounded-circle">
+	        				<div id="profileImage" class="rounded-circle" style="width: 120px; height: 120px; border: 3px solid #F4F4F4; overflow: hidden; cursor: pointer;">
+	        					<!-- <img src="/img/userICON.png" width="100px" height="100px"> -->
+	        				</div>
 <%-- 	        			<c:if test="${member.m_img == null }">
 	        					
 	        				</c:if>
@@ -185,6 +338,7 @@
 		        			</ul>
 	        			</div>
 	        		</div>
+	        		<button id="updateImage" type="button" class="btn btn-light">프로필 사진</button>
 	        		<button id="updateMember" type="button" class="btn btn-light float-right">회원 정보 수정</button>
 	        	</div>
 	        </div>
@@ -222,7 +376,7 @@
 	 </div>
 	
 
-	<!-- Modal -->
+	<!-- 개인정보 수정 Modal -->
 	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
@@ -242,6 +396,34 @@
 						<button id="confirmBtn" type="button" class="btn btn-dark" style="width: 300px; float:none; margin:0 auto;">확인</button>				
 					</div>
 				</form>
+			</div>
+		</div>
+	</div>
+	<!-- end Modal -->
+	
+	<!-- 프로필 사진 수정 Modal -->
+	<div class="modal fade" id="profileImageModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modalheader" style="padding: 20px;">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h5 class="modal-title" id="modalTitle" align="center">프로필 이미지</h5>
+				</div>
+				<div class="modal-body mb-3" style="padding: 20px 50px 0px 50px; " align="center">
+					<div id="imageBox" class="mb-3" align="center" style="display:inline-block; width: 300px; height: 300px; margin:0 auto; overflow: hidden; border: 8px solid #F0F0F0; border-radius: 50%;">
+						<img id='m_img' style='width:300px;'/>
+					</div>
+					<br>
+					<div>
+						<button type="button" id="addPhoto" class="addPhoto btn btn-outline-dark">프로필 사진 수정</button>
+						<button type="button" id="deletePhote" class="addPhoto btn btn-outline-dark">프로필 사진 삭제</button><br>
+						<input type="file" name="imagefile" id="imagefile" style="visibility: hidden;" >
+					</div>
+				</div>
+				<div class="modal-footer" style="background: #F4F4F4; border: 2px solid #F4F4F4;">
+					<button id="uploadProfileImageBtn" type="button" class="btn btn-dark" style="width: 200px; float:none; margin:0 auto;">수정</button>				
+					<button id="cancelBtn" type="button" class="btn btn-secondary" style="width: 200px; float:none; margin:0 auto;">취소</button>				
+				</div>
 			</div>
 		</div>
 	</div>

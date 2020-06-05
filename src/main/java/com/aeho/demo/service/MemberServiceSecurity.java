@@ -119,6 +119,11 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 		// TODO Auto-generated method stub
 		return memberDao.updateRelease(mv);
 	}
+
+	@Override
+	public int updateProfileImage(MemberVo mv) {
+		return memberDao.updateProfileImage(mv);
+	}
 	
 
 }

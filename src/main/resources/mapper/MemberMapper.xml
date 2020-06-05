@@ -76,4 +76,8 @@
   <select id="totalMember" resultType="int">
   	select count(*) from member where role != 'ROLE_MASTER' <include refid="searchSql"></include>
   </select>
+  
+  <update id="updateProfileImage">
+  	update member set m_img = #{m_img} where m_id = #{m_id}
+  </update>
 </mapper>

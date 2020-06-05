@@ -2,6 +2,8 @@ package com.aeho.demo.vo;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -11,9 +13,7 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class MemberVo {
 
 	private String m_id;
@@ -36,5 +36,8 @@ public class MemberVo {
 	
 	//수정할 비밀번호
 	private String newPwd;
+	
+	private String m_img;
+	private MultipartFile img_file;
 	
 }

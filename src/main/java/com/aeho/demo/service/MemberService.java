@@ -28,4 +28,6 @@ public interface MemberService {
 	int updateMemberState(MemberVo mv);
 	
 	int updateRelease(MemberVo mv);
+	
+	int updateProfileImage(MemberVo mv);
 }

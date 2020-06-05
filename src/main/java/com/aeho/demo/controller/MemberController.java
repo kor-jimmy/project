@@ -1,5 +1,7 @@
 package com.aeho.demo.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.lang.reflect.Member;
 import java.util.List;
 import java.util.Random;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeho.demo.service.BoardService;
@@ -30,6 +33,7 @@ import com.aeho.demo.service.MemberServiceSecurity;
 import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.GoodsVo;
 import com.aeho.demo.vo.MemberVo;
+import com.aeho.demo.vo.SlideImagesVo;
 import com.google.gson.Gson;
 
 import lombok.AllArgsConstructor;
@@ -269,6 +273,56 @@ public class MemberController {
 		});
 		
 		return authNum;
+	}
+	
+	@RequestMapping("/updateProfileImage")
+	@ResponseBody
+	public String updateProfileImage(HttpServletRequest request, MemberVo mv) {
+		
+		String result = "0";
+		System.out.println("update: "+ mv);
+		
+		MemberVo oldmember = memberServiceSecurity.getMember(mv.getM_id());
+		
+		String path = request.getRealPath("img/profileImg");
+		System.out.println("path: "+path);
+
+		MultipartFile file = null;
+		String filename = "";
+		
+		if(mv.getImg_file() != null) {
+			file = mv.getImg_file();
+			filename = mv.getM_id()+"_"+file.getOriginalFilename();
+		}
+		
+		mv.setM_img(filename);
+		System.out.println(mv);
+		
+		int re = memberServiceSecurity.updateProfileImage(mv);
+
+		if(re > 0) {
+			try {
+				
+				if(file != null) {
+					if(oldmember.getM_img() != null) {
+						File tempFile = new File(path + "/" + oldmember.getM_img());
+						tempFile.delete();
+					}
+					byte [] data = file.getBytes();
+					
+					FileOutputStream fos = new FileOutputStream(path+"/"+filename);
+
+					fos.write(data);
+					fos.close();
+				}
+				
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			result = "1";
+		}
+		
+		return result;
 	}
 
 

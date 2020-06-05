@@ -47,7 +47,7 @@
 
 		var checkNick = function(){
 			var m_nick = $("#m_nick").val();
-			console.log(m_nick);
+			//console.log(m_nick);
 
 			if( m_nick == user.m_nick){
 				validity_Nick = true;
@@ -80,14 +80,15 @@
 		$("#m_nick").on("blur keyup", function() {
 			checkNick();
 		});
-		
 
+		var wannaChangePWD = false;
 		$("#modifyPwd").click(function(){
 			$.ajax("/member/isCorrectPwd", {data: {m_id: user_id, m_pwd: $("#m_pwd").val()}, success: function(re){
 				if( re == 1 ){
 					$("#modifyPwdBox").show();
 					$("#m_pwd").attr("disabled", "disabled");
 					validity_Pwd = false;
+					wannaChangePWD = true;
 				}else{
 					swal({
 						  text: "비밀번호가 일치하지 않습니다!",
@@ -101,6 +102,10 @@
 		var newPwd;
 
 		var checkValidityOfPWD = function(){
+
+			if(!$("#m_pwd").attr("disabled")){
+				console.log("안 바꿀건데요!");
+			}
 			//password
 			if($("#new_pwd").val() == null || $("#new_pwd").val().trim() == ""){
 				$("#new_pwd").css("border", "1px solid #FF2121");
@@ -144,6 +149,7 @@
 			checkValidityOfPWDConfirm();
 			if( validity_Pwd && validity_Nick ){
 				var data = {m_id: user_id, m_pwd: $("#new_pwd").val(), m_nick: $("#m_nick").val()};
+				console.log(data);
 				$.ajax("/member/update", {
 					data: data, 
 					type:"POST",

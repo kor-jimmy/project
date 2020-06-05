@@ -29,4 +29,6 @@ public interface MemberDao {
 	int updateMemberState(MemberVo mv);
 	
 	int updateRelease(MemberVo mv);
+	
+	int updateProfileImage(MemberVo mv);
 }
