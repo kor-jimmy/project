@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@include file="../includes/header.jsp"%>
+<link href="/resources/css/button.css" rel="stylesheet">
 <style>
 	#reReContent{
 		float:left;
@@ -29,15 +30,6 @@
 	}
 	
 	#goodsReport{ cursor: pointer; }
-	
-	#updateBtn{ background: #CBCAFF; border: 1px solid #CBCAFF; color: white; border-radius: 10px; }
-	#updateBtn:hover{ border: 1px solid #A3A1FC; background: #A3A1FC; color: white; border-radius: 10px; }
-	
-	#insertReply{ background: #A3F0E4; border: 1px solid #A3F0E4; color: white; border-radius: 10px; }
-	#insertReply:hover{ background: #5FEAC9; border: 1px solid #5FEAC9; }
-	
-	#deleteBtn{ background: #c8ccd0; border: 1px solid #c8ccd0; color: white; border-radius: 10px; }
-	#deleteBtn:hover{ background: #e9ecef; border: 1px solid #e9ecef; }
 	
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>

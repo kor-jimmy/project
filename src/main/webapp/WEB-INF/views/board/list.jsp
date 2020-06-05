@@ -3,22 +3,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="../includes/header.jsp"%>
+<link href="/resources/css/button.css" rel="stylesheet">
 <style>
 	#boardArticles { background: rgba( 255, 255, 255, 0.5 ); }
 	a{ text-decoration: none !important; color: dimgray; }
 	
-	#insertBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
-	#insertBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
-	
-	#searchBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
-	#searchBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
-	#allBoardBtn{ background: #A3F0E4; border: 1px solid #A3F0E4; color: white; border-radius: 10px; }
-	#allBoardBtn:hover{ background: #5FEAC9; border: 1px solid #5FEAC9; }
-	
-	.paging-btn{ background: white; border: 2px solid #e9ecef; border-radius: 30px; padding: 2px 10px 2px 10px;}
-	.paging-btn:hover{ background: white; border: 2px solid #A3A1FC;}
-	.btn-outline-light:not(:disabled):not(.disabled).active{ background: #5FEAC9; color: white;border: 2px solid #5FEAC9;}
-	.btn-outline-light:not(:disabled):not(.disabled).active a{ color: white; }
 </style>
 <script type="text/javascript">
 	$(function(){

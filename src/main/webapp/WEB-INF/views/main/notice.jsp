@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="../includes/header.jsp"%>
+<link href="/resources/css/button.css" rel="stylesheet">
 <script type="text/javascript">
 	$(function(){
 		var c_no = $("#c_no").val();

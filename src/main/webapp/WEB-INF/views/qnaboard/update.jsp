@@ -2,10 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../includes/header.jsp"%>
+<link href="/resources/css/button.css" rel="stylesheet">
 <style>
 	.table{ background: rgba(255, 255, 255, 0.7); }
-	#updateBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
-	#updateBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
 </style>
 
 	<h2>QNA 수정</h2>

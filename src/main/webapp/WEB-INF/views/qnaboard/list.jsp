@@ -3,23 +3,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<link href="/resources/css/button.css" rel="stylesheet">
 <style>
 	a{ text-decoration: none !important; color: dimgray; }
 	
 	#qnaboardArticles{ background: rgba( 255, 255, 255, 0.5 ); }
-	
-	#insertBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
-	#insertBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
-	
-	#searchBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
-	#searchBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
-	#allBoardBtn{ background: #A3F0E4; border: 1px solid #A3F0E4; color: white; border-radius: 10px; }
-	#allBoardBtn:hover{ background: #5FEAC9; border: 1px solid #5FEAC9; }
-	
-	.paginate_button{ background: white; border: 2px solid #e9ecef; border-radius: 50%; padding: 2px 10px 2px 10px;}
-	.paginate_button:hover{ background: white; border: 2px solid #A3A1FC;}
-	.btn-outline-secondary:not(:disabled):not(.disabled).active{ background: #5FEAC9; color: white;border: 2px solid #5FEAC9;}
-	.btn-outline-secondary:not(:disabled):not(.disabled).active a{ color: white; }
+
 </style>
 <script type="text/javascript">
 $(function(){

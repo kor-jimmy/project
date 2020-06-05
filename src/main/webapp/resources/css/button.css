@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+/*보라색 버튼*/
+.mainBtn{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; border-radius: 10px; }
+.mainBtn:hover{ background: #CBCAFF; border: 1px solid #CBCAFF; }
+
+/*회색 버튼*/
+.grayBtn{ background: #c8ccd0; border: 1px solid #c8ccd0; color: white; border-radius: 10px; }
+.grayBtn:hover{ background: #e9ecef; border: 1px solid #e9ecef; }
+
+/*민트 버튼*/
+.subBtn{ background: #A3F0E4; border: 1px solid #A3F0E4; color: white; border-radius: 10px; }
+.subBtn:hover{ background: #5FEAC9; border: 1px solid #5FEAC9; }
+
+/*기본적으로 하얀버튼, active시 보라버튼*/
+.typeBtn{ background: white; border: 1px solid gray; color: gray; border-radius: 10px; }
+.typeBtn:hover{ border: 1px solid #A3A1FC; background: white; color: gray; border-radius: 10px; }
+.typeBtnActive{ background: #A3A1FC; border: 1px solid #A3A1FC; color: white; }
+
+/*기본적으로 하얀버튼, active시 민트버튼*/
+.list-mintBtn{ background: white; border: 1px solid gray; color: gray; border-radius: 10px; }
+.list-mintBtn:hover{ border: 1px solid #A3F0E4; background: white; color: gray; border-radius: 10px; }
+.list-mintBtnActive{ background: #A3F0E4; border: 1px solid #A3F0E4; color: white; }
+
+/*페이징 버튼*/
+.paginate_button{ background: white; border: 2px solid #e9ecef; border-radius: 50%; padding: 2px 10px 2px 10px;}
+.paginate_button:hover{ background: white; border: 2px solid #A3A1FC;}
+.btn-outline-light:not(:disabled):not(.disabled).active{ background: #5FEAC9; color: white;border: 2px solid #5FEAC9;}
+.btn-outline-light:not(:disabled):not(.disabled).active a{ color: white; }
