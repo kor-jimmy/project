@@ -86,6 +86,19 @@
 		white-space : normal; /*기본값*/
 		text-overflow: clip; /*기본값*/
 	}
+	
+	
+	/* 추천게시물 */
+	.bestContentDiv{
+		display: inline-block;
+		text-align: center;	
+		width: 200px;
+		height: 200px;
+		overflow:hidden;
+		white-space : nowrap;
+		text-overflow: ellipsis;
+		cursor: pointer;
+	}
 
 
 </style>
@@ -119,29 +132,31 @@
         var todayBest = function(){
             $.ajax("/todayBest",{success:function(data){
             	$("#bestContent").empty();
-                var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
                 var list = JSON.parse(data);
                 console.log(list);
                 $.each(list, function(idx,content){
+                    if(idx==2){
+                        var line = "<div class='w-100'></div>";
+                    	$("#bestContent").append(line);
+                    }
+                	var bestDiv = $("<div class='bestContentDiv col m-2' b_no="+content.b_no+"></div>").attr("title",content.b_title);
+                	var b_title = $("<p></p>").text(content.b_title);
                 	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
-                    var li = $("<li id='listContent' class='list-group-item'></li>").attr("b_no",content.b_no);
 					var src = "/boardImage/"+content.uuid+"_"+content.filename;
                     var img;
                     if(content.filename != null){
-                    	img = $("<img width=100 height=100></img>").attr("src",src);
+                    	img = $("<img width=130 height=130></img>").attr("src",src).addClass("rounded");
                     }else{
-                    	img = $("<img width=100 height=100></img>").attr("src","/img/no_image.png");
+                    	img = $("<img width=130 height=130></img>").attr("src","/img/no_image.png").addClass("rounded");
                     }
-					var b_title = $("<p></p>");
-					b_title.append(category,content.b_title)
-					var cnt = $("<p></p>");
-                    var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
-                    var b_replyCnt = $("<span class='badge badge-info'></span>").text("댓글 " + content.b_replycnt);
-                    cnt.append(b_loveCnt,"   ",b_replyCnt);
-                    li.append(img,b_title,cnt);
-                    ul.append(li);
+
+                    var bestContentImgDiv = $("<div></div>").append(img);
+					var bestContentInfoDiv = $("<div></div>").append(category,b_title);
+
+                    bestDiv.append(bestContentImgDiv,bestContentInfoDiv);
+                    $("#bestContent").append(bestDiv);
                 })
-                $("#bestContent").append(ul);
+                
             }})
 
 /*     		$.ajax("/todayBest", {success: function(data){
@@ -181,53 +196,71 @@
         }
         
 		var weekBest = function(){
-			console.log("주간 추천")
             $.ajax("/weekBest",{success:function(data){
             	$("#bestContent").empty();
-                var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
                 var list = JSON.parse(data);
+                console.log(list);
                 $.each(list, function(idx,content){
+                    if(idx==2){
+                        var line = "<div class='w-100'></div>";
+                    	$("#bestContent").append(line);
+                    }
+                	var bestDiv = $("<div class='bestContentDiv col m-2' b_no="+content.b_no+"></div>").attr("title",content.b_title);
+                	var b_title = $("<p></p>").text(content.b_title);
                 	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
-                    var li = $("<li id='listContent' class='list-group-item'></li>").attr("b_no",content.b_no);
-					var b_title = $("<p></p>");
-					b_title.append(category,content.b_title)
-					var cnt = $("<p></p>");
-                    var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
-                    var b_replyCnt = $("<span class='badge badge-info'></span>").text("댓글 " + content.b_replycnt);
-                    cnt.append(b_loveCnt,"   ",b_replyCnt);
-                    li.append(b_title,cnt);
-                    ul.append(li);
+					var src = "/boardImage/"+content.uuid+"_"+content.filename;
+                    var img;
+                    if(content.filename != null){
+                    	img = $("<img width=130 height=130></img>").attr("src",src).addClass("rounded");
+                    }else{
+                    	img = $("<img width=130 height=130></img>").attr("src","/img/no_image.png").addClass("rounded");
+                    }
+
+                    var bestContentImgDiv = $("<div></div>").append(img);
+					var bestContentInfoDiv = $("<div></div>").append(category,b_title);
+
+                    bestDiv.append(bestContentImgDiv,bestContentInfoDiv);
+                    $("#bestContent").append(bestDiv);
                 })
-                $("#bestContent").append(ul);
+                
             }})
-		}
+        }
 
 		var monthBest = function(){
-			console.log("월간 추천")
-            $.ajax("/monthBest",{success:function(data){
-            	$("#bestContent").empty();
-                var ul = $("<ul class='list-group list-group-flush' style='cursor:pointer;'></ul>");
-                var list = JSON.parse(data);
-                $.each(list, function(idx,content){
-                	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
-                    var li = $("<li id='listContent' class='list-group-item'></li>").attr("b_no",content.b_no);
-					var b_title = $("<p></p>");
-					b_title.append(category,content.b_title)
-					var cnt = $("<p></p>");
-                    var b_loveCnt= $("<span class='badge badge-danger'></span>").text("좋아요  " + content.b_lovecnt);
-                    var b_replyCnt = $("<span class='badge badge-info'></span>").text("댓글 " + content.b_replycnt);
-                    cnt.append(b_loveCnt,"   ",b_replyCnt);
-                    li.append(b_title,cnt);
-                    ul.append(li);
-                })
-                $("#bestContent").append(ul);
-            }})
+                $.ajax("/monthBest",{success:function(data){
+                	$("#bestContent").empty();
+                    var list = JSON.parse(data);
+                    console.log(list);
+                    $.each(list, function(idx,content){
+                        if(idx==2){
+                            var line = "<div class='w-100'></div>";
+                        	$("#bestContent").append(line);
+                        }
+                    	var bestDiv = $("<div class='bestContentDiv col m-2' b_no="+content.b_no+"></div>").attr("title",content.b_title);
+                    	var b_title = $("<p></p>").text(content.b_title);
+                    	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
+    					var src = "/boardImage/"+content.uuid+"_"+content.filename;
+                        var img;
+                        if(content.filename != null){
+                        	img = $("<img width=130 height=130></img>").attr("src",src).addClass("rounded");
+                        }else{
+                        	img = $("<img width=130 height=130></img>").attr("src","/img/no_image.png").addClass("rounded");
+                        }
+
+                        var bestContentImgDiv = $("<div></div>").append(img);
+    					var bestContentInfoDiv = $("<div></div>").append(category,b_title);
+
+                        bestDiv.append(bestContentImgDiv,bestContentInfoDiv);
+                        $("#bestContent").append(bestDiv);
+                    })
+                    
+                }})
 		}
         
 		monthBest();
 
 		//베스트 게시물 클릭 이벤트.
-        $(document).on("click","#listContent",function(e){
+        $(document).on("click",".bestContentDiv",function(e){
         	location.href="/board/get?b_no="+$(this).attr("b_no");
         })
 
@@ -509,11 +542,10 @@
 	                    <button id="monthBestBtn" type="button" class="btn btn-light">month</button>
 	                </p>
 		            <div class="mainContent">
-		                <div id="bestContent">
-	
-		                </div>
-            		</div>
-            		
+		            	<div id="bestContent" class="row">
+
+	             		</div>
+		            </div>
             	</div>
             	<br>
                 <hr>
