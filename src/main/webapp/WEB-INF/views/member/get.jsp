@@ -102,10 +102,6 @@
 		var newPwd;
 
 		var checkValidityOfPWD = function(){
-
-			if(!$("#m_pwd").attr("disabled")){
-				console.log("안 바꿀건데요!");
-			}
 			//password
 			if($("#new_pwd").val() == null || $("#new_pwd").val().trim() == ""){
 				$("#new_pwd").css("border", "1px solid #FF2121");
@@ -128,6 +124,10 @@
 		});
 
 		var checkValidityOfPWDConfirm = function(){
+			if(!wannaChangePWD){
+				validity_Pwd = true;
+				return false;
+			}
 			if($("#new_pwd_confirm").val() != newPwd ){
 				$("#new_pwd_confirm").css("border", "1px solid #FF2121");
 				$("#feedbackForNewPwdConfirm").css("color", "#FF2121").html("※비밀번호가 일치하지 않습니다.").show();
@@ -144,9 +144,9 @@
 		});
 
 		$("#updateBtn").click(function(e){
-			console.log(validity_Pwd, validity_Nick);
 			e.preventDefault();
 			checkValidityOfPWDConfirm();
+			console.log(validity_Pwd, validity_Nick);
 			if( validity_Pwd && validity_Nick ){
 				var data = {m_id: user_id, m_pwd: $("#new_pwd").val(), m_nick: $("#m_nick").val()};
 				console.log(data);

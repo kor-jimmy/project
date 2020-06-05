@@ -24,6 +24,7 @@ public class LoginController {
 	public void login(HttpServletRequest request) {
 		String referrer = request.getHeader("Referer");
 	    request.getSession().setAttribute("prevPage", referrer);
+	    System.out.println("Referer: " + referrer);
 	}
 	
 	@GetMapping("/loginError")
