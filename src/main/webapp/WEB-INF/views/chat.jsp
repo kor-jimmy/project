@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<meta charset="UTF-8">
-<meta name="_csrf" content="${_csrf.token}"/>
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@include file="includes/header.jsp"%>
+
 	<title>chating</title>
 	<style>
 		*{
@@ -43,19 +40,17 @@
 			display: none;
 		}
 	</style>
-</head>
 
 <script type="text/javascript">
 	var ws;
 
 	function wsOpen(){
-		ws = new WebSocket("ws://" + location.host + "/chating");
+		ws = new WebSocket("ws://" + location.host + "/chating/" + $("#roomNumber").val());
 		wsEvt();
 	}
 		
 	function wsEvt() {
-		ws.onopen = function(data){
-			//소켓이 열리면 동작
+		ws.onopen = function(data){//소켓이 열리면 동작
 		}
 			
 	ws.onmessage = function(data) {//메세지 받으면 동작
@@ -102,6 +97,7 @@
 	function send() {
 		var option ={
 			type: "message",
+			roomNumber : $("#roomNumber").val(),
 			sessionId : $("#sessionId").val(),
 			userName : $("#userName").val(),
 			msg : $("#chatting").val()
@@ -112,8 +108,10 @@
 </script>
 <body>
 	<div id="container" class="container">
-		<h1>채팅</h1>
+		<h1>${roomName }의 채팅방</h1>
 		<input type="hidden" id="sessionId" value="">
+		<input type="hidden" id="roomNumber" value="${roomNumber }">
+		
 		<div id="chating" class="chating">
 		</div>
 		
@@ -138,3 +136,5 @@
 	</div>
 </body>
 </html>
+
+<%@include file="includes/footer.jsp"%> 

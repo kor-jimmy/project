@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<meta charset="UTF-8">
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@include file="includes/header.jsp"%>
+
 	<title>Room</title>
 	<style>
 		*{
@@ -71,22 +70,22 @@
 			height: 25px;
 		}
 	</style>
-</head>
+	
 
 <script type="text/javascript">
 	//시큐리티 csrf        
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	
 	var ws;
 
 	window.onload = function(){
+		console.log(header,token);
 		getRoom();
 		createRoom();
 	}
 
 	function getRoom(){
-		commonAjax('/getRoom', "", 'POST', function(result){
+		commonAjax('/getRoom', '', 'POST', function(result){
 			createChatingRoom(result);
 		});
 	}
@@ -123,12 +122,12 @@
 		}
 	}
 
-	function commonAjax(url, parameter, xhr, type, calbak, contentType){
+	function commonAjax(url, parameter, type, calbak, contentType){
 		$.ajax({
 			url: url,
 			data: parameter,
 			beforeSend:function(xhr){
-				xhr.setRequestHeader(header,token)
+				xhr.setRequestHeader(header,token);
 				},
 			type: type,
 			contentType : contentType!=null?contentType:'application/x-www-form-urlencoded; charset=UTF-8',
@@ -161,3 +160,5 @@
 	</div>
 </body>
 </html>
+
+<%@include file="includes/footer.jsp"%>  

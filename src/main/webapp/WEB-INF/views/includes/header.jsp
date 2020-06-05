@@ -425,6 +425,9 @@
 								</div>
 								<div id="logout" class="userMenuBtn mb-1" onclick="location.href='/logout'">로그아웃</div>
 							</sec:authorize>
+							<sec:authorize access="isAuthenticated()">
+	         					<div id="chat_page" class="userMenuBtn" onclick="location.href='/room'">채팅</div>
+		         			</sec:authorize>
 							
 							<!-- <div id="login_out" class="userMenuBtn mb-1">로그인</div>
 							<div id="mypage" class="userMenuBtn mb-1">마이페이지</div> -->
