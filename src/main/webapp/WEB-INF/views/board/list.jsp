@@ -127,9 +127,11 @@
 	                    <td class="list-td" ><a class="" href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/><span class="badge badge-light">${board.b_replycnt }</span></a></td>
 	                    <td class="list-td"  align="center" style="overflow: visible;">
 	                    	<c:if test="${board.m_img !=null}">
-	                    		<img width="50" height="50" src='/img/profileImg/${board.m_img }'>
+	                    		<div style="display: inline-block;">
+	                    			<img width="30" height="30" src='/img/profileImg/${board.m_img }' style="border-radius: 50%;">
+	                    		</div>
 	                    	</c:if>
-	                    	<div class="dropleft">
+	                    	<div class="dropleft" style="display: inline-block;">
 	                    		<a m_id ="${board.m_id }" class="dropdown-toggle userNICK" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                    			<c:out value="${board.m_nick }"/>
 	                    		</a>

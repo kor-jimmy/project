@@ -23,8 +23,9 @@ public class LoginController {
 	@GetMapping("/loginCustom")
 	public void login(HttpServletRequest request) {
 		String referrer = request.getHeader("Referer");
-	    request.getSession().setAttribute("prevPage", referrer);
-	    System.out.println("Referer: " + referrer);
+		if(!referrer.equals("http://localhost:8088/loginCustom") && !referrer.equals("http://localhost:8088/member/insert") && !referrer.equals("http://localhost:8088/loginCustom?error")) {
+			request.getSession().setAttribute("prevPage", referrer);
+		}
 	}
 	
 	@GetMapping("/loginError")

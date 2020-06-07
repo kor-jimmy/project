@@ -80,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.deleteCookies("JSESSIONID","remember-me")
-				.logoutSuccessUrl("/main/main")
+				.logoutSuccessUrl("/loginCustom")
 			.and()
 				.exceptionHandling()
 				.accessDeniedPage("/access-denied")

@@ -71,7 +71,8 @@ public class MemberController {
 
 	@GetMapping("/insert")
 	public void insertMember(HttpServletRequest request ) {
-		
+		String referrer = request.getHeader("Referer");
+		request.getSession().setAttribute("prevPage", referrer);
 	}
 	
 	@GetMapping("/delete")
