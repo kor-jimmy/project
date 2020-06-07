@@ -183,16 +183,19 @@
 			         return false;
 			     }
 			});
+			
+			$('#searchModal').on('show.bs.modal', function (event) {
+				$.ajax("/search/listPicks", {success: function(data){
+					console.log(data);
+					$.each(data, function(idx, p){
+						var keyword = $("<div class='topPick'></div>").html(p.p_keyword);
+						var a = $("<a></a>").attr("href", "/search/search?keyword=" + p.p_keyword);
+						a.append(keyword);
+						$("#topPicksList").append(a);
+					});
+				}});
+			});
 
-			$.ajax("/search/listPicks", {success: function(data){
-				console.log(data);
-				$.each(data, function(idx, p){
-					var keyword = $("<div class='topPick'></div>").html(p.p_keyword);
-					var a = $("<a></a>").attr("href", "/search/search?keyword=" + p.p_keyword);
-					a.append(keyword);
-					$("#topPicksList").append(a);
-				});
-			}});
 			
 			$("#mypage").on("click",function(){
 				var id = ($("#userId").html()).split(":")[1];
@@ -450,7 +453,7 @@
 
 
 	<!-- Modal -->
-	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+	<div class="modal fade bd-example-modal-lg" id="searchModal" tabindex="-1" role="dialog"
 		aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content p-5" align="center">
