@@ -101,7 +101,7 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 	
 		//페이징
 		dto=result.dto;
-		console.log(dto.cri.pageNum); //현재 페이지
+		
 		$(".pagination").empty();
 		if(dto.prev){
 			var a=$("<a>이전</a>").attr("href","#");
@@ -114,9 +114,9 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 		}
 		for(i=dto.startPage; i<=dto.endPage; i++){
 			var a=$("<a class='pageNum'>"+i+"</a>").attr("href","#");
-			var li=$("<li class='paginate_button btn btn-outline-light'></li>").append(a);
+			var li=$("<li class='paginate_button btn btn-outline-light'></li>").attr("id", "goodsPage"+i).append(a);
 			$(li).on("click",function(){
-				listGoods(gc_code,keyword,$(this).html(), searchField, searchKeyword);
+				listGoods(gc_code,keyword,$(this).children("a").html(), searchField, searchKeyword);
 			})
 			var nbsp=$("<li>&nbsp;</li>");
 			$(".pagination").append(li,nbsp);
@@ -129,6 +129,10 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 			})
 			$(".pagination").append(li);
 		}
+
+		var presentPage = dto.cri.pageNum; //현재 페이지
+		console.log(presentPage);
+		$("#goodsPage"+presentPage).addClass("active");
 	}})
 }
 
