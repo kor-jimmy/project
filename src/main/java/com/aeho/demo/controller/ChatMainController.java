@@ -50,9 +50,22 @@ public class ChatMainController {
 		String roomName = (String) params.get("roomName");
 		if(roomName != null && !roomName.trim().equals("")) {
 			ChatRoomVo room = new ChatRoomVo();
-			room.setRoomNumber(++roomNumber);
+			room.setRoomNumber(roomNumber++);
 			room.setRoomName(roomName);
 			roomList.add(room);
+			System.out.println(roomList);
+		}
+		return roomList;
+	}
+	
+	@RequestMapping("/delete")
+	public @ResponseBody List<ChatRoomVo> deleteRoom(HttpServletRequest request, ChatRoomVo params){
+		int roomNumber = params.getRoomNumber();
+		System.out.println(params);
+		if(params.getRoomNumber() >= -1) {
+			//params.get("roomName");
+			roomList.remove(params.getRoomNumber());
+			System.out.println(roomList);
 		}
 		return roomList;
 	}

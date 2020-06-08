@@ -7,13 +7,13 @@
 
 	<style>
 		.chating{
-			background-color: #000;
-			width: 500px;
+			background-color: rgba(255, 255, 255, 0.7);
+			width: 1000px;
 			height: 500px;
 			overflow: auto;
 		}
 		.chating p{
-			color: #fff;
+			color: black;
 			text-align: left;
 		}
 		input{

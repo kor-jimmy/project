@@ -2,11 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="includes/header.jsp"%>
 
 	<style>
 		.roomList{
 			text-align: center;
+			overflow: auto;
 		}
 		.mainContent{
 			background: rgba(255, 255, 255, 0.7);
@@ -59,12 +61,22 @@
 							"<td class='num'>"+(idx+1)+"</td>"+
 							"<td class='room'>"+ rn +"</td>"+
 							"<td class='go'><button type='button' onclick='goRoom(\""+roomNumber+"\", \""+rn+"\")'>참여</button></td>" +
-							"<td class='delete'><button type='button' onclick='deleteRoom(\""+roomNumber+"\", \""+rn+"\")'>방 삭제</button></td>" +
+							"<td class='delete'><button type='button' onclick='deleteRoom("+roomNumber+")'>삭제</button></td>" +
 						"</tr>";	
 			});
 			
 			$("#roomList").empty().append(tag);
 		}
+	}
+
+	function deleteRoom(rn){
+		var msg = {	roomNumber : rn	};
+		console.log(msg);
+		commonAjax('/delete', msg, 'POST', function(result){
+			confirm("진짜 삭제하시겠습니까?");
+		});
+		$("#roomNumber").remove();
+		self.location="/room";
 	}
 
 	function commonAjax(url, parameter, type, calbak, contentType){
