@@ -122,8 +122,8 @@
 	            <tr align="center">
 	                <th width="10%">번호</th>
 	                <th width="15%">카테고리</th>
-	                <th width="45%">제목</th>
-	                <th width="10%">작성자</th>
+	                <th width="40%">제목</th>
+	                <th width="20%">작성자</th>
 	                <th width="15%">날짜</th>
 	                <th width="10%">조회</th>
 	                <th width="10%">Love</th>

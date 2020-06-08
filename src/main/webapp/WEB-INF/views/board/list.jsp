@@ -19,7 +19,7 @@
 		})
 		
 		if(!$("tbody tr").length){
-			var div = $("<div style='color: gray; font-weight: bold;'></div>").html("작성된 글이 없습니다. 첫 글을 남겨보세요!");
+			var div = $("<div style='color: gray; font-weight: bold;'></div>").html("작성된 글이 없습니다.");
 			var td = $("<td style='height: 300px; vertical-align: middle;' colspan='6' align='center'></td>").append(div);
 			$("tbody").append(td);
 		}

@@ -140,6 +140,9 @@
                         var line = "<div class='w-100'></div>";
                     	$("#bestContent").append(line);
                     }
+                    if(idx==4){
+						return false;
+                    }
                 	var bestDiv = $("<div class='bestContentDiv col m-2' b_no="+content.b_no+"></div>").attr("title",content.b_title);
                 	var b_title = $("<p></p>").text(content.b_title);
                 	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
@@ -206,6 +209,9 @@
                         var line = "<div class='w-100'></div>";
                     	$("#bestContent").append(line);
                     }
+                    if(idx==4){
+						return false;
+                    }
                 	var bestDiv = $("<div class='bestContentDiv col m-2' b_no="+content.b_no+"></div>").attr("title",content.b_title);
                 	var b_title = $("<p></p>").text(content.b_title);
                 	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
@@ -236,6 +242,9 @@
                         if(idx==2){
                             var line = "<div class='w-100'></div>";
                         	$("#bestContent").append(line);
+                        }
+                        if(idx==4){
+    						return false;
                         }
                     	var bestDiv = $("<div class='bestContentDiv col m-2' b_no="+content.b_no+"></div>").attr("title",content.b_title);
                     	var b_title = $("<p></p>").text(content.b_title);

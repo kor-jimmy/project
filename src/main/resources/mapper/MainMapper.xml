@@ -9,7 +9,7 @@
 		    from board b, category c, boardfiles bf where b.c_no=c.c_no and b.b_no=bf.b_no and b.c_no<10000 and b.b_no in 
 		        (select b_no from (select rownum, b_no from(select b_no from board 
 		            where to_char(b_date)=to_char(sysdate,'YY/MM/DD') order by b_lovecnt-b_hatecnt desc) 
-		                where rownum<=4))
+		                where rownum<=10)) order by b_lovecnt-b_hatecnt desc
     ]]>
 	</select>
 	
@@ -19,7 +19,7 @@
 		    from board b, category c, boardfiles bf where b.c_no=c.c_no and b.b_no=bf.b_no and b.c_no<10000 and b.b_no in 
 		        (select b_no from (select rownum, b_no from(select b_no from board 
 		        	where to_char(b_date)>=to_char(sysdate-7,'YY/MM/DD') order by b_lovecnt-b_hatecnt desc) 
-		                where rownum<=4))
+		                where rownum<=10)) order by b_lovecnt-b_hatecnt desc
 
     ]]>
 	</select>
@@ -30,7 +30,7 @@
 		    from board b, category c, boardfiles bf where b.c_no=c.c_no and b.b_no=bf.b_no and b.c_no<10000 and b.b_no in 
 		        (select b_no from (select rownum, b_no from(select b_no from board 
 		        	where to_char(b_date)>=to_char(sysdate-30,'YY/MM/DD') order by b_lovecnt-b_hatecnt desc) 
-		                where rownum<=4))
+		                where rownum<=10)) order by b_lovecnt-b_hatecnt desc
     ]]>
 	</select>
 	

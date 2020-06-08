@@ -134,7 +134,7 @@ public class BoardMangeController {
     	String year = today.split("/")[0];
     	String month = today.split("/")[1];
     	
-		String fileRoot = "C:\\aehoUpload\\board\\"+year+"\\"+month+"\\";	//저장될 외부 파일 경로
+		String fileRoot = "C:\\aehoUpload\\board\\";	//저장될 외부 파일 경로
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 		//확장자 유효성 검사

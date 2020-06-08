@@ -138,14 +138,12 @@
 				<li class="paginate_button previous">
 					<a href="${pageMake.startPage -1 }">이전</a>
 				</li>
-				<li>&nbsp;/&nbsp;</li>
 			</c:if>
 			
 			<c:forEach var="num" begin="${pageMake.startPage }" end="${pageMake.endPage }">
 				<li class="paginate_button ${pageMake.cri.pageNum==num ? "active": ""}">
 					<a href="${num }">${num }</a>
 				</li>
-				<li>&nbsp;/&nbsp;</li>
 			</c:forEach>    		
 			
 			<c:if test="${pageMake.next }">

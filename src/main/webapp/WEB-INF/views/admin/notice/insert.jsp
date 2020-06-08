@@ -134,7 +134,7 @@
 		//폼태그 기본속성 제거
 		$("#insertBtn").on("click",function(e){
 			var noticeSelect = $("#noticeSelect").val();
-			alert(noticeSelect);
+			//alert(noticeSelect);
 			if($("#b_title").val() == null || $("#b_title").val() == "" || 
 					$("#b_content").val() == null || $("#b_content").val() == ""){
 				alert("제목이나 글 내용을 비워둘 수는 없습니다.");
@@ -183,7 +183,7 @@
 							},
 							cache : false,
 							success : function(msg){
-								alert(msg);
+								//alert(msg);
 							}
 						})
 					}
