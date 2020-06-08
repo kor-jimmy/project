@@ -71,7 +71,7 @@
 		var result_checkID = false;
 		var result_checkNick = false;
 		
-		var idRegEx = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi;
+		var idRegEx = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
 		var passwordRegEx =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
 		var phoneRegEx = /^[0-9]{3}-[0-9]{4}-[0-9]{4}/;
 		var emailRegEx = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -105,10 +105,10 @@
 			var data = {m_id: $("#m_id").val()}
 			//0: 사용 가능하고 글자수 적합 / 1: 사용중인 아이디 / 2: 사용 가능하나 글자수 미달 / 3: 사용 가능하나 글자수 초과 
 			$.ajax("/member/isExistMember", {data: data, success: function(re){
-				if(re == 0){
-					validity_ID = true;
-					$("#m_id").css("border", "1px solid #23D795");
-					$("#feedbackForID").css("color", "#23D795").html("※사용 가능한 ID입니다.").show();
+				if(idRegEx.test($("#m_id").val())){
+					$("#m_id").css("border", "1px solid #FF2121");
+					$("#feedbackForID").css("color", "#FF2121").html("※ID에 특수문자를 사용할 수 없습니다.").show(); 
+					validity_ID = false;
 				}else if(re == 1){
 					$("#m_id").css("border", "1px solid #FF2121");
 					$("#feedbackForID").css("color", "#FF2121").html("※이미 사용중인 ID입니다.").show(); 
@@ -121,10 +121,10 @@
 					$("#m_id").css("border", "1px solid #FF2121");
 					$("#feedbackForID").css("color", "#FF2121").html("※ID는 20자를 초과할 수 없습니다.").show(); 
 					validity_ID = false;
-				}else if(idRegEx.test(m_id)){
-					$("#m_id").css("border", "1px solid #FF2121");
-					$("#feedbackForID").css("color", "#FF2121").html("※ID에 특수문자를 사용할 수 없습니다.").show(); 
-					validity_ID = false;
+				}else if(re == 0){
+					validity_ID = true;
+					$("#m_id").css("border", "1px solid #23D795");
+					$("#feedbackForID").css("color", "#23D795").html("※사용 가능한 ID입니다.").show();
 				}
 			}});
 		}

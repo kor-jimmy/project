@@ -71,6 +71,8 @@
 					if(v.vt_count_a != 0 || v.vt_count_b != 0){
 						a_per = v.vt_count_a / (v.vt_count_a + v.vt_count_b) * 100;
 						b_per = v.vt_count_b / (v.vt_count_a + v.vt_count_b) * 100;
+						a_per = a_per.toFixed(2);
+						b_per = b_per.toFixed(2);
 						a_html = v.vt_content.split("/")[0] + " " + a_per + "%";
 						b_html = v.vt_content.split("/")[1] + " " + b_per + "%";
 					}
@@ -170,6 +172,8 @@
 					if(v.vt_count_a != 0 || v.vt_count_b != 0){
 						a_per = v.vt_count_a / (v.vt_count_a + v.vt_count_b) * 100;
 						b_per = v.vt_count_b / (v.vt_count_a + v.vt_count_b) * 100;
+						a_per = a_per.toFixed(2);
+						b_per = b_per.toFixed(2);
 						a_html = v.vt_content.split("/")[0] + " " + a_per + "%";
 						b_html = v.vt_content.split("/")[1] + " " + b_per + "%";
 					}

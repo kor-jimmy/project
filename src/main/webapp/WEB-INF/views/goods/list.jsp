@@ -67,13 +67,15 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 				gc_dist.html("[삽니다] ");
 			
 			var title = $("<b></b>").html(g.g_title);
-			var writer = $("<p></p>").html(g.m_nick);
+			var writer = $("<p class='mb-2'></p>").html(g.m_nick);
+			var price = $("<p class='mb-2'></p>").html(g.g_price + "원");
 			var g_date = moment(item.g_date).format('YYYY-MM-DD');
-			var date = $("<span></span>").html(g_date);
+			var date = $("<p></p>").html(g_date);
 			//var replyCnt = $("<span class='badge badge-light'></span>").html(g.g_replycnt);
 			
 			var a = $("<a></a>").attr("href","/goods/get?g_no="+g.g_no).append(title);
-			var li = $("<li></li>").append(image, "<br>", gc_dist, a, "&nbsp;", writer, date);
+			var img_a = $("<a></a>").attr("href","/goods/get?g_no="+g.g_no).append(image);
+			var li = $("<li></li>").append(img_a, "<br>", gc_dist, a, "&nbsp;", writer, price, date);
 			div.append(li);
 			$("#goodsList").append(div);
 			

@@ -22,7 +22,7 @@
 		var select_rno = "";
 		var select_mid = "";
 		
-		$("#clickheart").hide();
+		$("#clickedheart").hide();
 		$("#clickedhate").hide();
 
 		/*var getCDist = function(c_no){
@@ -36,7 +36,7 @@
 		var isLoved = function(m_id, b_no){
 			$.ajax("/board/isLoved", {data: {m_id: m_id, b_no: b_no}, success: function(re){
 				if(re == 1){
-					$("#clickheart").show();
+					$("#clickedheart").show();
 					$("#heart").hide();
 				}
 			}});
@@ -378,7 +378,7 @@
 					success: function(result){
 					//alert(result);
 					if(result == 1){
-						$("#clickheart").show();
+						$("#clickedheart").show();
 						$("#heart").hide();
 						$("#loveCnt").html(eval($("#loveCnt").html())+1);
 					}
@@ -415,7 +415,7 @@
 		});
 
 		//좋아요 취소
-		$(document).on("click","#clickheart",function(){
+		$(document).on("click","#clickedheart",function(){
 			$.ajax({
 				url: "/board/deleteLove",
 				type: "POST", 
@@ -426,7 +426,7 @@
 				cache: false, 
 				success: function(result){
 				if(result == 1){
-					$("#clickheart").hide();
+					$("#clickedheart").hide();
 					$("#heart").show();
 					$("#loveCnt").html(eval($("#loveCnt").html())-1);
 				}
@@ -545,6 +545,11 @@
 			});
 		})
 
+		//목록으로 버튼
+		$("#listBtn").click(function(){
+			location.href="/board/list?categoryNum="+$("#c_no").val();
+		});
+
 
 	})
 </script>
@@ -561,14 +566,14 @@
 		<tr class="contents-padding">
 			<td colspan="3"><h3><c:out value="${board.b_title }"/></h3></td>
 			<td>
-				<img class="expressionIcons" id="heart" src="/img/heart.png" width="30" height="30">
-				<img class="expressionIcons" id="clickheart" src="/img/clickheart.png" width="30" height="30">
-				<img class="expressionIcons" id="hate" src="/img/hate.png" width="30" height="30">
-				<img class="expressionIcons" id="clickedhate" src="/img/clickedhate.png" width="30" height="30">
+				<img class="expressionIcons mr-2" id="heart" src="/img/heart.png" width="30" height="30">
+				<img class="expressionIcons mr-2" id="clickedheart" src="/img/clickedHeart.png" width="30" height="30">
+				<img class="expressionIcons mr-2" id="hate" src="/img/hate.png" width="30" height="30">
+				<img class="expressionIcons mr-2" id="clickedhate" src="/img/clickedHate.png" width="30" height="30">
 				<sec:authentication property="principal" var="pinfo"/>
 				<sec:authorize access="isAuthenticated()">
 					<c:if test="${pinfo.username != board.m_id}">
-						<img class="expressionIcons" id='boardReport' width=20px height=20px src='/img/reportICON.svg'>	
+						<img class="expressionIcons ml-4" id='boardReport' width=20px height=20px src='/img/reportICON.svg'>	
 					</c:if>
 				</sec:authorize>		
 			</td>
@@ -586,17 +591,17 @@
 		</tr>
 	</table>
 	<hr>
-	<div>			
+	<div class="mb-3">			
 		<sec:authentication property="principal" var="pinfo"/>
 		<sec:authorize access="isAuthenticated()">
 			<c:if test="${pinfo.username eq board.m_id}">
 					<button id="updateBtn" class="btn btn-outline-light mainBtn">수정</button>
 					<button id="deleteBtn" class="btn btn-outline-light grayBtn">삭제</button>			
 			</c:if>
-		</sec:authorize>		
+		</sec:authorize>	
+		<button id="listBtn" class="btn btn-outline-light typeBtn float-right">목록</button>
     </div>
-    
-	<hr>
+    <br>
 	<!-- 댓글목록 -->
 	<h4>Comments</h4>
 	<br>

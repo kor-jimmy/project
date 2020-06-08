@@ -61,7 +61,7 @@
 							"<td class='num'>"+(idx+1)+"</td>"+
 							"<td class='room'>"+ rn +"</td>"+
 							"<td class='go'><button type='button' onclick='goRoom(\""+roomNumber+"\", \""+rn+"\")'>참여</button></td>" +
-							"<td class='delete'><button type='button' onclick='deleteRoom("+roomNumber+")'>삭제</button></td>" +
+							"<td class='delete'><button type='button' onclick='deleteRoom("+idx+")'>삭제</button></td>" +
 						"</tr>";	
 			});
 			

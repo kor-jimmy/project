@@ -310,6 +310,10 @@
 				});
 			}
 		});
+
+		$("#listBtn").click(function(){
+			location.href="/goods/list";
+		});
 	});
 
 </script>
@@ -328,8 +332,12 @@
 			<td width="10%" align="center"><img id='goodsReport' class="expressionIcons" width=20px height=20px src='/img/reportICON.svg'>	</td>
 		</tr>
 		<tr>
+		</tr>
+		<tr>
 			<td colspan="6" height="500px">
-			<div class="contents-padding" id="content">${goods.g_content }</div></td>
+			<div class="float-none m-3 h3 mb-4"><span class="mr-4 ml-3 badge badge-warning"style="background-color: #A3A1FC; color: white;"><b>희망가</b></span> <strong><i> ${ goods.g_price }</i> 원</strong></div>
+			<hr>
+			<div class="contents-padding mt-5" id="content">${goods.g_content }</div></td>
 		</tr>
 	</table>
 	<div>
@@ -340,6 +348,7 @@
 				<button id="deleteBtn" class="btn btn-outline-light grayBtn">삭제</button>
 			</c:if>
 		</sec:authorize>
+		<button id="listBtn" class="btn btn-outline-light typeBtn float-right">목록</button>
 	</div>
 	<br>
 	<h4>Comments</h4>
