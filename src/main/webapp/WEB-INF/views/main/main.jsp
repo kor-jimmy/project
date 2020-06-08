@@ -526,7 +526,7 @@
             </ol>
             <div class="carousel-inner">
             <c:forEach var="s" items="${ slideImageList }">
-            	<div class="carousel-item">
+            	<div class="carousel-item" style="height: 300px; overflow: hidden;">
 	                <img class="d-block w-100" src="/img/${ s.s_img }">
 	                <div class="carousel-caption d-none d-md-block">
 	                    <h5>${ s.s_title }</h5>
