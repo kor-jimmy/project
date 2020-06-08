@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
+<link href="/resources/css/elements.css" rel="stylesheet">
 <style>
     #carousel-inner img{
         width: 1100px;
@@ -266,12 +267,18 @@
 
         //일간,월간,주간 버튼 이벤트
         $("#todayBestBtn").click(function(){
+            $(".typeBtn").removeClass("typeBtnActive");
+            $(this).addClass("typeBtnActive");
         	todayBest();
         })
         $("#weekBestBtn").click(function(){
+        	$(".typeBtn").removeClass("typeBtnActive");
+            $(this).addClass("typeBtnActive");
 			weekBest();
         })
         $("#monthBestBtn").click(function(){
+        	$(".typeBtn").removeClass("typeBtnActive");
+            $(this).addClass("typeBtnActive");
 			monthBest();
         })
 
@@ -323,7 +330,7 @@
 					var date = moment(board.b_date).format("YYYY-MM-DD");
 					var tr = $("<tr class='newBoardList' b_no="+board.b_no+"></tr>");
 					var td1 = $("<td></td>").html(board.c_dist);
-					var td2 = $("<td></td>").html(board.b_title);
+					var td2 = $("<td></td>").html(board.b_title).addClass("pointer-cursor");
 					var td3 = $("<td></td>").html(board.m_nick);
 					var td4 = $("<td></td>").html(date);
 
@@ -537,9 +544,9 @@
             	<div>
             		<h3>Ae?-Ho! 인기글</h3>
 	                <p>
-	                    <button id="todayBestBtn" type="button" class="btn btn-light">today</button>
-	                    <button id="weekBestBtn" type="button" class="btn btn-light">week</button>
-	                    <button id="monthBestBtn" type="button" class="btn btn-light">month</button>
+	                    <button id="todayBestBtn" type="button" class="btn btn-light typeBtn">today</button>
+	                    <button id="weekBestBtn" type="button" class="btn btn-light typeBtn">week</button>
+	                    <button id="monthBestBtn" type="button" class="btn btn-light typeBtn typeBtnActive">month</button>
 	                </p>
 		            <div class="mainContent">
 		            	<div id="bestContent" class="row">

@@ -6,3 +6,5 @@ a{ text-decoration: none !important; color: dimgray; }
 a:hover{ color: gray; }
 
 .grayscale{ filter: grayscale(100%); }
+
+.pointer-cursor{ cursor: pointer; }
