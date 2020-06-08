@@ -362,7 +362,7 @@
 				console.log(g);
 				var g = item;
 				
-				var div = $("<div class='goodsBox mb-2'></div>");
+				var div = $("<div class='goodsBox mb-2' style='width: inherit;'></div>");
 				
 				var con = g.g_content;
 				var img;
@@ -614,7 +614,7 @@
             	<div>
             		<h3>새로운 Ae-Ho품!</h3>
             		<div class="mainContent" id="goodsDiv" align="center">
-						<ul id="goodsList" class="mt-5">
+						<ul id="goodsList" class="mt-5 pr-5">
 							
 						</ul>
 					</div>

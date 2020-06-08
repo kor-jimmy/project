@@ -185,6 +185,7 @@
 			});
 			
 			$('#searchModal').on('show.bs.modal', function (event) {
+				$("#topPicksList").empty();
 				$.ajax("/search/listPicks", {success: function(data){
 					console.log(data);
 					$.each(data, function(idx, p){
