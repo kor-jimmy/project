@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -14,10 +13,12 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.aeho.demo.controller.ChatMainController;
+
+
 @Component
 public class SocketHandler extends TextWebSocketHandler {
 
-	
 	List<HashMap<String, Object>> rls = new ArrayList<>(); //웹소켓 세션을 담아둘 리스트 ---roomListSessions
 	
 	@Override
@@ -93,25 +94,27 @@ public class SocketHandler extends TextWebSocketHandler {
 			session.sendMessage(new TextMessage(obj.toJSONString()));
 		}
 		
+	
 		@Override
 		public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 			//소켓 종료
 			if(rls.size() > 0) { //소켓이 종료되면 해당 세션값들을 찾아서 지운다.
 					for(int i=0; i<rls.size(); i++) {
 						rls.get(i).remove(session.getId());
+						System.out.println(session.getPrincipal().getName()+"님이 퇴장하셨습니다.");
 					}
 				}
 				super.afterConnectionClosed(session, status);
 			}
 			
-			private static JSONObject jsonToObjectParser(String jsonStr) {
-				JSONParser parser = new JSONParser();
-				JSONObject obj = null;
-				try {
-					obj = (JSONObject) parser.parse(jsonStr);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				return obj;
+		private static JSONObject jsonToObjectParser(String jsonStr) {
+			JSONParser parser = new JSONParser();
+			JSONObject obj = null;
+			try {
+				obj = (JSONObject) parser.parse(jsonStr);
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
+			return obj;
+		}
 }

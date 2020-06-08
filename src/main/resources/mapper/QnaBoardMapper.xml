@@ -31,27 +31,26 @@
   
   
 <select id="getListWithPaging" resultType="com.aeho.demo.vo.QnaBoardVo">
-  	<![CDATA[
+	<![CDATA[
   		select *
   		from
   			(
   				select 
-  				  rownum rn, qb_no, m_id, c_no, qb_title, qb_content, qb_date, qb_updatedate, qb_ref, qb_level, qb_step, ROW_NUMBER() OVER(ORDER BY qb_no DESC) AS RNUM
+  				  rownum rn, qb_no, m_id, c_no, qb_title, qb_content, qb_date, qb_updatedate, qb_ref, qb_level, qb_step
   				from qnaboard
   				where rownum <= #{pageNum} * #{amount} and c_no=#{categoryNum} 
   		]]>
   			<if test="catKeyword != null">
-  				and qnaboard.c_no=(select qnaboard.c_no from category c where c.c_no=qnaboard.c_no and c_dist=#{catKeyword}) order by qb_ref desc, qb_level, qb_step		
+  				and qnaboard.c_no=(select qnaboard.c_no from category c where c.c_no=qnaboard.c_no and c_dist=#{catKeyword}) 	
   			</if>
   			<if test = "searchKeyword != null">
   				<include refid="searchSql"></include> 
   			</if>
  		<![CDATA[
   			) 
-  		where rn > (#{pageNum}-1) * #{amount} order by qb_ref desc, qb_level, qb_step
+  		where rn > (#{pageNum}-1) * #{amount} and c_no=#{categoryNum} order by qb_ref desc, qb_level, qb_step
   	]]>  
   </select>
-
   
   <select id="getTotalCount" resultType="int">
   		select count(*) from qnaboard qb where qb_no>0 and c_no=#{categoryNum}

@@ -6,22 +6,6 @@
 <%@include file="includes/header.jsp"%>
 
 	<style>
-/* 		*{
-			margin:0;
-			padding:0;
-		}
-		.container{
-			width: 500px;
-			margin: 0 auto;
-			padding: 25px
-		}
-		.container h1{
-			text-align: left;
-			padding: 5px 5px 5px 15px;
-			color: #FFBB00;
-			border-left: 3px solid #FFBB00;
-			margin-bottom: 20px;
-		} */
 		.chating{
 			background-color: #000;
 			width: 500px;
@@ -44,25 +28,28 @@
 <script type="text/javascript">
 	var ws;
 	var user_id = "<sec:authentication property='principal.username'/>";
-	//1. 유저 아이디를 가지고 닉네임을 호출하는 ajax
-	//2. 메세지를 보낼때마다 해당 정보(메세지번호(시퀀스), 아이디, 채팅방번호, 메세지내용, 날짜)를 가지고 
-	//		ajax 통신을 해서 디비에 넣어주는 기능 추가.
-	//3. 채팅방정보 디비에 들어가게 만듬.
-	
 	
 	function wsOpen(){
 		ws = new WebSocket("ws://" + location.host + "/chating/" + $("#roomNumber").val());
 		wsEvt();
 	}
+
+	function disconnect(data){
+		ws.close();
+		$("#closeBtn").append();
+		self.location="/room";
+	}
 		
 	function wsEvt() {
 		ws.onopen = function(data){//소켓이 열리면 동작
-		}
-			
+	}
+
 	ws.onmessage = function(data) {//메세지 받으면 동작
 		var msg = data.data;
 		if(msg != null && msg.trim() != ''){
 			var d = JSON.parse(msg);
+			var userID = $(this).attr("m_id");
+			var userData = {m_id:userID};
 			if(d.type == "getId"){
 				var si = d.sessionId != null ? d.sessionId : "";
 				if(si != ''){
@@ -74,11 +61,10 @@
 				}else{
 					$("#chating").append("<p class='others'>" + d.userName + " :" + d.msg + "</p>");
 				}
-					
 			}else{
 				console.warn("unknown type!")
 			}
-		}
+		}	
 	}
 
 	document.addEventListener("keypress", function(e){
@@ -91,7 +77,6 @@
 	function chatName(){
 		var userName = $("#userName").val();
 		if(userName == null || userName.trim() == ""){
-			alert("사용자 이름을 입력해주세요.");
 			$("#userName").focus();
 		}else{
 			wsOpen();
@@ -110,10 +95,11 @@
 		}
 		ws.send(JSON.stringify(option))
 		$('#chatting').val("");
+
 	}
 </script>
-
-	<div>
+<body>
+	<div id="container" class="container">
 		<h1>${roomName }의 채팅방</h1>
 		<input type="hidden" id="sessionId" value="">
 		<input type="hidden" id="roomNumber" value="${roomNumber }">
@@ -125,7 +111,7 @@
 			<table class="inputTable">
 				<tr>
 					<th>사용자명</th>
-					<th><input type="text" name="userName" id="userName" value="<sec:authentication property='principal.username'/>" required="required"></th>
+					<th><input type="text" name="userName" id="userName" value="<sec:authentication property='principal.username'/>" readonly="readonly"></th>
 					<th><button onclick="chatName()" id="startBtn">채팅방 입장</button></th>
 				</tr>
 			</table>
@@ -136,9 +122,12 @@
 					<th>메시지</th>
 					<th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
 					<th><button onclick="send()" id="sendBtn">보내기</button></th>
+					<th><button onclick="disconnect()" value="disconnect" id="closeBtn">나가기</button></th>
 				</tr>
 			</table>
 		</div>
 	</div>
+</body>
+</html>
 
 <%@include file="includes/footer.jsp"%> 

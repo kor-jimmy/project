@@ -5,69 +5,6 @@
 <%@include file="includes/header.jsp"%>
 
 	<style>
-/* 		*{
-			margin:0;
-			padding:0;
-		}
-		.container{
-			width: 500px;
-			margin: 0 auto;
-			padding: 25px
-		}
-		.container h1{
-			text-align: left;
-			padding: 5px 5px 5px 15px;
-			color: #FFBB00;
-			border-left: 3px solid #FFBB00;
-			margin-bottom: 20px;
-		} */
-/* 		.roomContainer{
-			background-color: #F6F6F6;
-			width: 500px;
-			height: 500px;
-			overflow: auto;
-		}
-		.roomList{
-			border: none;
-		}
-		.roomList th{
-			border: 1px solid #FFBB00;
-			background-color: #fff;
-			color: #FFBB00;
-		}
-		.roomList td{
-			border: 1px solid #FFBB00;
-			background-color: #fff;
-			text-align: left;
-			color: #FFBB00;
-		}
-		.roomList .num{
-			width: 75px;
-			text-align: center;
-		}
-		.roomList .room{
-			width: 350px;
-		}
-		.roomList .go{
-			width: 71px;
-			text-align: center;
-		}
-		button{
-			background-color: #FFBB00;
-			font-size: 14px;
-			color: #000;
-			border: 1px solid #000;
-			border-radius: 5px;
-			padding: 3px;
-			margin: 3px;
-		}
-		.inputTable th{
-			padding: 5px;
-		}
-		.inputTable input{
-			width: 330px;
-			height: 25px;
-		} */
 		.roomList{
 			text-align: center;
 		}
@@ -85,7 +22,6 @@
 	var ws;
 
 	window.onload = function(){
-		console.log(header,token);
 		getRoom();
 		createRoom();
 	}
@@ -108,8 +44,9 @@
 		});
 	}
 
+
 	function goRoom(number, name){
-		location.href="/moveChating?roomName="+name+"&"+"roomNumber="+number;
+		location.href="/moveChating?roomName="+name+"&roomNumber="+number;
 	}
 
 	function createChatingRoom(res){
@@ -122,6 +59,7 @@
 							"<td class='num'>"+(idx+1)+"</td>"+
 							"<td class='room'>"+ rn +"</td>"+
 							"<td class='go'><button type='button' onclick='goRoom(\""+roomNumber+"\", \""+rn+"\")'>참여</button></td>" +
+							"<td class='delete'><button type='button' onclick='deleteRoom(\""+roomNumber+"\", \""+rn+"\")'>방 삭제</button></td>" +
 						"</tr>";	
 			});
 			
@@ -148,6 +86,7 @@
 		});
 	}
 	
+	
 </script>
 
 	<div class="row">
@@ -161,7 +100,6 @@
 				<button id="createRoom">방 만들기</button>
 			</div>
 		</div>
-
 	</div>
 
 <%@include file="includes/footer.jsp"%>  
