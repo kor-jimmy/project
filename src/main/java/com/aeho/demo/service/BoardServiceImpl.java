@@ -161,6 +161,12 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return boardDao.mainNewBoard();
 	}
+
+	@Override
+	public BoardVo boardAlarm(int b_no) {
+		// TODO Auto-generated method stub
+		return boardDao.boardAlarm(b_no);
+	}
 	
 	
 	

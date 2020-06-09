@@ -11,6 +11,7 @@ import com.aeho.demo.dao.GoodsDao;
 import com.aeho.demo.dao.GoodsReplyDao;
 import com.aeho.demo.vo.AlarmVo;
 import com.aeho.demo.vo.GoodsReplyVo;
+import com.aeho.demo.vo.GoodsVo;
 
 @Service
 public class GoodsReplyServiceImpl implements GoodsReplyService {
@@ -53,7 +54,7 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 		//진탁) 06-09댓글 알람 등록
 		//본인 작성글이면 알람안되게!
 		//g_no로 작성자를 찾는거
-		String writer = goodsDao.findUser(gv.getG_no());
+		String writer = goodsDao.goodsAlarm(gv.getG_no()).getM_id();
 		if(!writer.equals(gv.getM_id())) {
 			AlarmVo alarmVo = new AlarmVo();
 			//댓글은 1번 좋아요는 2번 싫어요는 3번
@@ -118,6 +119,7 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	public int updateState(int gr_no) {
 		return goodsReplyDao.updateState(gr_no);
 	}
+
 
 
 }

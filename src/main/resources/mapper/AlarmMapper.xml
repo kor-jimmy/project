@@ -17,7 +17,7 @@
 	</select>
 	
 	<update id="updateCheck">
-		update set a_check='YES' where a_no=#{a_no}
+		update alarm set a_check='YES' where a_no=#{a_no}
 	</update>
 	
 </mapper>

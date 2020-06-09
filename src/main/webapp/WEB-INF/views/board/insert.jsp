@@ -101,8 +101,8 @@
 		//시큐리티 csrf 
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
-		console.log(token)
-		console.log(header)
+/* 		console.log(token)
+		console.log(header) */
 		
 		//폼태그 기본속성 제거
 		$("#insertBtn").on("click",function(e){

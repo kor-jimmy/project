@@ -25,4 +25,5 @@ public interface GoodsService {
 	
 	List<GoodsVo> mainNewGoods();
 	
+	GoodsVo goodsAlarm(int g_no);
 }

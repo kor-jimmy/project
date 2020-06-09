@@ -149,7 +149,8 @@
 	]]>
   </select>
   
-   <select id="findUser" resultType="java.lang.String">
-  		select m_id from goods where g_no=#{g_no}
+   <select id="goodsAlarm" resultType="com.aeho.demo.vo.GoodsVo">
+  		select * from goods where g_no=#{g_no}
   </select>
+  
 </mapper>

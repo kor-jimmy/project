@@ -189,7 +189,7 @@ public class MainController {
 	@ResponseBody
 	public String listAlarm(HttpServletRequest request, @RequestParam("m_id") String m_id) {
 		System.out.println("알람 들어온 아이디==>"+m_id);
-		List<AlarmVo> list = alarmServcie.listAlarm(m_id);
+		List<AlarmVo> list = alarmServcie.listAlarm(m_id.trim());
 		System.out.println("반환된 값==>"+list);
 		Gson gson = new Gson();
 		String str = gson.toJson(list);
@@ -200,6 +200,21 @@ public class MainController {
 	@ResponseBody
 	public void updateCheck(HttpServletRequest request, @RequestParam("a_no") int a_no) {
 		int re = alarmServcie.updateCheck(a_no);
+		System.out.println("업데이트 체크 작동중====");
 	}
+	
+	@GetMapping("/getBoardTitle")
+	@ResponseBody
+	public String getBoardTitle(HttpServletRequest requst, @RequestParam("b_no") int b_no) {
+		String str = boardService.boardAlarm(b_no).getB_title();
+		return str;
+	}
+	@GetMapping("/getGoodsTitle")
+	@ResponseBody
+	public String getGoodsTitle(HttpServletRequest requst, @RequestParam("g_no") int g_no) {
+		String str = goodsService.goodsAlarm(g_no).getG_title();
+		return str;
+	}
+	
 
 }

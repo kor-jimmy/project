@@ -29,5 +29,5 @@ public interface GoodsDao {
 	
 	List<GoodsVo> mainNewGoods();
 	
-	String findUser(int g_no);
+	GoodsVo goodsAlarm(int g_no);
 }

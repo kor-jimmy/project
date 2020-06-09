@@ -19,4 +19,6 @@ public class AlarmVo {
 	private int ac_code;
 	private String clickid;
 	
+	private String b_title;
+	
 }

@@ -38,4 +38,5 @@ public interface BoardService {
 	
 	List<BoardVo> mainNewBoard();
 	
+	BoardVo boardAlarm(int b_no);
 }

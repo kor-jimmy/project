@@ -112,6 +112,12 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsDao.mainNewGoods();
 	}
 
+	@Override
+	public GoodsVo goodsAlarm(int g_no) {
+		// TODO Auto-generated method stub
+		return goodsDao.goodsAlarm(g_no);
+	}
+
 	
 
 }

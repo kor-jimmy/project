@@ -109,11 +109,34 @@
 		.dropdown-toggle::after {
 			content: none;
 		}
+		
+		.boardAlarm{
+			
+		}
+		
+		.goodsAlarm{
+		
+		}
+		
+		.checkAlarm{
+			background: blue;
+		}
+		
+		#alarmList{
+			padding: 10px;
+			height: 300px;
+			width: 400px;
+			overflow: auto;
+		}
+
 
     </style>
     <script>    
     $(function(){
 
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
     	var userID = " <sec:authorize access='isAuthenticated()'><sec:authentication property='principal.username'/></sec:authorize>";
         
 		//각 분류별 카테고리를 호출하는 함수.
@@ -250,23 +273,107 @@
 
 			//알람기능
 			$("#notificationDiv").click(function(){
-				alert("ok");
+				$("#alarmList").empty();
 				var data = {m_id:userID}
+				
 				$.ajax({
 					url: "/listAlarm",
 					data: data,
 					type: "GET",
 					success: function(result){
-						var data = JSON.parse(result);
+						var alarmList = JSON.parse(result);
 						console.log(data)
-						$.each(data, function(idx, a){
-							console.log(a);
-							$("#alarmList").append(a);
+						$.each(alarmList, function(idx, alarm){
+							var alarmTitle =$("<b></b>");
+							var div = $("<div class='userAlarm'></div>").attr("a_no",alarm.a_no);
+							//1번 게시물인지 굿즈인지 판별
+							if(alarm.g_no == null || alarm.g_no ==""|| alarm.g_no =="null"){
+								div.addClass("boardAlarm");
+								div.attr("b_no",alarm.b_no);
+								$.ajax({
+									url:"/getBoardTitle",
+									data : {b_no:alarm.b_no},
+									type : "GET",
+									success : function(result){
+										alarmTitle.text(result);
+									}	
+								})
+							}
+							
+							if(alarm.b_no == null || alarm.b_no ==""|| alarm.b_no =="null"){
+								div.addClass("goodsAlarm");
+								div.attr("g_no",alarm.g_no);
+								$.ajax({
+									url:"/getGoodsTitle",
+									data : {g_no:alarm.g_no},
+									type : "GET",
+									success : function(result){
+										alarmTitle.text(result);
+									}
+								})
+							}
+							
+							if(alarm.a_check == "YES"){
+								div.addClass("checkAlarm");
+							}
+
+							var content = $("<div></div>").append(alarmTitle);
+							var msg = $("<p></p>");
+							var time = moment(alarm.a_time).format('YYY-MM-DD HH:mm:ss');
+							var date = $("<p></p>").append(time);
+							var clickID = alarm.clickid;
+							if(alarm.ac_code == 1){
+								msg.html(clickID+"님이 댓글을 달았습니다.");
+							}
+							if(alarm.ac_code==2){
+								msg.html(clickID+"님이 좋아요를 눌렀습니다.");
+							} 
+							if(alarm.ac_code==3){
+								msg.html(clickID+"님이 싫어요를 눌렀습니다.");
+							}
+							//var span = $("<span></span>").append(msg);
+							content.append(msg,date);
+							div.append(content); 
+							$("#alarmList").append(div);
 						});
 						
 					}
 				});
 			});
+
+			var updateCheck = function(no){
+				var a_no = no;
+				$.ajax({
+					url: "/updateCheck",
+					type: "POST",
+					data: {a_no:a_no},
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(header,token)
+					},
+					cache : false,
+					success:function(result){
+					}
+				})
+			}
+
+			$(document).on("click",".boardAlarm",function(e){
+				var b_no = $(this).attr("b_no");
+				var a_no = $(this).attr("a_no");
+				if($(this).attr('class').indexOf('checkAlarm')<=-1){
+					updateCheck(a_no);
+				}
+				
+				location.href="/board/get?b_no="+b_no;
+				
+			})
+			$(document).on("click",".goodsAlarm",function(e){
+				var g_no = $(this).attr("g_no");
+				var a_no = $(this).attr("a_no");
+				if($(this).attr('class').indexOf('checkAlarm')<=-1){
+					updateCheck(a_no);
+				}
+				location.href="/goods/get?g_no="+g_no;
+			})
 
 		})
     </script>

@@ -8,7 +8,7 @@
   </select>
   
   <select id="getBoard" resultType="com.aeho.demo.vo.BoardVo">
-  	select b.*,m_nick from board b,member m where b.b_no = #{b_no} and b.m_id=m.m_id
+  	select b.*, m_nick from board b,member m where b.b_no = #{b_no} and b.m_id=m.m_id
   </select>
   
   <select id="listCatBoard" resultType="com.aeho.demo.vo.BoardVo">
@@ -175,8 +175,8 @@
 	]]>
   </select>
   
-  <select id="findUser" resultType="java.lang.String">
-  	select m_id from board where b_no=#{b_no}
+  <select id="boardAlarm" resultType="com.aeho.demo.vo.BoardVo">
+  	select * from board where b_no=#{b_no}
   </select>
   
 </mapper>

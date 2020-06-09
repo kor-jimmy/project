@@ -42,7 +42,7 @@ public class HateServiceImpl implements HateService {
 		//진탁) 06-09댓글 알람 등록
 		//본인 작성글이면 알람안되게!
 		//b_no로 작성자를 찾는거
-		String writer = boardDao.findUser(hv.getB_no());
+		String writer = boardDao.boardAlarm(hv.getB_no()).getM_id();
 		if(!writer.equals(hv.getM_id())) {
 			AlarmVo alarmVo = new AlarmVo();
 			//댓글은 1번 좋아요는 2번 싫어요는 3번
