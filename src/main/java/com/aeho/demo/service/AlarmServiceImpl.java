@@ -39,4 +39,18 @@ public class AlarmServiceImpl implements AlarmServcie {
 		return alarmDao.updateCheck(a_no);
 	}
 
+	@Override
+	public int deleteBoardAlarm(int b_no) {
+		// TODO Auto-generated method stub
+		return alarmDao.deleteBoardAlarm(b_no);
+	}
+
+	@Override
+	public int deleteGoodsAlarm(int g_no) {
+		// TODO Auto-generated method stub
+		return alarmDao.deleteGoodsAlarm(g_no);
+	}
+	
+	
+
 }

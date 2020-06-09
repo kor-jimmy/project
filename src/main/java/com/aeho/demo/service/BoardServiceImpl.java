@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aeho.demo.dao.AlarmDao;
 import com.aeho.demo.dao.BoardDao;
 import com.aeho.demo.dao.BoardFilesDao;
 import com.aeho.demo.dao.HateDao;
@@ -17,6 +18,7 @@ import com.aeho.demo.dao.ReportDao;
 import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.vo.BoardFilesVo;
 import com.aeho.demo.vo.BoardVo;
+import com.aeho.demo.vo.LoveVo;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -38,6 +40,9 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	private ReportDao reportDao;
+	
+	@Autowired
+	private AlarmDao alarmDao;
 
 	@Override
 	public List<BoardVo> listBoard() {
@@ -80,33 +85,44 @@ public class BoardServiceImpl implements BoardService {
 
 	// 게시물 삭제시 댓글 삭제도 추가 , 파일 테이블 db 삭제기능
 	@Override
-	// @Transactional(rollbackFor=Exception.class)
+	@Transactional(rollbackFor=Exception.class)
 	public int deleteBoard(BoardVo bv) {
 		System.out.println("board service 로직타는중");
 		int result = 0;
-		
-		// 게시물 파일 테이블의 정보부터 삭제. 이유는 자식이니까 부모보다 먼저가야됨 불효자
-		// 파일이 없는경우 에러가 난다. 조건문으로 파일이 있는지 없는지 따진다.
-		if(boardFilesDao.findByBno(bv.getB_no())!=null) {
-			int result_files = boardFilesDao.deleteByBno(bv.getB_no());
-			System.out.println("파일 삭제 성공 번호 "+result_files);
-		}
+		try {
+			// 게시물 파일 테이블의 정보부터 삭제. 이유는 자식이니까 부모보다 먼저가야됨 불효자
+			// 파일이 없는경우 에러가 난다. 조건문으로 파일이 있는지 없는지 따진다.
+			if(boardFilesDao.findByBno(bv.getB_no())!=null) {
+				int result_files = boardFilesDao.deleteByBno(bv.getB_no());
+				System.out.println("파일 삭제 성공 번호 "+result_files);
+			}
 
-		if(replyDao.listReply(bv.getB_no()) != null) {
-			int result_reply = replyDao.deleteBoardReply(bv.getB_no());
-			System.out.println("댓글 삭제 성공 번호 "+result_reply);	
+			if(replyDao.listReply(bv.getB_no()) != null) {
+				int result_reply = replyDao.deleteBoardReply(bv.getB_no());
+				System.out.println("댓글 삭제 성공 번호 "+result_reply);	
+			}
+			
+			if(reportDao.listReport(bv.getB_no(), "board") != null) {
+				int result_report = reportDao.deleteReport(bv.getB_no(), "board");
+			}
+			
+			int result_alarm = alarmDao.deleteBoardAlarm(bv.getB_no());
+			
+			int result_board = boardDao.deleteBoard(bv);
+			
+			
+			System.out.println("게시물 삭제 성공 번호 "+result_board);
+			
+			if (result_board > 0) {
+				result = 1; 
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 		
-		if(reportDao.listReport(bv.getB_no(), "board") != null) {
-			int result_report = reportDao.deleteReport(bv.getB_no(), "board");
-		}
-		
-		int result_board = boardDao.deleteBoard(bv);
-		System.out.println("게심루 삭제 성공 번호 "+result_board);
-		
-		if (result_board > 0) {
-			result = 1; 
-		}
+
 		return result;
 	}
 

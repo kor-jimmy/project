@@ -13,4 +13,8 @@ public interface AlarmDao {
 	List<AlarmVo> listAlarm(String m_id);
 	
 	int updateCheck(int a_no);
+	
+	int deleteBoardAlarm(int b_no);
+	
+	int deleteGoodsAlarm(int g_no);
 }

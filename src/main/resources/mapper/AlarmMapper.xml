@@ -20,4 +20,11 @@
 		update alarm set a_check='YES' where a_no=#{a_no}
 	</update>
 	
+	<delete id="deleteBoardAlarm">
+		delete alarm where b_no = #{b_no}
+	</delete>
+	<delete id="deleteGoodsAlarm">
+		delete alarm where g_no = #{g_no}
+	</delete>
+	
 </mapper>

@@ -27,7 +27,6 @@ public class ReplyServiceImple implements ReplyService {
 	private AlarmDao alarmDao;
 	
 	@Override
-	@Transactional(rollbackFor=Exception.class)
 	public List<ReplyVo> listReply(int b_no) {
 		return replyDao.listReply(b_no);
 	}
