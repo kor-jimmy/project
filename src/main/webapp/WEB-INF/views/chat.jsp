@@ -4,6 +4,8 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="includes/header.jsp"%>
+<link href="/resources/css/button.css" rel="stylesheet">
+<link href="/resources/css/font.css" rel="stylesheet">
 
 	<style>
 		.chating{
@@ -100,7 +102,7 @@
 </script>
 <body>
 	<div id="container" class="container">
-		<h1>${roomName }의 채팅방</h1>
+		<h1 class="font-family">${roomName }</h1>
 		<input type="hidden" id="sessionId" value="">
 		<input type="hidden" id="roomNumber" value="${roomNumber }">
 		
@@ -111,8 +113,8 @@
 			<table class="inputTable">
 				<tr>
 					<th>사용자명</th>
-					<th><input type="text" name="userName" id="userName" value="<sec:authentication property='principal.username'/>" readonly="readonly"></th>
-					<th><button onclick="chatName()" id="startBtn">채팅방 입장</button></th>
+					<th><input type="text" name="userName" id="userName" class="btn btn-outline-light typeBtn subBtn" value="<sec:authentication property='principal.username'/>" readonly="readonly"></th>
+					<th><button onclick="chatName()" id="startBtn" class="btn btn-outline-light typeBtn subBtn">채팅방 입장</button></th>
 				</tr>
 			</table>
 		</div>
@@ -120,9 +122,9 @@
 			<table class="inputTable">
 				<tr>
 					<th>메시지</th>
-					<th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
-					<th><button onclick="send()" id="sendBtn">보내기</button></th>
-					<th><button onclick="disconnect()" value="disconnect" id="closeBtn">나가기</button></th>
+					<th><input id="chatting" placeholder="보내실 메시지를 입력하세요." class="btn btn-outline-light typeBtn subBtn"></th>
+					<th><button onclick="send()" id="sendBtn" class="btn-outline-light list-mintBtnActive">보내기</button></th>
+					<th><button onclick="disconnect()" value="disconnect" id="closeBtn" class="btn-outline-light typeBtnActive">나가기</button></th>
 				</tr>
 			</table>
 		</div>

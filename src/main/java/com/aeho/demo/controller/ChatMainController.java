@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.aeho.demo.vo.ChatRoomVo;
+import com.aeho.demo.vo.QnaBoardFilesVo;
 
 
 @Controller

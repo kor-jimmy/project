@@ -54,13 +54,14 @@
 			<div class="contents-padding" id="contents">${qnaboard.qb_content }</div></td>
 		</tr>
 	</table>
-	<button id="deleteBtn" class="btn btn-outline-light grayBtn">삭제</button>
-	<button id="updateBtn" class="btn btn-outline-light subBtn">수정</button>
+	
 
 	<sec:authentication property="principal" var="pinfo"/>
 	<sec:authorize access="isAuthenticated()">
 		<c:if test="${pinfo.username eq qnaboard.m_id}">
 			<button id="replyInsertBtn" class="btn btn-outline-light mainBtn">답글</button>
+			<button id="deleteBtn" class="btn btn-outline-light grayBtn">삭제</button>
+			<button id="updateBtn" class="btn btn-outline-light subBtn">수정</button>
 		</c:if>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_MASTER')">
