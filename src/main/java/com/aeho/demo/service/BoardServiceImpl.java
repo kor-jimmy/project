@@ -18,6 +18,7 @@ import com.aeho.demo.dao.ReportDao;
 import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.vo.BoardFilesVo;
 import com.aeho.demo.vo.BoardVo;
+import com.aeho.demo.vo.HateVo;
 import com.aeho.demo.vo.LoveVo;
 
 @Service
@@ -106,7 +107,18 @@ public class BoardServiceImpl implements BoardService {
 				int result_report = reportDao.deleteReport(bv.getB_no(), "board");
 			}
 			
+			LoveVo lv = new LoveVo();
+			lv.setB_no(bv.getB_no());
+			int result_love = loveDao.deleteLove(lv);
+			System.out.println("좋아요 삭제 결과: " + result_love);
+			
+			HateVo hv = new HateVo();
+			hv.setB_no(bv.getB_no());
+			int result_hate = hateDao.deleteHate(hv);
+			System.out.println("싫어요 삭제 결과: " + result_hate);
+			
 			int result_alarm = alarmDao.deleteBoardAlarm(bv.getB_no());
+			System.out.println("알림 삭제 결과: " + result_alarm);
 			
 			int result_board = boardDao.deleteBoard(bv);
 			

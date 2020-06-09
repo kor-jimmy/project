@@ -111,24 +111,35 @@
 		}
 		
 		.boardAlarm{
-			
+			background: #FFF4D1;
 		}
 		
 		.goodsAlarm{
-		
+			background: #FFF4D1;
 		}
 		
 		.checkAlarm{
-			background: blue;
+			background: #F4F4F4;
 		}
 		
 		#alarmList{
 			padding: 10px;
 			height: 300px;
 			width: 400px;
-			overflow: auto;
 		}
-
+		.alarmListBox{
+			overflow: auto;
+			height: 280px;
+		}
+		.userAlarm{
+			padding: 10px;
+			margin-bottom: 10px;
+		}
+		
+		#alarmIcon{
+			border-radius: 50%;
+			padding: 5px;
+		}
 
     </style>
     <script>    
@@ -283,8 +294,10 @@
 					success: function(result){
 						var alarmList = JSON.parse(result);
 						console.log(data)
+						var alarmListBox = $("<div class='alarmListBox'></div>");
+						var alarmListContain = $("<div class='mr-2'></div>");
 						$.each(alarmList, function(idx, alarm){
-							var alarmTitle =$("<b></b>");
+							var alarmTitle =$("<h5 class='pointer-cursor'></h5>");
 							var div = $("<div class='userAlarm'></div>").attr("a_no",alarm.a_no);
 							//1번 게시물인지 굿즈인지 판별
 							if(alarm.g_no == null || alarm.g_no ==""|| alarm.g_no =="null"){
@@ -317,10 +330,10 @@
 								div.addClass("checkAlarm");
 							}
 
-							var content = $("<div></div>").append(alarmTitle);
+							var content = $("<div class='userAlarmContent'></div>").append(alarmTitle);
 							var msg = $("<p></p>");
-							var time = moment(alarm.a_time).format('YYY-MM-DD HH:mm:ss');
-							var date = $("<p></p>").append(time);
+							var time = moment(alarm.a_time).format('YYYY-MM-DD HH:mm:ss');
+							var date = $("<p class='mb-1'></p>").append(time);
 							var clickID = alarm.clickid;
 							if(alarm.ac_code == 1){
 								msg.html(clickID+"님이 댓글을 달았습니다.");
@@ -332,10 +345,14 @@
 								msg.html(clickID+"님이 싫어요를 눌렀습니다.");
 							}
 							//var span = $("<span></span>").append(msg);
+							
 							content.append(msg,date);
-							div.append(content); 
-							$("#alarmList").append(div);
+							div.append(content);
+							alarmListContain.append(div);
+							alarmListBox.append(alarmListContain);
+							
 						});
+						$("#alarmList").append(alarmListBox);
 						
 					}
 				});
@@ -389,7 +406,7 @@
             		<sec:authorize access="isAuthenticated()">            		
 					<div id="notificationDiv" class="headerIconDiv ml-5 pointer-cursor nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                			<p id="alarmIcon">
-               				<img src="/img/bell.png" width="35px" height="35px">
+               				<img id="alarmImg" src="/img/bell.png" width="35px" height="35px">
                			</p>
                 	</div>
                 	</sec:authorize>
@@ -603,7 +620,7 @@
 	<div class="modal fade bd-example-modal-lg" id="searchModal" tabindex="-1" role="dialog"
 		aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
-			<div class="modal-content p-5" align="center">
+			<div class="modal-content p-5 searchModal-content" align="center">
  				<div class="serachBox">
 					<!-- <h1 id="serachBoxH1">Search</h1> -->
 					<br>

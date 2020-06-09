@@ -142,7 +142,7 @@ input[id="mainTotalSearch"]:hover {
 	background: #CBCAFF;
 }
 
-.modal-content{
+.searchModal-content{
 	background-image: url('/img/search_background.png');
 	
 }

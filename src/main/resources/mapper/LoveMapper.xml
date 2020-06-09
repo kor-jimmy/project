@@ -10,7 +10,10 @@
   </insert>
   
   <delete id="deleteLove">
-  	delete love where b_no = #{b_no} and m_id = #{m_id}
+  	delete love where b_no = #{b_no} 
+  	<if test="m_id != null and m_id != ''">
+  		and m_id = #{m_id}
+  	</if>
   </delete>
   
   <select id="isChecked" resultType="java.lang.Integer">
