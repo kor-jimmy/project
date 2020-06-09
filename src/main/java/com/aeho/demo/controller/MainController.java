@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -190,6 +191,12 @@ public class MainController {
 		Gson gson = new Gson();
 		String str = gson.toJson(list);
 		return str;
+	}
+	
+	@PostMapping("/updateCheck")
+	@ResponseBody
+	public void updateCheck(HttpServletRequest request, @RequestParam("a_no") int a_no) {
+		int re = alarmServcie.updateCheck(a_no);
 	}
 
 }

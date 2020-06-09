@@ -12,5 +12,5 @@ public interface AlarmDao {
 	
 	List<AlarmVo> listAlarm(String m_id);
 	
-	int updateCheck(AlarmVo alarmVo);
+	int updateCheck(int a_no);
 }

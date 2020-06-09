@@ -33,9 +33,9 @@ public class AlarmServiceImpl implements AlarmServcie {
 	}
 
 	@Override
-	public int updateCheck(AlarmVo alarmVo) {
+	public int updateCheck(int a_no) {
 		// TODO Auto-generated method stub
-		return alarmDao.updateCheck(alarmVo);
+		return alarmDao.updateCheck(a_no);
 	}
 
 }
