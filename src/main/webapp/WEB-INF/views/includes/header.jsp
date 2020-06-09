@@ -549,7 +549,7 @@
 	                <li class="nav-item"><a href="/vote/vote" class="nav-link text-secondary">투표</a></li>
 	                <li id="qnaBoard" class="nav-item dropdown">
 				        <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				          	고객의 소리
+				          	Q&A
 				        </a>
 				        <div id="qBoard" class="dropdown-menu" aria-labelledby="navbarDropdown">			        				         	
 				        </div>

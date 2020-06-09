@@ -86,7 +86,6 @@
 				deleteTd.append(delBtn);
 				goTd.append(goBtn);
 				tagTr.append(number, roomname, goTd, deleteTd);
-				
 				$("#roomList").append(tagTr);
 			});	
 			
