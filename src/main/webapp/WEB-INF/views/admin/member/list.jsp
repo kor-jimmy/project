@@ -155,7 +155,6 @@
 							<td align="center"><c:out value="${member.m_reportcnt }" /></td>
 							<td align="center">
 								<select id="role" class="custom-select mr-sm-2">
-									<option value="ROLE_MASTER" <c:if test="${member.role == 'ROLE_MASTER'}">selected</c:if>>마스터</option>
 									<option value="ROLE_MANAGER" <c:if test="${member.role == 'ROLE_MANAGER'}">selected</c:if>>매니저</option>
 									<option value="ROLE_USER" <c:if test="${member.role == 'ROLE_USER'}">selected</c:if>>일반유저</option>
 								</select>

@@ -175,4 +175,8 @@
 	]]>
   </select>
   
+  <select id="findUser" resultType="java.lang.String">
+  	select m_id from board where b_no=#{b_no}
+  </select>
+  
 </mapper>

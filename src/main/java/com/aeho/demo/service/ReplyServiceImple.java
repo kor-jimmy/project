@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aeho.demo.dao.AlarmDao;
 import com.aeho.demo.dao.BoardDao;
 import com.aeho.demo.dao.ReplyDao;
 import com.aeho.demo.dao.ReportDao;
 import com.aeho.demo.domain.CriteriaForReply;
+import com.aeho.demo.vo.AlarmVo;
 import com.aeho.demo.vo.ReplyVo;
 
 @Service
@@ -21,6 +23,8 @@ public class ReplyServiceImple implements ReplyService {
 	private BoardDao boardDao;
 	@Autowired
 	private ReportDao reportDao;
+	@Autowired 
+	private AlarmDao alarmDao;
 	
 	@Override
 	@Transactional(rollbackFor=Exception.class)
@@ -62,6 +66,22 @@ public class ReplyServiceImple implements ReplyService {
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		
+		//진탁) 06-09댓글 알람 등록
+		//본인 작성글이면 알람안되게!
+		//b_no로 작성자를 찾는거
+		String writer = boardDao.findUser(rv.getB_no());
+		if(!writer.equals(rv.getM_id())) {
+			AlarmVo alarmVo = new AlarmVo();
+			//댓글은 1번 좋아요는 2번 싫어요는 3번
+			alarmVo.setAc_code(1);
+			alarmVo.setB_no(rv.getB_no());
+			alarmVo.setClickid(rv.getM_id());
+			alarmVo.setM_id(writer);
+			int alarmResult = alarmDao.insertBoardAlarm(alarmVo);
+		}
+
+		
 		return re;
 	}
 

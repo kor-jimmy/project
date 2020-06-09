@@ -21,4 +21,5 @@ public interface GoodsReplyDao {
 	int updateCnt(int gr_ref);
 
 	int updateState(int gr_no);
+
 }

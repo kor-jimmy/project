@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aeho.demo.dao.AlarmDao;
 import com.aeho.demo.dao.GoodsDao;
 import com.aeho.demo.dao.GoodsReplyDao;
+import com.aeho.demo.vo.AlarmVo;
 import com.aeho.demo.vo.GoodsReplyVo;
 
 @Service
@@ -17,6 +19,10 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 	
 	@Autowired
 	private GoodsDao goodsDao;
+	
+	@Autowired
+	private AlarmDao alarmDao;
+
 	
 	@Override
 	public List<GoodsReplyVo> listGoodsReply(int g_no) {
@@ -44,6 +50,19 @@ public class GoodsReplyServiceImpl implements GoodsReplyService {
 			System.out.println(e.getMessage());// TODO: handle exception
 		}
 		
+		//진탁) 06-09댓글 알람 등록
+		//본인 작성글이면 알람안되게!
+		//g_no로 작성자를 찾는거
+		String writer = goodsDao.findUser(gv.getG_no());
+		if(!writer.equals(gv.getM_id())) {
+			AlarmVo alarmVo = new AlarmVo();
+			//댓글은 1번 좋아요는 2번 싫어요는 3번
+			alarmVo.setAc_code(1);
+			alarmVo.setG_no(gv.getG_no());
+			alarmVo.setClickid(gv.getM_id());
+			alarmVo.setM_id(writer);
+			int alarmResult = alarmDao.insertGoodsAlarm(alarmVo);
+		}
 		return re;
 	}
 

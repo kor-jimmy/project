@@ -148,4 +148,8 @@
 	        where rownum <= 3
 	]]>
   </select>
+  
+   <select id="findUser" resultType="java.lang.String">
+  		select m_id from goods where g_no=#{g_no}
+  </select>
 </mapper>

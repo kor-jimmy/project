@@ -49,4 +49,7 @@ public interface BoardDao {
 	//메인 페이지용 최신 게시글
 	List<BoardVo> mainNewBoard();
 	
+	//알람용 글번호로 회원 아이디를 찾는거
+	String findUser(int b_no);
+	
 }

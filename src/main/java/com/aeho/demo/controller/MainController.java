@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,11 +19,13 @@ import com.aeho.demo.domain.CategoryDTO;
 import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.domain.PageDto;
 import com.aeho.demo.security.MemberPrincipal;
+import com.aeho.demo.service.AlarmServiceImpl;
 import com.aeho.demo.service.BoardService;
 import com.aeho.demo.service.CategoryService;
 import com.aeho.demo.service.GoodsService;
 import com.aeho.demo.service.MainServcie;
 import com.aeho.demo.service.SlideImagesService;
+import com.aeho.demo.vo.AlarmVo;
 import com.aeho.demo.vo.BoardVo;
 import com.aeho.demo.vo.CategoryVo;
 import com.aeho.demo.vo.GoodsVo;
@@ -45,6 +48,9 @@ public class MainController {
 	
 	@Autowired
 	private SlideImagesService slideImageService;
+	
+	@Autowired
+	private AlarmServiceImpl alarmServcie;
 	
 	@GetMapping("/aeho")
 	public String main(HttpServletRequest request) {
@@ -171,6 +177,16 @@ public class MainController {
 	@ResponseBody
 	public String popCategory(HttpServletRequest request) {
 		List<CategoryVo> list = categoryService.popCategory();
+		Gson gson = new Gson();
+		String str = gson.toJson(list);
+		return str;
+	}
+	
+	// 진탁) 0609 알람 기능추가중
+	@GetMapping("/listAlarm")
+	@ResponseBody
+	public String listAlarm(HttpServletRequest request, @RequestParam("m_id") String m_id) {
+		List<AlarmVo> list = alarmServcie.listAlarm(m_id);
 		Gson gson = new Gson();
 		String str = gson.toJson(list);
 		return str;

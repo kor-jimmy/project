@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aeho.demo.dao.AlarmDao;
 import com.aeho.demo.dao.GoodsDao;
 import com.aeho.demo.dao.GoodsFilesDao;
 import com.aeho.demo.dao.GoodsReplyDao;
@@ -27,6 +28,7 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsFilesDao goodsFilesDao;
 	@Autowired
 	private ReportDao reportDao;
+
 	
 	public void setGoodsDao(GoodsDao goodsDao) {
 		this.goodsDao = goodsDao;
