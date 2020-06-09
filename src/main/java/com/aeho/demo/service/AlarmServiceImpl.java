@@ -29,6 +29,7 @@ public class AlarmServiceImpl implements AlarmServcie {
 	@Override
 	public List<AlarmVo> listAlarm(String m_id) {
 		// TODO Auto-generated method stub
+		System.out.println("알람서비스=>"+alarmDao.listAlarm(m_id));
 		return alarmDao.listAlarm(m_id);
 	}
 

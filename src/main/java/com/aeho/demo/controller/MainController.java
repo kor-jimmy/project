@@ -20,6 +20,7 @@ import com.aeho.demo.domain.CategoryDTO;
 import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.domain.PageDto;
 import com.aeho.demo.security.MemberPrincipal;
+import com.aeho.demo.service.AlarmServcie;
 import com.aeho.demo.service.AlarmServiceImpl;
 import com.aeho.demo.service.BoardService;
 import com.aeho.demo.service.CategoryService;
@@ -51,7 +52,7 @@ public class MainController {
 	private SlideImagesService slideImageService;
 	
 	@Autowired
-	private AlarmServiceImpl alarmServcie;
+	private AlarmServcie alarmServcie;
 	
 	@GetMapping("/aeho")
 	public String main(HttpServletRequest request) {
@@ -187,7 +188,9 @@ public class MainController {
 	@GetMapping("/listAlarm")
 	@ResponseBody
 	public String listAlarm(HttpServletRequest request, @RequestParam("m_id") String m_id) {
+		System.out.println("알람 들어온 아이디==>"+m_id);
 		List<AlarmVo> list = alarmServcie.listAlarm(m_id);
+		System.out.println("반환된 값==>"+list);
 		Gson gson = new Gson();
 		String str = gson.toJson(list);
 		return str;

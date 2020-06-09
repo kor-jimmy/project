@@ -13,7 +13,7 @@
 	</insert>
 	
 	<select id="listAlarm" resultType="com.aeho.demo.vo.AlarmVo">
-		select *from alarm where m_id = #{m_id} order by a_no desc
+		select * from alarm where m_id = #{m_id} order by a_no desc
 	</select>
 	
 	<update id="updateCheck">

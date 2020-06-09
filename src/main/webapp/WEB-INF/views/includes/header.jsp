@@ -248,13 +248,17 @@
 			})
 			*/
 
+			//알람기능
 			$("#notificationDiv").click(function(){
+				alert("ok");
+				var data = {m_id:userID}
 				$.ajax({
 					url: "/listAlarm",
-					data: {m_id: userID},
+					data: data,
 					type: "GET",
-					success: function(data){
-						var data = JSON.parse(data);
+					success: function(result){
+						var data = JSON.parse(result);
+						console.log(data)
 						$.each(data, function(idx, a){
 							console.log(a);
 							$("#alarmList").append(a);
