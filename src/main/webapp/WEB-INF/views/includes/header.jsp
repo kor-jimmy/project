@@ -20,6 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link href="/resources/css/main.css" rel="stylesheet">
     <link href="/resources/css/header.css" rel="stylesheet">
+    <link href="/resources/css/elements.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
@@ -57,8 +58,8 @@
 		.containerBox{
 			margin: 50px 0px 100px 0px;
 		}
-        #searchDiv{
-            margin-top: 40px;
+        .headerIconDiv{
+            margin-top: 20px;
         }
         #headerTop{
         	padding-top: 5px;
@@ -104,10 +105,17 @@
 		}
 		
 		#serachIcon span{ float: left; }
+		
+		.dropdown-toggle::after {
+			content: none;
+		}
 
     </style>
-    <script>
+    <script>    
     $(function(){
+
+    	var userID = " <sec:authorize access='isAuthenticated()'><sec:authentication property='principal.username'/></sec:authorize>";
+        
 		//각 분류별 카테고리를 호출하는 함수.
 		var menuCategory = function(categoryInfo, key){
 			console.log("함수 동작중");
@@ -240,6 +248,22 @@
 			})
 			*/
 
+			$("#notificationDiv").click(function(){
+				$.ajax({
+					url: "/listAlarm",
+					data: {m_id: userID},
+					type: "GET",
+					success: function(data){
+						var data = JSON.parse(data);
+						$.each(data, function(idx, a){
+							console.log(a);
+							$("#alarmList").append(a);
+						});
+						
+					}
+				});
+			});
+
 		})
     </script>
 </head>
@@ -249,9 +273,20 @@
     <div class="mb-0 p-3" id="headerTop" style="background-color: rgb(163, 161, 252);">
     	<div class="container">
             <div class="row">
-            	<div class="col-sm">
-
+            
+            	<div class="col-sm nav-item dropdown" align="left">
+            		<sec:authorize access="isAuthenticated()">            		
+					<div id="notificationDiv" class="headerIconDiv ml-5 pointer-cursor nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               			<p id="alarmIcon">
+               				<img src="/img/bell.png" width="35px" height="35px">
+               			</p>
+                	</div>
+                	</sec:authorize>
+                	<div id="alarmList" class="dropdown-menu" aria-labelledby="navbarDropdown">		        				         	
+					</div>
             	</div>
+            
+            	
                 <div class="col-sm" align="center">
 <!--                     <a href="/aeho">
                         <img src="/img/ma.png" width="200px" height="120px">
@@ -265,7 +300,7 @@
 				    </a>
                 </div>
                 <div class="col-sm" align="right">
-                	<div id="searchDiv">
+                	<div id="searchDiv" class="headerIconDiv">
                 		<!-- <button type="button" class="btn btn-primary" > -->
                 			<p id="serachIcon" data-toggle="modal" data-target=".bd-example-modal-lg">
                 				<span>SEARCH</span>
