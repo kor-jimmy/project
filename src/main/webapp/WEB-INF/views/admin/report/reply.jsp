@@ -109,26 +109,28 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${ replyList }" var="re" >
-						<tr>
-							<td align="center"><input type="checkbox" value="${ re.r_no }" name="choose"></td>
-							<td align="center"><c:out value="${ re.r_no }" /></td>
-							<td>
-								<a class="" href="/board/get?b_no=${ re.b_no }&selected=${ re.r_no }" target="_blank">
-									<c:out value="${ re.r_content }" />
-									<!-- <span class="badge badge-light">${board.b_replycnt }</span> -->
-								</a>
-							</td>	
-							<td align="center">
-								<a href="/admin/member/list?pageNum=1&amount=10&searchField=m_id&keyword=${re.m_id }">
-									<c:out value="${ re.m_id }" />
-								</a>
-								
-							</td>
-							<td align="center">
-								<fmt:formatDate pattern="yyyy-MM-dd" value="${ re.r_date }" />
-							</td>
-							<td align="center"><c:out value="${ re.r_reportcnt }" /></td>
-						</tr>
+						<c:if test="${re.r_state==0 }">
+							<tr>
+								<td align="center"><input type="checkbox" value="${ re.r_no }" name="choose"></td>
+								<td align="center"><c:out value="${ re.r_no }" /></td>
+								<td>
+									<a class="" href="/board/get?b_no=${ re.b_no }&selected=${ re.r_no }" target="_blank">
+										<c:out value="${ re.r_content }" />
+										<!-- <span class="badge badge-light">${board.b_replycnt }</span> -->
+									</a>
+								</td>	
+								<td align="center">
+									<a href="/admin/member/list?pageNum=1&amount=10&searchField=m_id&keyword=${re.m_id }">
+										<c:out value="${ re.m_id }" />
+									</a>
+									
+								</td>
+								<td align="center">
+									<fmt:formatDate pattern="yyyy-MM-dd" value="${ re.r_date }" />
+								</td>
+								<td align="center"><c:out value="${ re.r_reportcnt }" /></td>
+							</tr>
+						</c:if>
 					</c:forEach>
 				</tbody>
 			</table>
