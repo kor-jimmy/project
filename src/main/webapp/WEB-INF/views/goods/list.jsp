@@ -218,7 +218,7 @@ $(function(){
 	<p>상품 등록을 원하시면 카테고리를 선택해주세요.</p>
 	<hr>
 	
-	<button id="allBtn" type="button" class="btn btn-outline-light typeBtn" value="0">전체보기</button>
+	<button id="allBtn" type="button" class="btn btn-outline-light typeBtn typeBtnActive" value="0">전체보기</button>
 	<button id="buyBtn" type="button" class="btn btn-outline-light typeBtn" value="2">삽니다</button>
 	<button id="sellBtn" type="button" class="btn btn-outline-light typeBtn" value="1">팝니다</button>
 	<br><br>

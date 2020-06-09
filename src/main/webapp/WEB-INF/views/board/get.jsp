@@ -68,7 +68,6 @@
 			    buttons: ["NO", "YES"]
 			}).then((YES) => {
 			    if (YES) {
-			    	flag = "true";
 					$.ajax("/board/delete", {
 						type: 'POST', 
 						data: {b_no: b_no},

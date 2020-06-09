@@ -79,7 +79,7 @@ public class ReportManageController {
 		}
 	}
 	
-	@RequestMapping("reply")
+	@RequestMapping("/reply")
 	public void getReportReply(CriteriaForReply cri, Model model){
 		
 		cri.setAmount(30);
@@ -102,22 +102,22 @@ public class ReportManageController {
 		
 	}
 	
-	@RequestMapping("goods")
+	@RequestMapping("/goods")
 	public void getReportGoods(Model model) {
 		
 		Criteria2 cri = new Criteria2();
 		
 		List<GoodsVo> goodsList = goodsService.getReportGoods(cri);
 		int total = goodsService.getReportGoods(cri).size();
-		
 		model.addAttribute("pageMake", new PageDto2(cri, total));
 		model.addAttribute("goodsList", goodsList);
 	}
 	
 	@PostMapping("/chooseGoodsDelete")
 	@ResponseBody
-	public String chooseGoodsdelete(@RequestParam(value = "list[]") List<Integer> chooseGno) {
-		String msg = "삭제되지 못 한 게시글이 존재합니다.";
+	public void chooseGoodsdelete(@RequestParam(value = "list[]") List<Integer> chooseGno) {
+		System.out.println("굿즈 컨트롤러 딜리트 ㅈ동작중****");
+		//String msg = "삭제되지 못 한 게시글이 존재합니다.";
 		int re = 0;
 		for( int i=0; i<chooseGno.size(); i++ ) {
 			GoodsVo gv = new GoodsVo();
@@ -125,11 +125,10 @@ public class ReportManageController {
 			re = re + goodsService.deleteGoods(gv);
 		}
 		
-		if( re == chooseGno.size() ) {
-			msg = "삭제가 모두 완료되었습니다.";
-		}
-		System.out.println("re: " + re + "/ chooseGno: "+chooseGno);
-		return msg;
+		/*
+		 * if( re == chooseGno.size() ) { msg = "삭제가 모두 완료되었습니다."; }
+		 */
+		//System.out.println("re: " + re + "/ chooseGno: "+chooseGno+" /msg: "+msg);
 	}
 
 }

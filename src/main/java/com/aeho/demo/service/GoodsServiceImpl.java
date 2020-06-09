@@ -28,6 +28,8 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsFilesDao goodsFilesDao;
 	@Autowired
 	private ReportDao reportDao;
+	@Autowired
+	private AlarmDao alarmDao;
 
 	
 	public void setGoodsDao(GoodsDao goodsDao) {
@@ -85,6 +87,7 @@ public class GoodsServiceImpl implements GoodsService {
 			int result_report = reportDao.deleteReport(gv.getG_no(), "goods");//신고 삭제 번호
 		}
 //		int result_goodsReply = goodsReplyDao.deleteGoods(gv.getG_no());
+		int result_alarm = alarmDao.deleteGoodsAlarm(gv.getG_no());
 		int result_goods = goodsDao.deleteGoods(gv);
 		if(result_goods > 0)
 			result = 1;

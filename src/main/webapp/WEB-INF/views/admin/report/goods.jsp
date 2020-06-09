@@ -65,6 +65,7 @@
 						xhr.setRequestHeader(header,token)	
 					},
 					cache:false,
+					
 					success:function(msg){
 						alert(msg);
 						location.href="/admin/report/goods";

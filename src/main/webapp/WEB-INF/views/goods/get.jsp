@@ -32,26 +32,25 @@
 		});
 		//게시물 삭제
 		$("#deleteBtn").on("click",function(){
-			console.log(g_no);
-			var re = confirm("정말로 삭제하시겠습니까?");
-			if(re){
-				$.ajax({
-					url:"/goods/delete",
-					type: 'POST', 
-					data: {g_no: g_no},
-					beforeSend: function(xhr){
-						xhr.setRequestHeader(header,token)	
-					},
-					cache:false, 
-					success: function(result){
-						swal({
-						    text: result,
-						    icon: "success",
-						    buttons: "확인"
-						})
-						location.href="/goods/list";
+			swal({
+				title:"게시물을 삭제 하시겠습니까?",
+				icon:"info",
+				buttons: ["NO", "YES"]
+			}).then((YES) => {
+				if(YES){
+					$.ajax({
+						url:"/goods/delete",
+						type: 'POST', 
+						data: {g_no: g_no},
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(header,token)	
+						},
+						cache:false, 
+						success: function(result){
+							location.href="/goods/list";
 					}});
-			}
+				}
+			})
 		})
 		
 		//댓글 목록
