@@ -72,7 +72,7 @@ $(function(){
 		var c_no = eval(cats.attr("id"))+eval(cats.length);
 		var c_dist = $("#c_dist").val();
 		var data = {c_no: c_no, c_dist: c_dist};
-		$.ajax("/category/insert", {
+		$.ajax("/admin/category/insert", {
 			type: 'POST', 
 			beforeSend: function(xhr){
 				xhr.setRequestHeader(header,token)	
@@ -122,7 +122,7 @@ $(function(){
 		var c_no = $("#c_no").val();
 		var c_dist = $("#c_dist").val();
 		var data = {c_no: c_no, c_dist: c_dist}
-		$.ajax("/category/update", {
+		$.ajax("/admin/category/update", {
 			type: 'POST', 
 			data: data, 
 			beforeSend: function(xhr){
@@ -141,7 +141,7 @@ $(function(){
 		var data = {c_no: c_no, c_dist: c_dist}
 		var re = confirm("카테고리를 영구적으로 삭제하시겠습니까?");
 		if (re) {
-			$.ajax("/category/delete", {
+			$.ajax("/admin/category/delete", {
 				type: 'POST', 
 				data: data, 
 				beforeSend: function(xhr){

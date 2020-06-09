@@ -26,4 +26,5 @@ public interface ReplyService {
 	int getReportCnt();
 	
 	List<ReplyVo> getReportReply(CriteriaForReply cri);
+
 }

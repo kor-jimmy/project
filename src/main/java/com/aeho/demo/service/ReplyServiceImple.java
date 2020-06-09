@@ -159,5 +159,4 @@ public class ReplyServiceImple implements ReplyService {
 	public int getReportCnt() {
 		return replyDao.getReportCnt();
 	}
-
 }
