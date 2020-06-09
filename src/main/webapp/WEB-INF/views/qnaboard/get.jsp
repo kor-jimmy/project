@@ -63,11 +63,11 @@
 			<button id="deleteBtn" class="btn btn-outline-light grayBtn">삭제</button>
 			<button id="updateBtn" class="btn btn-outline-light subBtn">수정</button>
 		</c:if>
+		<sec:authorize access="hasRole('ROLE_MASTER')">
+			<button id="replyInsertBtn" class="btn btn-outline-light mainBtn">답글</button>
+			<button id="deleteBtn" class="btn btn-outline-light grayBtn">삭제</button>
+		</sec:authorize>
 	</sec:authorize>
-	<sec:authorize access="hasRole('ROLE_MASTER')">
-		<button id="replyInsertBtn" class="btn btn-outline-light mainBtn">답글</button>
-	</sec:authorize>
-	
 	<button id="listBtn" class="btn btn-outline-light typeBtn">목록</button>
 	
 <%@include file="../includes/footer.jsp"%>

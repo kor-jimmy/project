@@ -30,10 +30,7 @@ public class ChatMainController {
 		return mv;
 	}
 	
-	/**
-	 * 방 페이지
-	 * @return
-	 */
+	
 	@RequestMapping("/room")
 	public ModelAndView room(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
@@ -41,23 +38,22 @@ public class ChatMainController {
 		return mv;
 	}
 	
-	/**
-	 * 방 생성하기
-	 * @param params
-	 * @return
-	 */
+	
 	@RequestMapping("/createRoom")
-	public @ResponseBody List<ChatRoomVo> createRoom(HttpServletRequest request, @RequestParam HashMap<Object, Object> params){
+	public @ResponseBody List<ChatRoomVo> createRoom(HttpServletRequest request, @RequestParam HashMap<Object, Object> params, ChatRoomVo crv){
 		String roomName = (String) params.get("roomName");
+		String m_id = crv.getM_id();
 		if(roomName != null && !roomName.trim().equals("")) {
 			ChatRoomVo room = new ChatRoomVo();
 			room.setRoomNumber(roomNumber++);
-			room.setRoomName(roomName);
+			room.setRoomName(roomName.trim());
+			room.setM_id(m_id);
 			roomList.add(room);
 			System.out.println(roomList);
 		}
 		return roomList;
 	}
+	
 	
 	@RequestMapping("/delete")
 	public @ResponseBody List<ChatRoomVo> deleteRoom(HttpServletRequest request, ChatRoomVo params){
@@ -71,20 +67,13 @@ public class ChatMainController {
 		return roomList;
 	}
 	
-	/**
-	 * 방 정보가져오기
-	 * @param params
-	 * @return
-	 */
+	
 	@RequestMapping("/getRoom")
 	public @ResponseBody List<ChatRoomVo> getRoom(HttpServletRequest request, @RequestParam HashMap<Object, Object> params){
 		return roomList;
 	}
 	
-	/**
-	 * 채팅방
-	 * @return
-	 */
+	
 	@RequestMapping("/moveChating")
 	public ModelAndView chating(HttpServletRequest request, @RequestParam HashMap<Object, Object> params) {
 		ModelAndView mv = new ModelAndView();

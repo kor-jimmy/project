@@ -13,4 +13,6 @@ import lombok.Setter;
 public class ChatRoomVo {
 	private int roomNumber;
 	private String roomName;
+	
+	private String m_id;
 }

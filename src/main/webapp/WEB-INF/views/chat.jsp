@@ -10,14 +10,11 @@
 	<style>
 		.chating{
 			background-color: rgba(255, 255, 255, 0.7);
-			width: 1000px;
+			width: 800px;
 			height: 500px;
 			overflow: auto;
 		}
-		.chating p{
-			color: black;
-			text-align: left;
-		}
+		
 		input{
 			width: 330px;
 			height: 25px;
@@ -25,6 +22,28 @@
 		#yourMsg{
 			display: none;
 		}
+		
+		.msg_cotainer{
+		margin-top: 10px;
+		margin-bottom: 10px;
+		border-radius: 25px;
+		background-color: #82ccdd;
+		color: white;
+		padding:10px;
+		clear:both;
+		float:left;
+	}
+	
+		.msg_cotainer_send{
+		margin-top: 10px;
+		margin-bottom: 10px;
+		border-radius: 25px;
+		background-color: #78e08f;
+		color: white;
+		padding:10px;
+		clear:both;
+		float:right;
+	}
 	</style>
 
 <script type="text/javascript">
@@ -59,9 +78,9 @@
 				}
 			}else if(d.type == "message"){
 				if(d.sessionId == $("#sessionId").val()){
-					$("#chating").append("<p class='me'>나 :" + d.msg + "</p>");	
+					$("#chating").append("<p class='msg_cotainer'>나 :" + d.msg + "</p><br>");	
 				}else{
-					$("#chating").append("<p class='others'>" + d.userName + " :" + d.msg + "</p>");
+					$("#chating").append("<p class='msg_cotainer_send'>" + d.userName + " :" + d.msg + "</p><br>");
 				}
 			}else{
 				console.warn("unknown type!")
