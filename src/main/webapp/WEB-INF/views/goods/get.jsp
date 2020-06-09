@@ -116,7 +116,7 @@
 					li.append(deletedReply);
 				}
 				else if(r.gr_state == 1 && r.gr_reCnt == 0){
-					return false;
+					return;
 				}
 				else{
 					li.append(replyDiv);

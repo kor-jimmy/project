@@ -122,6 +122,7 @@ public class ReplyServiceImple implements ReplyService {
 	
 	@Override
 	public int deleteBoardReply(int b_no) {
+		System.out.println("댓글 삭제가 안되네?");
 		return replyDao.deleteBoardReply(b_no);
 	}
 

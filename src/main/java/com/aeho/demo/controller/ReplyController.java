@@ -50,8 +50,9 @@ public class ReplyController {
 	@GetMapping(value="/list", produces = "application/json; charset=utf-8")
 	public String list(HttpServletRequest request, ReplyVo rv) {
 		System.out.println("리플라이 리스트 컨트롤러 동작중");
+		System.out.println("들어온 비노우==>"+rv.getB_no());
 		List<ReplyVo> list = replyService.listReply(rv.getB_no());
-		System.out.println();
+		System.out.println("해당 글 댓글 목록 ==>"+list);
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}
@@ -59,7 +60,6 @@ public class ReplyController {
 	@PostMapping("/delete")
 	public String delete(HttpServletRequest request, ReplyVo rv) {
 		System.out.println("리플라이 딜리트 컨트롤러 동작중");
-		System.out.println(rv.getR_no());
 		String msg = "댓글 삭제에 실패하였습니다.";
 		int re = replyService.deleteReply(rv);
 		if (re>0) {

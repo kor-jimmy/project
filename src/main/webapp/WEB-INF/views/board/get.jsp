@@ -99,6 +99,8 @@
 			reply = JSON.parse(reply);
 			console.log(reply);
 			$.each(reply, function(idx,r){
+				console.log(idx);
+				console.log(r);
 				var m_id = r.m_id
 				//console.log(m_id)
 				// 댓글 ul로 수정.
@@ -167,7 +169,7 @@
 					li.append(deletedReply);
 				}
 				else if(r.r_state == 1 && r.r_reCnt == 0){
-					return false;
+					return;
 				}
 				else{
 					li.append(replyDiv);
