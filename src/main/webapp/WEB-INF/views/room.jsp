@@ -4,7 +4,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
-<link href="/resources/css/font.css" rel="stylesheet">
+<!-- <link href="/resources/css/font.css" rel="stylesheet"> -->
 
 	<style>
 		.roomList{

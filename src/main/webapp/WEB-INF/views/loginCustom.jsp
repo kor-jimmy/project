@@ -38,7 +38,7 @@
 						$("#loginForm").submit();
 					}
 
-					if(member.m_state=="DEACTIVATE"){
+					if(member.m_state=="PAUSE"){
 						var banDate = moment(member.m_bandate).format('YYYY-MM-DD');
 						var today = new Date();
 						var checkDate = moment(today).format('YYYY-MM-DD');

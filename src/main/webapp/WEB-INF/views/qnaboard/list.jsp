@@ -62,7 +62,7 @@ $(function(){
          <tbody>
 	 	 <c:forEach var="qnaboard" items="${list }">
 	 	 <tr onclick="location.href='/qnaboard/get?qb_no=${qnaboard.qb_no}'">
-		<td><c:out value="${qnaboard.qb_no }"/></td>
+		<td align="center"><c:out value="${qnaboard.qb_no }"/></td>
 		<td>
 			<c:choose> 
 				<c:when test = "${qnaboard.qb_level > 0}">

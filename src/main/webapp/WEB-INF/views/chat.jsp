@@ -5,7 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
-<link href="/resources/css/font.css" rel="stylesheet">
+<!-- <link href="/resources/css/font.css" rel="stylesheet"> -->
 
 	<style>
 		.chating{

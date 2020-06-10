@@ -109,7 +109,7 @@
 		$(".carousel-item").first().addClass("active");
 		$(".indicators").first().addClass("active");
 		
-		$.ajax("http://192.168.0.17:5000/videos", 
+		$.ajax("http://192.168.0.19:5000/videos", 
 			{dataType: "jsonp",
 			jsonpCallback: "getVideos",
 			success: function(data){

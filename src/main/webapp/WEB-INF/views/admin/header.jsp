@@ -124,7 +124,7 @@
         </div>
       </li>
       
-      <!-- qna-->
+<!--       qna
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#qna" aria-expanded="true" aria-controls="qna">
           <span>Q&A</span>
@@ -135,7 +135,7 @@
             <a class="collapse-item" href="#">신규 Q&A</a>
           </div>
         </div>
-      </li>
+      </li> -->
 
       <!-- Divider -->
       <hr class="sidebar-divider">
