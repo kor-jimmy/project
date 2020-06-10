@@ -28,9 +28,12 @@
   		<when test="searchField != null and !searchField.equals('') and searchField.equals('all')">
   			and (g_title like '%'||#{searchKeyword}||'%' or g_content like '%'||#{searchKeyword}||'%' or g.m_id like '%'||#{searchKeyword}||'%')
   		</when>
-  		<when test="searchField != null and !searchField.equals('') and (searchField.equals('g_title') or searchField.equals('g_content') or searchField.equals('m_id'))">
+  		<when test="searchField != null and !searchField.equals('') and (searchField.equals('g_title') or searchField.equals('g_content'))">
   			and g.${searchField} like '%'||#{searchKeyword}||'%'
   		</when>
+  		<when test="searchField.equals('m_id')">
+			and ${searchField} like #{keyword}
+		</when>
   		<when test="searchField != null and !searchField.equals('') and searchField.equals('doc')">
   			and (g_title like '%'||#{searchKeyword}||'%' or g_content like '%'||#{searchKeyword}||'%')
   		</when>

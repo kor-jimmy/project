@@ -20,8 +20,11 @@
   		<when test="searchField != null and !searchField.equals('') and searchField.equals('all')">
 			and (b_title like '%'||#{keyword}||'%' or b_content like '%'||#{keyword}||'%' or m_id like '%'||#{keyword}||'%')
 		</when>
-		<when test="searchField != null and !searchField.equals('') and (searchField.equals('b_title') or searchField.equals('b_content') or searchField.equals('m_id'))">
+		<when test="searchField != null and !searchField.equals('') and (searchField.equals('b_title') or searchField.equals('b_content'))">
 			and ${searchField} like '%'||#{keyword}||'%'
+		</when>
+		<when test="searchField.equals('m_id')">
+			and m_id = #{keyword}
 		</when>
 		<when test="searchField != null and !searchField.equals('') and searchField.equals('doc')">
 			and (b_title like '%'||#{keyword}||'%' or b_content like '%'||#{keyword}||'%')
