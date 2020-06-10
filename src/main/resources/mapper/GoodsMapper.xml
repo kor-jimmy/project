@@ -32,7 +32,7 @@
   			and g.${searchField} like '%'||#{searchKeyword}||'%'
   		</when>
   		<when test="searchField.equals('m_id')">
-			and ${searchField} like #{keyword}
+			and ${searchField} = #{keyword}
 		</when>
   		<when test="searchField != null and !searchField.equals('') and searchField.equals('doc')">
   			and (g_title like '%'||#{searchKeyword}||'%' or g_content like '%'||#{searchKeyword}||'%')
