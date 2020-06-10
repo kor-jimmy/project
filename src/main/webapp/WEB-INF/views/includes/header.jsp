@@ -282,11 +282,8 @@
 			})
 			*/
 
-			//알람기능
-			$("#notificationDiv").click(function(){
+			var alarm = function(data){
 				$("#alarmList").empty();
-				var data = {m_id:userID}
-				
 				$.ajax({
 					url: "/listAlarm",
 					data: data,
@@ -356,7 +353,42 @@
 						
 					}
 				});
+
+			}
+			
+			//알람기능
+			$("#notificationDiv").click(function(){				
+				var data = {m_id:userID};
+				alarm(data);
 			});
+
+			
+			var checkNewAlarm = function(data){
+				$.ajax({
+					url: "/listAlarm",
+					data: {m_id:data},
+					type: "GET",
+					success: function(result){
+						var list = JSON.parse(result);
+						var count = 0;
+						$.each(list, function(idx, alarm){
+							if(alarm.a_check == "NO"){
+								count = count + 1;
+							}
+						})
+						if(count>0){
+							$("#alarmImg").attr("src","/img/bell_new.png");
+							$("#alarmCount").html(count);
+						}
+					}
+				})
+				
+			}
+			checkNewAlarm(userID);
+			
+			setInterval(function(){
+				checkNewAlarm(userID);
+			},3000);
 
 			var updateCheck = function(no){
 				var a_no = no;
@@ -407,6 +439,7 @@
 					<div id="notificationDiv" class="headerIconDiv ml-5 pointer-cursor nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                			<p id="alarmIcon">
                				<img id="alarmImg" src="/img/bell.png" width="35px" height="35px">
+               				<span class="badge badge-danger" id="alarmCount"></span>
                			</p>
                 	</div>
                 	</sec:authorize>
