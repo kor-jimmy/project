@@ -52,4 +52,8 @@ public interface BoardDao {
 	//알람용 글번호로 해당 글 정보 찾는거
 	BoardVo boardAlarm(int b_no);
 	
+	int loveTotal(String m_id);
+	
+	int hateTotal(String m_id);
+	
 }

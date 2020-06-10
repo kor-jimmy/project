@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.aeho.demo.dao.BoardDao;
+import com.aeho.demo.dao.MemberDao;
 import com.aeho.demo.service.BoardService;
 import com.aeho.demo.service.GoodsService;
 import com.aeho.demo.service.MemberServiceSecurity;

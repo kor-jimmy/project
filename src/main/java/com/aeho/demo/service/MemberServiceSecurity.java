@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.aeho.demo.dao.BoardDao;
 import com.aeho.demo.dao.MemberDao;
 import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.security.MemberPrincipal;
@@ -19,6 +20,8 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 	
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private BoardDao boardDao;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -40,6 +43,11 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 
 	@Override
 	public MemberVo getMember(String m_id) {
+		int m_lovecnt = boardDao.loveTotal(m_id);
+		int hateTotal = boardDao.hateTotal(m_id);
+		memberDao.updateLove(m_id, m_lovecnt);
+		memberDao.updateHate(m_id, hateTotal);
+		
 		return memberDao.getMember(m_id);
 	}
 

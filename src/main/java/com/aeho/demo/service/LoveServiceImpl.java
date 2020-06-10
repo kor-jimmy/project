@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aeho.demo.dao.AlarmDao;
 import com.aeho.demo.dao.BoardDao;
 import com.aeho.demo.dao.LoveDao;
+import com.aeho.demo.dao.MemberDao;
 import com.aeho.demo.vo.AlarmVo;
 import com.aeho.demo.vo.LoveVo;
 
@@ -21,6 +22,9 @@ public class LoveServiceImpl implements LoveService {
 	
 	@Autowired
 	private AlarmDao alarmDao;
+	
+	@Autowired
+	private MemberDao memberDao;
 	
 	@Override
 	@Transactional(rollbackFor=Exception.class)

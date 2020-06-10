@@ -185,4 +185,13 @@
   	select * from board where b_no=#{b_no}
   </select>
   
+  
+  <!-- 좋아요 싫어요 수 계산 -->
+  <select id="loveTotal" resultType="int">
+  	select sum(b_lovecnt) from board where m_id=#{m_id}
+  </select>
+  <select id="hateTotal" resultType="int">
+  	select sum(b_hatecnt) from board where m_id=#{m_id}
+  </select>
+  
 </mapper>
