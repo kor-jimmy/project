@@ -7,14 +7,29 @@
 <link href="/resources/css/button.css" rel="stylesheet">
 <!-- <link href="/resources/css/font.css" rel="stylesheet"> -->
 
-	<style>
-		.chating{
-			background-color: rgba(255, 255, 255, 0.7);
-			width: 800px;
-			height: 500px;
-			overflow: auto;
-		}
-		
+<style>
+	.chating{
+		background-color: rgba(255, 255, 255, 0.7);
+		width: 800px;
+		height: 500px;
+		overflow: auto;
+	}
+	
+	.chating::-webkit-scrollbar {
+	    width: 10px;
+	  }
+	  .chating::-webkit-scrollbar-thumb {
+	    background-color: white;
+	    border-radius: 10px;
+	    background-clip: padding-box;
+	    border: 2px solid transparent;
+	  }
+	  .chating::-webkit-scrollbar-track {
+	    background-color: grey;
+	    border-radius: 10px;
+	    box-shadow: inset 0px 0px 5px white;
+	  }
+			
 		input{
 			width: 330px;
 			height: 25px;
@@ -44,7 +59,7 @@
 		clear:both;
 		float:right;
 	}
-	</style>
+</style>
 
 <script type="text/javascript">
 	var ws;
@@ -86,6 +101,7 @@
 				console.warn("unknown type!")
 			}
 		}	
+			const $chating = $('#chating'); $chating.scrollTop($chating[0].scrollHeight);
 	}
 
 	document.addEventListener("keypress", function(e){
