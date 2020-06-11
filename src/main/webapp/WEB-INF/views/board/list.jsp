@@ -86,6 +86,7 @@
 			self.location = "/board/list?categoryNum="+c_no+"&c_no="+c_no+"&pageNum=1&amount=30&searchField=m_id&keyword="+userID;
 			
 		})
+		
 	})
 	
 </script>
@@ -122,9 +123,16 @@
         </thead>
         <tbody>
             <c:forEach items="${list }" var="board" >
+
                		<tr>
 	                    <td class="list-td" align="center"><c:out value="${board.b_no }"/></td>
-	                    <td class="list-td" ><a class="" href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/><span class="badge badge-light">${board.b_replycnt }</span></a></td>
+	                    <!-- &&&&&&&&이녀석&&&&&&&& -->
+	                    <td class="list-td" >
+	                    	<a class="" href="/board/get?b_no=${board.b_no }">
+	                    		<c:out value="<span id='b_title'>${board.b_title}</span>" escapeXml="false"/>
+	                    		<span class="badge badge-light">${board.b_replycnt }</span>
+	                    	</a>
+	                    </td>
 	                    <td class="list-td"  align="center" style="overflow: visible;">
 	                    	<c:if test="${board.m_img !=null}">
 	                    		<div style="display: inline-block;">
@@ -144,7 +152,12 @@
 	                    <td class="list-td" align="center"><c:out value="${board.b_hit }"/></td>
 	                    <td class="list-td" align="center"><c:out value="${board.b_lovecnt }"/></td>
                 	</tr>
+    	            <script>
+	            		var changeTitle = changeOutValue($("#b_title").val());
+	            		$("#b_title").val(changeTitle);
+	            	</script>
             </c:forEach>
+            
         </tbody>
     </table>
 
@@ -207,7 +220,7 @@
     	<!-- 페이징 관련 a태그 속성 관리 -->
     	<form id="actionForm" action="/board/list" method="get">
     		<input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
-    		<input type="hidden" name="amount" value="${pageMake.cri.amount }">
+    		<input type="hidden" id="pageAmount" name="amount" value="${pageMake.cri.amount }">
     		<input type="hidden" name="categoryNum" value="${pageMake.cri.categoryNum }"> 
     		<input type="hidden" name="searchField" value="${ pageMake.cri.searchField }">   		
     		<input type="hidden" name="keyword" value="${ pageMake.cri.keyword }">    		

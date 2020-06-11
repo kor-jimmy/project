@@ -4,6 +4,7 @@
 <%@include file="../includes/header.jsp"%>
 <link href="/resources/css/button.css" rel="stylesheet">
 <link href="/resources/css/boardTable.css" rel="stylesheet">
+
 <h2>게시물 등록</h2>
 <hr>
 <form id="insertForm" method="post" enctype="multipart/form-data">
@@ -26,6 +27,7 @@
 <script type="text/javascript">
 
 	$(function(){
+	
 		var fileList = [];
 		var uploadFileList = [];
 
@@ -106,12 +108,17 @@
 		
 		//폼태그 기본속성 제거
 		$("#insertBtn").on("click",function(e){
+			e.preventDefault();
+ 			var b_title = $("#b_title").val();
+			var changeTitle = xssChange(b_title);
+			$("#b_title").val(changeTitle);
+			alert(changeTitle);
 			if($("#b_title").val() == null || $("#b_title").val() == "" || 
 					$("#b_content").val() == null || $("#b_content").val() == ""){
 				alert("제목이나 글 내용을 비워둘 수는 없습니다.");
 				return;
 			}
-			e.preventDefault();
+			
 			var myInsert = $("#insertForm").serialize();
 			var date = new Date();
 			var year = date.getYear()+1900;
