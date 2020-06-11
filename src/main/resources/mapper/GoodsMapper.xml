@@ -48,7 +48,7 @@
   			(
   				select /*+ INDEX_DESC(goods pk_goods)*/
   					rownum rn, g_no, gc_code, g.m_id, g_title, g_content, g_price, g_date, g_updatedate, g_replycnt, c_no, m_nick
-  				from (select * from goods order by g_updatedate desc) g, member m 
+  				from (select * from goods order by g_no desc) g, member m 
   				where rownum <= #{pageNum} * #{amount} 
   				]]>
   				
@@ -66,7 +66,7 @@
   				<if test="searchKeyword != null and searchKeyword != ''">
   					<include refid="searchSql"></include>
   				</if>
-  				 and m.m_id=g.m_id
+  				 and m.m_id=g.m_id order by g_no desc
   			<![CDATA[
   			)
   		where rn > (#{pageNum}-1) * #{amount} 

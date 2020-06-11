@@ -58,8 +58,6 @@
 			goodsReply = JSON.parse(goodsReply)		
 			//console.log(goodsReply);
 			$.each(goodsReply, function(idx,r){
-
-				var changeContent = changeOutValue(r.gr_content);
 				
 				//console.log(r.gr_content);
 				var li  =$("<li class='list-group-item rep' idx="+idx+" r_no="+r.gr_no+"></li>")
@@ -71,9 +69,9 @@
 				var replyContent = $("<span class='replyContent'></span>")
 				if(r.gr_level != 0){
 					contentDiv.append($("<img src='/img/re.png' width='45px' height='45px'>"));
-					var tagID = (changeContent).split("/")[0];
-					var indexID = (changeContent).indexOf("/");
-					var realContent = (changeContent).substring(indexID+1);
+					var tagID = (r.gr_content).split("/")[0];
+					var indexID = (r.gr_content).indexOf("/");
+					var realContent = (r.gr_content).substring(indexID+1);
 					replyContent.html(realContent);
 					//li.addClass("list-group-item-warning");
 					li.css("background", "#F4F4F4");
@@ -201,7 +199,7 @@
 		})
 		
 		//댓글 등록
-		$("#insertReply").on("click",function(){
+		$("#insertReply").on("click",function(e){
 
 			e.preventDefault();
  			var gr_content = $("#gr_content").val();
@@ -383,7 +381,7 @@
 			<input class="form-control" type="text" name="m_id" value="<sec:authentication property="principal.username"/>" readonly="readonly">
 		</div>
 		<div class="col-sm-8 my-1">
-			<input class="form-control" type="text" name="gr_content" required="required" placeholder="댓글을 입력하세요.">
+			<input class="form-control" type="text" id="gr_content" name="gr_content" required="required" placeholder="댓글을 입력하세요.">
 		</div>
 		<div class="col-sm-2 my-1">
 			<a href="#" id="insertReply" class="btn btn-outline-light subBtn">댓글등록</a>

@@ -36,7 +36,8 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 
 			var g = item;
 
-			var changeTitle = changeOutValue(g.g_title);
+			var changeTitle = changeOutValue("g_title: " +g.g_title);
+			console.log("changeTitle"+changeTitle);
 			
 			var div = $("<div class='goodsBox mb-5'></div>");
 			var con = g.g_content;
@@ -69,7 +70,7 @@ function listGoods(gc_code,keyword,pageNum,searchField,searchKeyword){
 			else
 				gc_dist.html("[삽니다] ");
 			
-			var title = $("<b></b>").html(changeTitle);
+			var title = $("<b></b>").html(g.g_title);
 			var writer = $("<p class='mb-2'></p>").html(g.m_nick);
 			var price = $("<p class='mb-2'></p>").html(g.g_price + "원");
 			var g_date = moment(item.g_date).format('YYYY-MM-DD');
