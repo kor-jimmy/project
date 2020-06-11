@@ -44,7 +44,7 @@
   				<choose>
   				  	<when test="categoryNum == 10000">
   				  		<![CDATA[
-  							and b.c_no>10000 and b.c_no<10010
+  							and b.c_no>10000 and b.c_no<10010 
   						]]>
   					</when>
   					<when test="categoryNum == 9999">
@@ -76,6 +76,7 @@
 						and m.${searchField} like '%'||#{keyword}||'%'
 					</when>
 			  	</choose>
+			  	order by b_no desc
   	<![CDATA[
   			)
   		where rn > (#{pageNum}-1) * #{amount} 
