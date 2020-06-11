@@ -148,6 +148,13 @@ public class MemberController {
 		return str;
 	}
 	
+	@GetMapping("/getMemberInfoByEmail")
+	@ResponseBody
+	public String getMemberInfoByEmail(HttpServletRequest request, String email) {
+		int re = memberServiceSecurity.getMemberByEmail(email).size();
+		return Integer.toString(re);
+	}
+
 	@GetMapping("/getMypageBoard")
 	@ResponseBody
 	public String getMypageBoard(HttpServletRequest request, @RequestParam("m_id") String m_id) {
@@ -218,7 +225,7 @@ public class MemberController {
 				message.setTo(email);
 				message.setSubject("[Aeho] 아이디 안내입니다.");
 				String str = "<h2><i>AE-HO</i></h2><p>본 메일로 요청하신 회원님의 아이디는 다음과 같습니다.</p>";
-				str += "<h5>" + IDList + "</h5><br><br>";
+				str += "<h4>" + IDList + "</h4><br><br>";
 				str += "<a href='http://192.168.0.10:8088/loginCustom'>로그인 하러가기</a>";
 				message.setText(str, true);
 				//message.addInline("aeho", new ClassPathResource("/project/src/main/webapp/img/AEHO_for_EMAIL.png"));
