@@ -13,7 +13,7 @@
 <table class="table table-bordered opacity-table">
 	<tr>
 		<td>게시물 제목</td>
-		<td><input type="text" name="b_title" required="required" style="width:40%;" value="${board.b_title}"></td>
+		<td><input type="text" id="b_title" name="b_title" required="required" style="width:40%;" value="${board.b_title}"></td>
 	</tr>
 	<tr>
 		<td>내용</td>
@@ -99,7 +99,12 @@
 
 		//폼태그 기본속성 제거
 		$("#updateBtn").on("click",function(e){
+
 			e.preventDefault();
+ 			var b_title = $("#b_title").val();
+			var changeTitle = xssChange(b_title);
+			$("#b_title").val(changeTitle);
+			
 			var myInsert = $("#updateForm").serialize();
 			var date = new Date();
 			var year = date.getYear()+1900;

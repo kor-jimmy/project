@@ -12,7 +12,7 @@
 	<table class="table table-bordered opacity-table">
 		<tr>
 			<td>상품 제목</td>
-			<td><input type="text" name="g_title" required="required" value="${goods.g_title }"></td>
+			<td><input type="text" id="g_title" name="g_title" required="required" value="${goods.g_title }"></td>
 		</tr>
 		<tr><!--  
 			<td>삽니다/팝니다</td>
@@ -118,6 +118,10 @@
 		//클릭이벤트()
 		$("#updateBtn").on("click",function(e){
 			e.preventDefault();
+ 			var g_title = $("#g_title").val();
+			var changeTitle = xssChange(g_title);
+			$("#g_title").val(changeTitle);
+			
 			var myInsert = $("#updateForm").serialize();
 			var date = new Date();
 			var year = date.getYear()+1900;

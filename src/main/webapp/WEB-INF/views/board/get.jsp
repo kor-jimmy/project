@@ -98,6 +98,9 @@
 			reply = JSON.parse(reply);
 			console.log(reply);
 			$.each(reply, function(idx,r){
+				
+				var changeContent = changeOutValue(r.r_content);
+        		
 				console.log(idx);
 				console.log(r);
 				var m_id = r.m_id
@@ -115,13 +118,13 @@
 				var replyString="";
 				if(r.r_level != 0){
 					var reReIcon = $("<img src='/img/re.png' width=45px height=45px></img>")
-					replyContent.html(r.r_content);
+					replyContent.html(changeContent);
 					contentDiv.append(reReIcon);
 					contentDiv.removeClass("reContent");
 					li.addClass("list-group-item-secondary");
 				}
 				else{
-					replyContent.html(r.r_content);
+					replyContent.html(changeContent);
 				}
 				
 				contentDiv.append(replyContent);
@@ -255,6 +258,12 @@
 		
 		//대댓글 등록
 		$(document).on("click","#insertReReply",function(e){
+
+			e.preventDefault();
+ 			var r_content = $("#reReContent").val();
+			var changeContent = xssChange(r_content);
+			$("#reReContent").val(changeContent);
+			
 			if(logingID == null || logingID == ""){
 				swal({
 					  title: "로그인이 필요한 서비스 입니다!",
@@ -303,6 +312,12 @@
 
 		//댓글 등록 ajax
 		$("#insertReply").on("click",function(e){
+
+			e.preventDefault();
+ 			var r_content = $("#r_content").val();
+			var changeContent = xssChange(r_content);
+			$("#r_content").val(changeContent);
+			
 			var r = $("#boardReply").serialize();
 			console.log(r);
 			swal({
@@ -390,6 +405,7 @@
 		
 		//싫어요 등록
 		$(document).on("click", "#hate", function(){
+
 			if(m_id == "" || m_id == null){
 				swal({
 					  text: "로그인 후 이용 가능한 서비스입니다.",
@@ -565,7 +581,7 @@
 	</sec:authorize>
 	<table class="table opacity-table">
 		<tr class="contents-padding">
-			<td colspan="3"><h3><c:out value="${board.b_title }"/></h3></td>
+			<td colspan="3"><h3><c:out value="<span id='b_title'>${board.b_title}</span>" escapeXml="false"/></h3></td>
 			<td>
 				<img class="expressionIcons mr-2" id="heart" src="/img/heart.png" width="30" height="30">
 				<img class="expressionIcons mr-2" id="clickedheart" src="/img/clickedHeart.png" width="30" height="30">
@@ -589,8 +605,12 @@
 			<td colspan="4" height="500px">
 				<div class="contents-padding">${board.b_content }</div>
 			</td>
-		</tr>
+		</tr>     	
 	</table>
+	<script>
+       	var changeTitle = changeOutValue($("#b_title").val());
+       	$("#b_title").val(changeTitle);
+    </script>
 	<hr>
 	<div class="mb-3">			
 		<sec:authentication property="principal" var="pinfo"/>
@@ -620,7 +640,7 @@
 						<input class="form-control" type="text" name="m_id" value="<sec:authentication property="principal.username"/>" readonly="readonly">
 					</div>
 					<div class="col-sm-8 my-1"> 
-						<input class="form-control" type="text" name="r_content" required="required" placeholder="댓글을 입력하세요!">
+						<input class="form-control" type="text" id="r_content" name="r_content" required="required" placeholder="댓글을 입력하세요!">
 					</div>
 					<div class="col-sm-2 my-1">
 						<a href="#" id="insertReply" class="btn btn-outline-light subBtn">댓글등록</a>

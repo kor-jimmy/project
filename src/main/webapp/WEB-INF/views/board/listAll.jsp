@@ -134,7 +134,7 @@
 	               		<tr>
 		                    <td align="center"><c:out value="${board.b_no }"/></td>
 		                    <td align="center"><a href="/board/list?categoryNum=${ board.c_no }"><c:out value="${board.c_dist }"/></a></td>
-		                    <td><a class="" href="/board/get?b_no=${board.b_no }"><c:out value="${board.b_title }"/><span class="badge badge-light">${board.b_replycnt }</span></a></td>
+		                    <td><a class="" href="/board/get?b_no=${board.b_no }"><c:out value="<span id='b_title'>${board.b_title}</span>" escapeXml="false"/><span class="badge badge-light">${board.b_replycnt }</span></a></td>
 		                    <td align="center" style="overflow: visible;">
 		                    	<c:if test="${board.m_img !=null}">
 		                    		<div style="display: inline-block;">
@@ -157,6 +157,11 @@
 	            </c:forEach>
 	        </tbody>
 	    </table>
+	    
+	    <script>
+      		var changeTitle = changeOutValue($("#b_title").val());
+      		$("#b_title").val(changeTitle);
+      	</script>
 	    
 	    <hr>
 	    <!-- 게시물 검색 -->

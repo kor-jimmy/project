@@ -135,6 +135,11 @@
 			var header = $("meta[name='_csrf_header']").attr("content");
 			console.log("토큰 : "+token+" / 헤더:"+header);
 			$("#insertBtn").on("click",function(e){
+
+				e.preventDefault();
+	 			var qb_title = $("#qb_title").val();
+				var changeTitle = xssChange(qb_title);
+				$("#qb_title").val(changeTitle);
 				
 				if($("#qb_title").val() == null || $("#qb_title").val() == "" || 
 						$("#qb_content").val() == null || $("#qb_content").val() == ""){

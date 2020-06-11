@@ -13,7 +13,7 @@
 	<table class="table table-bordered opacity-table">
 		<tr>
 			<td>QNA 제목</td>
-			<td><input type="text" name="qb_title" required="required" value="${qnaboard.qb_title }"></td>
+			<td><input type="text" id="qb_title" name="qb_title" required="required" value="${qnaboard.qb_title }"></td>
 		<tr>
 			<td>작성자</td>
 			<td><input type="text" name="m_id" readonly="readonly" value="${qnaboard.m_id }"></td>
@@ -103,7 +103,12 @@
 		
 		//클릭이벤트()
 		$("#updateBtn").on("click",function(e){
+
 			e.preventDefault();
+ 			var qb_title = $("#qb_title").val();
+			var changeTitle = xssChange(qb_title);
+			$("#qb_title").val(changeTitle);
+			
 			var myInsert = $("#updateForm").serialize();
 			var date = new Date();
 			var year = date.getYear()+1900;

@@ -58,6 +58,9 @@
 			goodsReply = JSON.parse(goodsReply)		
 			//console.log(goodsReply);
 			$.each(goodsReply, function(idx,r){
+
+				var changeContent = changeOutValue(r.gr_content);
+				
 				//console.log(r.gr_content);
 				var li  =$("<li class='list-group-item rep' idx="+idx+" r_no="+r.gr_no+"></li>")
 			 	var replyDiv = $("<div class='row'></div>");
@@ -68,9 +71,9 @@
 				var replyContent = $("<span class='replyContent'></span>")
 				if(r.gr_level != 0){
 					contentDiv.append($("<img src='/img/re.png' width='45px' height='45px'>"));
-					var tagID = (r.gr_content).split("/")[0];
-					var indexID = (r.gr_content).indexOf("/");
-					var realContent = (r.gr_content).substring(indexID+1);
+					var tagID = (changeContent).split("/")[0];
+					var indexID = (changeContent).indexOf("/");
+					var realContent = (changeContent).substring(indexID+1);
 					replyContent.html(realContent);
 					//li.addClass("list-group-item-warning");
 					li.css("background", "#F4F4F4");
@@ -150,6 +153,12 @@
 		
 		//대댓글 등록
 		$(document).on("click","#insertReReply",function(){
+
+			e.preventDefault();
+ 			var r_content = $("#reReContent").val();
+			var changeContent = xssChange(r_content);
+			$("#reReContent").val(changeContent);
+			
 			if(logingID == null || logingID == ""){
 				swal({
 					  title: "로그인이 필요한 서비스 입니다!",
@@ -193,6 +202,12 @@
 		
 		//댓글 등록
 		$("#insertReply").on("click",function(){
+
+			e.preventDefault();
+ 			var gr_content = $("#gr_content").val();
+			var changeContent = xssChange(gr_content);
+			$("#gr_content").val(changeContent);
+			
 			var data = $("#reply").serialize();
 			//var re = confirm("댓글을 등록하시겠습니까? 한 번 입력한 댓글은 수정이 불가하므로 신중하게 입력해 주세요.");
 			swal({
@@ -320,7 +335,7 @@
 	<input type="hidden" id="writer" value="${ goods.m_id }">
 	<table class="table table-bordered opacity-table">
 		<tr>
-			<td id="title" class="contents-padding" colspan="6"><h3><c:out value="${goods.g_title }"/></h3></td>
+			<td id="title" class="contents-padding" colspan="6"><h3><c:out value="<span id='g_title'>${goods.g_title}</span>" escapeXml="false"/></h3></td>
 		</tr>
 		<tr>
 			<td width="15%" align="center"><b>작성자</b></td>
@@ -339,6 +354,10 @@
 			<div class="contents-padding mt-5" id="content">${goods.g_content }</div></td>
 		</tr>
 	</table>
+	<script>
+       	var changeTitle = changeOutValue($("#g_title").val());
+       	$("#g_title").val(changeTitle);
+    </script>
 	<div>
 		<sec:authentication property="principal" var="pinfo"/>
 		<sec:authorize access="isAuthenticated()">

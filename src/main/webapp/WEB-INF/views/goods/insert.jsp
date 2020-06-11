@@ -115,6 +115,13 @@
 			console.log("토큰 : "+token+" / 헤더:"+header);
 
 			$("#insertBtn").on("click",function(e){
+
+				e.preventDefault();
+	 			var g_title = $("#g_title").val();
+				var changeTitle = xssChange(g_title);
+				$("#g_title").val(changeTitle);
+				alert(changeTitle);
+				
 				var gc_code = $("#gc_code option:selected").val();
 				if($("#g_title").val() == null || $("#g_title").val() == "" || 
 						$("#g_content").val() == null || $("#g_content").val() == "" || gc_code == "0"){
@@ -122,7 +129,6 @@
 					return false;
 				}
 //				console.log("클릭동작")
-				e.preventDefault();
 				var myInsert = $("#insertForm").serialize();
 				var date = new Date();
 				var year = date.getYear()+1900;
