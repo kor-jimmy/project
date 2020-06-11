@@ -50,6 +50,11 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 		
 		return memberDao.getMember(m_id);
 	}
+	
+	@Override
+	public List<MemberVo> getMemberByEmail(String email) {
+		return memberDao.getMemberByEmail(email);
+	}
 
 	@Override
 	public int insertMember(MemberVo mv) {

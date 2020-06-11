@@ -87,5 +87,9 @@
   <update id="updateHate">
   	update member set m_hatecnt = #{m_hatecnt} where m_id=#{m_id}
   </update>
+  
+  <select id="getMemberByEmail" resultType="com.aeho.demo.vo.MemberVo">
+  	select * from member where m_email = #{m_email}
+  </select>
 
 </mapper>

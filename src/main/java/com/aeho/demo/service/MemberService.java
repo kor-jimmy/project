@@ -31,4 +31,6 @@ public interface MemberService {
 	int updateRelease(MemberVo mv);
 	
 	int updateProfileImage(MemberVo mv);
+	
+	List<MemberVo> getMemberByEmail(String email);
 }

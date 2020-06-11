@@ -193,8 +193,42 @@ public class MemberController {
 	public void findInfo(HttpServletRequest request) {
 	}
 	
+	//아이디 찾기
+	@RequestMapping("/sendMailForID")
+	@ResponseBody
+	public void sendMailForID(HttpServletRequest request, String email) {
+		System.out.println(email);
+		List<MemberVo> mvList = memberServiceSecurity.getMemberByEmail(email);
+		
+		String m_id = "";
+		
+		for( MemberVo m : mvList ) {
+			m_id = m_id + " [ " + m.getM_id() + " ] ";
+		}
+		
+		final String IDList = m_id;
+		
+		mailSender.send(new MimeMessagePreparator() {
+			
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom("team.demo2020@gmail.com");
+				message.setTo(email);
+				message.setSubject("[Aeho] 아이디 안내입니다.");
+				String str = "<h2><i>AE-HO</i></h2><p>본 메일로 요청하신 회원님의 아이디는 다음과 같습니다.</p>";
+				str += "<h5>" + IDList + "</h5><br><br>";
+				str += "<a href='http://192.168.0.10:8088/loginCustom'>로그인 하러가기</a>";
+				message.setText(str, true);
+				//message.addInline("aeho", new ClassPathResource("/project/src/main/webapp/img/AEHO_for_EMAIL.png"));
+			}
+			
+		});
+		
+	}
 	
-	
+	//비밀번호 찾기
 	@RequestMapping("/sendMailForPwd")
 	@ResponseBody
 	public String sendMailForPwd(HttpServletRequest request, String m_id, String email) {
@@ -232,9 +266,9 @@ public class MemberController {
 				message.setFrom("team.demo2020@gmail.com");
 				message.setTo(email);
 			    message.setSubject("[Aeho] 새 비밀번호 안내입니다..");
-				String str = "<h2><i>Welcome!</i></h2><p>새로운 비밀번호는 ["+tempPwd+"]입니다.</p><br>";
+				String str = "<h2><i>AE-HO!</i></h2><p>새로운 비밀번호는 ["+tempPwd+"]입니다.</p><br>";
 				str += "<i>로그인 후 반드시 새 비밀번호를 지정해주십시오.</i>";
-				str += "<a href='http://localhost:8088/loginCustom'>로그인 하러가기</a>";
+				str += "<a href='http://192.168.0.10:8088/loginCustom'>로그인 하러가기</a>";
 			    message.setText(str, true);
 			    //message.addInline("aeho", new ClassPathResource("/project/src/main/webapp/img/AEHO_for_EMAIL.png"));
 			}

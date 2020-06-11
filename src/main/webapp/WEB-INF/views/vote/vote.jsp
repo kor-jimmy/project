@@ -228,11 +228,16 @@
 		$(".option").on("click", function(){
 			if(m_id == "" || m_id == null){
 				swal({
-					  text: "로그인 후 이용 가능한 서비스입니다.",
+					  text: "로그인 후 이용 가능한 서비스입니다.\n로그인 화면으로 이동할까요?",
 					  icon: "warning",
-					  button: "확인"
-					});
-				return false;
+					  buttons: ["아니오", "예"]
+				}).then((예) => {
+				    if (예) {
+						location.href="/loginCustom";
+				    }else{
+				    	return false;
+				    }
+				});
 			}
 			option= $(this).attr("option");
 			$(".option").children("img").css("border", "none");
@@ -245,11 +250,16 @@
 		$(".btn-primary").click(function(){
 			if(m_id == "" || m_id == null){
 				swal({
-					  text: "로그인 후 이용 가능한 서비스입니다.",
+					text: "로그인 후 이용 가능한 서비스입니다.\n로그인 화면으로 이동할까요?",
 					  icon: "warning",
-					  button: "확인"
-					});
-				return false;
+					  buttons: ["아니오", "예"]
+				}).then((예) => {
+				    if (예) {
+						location.href="/loginCustom";
+				    }else{
+				    	return false;
+				    }
+				});
 			}else{
 				isChecked(m_id, vt.vt_no);
 				console.log(option);

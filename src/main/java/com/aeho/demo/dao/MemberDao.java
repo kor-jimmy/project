@@ -35,4 +35,6 @@ public interface MemberDao {
 	int updateLove(String m_id, int m_lovecnt);
 	
 	int updateHate(String m_id, int m_hatecnt);
+	
+	List<MemberVo> getMemberByEmail(String email);
 }
