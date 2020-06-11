@@ -45,45 +45,49 @@ $(function(){
 	});
 });
 </script>
-    <h2><c:out value="${catKeyword}"/></h2>
-    <input type="hidden" name="c_no" id="c_no" value="${c_no}">
-    <input type="hidden" name="qb_no" id="qb_no" value="${qb_no}">
-    <hr>
-    <div class="opacity-table" id="qnaboardArticles">
-    <table class="table table-hover">
-        <thead>
-            <tr align="center">
-                <th width="10%">번호</th>
-                <th width="50%">제목</th>
-                <th width="10%">작성자</th>
-                <th width="10%">날짜</th>
-            </tr>
-        </thead>
-         <tbody>
-	 	 <c:forEach var="qnaboard" items="${list }">
-	 	 <tr onclick="location.href='/qnaboard/get?qb_no=${qnaboard.qb_no}'">
-		<td align="center"><c:out value="${qnaboard.qb_no }"/></td>
-		<td>
-			<c:choose> 
-				<c:when test = "${qnaboard.qb_level > 0}">
-					<c:forEach begin="0" end="${qnaboard.qb_level}">
-					<c:out value="&nbsp;&nbsp;&nbsp;&nbsp;" escapeXml="false"/> 
-					</c:forEach>	
-						<img src="/img/re.png" width="20" height="20">
-						<c:out value="${qnaboard.qb_title }"/>
-				</c:when> 
-				<c:otherwise>
-					<c:out value="${qnaboard.qb_title}"/>		
-				</c:otherwise> 
-			</c:choose>
-		</td>
-				<td><c:out value="${qnaboard.m_id }"/></td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd" value="${qnaboard.qb_date }"/></td>
-		</tr>
+	<h2><c:out value="${catKeyword}"/></h2>
+	<input type="hidden" name="c_no" id="c_no" value="${c_no}">
+	<input type="hidden" name="qb_no" id="qb_no" value="${qb_no}">
+	<hr>
+	<div class="opacity-table" id="qnaboardArticles">
+		<table class="table table-hover">
+			<thead>
+				<tr align="center">
+					<th width="10%">번호</th>
+					<th width="50%">제목</th>
+					<th width="10%">작성자</th>
+					<th width="10%">날짜</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="qnaboard" items="${list }">
+					<tr onclick="location.href='/qnaboard/get?qb_no=${qnaboard.qb_no}'">
+						<td align="center"><c:out value="${qnaboard.qb_no }"/></td>
+							<td>
+								<c:choose> 
+									<c:when test = "${qnaboard.qb_level > 0}">
+										<c:forEach begin="0" end="${qnaboard.qb_level}">
+											<c:out value="&nbsp;&nbsp;&nbsp;&nbsp;" escapeXml="false"/> 
+										</c:forEach>	
+										<img src="/img/re.png" width="20" height="20">
+										<c:out value="${qnaboard.qb_title }"/>
+									</c:when> 
+									<c:otherwise>
+										<c:out value="<span id='qb_title'>${qnaboard.qb_title}</span>" escapeXml="false"/>
+									</c:otherwise> 
+								</c:choose>
+							</td>
+						<td><c:out value="${qnaboard.m_id }"/></td>
+						<td><fmt:formatDate pattern="yyyy-MM-dd" value="${qnaboard.qb_date }"/></td>
+					</tr>
+					<script>
+						var changeTitle = changeOutValue($("#qb_title").val());
+						$("#qb_title").val(changeTitle);
+					</script>
 				</c:forEach>
-      </tbody>
-    </table>
-    <hr>
+			</tbody>
+		</table>
+    	<hr>
     <!-- 게시물 검색 -->
     <form id="searchForm" action="/qnaboard/list" method="get">
     <div class="form-row align-items-center">

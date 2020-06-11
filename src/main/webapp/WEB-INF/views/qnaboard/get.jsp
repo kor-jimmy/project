@@ -41,7 +41,7 @@
 	<input type="hidden" id="c_no" value="${ qnaboard.c_no }">
 	<table class="table table-bordered opacity-table">
 		<tr>
-			<td colspan="4"><h3><c:out value="${qnaboard.qb_title }"/></h3></td>
+			<td colspan="4"><h3><c:out value="<span id='qb_title'>${ qnaboard.qb_title }</span>" escapeXml="false"/></h3></td>
 		</tr>
 		<tr>
 			<td width="20%" align="center">작성자</td>
@@ -54,6 +54,11 @@
 			<div class="contents-padding" id="contents">${qnaboard.qb_content }</div></td>
 		</tr>
 	</table>
+	
+	<script>
+       	var changeTitle = changeOutValue($("#qb_title").val());
+       	$("#qb_title").val(changeTitle);
+    </script>
 	
 
 	<sec:authentication property="principal" var="pinfo"/>

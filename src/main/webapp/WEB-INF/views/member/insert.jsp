@@ -72,9 +72,10 @@
 		var result_checkNick = false;
 		
 		var idRegEx = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
-		var passwordRegEx =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&<>])[A-Za-z\d$@$!%*#?&]{6,}$/;
+		var passwordRegEx =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
 		var phoneRegEx = /^[0-9]{3}-[0-9]{4}-[0-9]{4}/;
 		var emailRegEx = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		var nickRegEx = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
 
 		var validity_ID = false;
 		var validity_Pwd = false;
@@ -139,10 +140,10 @@
 			console.log(m_nick);
 			var data = {m_nick: m_nick}
 			$.ajax("/member/isExistNick", {data: data, success: function(re){
-				if(re == 0){
-					$("#m_nick").css("border", "1px solid #23D795");
-					$("#feedbackForNick").css("color", "#23D795").html("※사용 가능한 닉네임입니다.").show();
-					validity_Nick = true;
+				if(nickRegEx.test(m_nick)){
+					$("#m_nick").css("border", "1px solid #FF2121");
+					$("#feedbackForNick").css("color", "#FF2121").html("※닉네임에 특수문자를 사용할 수 없습니다.").show(); 
+					validity_Nick = false;
 				}else if(re == 1){
 					$("#m_nick").css("border", "1px solid #FF2121");
 					$("#feedbackForNick").css("color", "#FF2121").html("※이미 사용중인 닉네임입니다.").show(); 
@@ -155,6 +156,10 @@
 					$("#m_nick").css("border", "1px solid #FF2121");
 					$("#feedbackForNick").css("color", "#FF2121").html("※닉네임은 20자를 초과할 수 없습니다.").show(); 
 					validity_Nick = false;
+				}else if(re == 0){
+					$("#m_nick").css("border", "1px solid #23D795");
+					$("#feedbackForNick").css("color", "#23D795").html("※사용 가능한 닉네임입니다.").show();
+					validity_Nick = true;
 				}
 			}});
 		}
