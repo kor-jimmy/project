@@ -361,6 +361,13 @@ public class MemberController {
 		
 		return result;
 	}
+	
+	@RequestMapping("/leave")
+	@ResponseBody
+	public String memberLeave(HttpServletRequest request, String m_id) {
+		int re = memberServiceSecurity.deleteMember(m_id);
+		return re+"";
+	}
 
 
 }

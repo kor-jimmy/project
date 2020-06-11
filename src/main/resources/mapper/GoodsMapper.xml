@@ -156,4 +156,8 @@
   		select * from goods where g_no=#{g_no}
   </select>
   
+  <update id="updateGoodsWhereID">
+  	update goods set m_id = '탈퇴한 애호가' where m_id = #{m_id}
+  </update>
+  
 </mapper>

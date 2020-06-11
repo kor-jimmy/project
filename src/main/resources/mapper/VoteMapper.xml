@@ -32,4 +32,8 @@
   	select * from vote where vt_no = #{vt_no} and m_id = #{m_id}
   </select>
   
+  <update id="updateVoteWhereID">
+  	update vote set m_id = '탈퇴한 애호가' where m_id = #{m_id}
+  </update>
+  
 </mapper>

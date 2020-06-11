@@ -21,4 +21,8 @@ public interface ReportDao {
 	int isCheckedGoods(ReportVo rev);
 	
 	int deleteReport(int no, String wherekey);
+	
+	List<ReportVo> getReportById(String m_id);
+	
+	int updateReportWhereID(String m_id);
 }

@@ -27,4 +27,7 @@
 		delete alarm where g_no = #{g_no}
 	</delete>
 	
+	<update id="updateAlarmWhereID">
+  		update alarm set m_id = '탈퇴한 애호가' where m_id = #{m_id}
+  	</update>
 </mapper>

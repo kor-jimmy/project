@@ -20,5 +20,7 @@ public interface VoteDao {
 	int deleteVote(VoteVo vv);
 	
 	List<VoteVo> isChecked(VoteVo vv);
+	
+	int updateVoteWhereID(String m_id);
 		
 }

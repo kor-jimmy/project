@@ -20,4 +20,8 @@
   	select count(*) from love where b_no = #{b_no} and m_id = #{m_id}
   </select>
   
+  <delete id="deleteLoveByID">
+  	delete love where m_id = #{m_id}
+  </delete>
+  
 </mapper>

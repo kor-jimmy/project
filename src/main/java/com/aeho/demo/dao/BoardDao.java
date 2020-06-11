@@ -56,4 +56,6 @@ public interface BoardDao {
 	
 	int hateTotal(String m_id);
 	
+	int updateBoardWhereID(String m_id);
+	
 }

@@ -17,4 +17,6 @@ public interface AlarmDao {
 	int deleteBoardAlarm(int b_no);
 	
 	int deleteGoodsAlarm(int g_no);
+	
+	int updateAlarmWhereID(String m_id);
 }

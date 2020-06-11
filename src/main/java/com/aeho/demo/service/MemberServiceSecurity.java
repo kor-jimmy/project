@@ -8,12 +8,26 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.aeho.demo.dao.AlarmDao;
 import com.aeho.demo.dao.BoardDao;
+import com.aeho.demo.dao.GoodsDao;
+import com.aeho.demo.dao.GoodsReplyDao;
+import com.aeho.demo.dao.HateDao;
+import com.aeho.demo.dao.LoveDao;
 import com.aeho.demo.dao.MemberDao;
+import com.aeho.demo.dao.QnaBoardDao;
+import com.aeho.demo.dao.ReplyDao;
+import com.aeho.demo.dao.ReportDao;
+import com.aeho.demo.dao.VoteDao;
 import com.aeho.demo.domain.Criteria;
 import com.aeho.demo.security.MemberPrincipal;
+import com.aeho.demo.vo.BoardVo;
+import com.aeho.demo.vo.GoodsVo;
 import com.aeho.demo.vo.MemberVo;
+import com.aeho.demo.vo.ReplyVo;
+import com.aeho.demo.vo.ReportVo;
 
 @Service
 public class MemberServiceSecurity implements MemberService, UserDetailsService {
@@ -22,7 +36,25 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 	private MemberDao memberDao;
 	@Autowired
 	private BoardDao boardDao;
-	
+	@Autowired
+	private ReportDao reportDao;
+	@Autowired
+	private GoodsDao goodsDao;
+	@Autowired
+	private GoodsReplyDao goodaReplyDao;
+	@Autowired
+	private ReplyDao replyDao;
+	@Autowired
+	private AlarmDao alarmDao;
+	@Autowired
+	private VoteDao voteDao;
+	@Autowired
+	private QnaBoardDao qnaboardDao;
+	@Autowired
+	private LoveDao loveDao;
+	@Autowired
+	private HateDao hateDao;
+
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -136,6 +168,34 @@ public class MemberServiceSecurity implements MemberService, UserDetailsService 
 	@Override
 	public int updateProfileImage(MemberVo mv) {
 		return memberDao.updateProfileImage(mv);
+	}
+
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public int deleteMember(String m_id) {
+		int re = 0;
+		
+		try {
+			//해당 회원의 게시물, 댓글, 굿즈, 신고, 좋아요, 싫어요 모두 탈퇴회원으로 변경
+			boardDao.updateBoardWhereID(m_id);
+			goodsDao.updateGoodsWhereID(m_id);
+			replyDao.updateReplyWhereID(m_id);
+			reportDao.updateReportWhereID(m_id);
+			goodaReplyDao.updateGoodsReplyWhereID(m_id);
+			qnaboardDao.updateQnAWhereID(m_id);
+			voteDao.updateVoteWhereID(m_id);
+			alarmDao.updateAlarmWhereID(m_id);
+			//좋아요, 싫어요는 삭제처리
+			loveDao.deleteLoveByID(m_id);
+			hateDao.deleteHateByID(m_id);
+
+			//이후 삭제
+			re = memberDao.deleteMember(m_id);
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return re;
 	}
 	
 

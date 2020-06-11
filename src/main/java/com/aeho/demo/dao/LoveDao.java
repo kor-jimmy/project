@@ -10,4 +10,6 @@ public interface LoveDao {
 	
 	int isChecked(LoveVo lv);
 	
+	int deleteLoveByID(String m_id);
+	
 }

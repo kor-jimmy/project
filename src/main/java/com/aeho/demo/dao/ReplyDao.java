@@ -33,4 +33,8 @@ public interface ReplyDao {
 	int getReportCnt();
 	
 	List<ReplyVo> getReportReply(CriteriaForReply cri);
+	
+	List<ReplyVo> getReplyById(String m_id);
+	
+	int updateReplyWhereID(String m_id);
 }

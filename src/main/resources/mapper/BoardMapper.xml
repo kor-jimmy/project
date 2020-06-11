@@ -188,10 +188,14 @@
   
   <!-- 좋아요 싫어요 수 계산 -->
   <select id="loveTotal" resultType="int">
-  	select sum(b_lovecnt) from board where m_id=#{m_id}
+  	select nvl(sum(b_lovecnt), 0) from board where m_id=#{m_id}
   </select>
   <select id="hateTotal" resultType="int">
-  	select sum(b_hatecnt) from board where m_id=#{m_id}
+  	select nvl(sum(b_hatecnt), 0) from board where m_id=#{m_id}
   </select>
+  
+  <update id="updateBoardWhereID">
+  	update board set m_id = '탈퇴한 애호가' where m_id = #{m_id}
+  </update>
   
 </mapper>

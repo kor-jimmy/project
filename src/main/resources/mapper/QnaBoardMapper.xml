@@ -92,4 +92,8 @@
   	update qnaboard set qb_step=qb_step+1 where qb_ref=#{qb_ref} and qb_step>#{qb_step} 
   </update>
   
+  <update id="updateQnAWhereID">
+  	update qnaboard set m_id = '탈퇴한 애호가' where m_id = #{m_id}
+  </update>
+  
 </mapper>

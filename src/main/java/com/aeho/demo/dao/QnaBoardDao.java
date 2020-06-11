@@ -28,5 +28,7 @@ public interface QnaBoardDao {
 	List<QnaBoardVo> listCatBoard(String catKeyword);
 	//step+1
 	int updateStep(HashMap map);
+	
+	int updateQnAWhereID(String m_id);
 
 }

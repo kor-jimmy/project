@@ -37,4 +37,6 @@ public interface MemberDao {
 	int updateHate(String m_id, int m_hatecnt);
 	
 	List<MemberVo> getMemberByEmail(String email);
+	
+	int deleteMember(String m_id);
 }

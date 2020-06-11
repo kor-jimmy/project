@@ -30,4 +30,6 @@ public interface GoodsDao {
 	List<GoodsVo> mainNewGoods();
 	
 	GoodsVo goodsAlarm(int g_no);
+	
+	int updateGoodsWhereID(String m_id);
 }

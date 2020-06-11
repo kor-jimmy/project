@@ -76,4 +76,12 @@
   		where rn > (#{pageNum}-1) * #{amount} 
   	]]>
   </select>
+  
+  <select id="getReplyById" resultType="com.aeho.demo.vo.ReplyVo">
+  	select * from reply where m_id = ${m_id}
+  </select>
+  
+  <update id="updateReplyWhereID">
+  	update reply set m_id = '탈퇴한 애호가' where m_id = #{m_id}
+  </update>
 </mapper>

@@ -45,4 +45,8 @@
   <update id="updateState">
   	update goodsReply set gr_state=1 where gr_no=#{gr_no}
   </update>
+  
+  <update id="updateGoodsReplyWhereID">
+  	update goodsReply set m_id = '탈퇴한 애호가' where m_id = #{m_id}
+  </update>
 </mapper>

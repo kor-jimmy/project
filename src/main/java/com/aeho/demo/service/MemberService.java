@@ -33,4 +33,6 @@ public interface MemberService {
 	int updateProfileImage(MemberVo mv);
 	
 	List<MemberVo> getMemberByEmail(String email);
+	
+	int deleteMember(String m_id);
 }

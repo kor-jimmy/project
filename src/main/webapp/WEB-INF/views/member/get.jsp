@@ -13,11 +13,13 @@
 	#modifyPwd{ background: white; }
 	.wannaModify{ background: white; }
 	
-	#updateBtn{ background: #A3A1FC; border-color: #A3A1FC; }
-	#updateBtn:hover{ background: #CBCAFF; border-color: #CBCAFF; }
+	#updateBtn{ background: #A3A1FC; border-color: #A3A1FC; color: white; }
+	#updateBtn:hover{ background: #CBCAFF; border-color: #CBCAFF; color: white; }
 	
-	#resetBtn{ background: #BDBDBD; border-color: #BDBDBD; }
-	#resetBtn:hover{ background: lightgray; border-color: lightgray; }
+	#resetBtn{ background: #BDBDBD; border-color: #BDBDBD; color: white;}
+	#resetBtn:hover{ background: lightgray; border-color: lightgray; color: white; }
+	
+	#leaveBtn:hover{ background: #FB3461; border-color: #FB3461; color: white; }
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
@@ -175,6 +177,36 @@
 			e.preventDefault();
 			location.href="/member/mypage";
 		});
+
+		$("#leaveBtn").click(function(e){
+			e.preventDefault();
+			swal({
+				  text: "정말로 탈퇴하시겠습니까?",
+				  icon: "warning",
+				  buttons: ["취소", "확인"]
+			}).then((확인)=>{
+				if(확인){
+					$.ajax({
+						url: "/member/leave",
+						data: {m_id: user_id},
+						success: function(re){
+							if(re > 0){
+								swal({
+									  text: "탈퇴되었습니다.\n그동안 이용해주셔서 감사합니다.",
+									  icon: "success",
+									  button: "확인"
+								}).then((확인)=>{
+									if(확인){
+										location.href='/logout';
+									}
+								});
+							}
+							
+						}
+					});
+				}
+			});
+		});
 		
 	})
 </script>
@@ -227,8 +259,9 @@
 					</font>
 				</div>
 				<br>
-				<button type="submit" class="btn btn-primary" id="updateBtn">수정하기</button>
-				<button type="button" class="btn btn-primary" id="resetBtn">취소</button>
+				<button type="submit" class="btn btn-light" id="updateBtn">수정하기</button>
+				<button type="button" class="btn btn-light" id="resetBtn">취소</button>
+				<button type="button" class="btn btn-light float-right" id="leaveBtn">회원 탈퇴</button>
 			</form>
 		</div>
 	</div>

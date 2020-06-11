@@ -9,4 +9,6 @@ public interface HateDao {
 	int deleteHate(HateVo hv);
 	
 	int isChecked(HateVo hv);
+	
+	int deleteHateByID(String m_id);
 }
