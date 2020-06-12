@@ -112,7 +112,7 @@
  			var b_title = $("#b_title").val();
 			var changeTitle = xssChange(b_title);
 			$("#b_title").val(changeTitle);
-			alert(changeTitle);
+			//alert(changeTitle);
 			if($("#b_title").val() == null || $("#b_title").val() == "" || 
 					$("#b_content").val() == null || $("#b_content").val() == ""){
 				alert("제목이나 글 내용을 비워둘 수는 없습니다.");

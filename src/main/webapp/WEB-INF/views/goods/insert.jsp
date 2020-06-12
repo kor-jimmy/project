@@ -120,7 +120,7 @@
 	 			var g_title = $("#g_title").val();
 				var changeTitle = xssChange(g_title);
 				$("#g_title").val(changeTitle);
-				alert(changeTitle);
+				//alert(changeTitle);
 				
 				var gc_code = $("#gc_code option:selected").val();
 				if($("#g_title").val() == null || $("#g_title").val() == "" || 
