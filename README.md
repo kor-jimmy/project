@@ -1,6 +1,5 @@
 # project AE-HO
 깨끗한 팬 문화를 위한 웹 커뮤니티 AE-HO
-프로젝트 소개  
 ![intro AEHO](./bin/images/intro.JPG)
 
 ## 프로젝트 개요
@@ -15,4 +14,12 @@
 - 5,6주차) 5/24~06/07 테스트, 디버깅
 - 7주차) 06/08~06/12 발표 준비
 
-
+## 개발 도구, 사용 기술
+- SpringBoot
+- SpringSecurity
+- jQuery
+- Oracle
+- jsp
+- myBatis
+- css, html, bootstrap
+- summernote
