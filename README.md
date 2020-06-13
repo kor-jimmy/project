@@ -1,7 +1,7 @@
 # project AE-HO
 깨끗한 팬 문화를 위한 웹 커뮤니티 AE-HO
 프로젝트 소개  
-![intro AEHO](./src/images/intro.jpg)
+![intro AEHO](./bin/images/intro.jpg)
 
 # 기존 웹 커뮤니티의 문제
 - 운영진의 미비한 제재
