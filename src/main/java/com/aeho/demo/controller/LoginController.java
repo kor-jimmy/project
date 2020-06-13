@@ -29,7 +29,7 @@ public class LoginController {
 		 * !referrer.equals("http://192.168.0.24:8088/loginCustom?error")) {
 		 * request.getSession().setAttribute("prevPage", referrer); }
 		 */
-		request.getSession().setAttribute("prevPage", "http://192.168.0.10:8088/aeho");
+		request.getSession().setAttribute("prevPage", "http://192.168.0.7:8088/aeho");
 	}
 	
 	@GetMapping("/loginError")

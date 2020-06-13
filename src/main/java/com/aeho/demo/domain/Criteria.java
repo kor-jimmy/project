@@ -23,7 +23,7 @@ public class Criteria {
 	*/
 	
 	public Criteria() {
-		this(1,30,0, "all", "");
+		this(1,20,0, "all", "");
 	}
 	
 	public Criteria(int pageNum, int amount, int categoryNum, String searchField, String keyword) {

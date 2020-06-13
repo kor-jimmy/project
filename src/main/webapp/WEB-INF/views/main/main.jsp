@@ -109,7 +109,7 @@
 		$(".carousel-item").first().addClass("active");
 		$(".indicators").first().addClass("active");
 		
-		$.ajax("http://192.168.0.19:5000/videos", 
+		$.ajax("http://192.168.0.3:5000/videos", 
 			{dataType: "jsonp",
 			jsonpCallback: "getVideos",
 			success: function(data){
@@ -144,8 +144,8 @@
 						return false;
                     }
                 	var bestDiv = $("<div class='bestContentDiv col m-2' b_no="+content.b_no+"></div>").attr("title",content.b_title);
-                	var b_title = $("<p></p>").text(content.b_title);
-                	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
+                	var b_title = $("<p></p>").html(content.b_title);
+                	var category = $("<span class='badge badge-secondary'></span>").html(content.c_dist);
 					var src = "/boardImage/"+content.uuid+"_"+content.filename;
                     var img;
                     if(content.filename != null){
@@ -213,8 +213,8 @@
 						return false;
                     }
                 	var bestDiv = $("<div class='bestContentDiv col m-2' b_no="+content.b_no+"></div>").attr("title",content.b_title);
-                	var b_title = $("<p></p>").text(content.b_title);
-                	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
+                	var b_title = $("<p></p>").html(content.b_title);
+                	var category = $("<span class='badge badge-secondary'></span>").html(content.c_dist);
 					var src = "/boardImage/"+content.uuid+"_"+content.filename;
                     var img;
                     if(content.filename != null){
@@ -247,8 +247,8 @@
     						return false;
                         }
                     	var bestDiv = $("<div class='bestContentDiv col m-2' b_no="+content.b_no+"></div>").attr("title",content.b_title);
-                    	var b_title = $("<p></p>").text(content.b_title);
-                    	var category = $("<span class='badge badge-secondary'></span>").text(content.c_dist);
+                    	var b_title = $("<p></p>").html(content.b_title);
+                    	var category = $("<span class='badge badge-secondary'></span>").html(content.c_dist);
     					var src = "/boardImage/"+content.uuid+"_"+content.filename;
                         var img;
                         if(content.filename != null){
