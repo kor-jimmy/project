@@ -17,9 +17,15 @@
 ## 개발 도구, 사용 기술
 - SpringBoot
 - SpringSecurity
-- jQuery
 - Oracle
-- jsp
 - myBatis
+- jQuery
+- jsp
 - css, html, bootstrap
+- ajax
 - summernote
+
+## 개발 과정
+ 팀 구성원 모두가 프로젝트의 사소한 부분들 까지 알아야 된다 생각하여 구글 드라이버를 이용해 매일 작업일지 작성 하여 서로 공유하고 코드리뷰를 진행. 이러한 작업 방식이 미래에 일어 날 위험 요소 대응에 적절하게 작용하는 역할을 하였다. 약 120개의 작업 일지를 작성.
+ 
+ 
