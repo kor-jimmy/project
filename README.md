@@ -26,7 +26,7 @@
 - summernote
  
 ## 시연 화면
-https://youtu.be/cHZ3YgEsahU
+https://www.youtube.com/watch?v=dHdC-BwHH2w&t=54s
 
 
 
